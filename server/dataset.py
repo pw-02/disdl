@@ -76,6 +76,12 @@ class Dataset():
 
         return paired_samples
     
+    def get_samples(self, indices: List[int]):
+        samples = []
+        for i in indices:
+            samples.append(self._classed_items[i])
+        return samples
+    
 
 #main
 if __name__ == "__main__":

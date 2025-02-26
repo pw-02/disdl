@@ -20,12 +20,11 @@ class Batch:
         self.epoch_idx:int = epoch_idx
         self.partition_id:int = partition_idx
         self.batch_id:str = batch_id
-        # self.epoch_seed:int = epoch_seed
         self.is_cached:bool = False
         self.caching_in_progress:bool = False
         self.next_access_time:float = None
         self.last_accessed_time:float = 0 #None #float('inf')
-        self.has_been_accessed_before = False
+        self.is_first_access = True
         self.lock = threading.Lock()  # Lock for accessing shared resources
         self.batch_partition_id = f"{self.epoch_idx}_{self.partition_id}"
         self.evict_from_cache_simulation_time: Optional[float] = None
@@ -42,14 +41,6 @@ class Batch:
         with self.lock:
             self.last_accessed_time = time.time()
     
-    def is_first_access(self):
-        """Check if this is the first time the batch is being accessed."""
-        with self.lock:
-            if self.has_been_acessed_before:
-                return False
-            else:
-                self.has_been_acessed_before = True
-                return True
 
     def set_cache_status(self, is_cached:bool):
         """Set the cache status and handle cache eviction timer."""

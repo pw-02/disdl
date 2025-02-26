@@ -7,7 +7,7 @@ from logger_config import logger
 import hydra
 from omegaconf import DictConfig
 from args import DisDLArgs
-from server.bacth_manager import CentralBatchManager
+from server.batch_manager import CentralBatchManager
 from omegaconf import OmegaConf
 from typing import Dict
 

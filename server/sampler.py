@@ -1,7 +1,8 @@
 from typing import  Dict, Sized
 from itertools import cycle
 import random
-from batch import Batch
+from batch import Batch, BatchSet
+from collections import OrderedDict
 import hashlib
 
 class PartitionedBatchSampler():
@@ -13,6 +14,7 @@ class PartitionedBatchSampler():
         partitions = self._partition_indices(num_partitions) # List of partitions (each a list of indices)
         self.partitions_cycle = cycle(enumerate(partitions))  # Track partition index
         self.num_partitions = len(partitions)
+        self.batches_per_epoch = self.calc_num_batchs_per_epoch()
 
         # Initialize epoch tracking
         self.current_epoch = 0
@@ -94,6 +96,14 @@ class PartitionedBatchSampler():
         assert total_files == self.num_files
 
         return partitions
+    
+    def calc_num_batchs_per_epoch(self):
+        # Calculate the number of batches
+        if self.drop_last:
+            return self.num_files // self.batch_size
+        else:
+            return (self.num_files + self.batch_size - 1) // self.batch_size
+
 
 if __name__ == "__main__":
     
@@ -111,19 +121,36 @@ if __name__ == "__main__":
                                       drop_last=False, 
                                       shuffle=True)
     
-    # print(f"Total partitions: {len(sampler.partitions_cycle)}")
-    paths = set()  # Use a set for quick duplicate detection
-    path_list = []  # Maintain the ordered list for debugging
+    epoch_partition_batches: Dict[int, Dict[int, BatchSet]] = OrderedDict()  #first key is epoch id, second key is partition id, value is the batches
 
-    for i, batch in enumerate(sampler):
+    # Generate initial batches
+    for _ in range(10000):
+        next_batch:Batch = next(sampler)
+        # Ensure epoch exists, initializing with an OrderedDict for partitions
+        partition_batches = epoch_partition_batches.setdefault(next_batch.epoch_idx, OrderedDict())
         
-        for idx in batch.indicies:
-            path, label = dataset._classed_items[idx]
+         # Ensure partition exists, initializing with a new BatchSet if needed
+        partition_batch_set = partition_batches.setdefault(
+            next_batch.partition_id, BatchSet(f'{next_batch.epoch_idx}_{next_batch.partition_id}')
+        )
+        # Store the batch in the BatchSet
+        partition_batch_set.batches[next_batch.batch_id] = next_batch
+    
+    print(epoch_partition_batches)
+
+    # # print(f"Total partitions: {len(sampler.partitions_cycle)}")
+    # paths = set()  # Use a set for quick duplicate detection
+    # path_list = []  # Maintain the ordered list for debugging
+
+    # for i, batch in enumerate(sampler):
+        
+    #     for idx in batch.indicies:
+    #         path, label = dataset._classed_items[idx]
             
-            if path in paths:  # Check if path already exists
-                print(f"Duplicate detected! Total unique paths before duplicate: {len(paths)}")
-                exit()  # Stop execution immediately
+    #         if path in paths:  # Check if path already exists
+    #             print(f"Duplicate detected! Total unique paths before duplicate: {len(paths)}")
+    #             exit()  # Stop execution immediately
             
-            paths.add(path)
-            path_list.append(path)  # Keep track of order (for debugging)
-        print(f"Batch {i}: {batch.batch_id} with {len(batch.indicies)} samples")
+    #         paths.add(path)
+    #         path_list.append(path)  # Keep track of order (for debugging)
+    #     print(f"Batch {i}: {batch.batch_id} with {len(batch.indicies)} samples")

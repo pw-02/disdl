@@ -7,7 +7,7 @@ class DisDLArgs:
     batch_size:int
     lookahead_steps:int
     serverless_cache_address:str
-    cache_evition_ttl_threshold:float
+    cache_keep_alive_timeout:float
     use_prefetching:bool
     use_keep_alive:bool
     prefetch_lambda_name:str

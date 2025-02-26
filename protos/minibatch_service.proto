@@ -1,0 +1,79 @@
+/* 
+Command to create stub files:
+python -m grpc_tools.protoc --proto_path=. ./protos/minibatch_service.proto --python_out=. --grpc_python_out=.
+*/
+
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";  // Import Empty type for responses
+
+
+service MiniBatchService {
+  // Health check
+  rpc Ping (PingRequest) returns (PingResponse);
+
+  // Register a dataset for a job
+  rpc RegisterDataset (RegisterDatasetRequest) returns (RegisterDatasetResponse);
+
+  // Get the next batch for a given job
+  rpc GetNextBatchForJob (GetNextBatchForJobRequest) returns (GetNextBatchForJobResponse);
+
+  // Notify server when a job ends
+  rpc JobEnded (JobEndedRequest) returns (google.protobuf.Empty);
+
+  // Update job status (e.g., batch consumption rate)
+  rpc JobUpdate (JobUpdateRequest) returns (google.protobuf.Empty);
+}
+
+/* --- Ping (Health Check) --- */
+message PingRequest {}
+message PingResponse {
+string message = 1;
+}
+
+/* --- Dataset Registration --- */
+message RegisterDatasetRequest {
+  string dataset_name = 1; //s3 bucket name
+  string storage_path = 2;  // S3 path
+}
+
+message RegisterDatasetResponse {
+  string dataset_id = 1;
+  bool success = 2;
+  string dataset_info = 3; // Number of files, chunks, etc.
+}
+
+/* --- Batch Retrieval --- */
+message GetNextBatchForJobRequest {
+  string job_id = 1;
+  string dataset_id = 2;  // Optional, useful for multi-dataset scenarios
+}
+
+message Batch {
+  string batch_id = 1;
+  repeated uint32 indices = 2;  // Using uint32 as indices are non-negative
+  bool is_cached = 3;  // Indicates if batch was precomputed and cached
+  //int64 timestamp = 4;  // (Optional) Time when batch was created, useful for cache management
+}
+
+message GetNextBatchForJobResponse {
+  Batch batch = 1;  // Currently fetching one batch, but expandable
+  // repeated Batch batches = 2;  // Future-proofing for multi-batch responses
+}
+
+
+/* --- Job Management --- */
+message JobEndedRequest {
+  string job_id = 1;
+  string dataset_id = 2;  // Optional, useful for multi-dataset scenarios
+}
+
+message JobUpdateRequest {
+  string job_id = 1;
+  string dataset_id = 2;  // Optional, useful for multi-dataset scenarios
+  string previous_step_batch_id = 3;
+  double previous_step_wait_for_data_time = 4;  // More precise timing
+  bool previous_step_is_cache_hit = 5;
+  double previous_step_gpu_time = 6;
+  bool prefetched_next_batch = 7;  // More descriptive than "cached_previous_batch"
+}

@@ -1,0 +1,5 @@
+kind: 'text'
+batch_size: 1 #chunk_size  = number of files per chunk
+shuffle: False
+drop_last: False
+prefetch_lambda_name: 'CreatetextTrainingBatch'

@@ -1,0 +1,13 @@
+requests
+pillow
+redis
+-f https://download.pytorch.org/whl/torch_stable.html
+torch==1.13.1+cpu
+torchvision==0.14.1+cpu
+numpy<2.0
+# lz4
+zstandard
+torchtext
+transformers
+# torch==1.9.0+cpu
+# torchvision==0.10.0+cpu

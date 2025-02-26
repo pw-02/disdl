@@ -1,0 +1,35 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'lambda Sample SAM Template for lambda
+
+  '
+Globals:
+  Function:
+    Timeout: 30
+    MemorySize: 3072
+  Api:
+    BinaryMediaTypes:
+    - image/png
+    - image/jpg
+    - image/jpeg
+Resources:
+  CreateVisionBatchFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: CreateVisionTrainingBatch
+      PackageType: Image
+      Architectures:
+      - x86_64
+      Role: arn:aws:iam::590178426343:role/SIONLambdaRole
+      VpcConfig:
+        SecurityGroupIds:
+        - sg-0e3cfe7dde2d319b2
+        SubnetIds:
+        - subnet-0719017fb24af22ac
+        - subnet-076f5a2c0e07e6b1e
+      ImageUri: createvisionbatchfunction:python3.9-v1
+    Metadata:
+      DockerContext: C:\Users\pw\projects\super-dataloader\awslambda\vision\create_vision_batch
+      DockerTag: python3.9-v1
+      Dockerfile: Dockerfile
+      SamResourceId: CreateVisionBatchFunction

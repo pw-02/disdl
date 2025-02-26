@@ -1,0 +1,6 @@
+kind: 'multimodal'
+batch_size: 256 #chunk_size  = number of files per chunk
+shuffle: True
+drop_last: False
+prefetch_lambda_name: 'CreateMultiModalBatch'
+# num_dataset_partitions: 1

@@ -15,10 +15,12 @@ class DLTJob:
         self.job_id = job_id
         self.partition_id_cycle: Optional[Iterator[int]] = None
         self.epochs_completed_count = -1
-        self.started_partition_index = None
-        self.active_batch_set_ids = set()
-        # self.active_batch_set_id = None
+        self.partitions_remaining_in_current_epoch = []
+        self.active_partition_idx = None
+        self.active_bacth_set_id = None
 
+        # self.active_batch_set_ids = set()
+        # self.active_batch_set_id = None
         # self.active_epoch = initial_epoch
         self.total_steps = 0
         self.future_batches: OrderedDict[str, Batch] = OrderedDict()
@@ -65,36 +67,25 @@ class DLTJob:
     def next_batch(self):
         with self.lock:
             next_training_batch = None
-            not_in_progress_batch = None  # To hold the first batch found that's in progress
+            first_available_batch_id  = None  # First batch that is not already being processed
 
-            active_batch_set_id = next(iter(self.future_batches.items()))[1].batch_partition_id
-            if active_batch_set_id not in self.active_batch_set_ids or active_batch_set_id != '1_1':
-                pass
-
-           # First pass: Find the first cached batch
             for batch_id, batch in list(self.future_batches.items()):
-                if batch.batch_partition_id == active_batch_set_id:
-                    if batch.is_cached:
-                        next_training_batch = self.future_batches.pop(batch_id)  # Cached batch found
-                        break
-                    elif  not batch.caching_in_progress:
-                        # Store the first available batch in progress if no cached batch is found
-                        if not not_in_progress_batch:
-                            not_in_progress_batch = batch_id
-            # Second pass: If no cached batch was found, use the first in-progress batch
-            if not next_training_batch and not_in_progress_batch:
-                next_training_batch = self.future_batches.pop(not_in_progress_batch)
+                if batch.is_cached:
+                    next_training_batch = self.future_batches.pop(batch_id)  # Cached batch found
+                    break
+                elif not batch.caching_in_progress and not first_available_batch_id:
+                    first_available_batch_id = batch_id
             
+            if not next_training_batch and first_available_batch_id:
+                next_training_batch = self.future_batches.pop(first_available_batch_id)
+
             if not next_training_batch:
-                logger.debug("No cached or in-progress batch found. Returning the first available batch")
+                logger.debug("No cached or in-progress batch found. Returning the next batch")
                 next_training_batch = self.future_batches.pop(next(iter(self.future_batches)))
-                
+            
             self.current_batch = next_training_batch
             return next_training_batch
 
-        
-
-         
     
     # def next_training_step_batch(
     #     self,

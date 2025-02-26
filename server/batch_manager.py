@@ -29,7 +29,7 @@ class CentralBatchManager:
             shuffle=args.shuffle)
            
         self.active_epoch_idx = None
-        self.active_partition_id = None
+        self.active_partition_idxx = None
         self.evict_from_cache_simulation_time = args.evict_from_cache_simulation_time
         self.lookahead_distance = args.lookahead_steps
 
@@ -74,27 +74,27 @@ class CentralBatchManager:
             next_batch.evict_from_cache_simulation_time = self.evict_from_cache_simulation_time
 
         self.active_epoch_idx = next_batch.epoch_idx
-        self.active_partition_id = next_batch.partition_id
+        self.active_partition_idx = next_batch.partition_idx
 
         # Ensure epoch exists, initializing with an OrderedDict for partitions
         partition_batches = self.epoch_partition_batches.setdefault(next_batch.epoch_idx, OrderedDict())
         
          # Ensure partition exists, initializing with a new BatchSet if needed
         partition_batch_set = partition_batches.setdefault(
-            next_batch.partition_id, BatchSet(f'{next_batch.epoch_idx}_{next_batch.partition_id}')
+            next_batch.partition_idx, BatchSet(f'{next_batch.epoch_idx}_{next_batch.partition_idx}')
         )
         # Store the batch in the BatchSet
         partition_batch_set.batches[next_batch.batch_id] = next_batch
 
         # now lets add the batch to the future batches of all active jobs that are waiting for it
         for job in self.active_jobs.values():
-            if partition_batch_set.id in job.active_batch_set_ids:
+            if partition_batch_set.id == job.active_bacth_set_id:
                 job.future_batches[next_batch.batch_id] = next_batch
     
     def _warm_up_cache(self, max_batches:int = 40):
         warm_up_started = time.perf_counter()
         prefetch_list: TypingOrderedDict[str, Tuple[Batch, str]] = OrderedDict()
-        for batch in self.epoch_partition_batches[self.active_epoch_idx][self.active_partition_id].batches.values():
+        for batch in self.epoch_partition_batches[self.active_epoch_idx][self.active_partition_idx].batches.values():
             payload = {
                 'bucket_name': self.dataset.s3_bucket,
                 'batch_id': batch.batch_id,
@@ -124,8 +124,8 @@ class CentralBatchManager:
             
             current_job = self.active_jobs.setdefault(job_id, DLTJob(job_id))
 
-            if not current_job.future_batches or len(current_job.future_batches) < self.lookahead_distance:
-                # if not job.future_batches or len(job.future_batches) == 0: #reached end of partition so start preparing for next one
+            # if not current_job.future_batches or len(current_job.future_batches) < self.lookahead_distance:
+            if len(current_job.future_batches) == 0: #reached end of partition so start preparing for next one
                 self.allocate_batches_to_job(current_job)
 
             next_batch = current_job.next_batch()
@@ -137,39 +137,36 @@ class CentralBatchManager:
                 next_batch.is_first_access = False
                 self._generate_new_batch()
 
-            logger.debug(f"Job '{job_id}' given batch '{next_batch.batch_id}' from partition '{next_batch.partition_id}' in epoch '{next_batch.epoch_idx}'")
+            # logger.debug(f"Job '{job_id}' given batch '{next_batch.batch_id}'")
             return next_batch
+        
+    def reverse_cycle_mod(self, start: int, mod: int):
+        for i in range(mod):
+            yield (start - i) % mod
 
     def allocate_batches_to_job(self, job: DLTJob):
-        is_new_job: bool = False
-        if job.partition_id_cycle is None: #new job, lets start cycling partitons at the currently active partition
-            partition_ids = list(self.dataset.partitions.keys())
-            start_index = partition_ids.index(self.active_partition_id)
-            reordered_ids = partition_ids[start_index:] + partition_ids[:start_index]
-            job.partition_id_cycle = cycle(reordered_ids)
-            job.started_partition_index = copy.deepcopy(self.active_partition_id)
-            is_new_job = True
 
-        next_partition_id = next(job.partition_id_cycle)
-        if next_partition_id == job.started_partition_index:
+        if not job.partitions_remaining_in_current_epoch:
+            #start a new epoch at the current and reset the partitions
             job.epochs_completed_count += 1
-        
-        for epoch_id in reversed(self.epoch_partition_batches.keys()):
-                if next_partition_id in self.epoch_partition_batches[epoch_id]:
-                    batch_set = self.epoch_partition_batches[epoch_id][next_partition_id]
-                    if batch_set not in job.active_batch_set_ids:
-                        job.active_batch_set_ids.add(batch_set.id)
-                        for batch_id, batch in reversed(list(batch_set.batches.items())):
-                            job.future_batches[batch_id] = batch  # Add the batch
-                            if is_new_job:
-                                job.future_batches.move_to_end(batch_id, last=False)
-                        
-                        if len(job.future_batches) >= self.look_ahead:
-                            break
-                    if len(job.future_batches) >= self.look_ahead:
-                            break
-        pass
-   
+            job.partitions_remaining_in_current_epoch = list(range(self.sampler.num_partitions))
+            #assign job the active partition and remove it from its list of partitions
+            job.active_partition_idx = self.active_partition_idx
+            job.active_bacth_set_id = self.epoch_partition_batches[self.active_epoch_idx][self.active_partition_idx].id
+            for batch in self.epoch_partition_batches[self.active_epoch_idx][self.active_partition_idx].batches.values():
+                job.future_batches[batch.batch_id] = batch
+            job.partitions_remaining_in_current_epoch.remove(self.active_partition_idx)
+        else:
+            for partition_idx in self.reverse_cycle_mod(self.active_partition_idx, self.sampler.num_partitions):
+                if partition_idx in job.partitions_remaining_in_current_epoch:
+                    job.active_partition_idx = partition_idx
+                    job.active_bacth_set_id = self.epoch_partition_batches[self.active_epoch_idx][self.active_partition_idx].id
+                    for batch in self.epoch_partition_batches[self.active_epoch_idx][partition_idx].batches.values():
+                        job.future_batches[batch.batch_id] = batch
+                    job.partitions_remaining_in_current_epoch.remove(partition_idx)
+                    break
+
+
     def update_job_progess(self, job_id,
                            previous_step_batch_id,
                            previous_step_wait_for_data_time,
@@ -217,64 +214,64 @@ class CentralBatchManager:
     
 if __name__ == "__main__":
     pass
-    # # Constants
-    # MISS_WAIT_FOR_DATA_TIME = 1.4
-    # HIT_WAIT_FOR_DATA_TIME = 0.001
-    # PREFETCH_TIME = 3
-    # NUM_JOBS = 1 # Number of parallel jobs to simulate
-    # DELAY_BETWEEN_JOBS = 0.1  # Delay in seconds between the start of each job
-    # BATCHES_PER_JOB = 2346  # Number of batches each job will process
-    # GPU_TIME = 0.01
-    # super_args:SUPERArgs = SUPERArgs(
-    #         batch_size = 128,
-    #         partitions_per_dataset = 1,
-    #         lookahead_steps = 1000,
-    #         serverless_cache_address = '',
-    #         use_prefetching = True,
-    #         use_keep_alive = False,
-    #         prefetch_lambda_name = 'CreateVisionTrainingBatch',
-    #         prefetch_cost_cap_per_hour=None,
-    #         cache_evition_ttl_threshold = 1000,
-    #         prefetch_simulation_time = PREFETCH_TIME,
-    #         evict_from_cache_simulation_time = None,
-    #         shuffle = False,
-    #         drop_last = False,
-    #         workload_kind = 'vision')
+    # Constants
+    MISS_WAIT_FOR_DATA_TIME =  0.00001
+    HIT_WAIT_FOR_DATA_TIME = 0.00001
+    PREFETCH_TIME = 3
+    NUM_JOBS = 1 # Number of parallel jobs to simulate
+    DELAY_BETWEEN_JOBS = 0.1  # Delay in seconds between the start of each job
+    BATCHES_PER_JOB = 2346  # Number of batches each job will process
+    GPU_TIME = 0.01
+    args:DisDLArgs = DisDLArgs(
+            batch_size = 100,
+            num_dataset_partitions = 10,
+            lookahead_steps = 10,
+            shuffle = False,
+            drop_last = False,
+            workload_kind = 'vision',
+            serverless_cache_address = None,
+            use_prefetching = False,
+            use_keep_alive = False,
+            prefetch_lambda_name = 'CreateVisionTrainingBatch',
+            prefetch_cost_cap_per_hour=None,
+            cache_keep_alive_timeout = 60 * 3, # 3 minutes
+            prefetch_simulation_time = None,
+            evict_from_cache_simulation_time = None)
 
-    # dataset = Dataset(data_dir='s3://sdl-cifar10/test/', batch_size=super_args.batch_size, drop_last=super_args.drop_last, num_partitions=super_args.partitions_per_dataset)
-    # batch_manager = CentralBatchManager(dataset=dataset, args=super_args)
+    dataset = Dataset(data_dir='s3://sdl-cifar10/test/')
+    batch_manager = CentralBatchManager(dataset=dataset, args=args)
     
-    # job_id = '1'
-    # cache_hits = 0
-    # cache_misses = 0
-    # previous_step_total_time = 0
-    # previous_step_is_cache_hit = False
-    # cached_previous_batch = False
-    # BATCHES_PER_JOB = 1173  # Number of batches each job will process
+    job_id = '1'
+    cache_hits = 0
+    cache_misses = 0
+    previous_step_total_time = 0
+    previous_step_is_cache_hit = False
+    cached_previous_batch = False
+    BATCHES_PER_JOB = 1000  # Number of batches each job will process
 
-    # end = time.perf_counter()
+    end = time.perf_counter()
 
-    # for i in range(BATCHES_PER_JOB):
-    #     batch:Batch = batch_manager.get_next_batch(job_id=job_id)
+    for i in range(BATCHES_PER_JOB):
+        batch:Batch = batch_manager.get_next_batch_for_job(job_id=job_id)
 
-    #     if batch.is_cached:
-    #         previous_step_wait_for_data_time = HIT_WAIT_FOR_DATA_TIME
-    #         previous_step_is_cache_hit = True
-    #         cache_hits += 1
-    #         time.sleep(previous_step_wait_for_data_time + GPU_TIME)
-    #         cached_missed_batch = False
-    #     else:
-    #         previous_step_wait_for_data_time = MISS_WAIT_FOR_DATA_TIME
-    #         previous_step_is_cache_hit = False
-    #         cache_misses += 1
-    #         cached_missed_batch = False
-    #         time.sleep(previous_step_wait_for_data_time + GPU_TIME)
+        if batch.is_cached:
+            previous_step_wait_for_data_time = HIT_WAIT_FOR_DATA_TIME
+            previous_step_is_cache_hit = True
+            cache_hits += 1
+            time.sleep(previous_step_wait_for_data_time + GPU_TIME)
+            cached_missed_batch = False
+        else:
+            previous_step_wait_for_data_time = MISS_WAIT_FOR_DATA_TIME
+            previous_step_is_cache_hit = False
+            cache_misses += 1
+            cached_missed_batch = False
+            time.sleep(previous_step_wait_for_data_time + GPU_TIME)
         
-    #     batch_manager.update_job_progess(job_id, batch.batch_id, previous_step_wait_for_data_time, previous_step_is_cache_hit, GPU_TIME, cached_missed_batch)
-    #     hit_rate = cache_hits / (i + 1) if (i + 1) > 0 else 0
-    #     if i % 100== 0 or not previous_step_is_cache_hit:
-    #         logger.info(f'Setp {i+1}, Job {job_id}, {batch.batch_id}, Hits: {cache_hits}, Misses: {cache_misses}, Rate: {hit_rate:.2f}')
+        batch_manager.update_job_progess(job_id, batch.batch_id, previous_step_wait_for_data_time, previous_step_is_cache_hit, GPU_TIME, cached_missed_batch)
+        hit_rate = cache_hits / (i + 1) if (i + 1) > 0 else 0
+        if i % 100== 0 or not previous_step_is_cache_hit:
+            logger.info(f'Setp {i+1}, Job {job_id}, {batch.batch_id}, Hits: {cache_hits}, Misses: {cache_misses}, Rate: {hit_rate:.2f}')
   
-    # batch_manager.job_ended(job_id)
+    batch_manager.h(job_id)
 
-    # time.sleep(5)
+    time.sleep(5)

@@ -2,7 +2,6 @@ from dataclasses import dataclass
 
 @dataclass
 class DisDLArgs:
-    dataloader_name:str
     num_dataset_partitions:int
     batch_size:int
     lookahead_steps:int

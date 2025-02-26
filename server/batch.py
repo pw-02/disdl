@@ -18,7 +18,7 @@ class Batch:
     def __init__(self, batch_indicies, batch_id, epoch_idx, partition_idx):
         self.indicies: List[int] = batch_indicies
         self.epoch_idx:int = epoch_idx
-        self.partition_id:int = partition_idx
+        self.partition_idx:int = partition_idx
         self.batch_id:str = batch_id
         self.is_cached:bool = False
         self.caching_in_progress:bool = False
@@ -26,7 +26,7 @@ class Batch:
         self.last_accessed_time:float = 0 #None #float('inf')
         self.is_first_access = True
         self.lock = threading.Lock()  # Lock for accessing shared resources
-        self.batch_partition_id = f"{self.epoch_idx}_{self.partition_id}"
+        self.epoch_partition_id = f"{self.epoch_idx}_{self.partition_idx}"
         self.evict_from_cache_simulation_time: Optional[float] = None
         self.ttl_timer: Optional[threading.Timer] = None  # Initialize timer
         self.prefetched_time_utc = None

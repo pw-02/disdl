@@ -52,7 +52,7 @@ class PartitionedBatchSampler():
                     self.current_epoch += 1  # Full epoch completed
                     self.processed_partitions = 0  # Reset for the next epoch
                     self.current_idx = 0  # Reset for the next epoch
-                    print(f"Epoch {self.current_epoch} completed!")  # Notify when an epoch ends
+                    # print(f"Epoch {self.current_epoch} completed!")  # Notify when an epoch ends
 
                 self.active_partition_idx, self.active_partition = next(self.partitions_cycle)
                 self.sampler = self._create_sampler(self.active_partition)

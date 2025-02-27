@@ -35,7 +35,9 @@ class CentralBatchManager:
 
         # self.lookahead_steps = min(args.lookahead_steps, self.dataset.partitions[1].num_batches)
         self.active_jobs: Dict[str, DLTJob] = {}
-        self.epoch_partition_batches: Dict[int, Dict[int, BatchSet]] = OrderedDict()  #first key is epoch id, second key is partition id, value is the batches
+        # self.epoch_partition_batches: Dict[int, Dict[int, BatchSet]] = OrderedDict()  #first key is epoch id, second key is partition id, value is the batches
+
+        self.epoch_partition_batches: Dict[int, Dict[str, BatchSet]] = OrderedDict()  #first partition id, value list of bacthes for that partition
 
         # Generate initial batches
         for _ in range(self.lookahead_distance):
@@ -77,20 +79,42 @@ class CentralBatchManager:
         self.active_partition_idx = next_batch.partition_idx
 
         # Ensure epoch exists, initializing with an OrderedDict for partitions
-        partition_batches = self.epoch_partition_batches.setdefault(next_batch.epoch_idx, OrderedDict())
-        
+        partition_batches = self.epoch_partition_batches.setdefault(next_batch.partition_idx, OrderedDict())
          # Ensure partition exists, initializing with a new BatchSet if needed
-        partition_batch_set = partition_batches.setdefault(
-            next_batch.partition_idx, BatchSet(f'{next_batch.epoch_idx}_{next_batch.partition_idx}')
-        )
-        # Store the batch in the BatchSet
-        partition_batch_set.batches[next_batch.batch_id] = next_batch
-
+        batch_set_id = f'{next_batch.epoch_idx}_{next_batch.partition_idx}'
+        if batch_set_id in partition_batches:
+            partition_batches[batch_set_id].batches[next_batch.batch_id] = next_batch
+        else:
+            partition_batches[batch_set_id] = BatchSet(batch_set_id)
+            partition_batches[batch_set_id].batches[next_batch.batch_id] = next_batch
+        
+        self._clean_up_old_batches()
+        
         # now lets add the batch to the future batches of all active jobs that are waiting for it
         for job in self.active_jobs.values():
-            if partition_batch_set.id == job.active_bacth_set_id:
+            if batch_set_id == job.active_bacth_set_id:
                 job.future_batches[next_batch.batch_id] = next_batch
+                
+    def _clean_up_old_batches(self):
+        #clean up old batches that are no longer needed
+        for partition_id, partition_batches in self.epoch_partition_batches.items():
+            #check if there are more than two batch sets in the partition_batches
+            if len(partition_batches) >= 2:
+                #check if any job is processing the oldest batch set
+                oldest_batch_set_id = list(partition_batches.keys())[0]
+                not_in_use = True
+                for job in self.active_jobs.values():
+                    if oldest_batch_set_id == job.active_bacth_set_id:
+                        not_in_use = False
+                        break
+                if not_in_use:
+                    #remove the entire batch set from the partition_batches
+                    partition_batches.pop(oldest_batch_set_id)
     
+    def total_active_batches(self):
+        return sum(len(partition_batches) for partition_batches in self.epoch_partition_batches.values())
+    
+
     def _warm_up_cache(self, max_batches:int = 40):
         warm_up_started = time.perf_counter()
         prefetch_list: TypingOrderedDict[str, Tuple[Batch, str]] = OrderedDict()
@@ -145,26 +169,47 @@ class CentralBatchManager:
             yield (start - i) % mod
 
     def allocate_batches_to_job(self, job: DLTJob):
-
+        
         if not job.partitions_remaining_in_current_epoch:
             #start a new epoch at the current and reset the partitions
             job.epochs_completed_count += 1
             job.partitions_remaining_in_current_epoch = list(range(self.sampler.num_partitions))
-            #assign job the active partition and remove it from its list of partitions
-            job.active_partition_idx = self.active_partition_idx
-            job.active_bacth_set_id = self.epoch_partition_batches[self.active_epoch_idx][self.active_partition_idx].id
-            for batch in self.epoch_partition_batches[self.active_epoch_idx][self.active_partition_idx].batches.values():
-                job.future_batches[batch.batch_id] = batch
-            job.partitions_remaining_in_current_epoch.remove(self.active_partition_idx)
-        else:
-            for partition_idx in self.reverse_cycle_mod(self.active_partition_idx, self.sampler.num_partitions):
-                if partition_idx in job.partitions_remaining_in_current_epoch:
-                    job.active_partition_idx = partition_idx
-                    job.active_bacth_set_id = self.epoch_partition_batches[self.active_epoch_idx][self.active_partition_idx].id
-                    for batch in self.epoch_partition_batches[self.active_epoch_idx][partition_idx].batches.values():
-                        job.future_batches[batch.batch_id] = batch
-                    job.partitions_remaining_in_current_epoch.remove(partition_idx)
-                    break
+            self._clean_up_old_batches()
+
+        #get the next partition for the job by popping the first one
+        job.active_partition_idx = job.partitions_remaining_in_current_epoch.pop(0)
+        #find the most recent bacth set for the active partition in self.epoch_partition_batche
+        batch_set = self.epoch_partition_batches[job.active_partition_idx][next(reversed(self.epoch_partition_batches[job.active_partition_idx]))]
+        job.active_bacth_set_id = batch_set.id
+        for batch in batch_set.batches.values():
+            job.future_batches[batch.batch_id] = batch
+
+        logger.info(f"Job '{job.job_id}' assigned batch set '{job.active_bacth_set_id}'")
+
+
+    # def allocate_batches_to_job(self, job: DLTJob):
+
+    #     if not job.partitions_remaining_in_current_epoch:
+    #         #start a new epoch at the current and reset the partitions
+    #         job.epochs_completed_count += 1
+    #         job.partitions_remaining_in_current_epoch = list(range(self.sampler.num_partitions))
+    #         #assign job the active partition and remove it from its list of partitions
+    #         job.active_partition_idx = self.active_partition_idx
+    #         job.active_bacth_set_id = self.epoch_partition_batches[self.active_epoch_idx][self.active_partition_idx].id
+    #         for batch in self.epoch_partition_batches[self.active_epoch_idx][self.active_partition_idx].batches.values():
+    #             job.future_batches[batch.batch_id] = batch
+    #         job.partitions_remaining_in_current_epoch.remove(self.active_partition_idx)
+    #         # logger.debug(f"Job '{job.job_id}' finished epoch {self.active_epoch_idx}. Assigned batch set '{job.active_bacth_set_id}'")
+    #     else:
+    #         for partition_idx in self.reverse_cycle_mod(self.active_partition_idx, self.sampler.num_partitions):
+    #             if partition_idx in job.partitions_remaining_in_current_epoch:
+    #                 job.active_partition_idx = partition_idx
+    #                 job.active_bacth_set_id = self.epoch_partition_batches[self.active_epoch_idx][self.active_partition_idx].id
+    #                 for batch in self.epoch_partition_batches[self.active_epoch_idx][partition_idx].batches.values():
+    #                     job.future_batches[batch.batch_id] = batch
+    #                 job.partitions_remaining_in_current_epoch.remove(partition_idx)
+    #                 break
+    #     logger.info(f"Job '{job.job_id}' assigned batch set '{job.active_bacth_set_id}'")
 
 
     def update_job_progess(self, job_id,

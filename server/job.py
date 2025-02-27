@@ -80,7 +80,7 @@ class DLTJob:
                 next_training_batch = self.future_batches.pop(first_available_batch_id)
 
             if not next_training_batch:
-                logger.debug("No cached or in-progress batch found. Returning the next batch")
+                # logger.debug("No cached or in-progress batch found. Returning the next batch")
                 next_training_batch = self.future_batches.pop(next(iter(self.future_batches)))
             
             self.current_batch = next_training_batch

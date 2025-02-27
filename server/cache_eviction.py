@@ -6,7 +6,12 @@ from job import DLTJob
 import redis
 
 class CacheEvictionService:
-    def __init__(self, cache_address: str, jobs:Dict[str, DLTJob], keep_alive_time_threshold:int = 1000, simulate_keep_alvive: bool = False):
+    def __init__(self, 
+                 cache_address: str, 
+                 jobs:Dict[str, DLTJob], 
+                 keep_alive_time_threshold:int = 1000, 
+                 simulate_keep_alvive: bool = False):
+        
         self.cache_address = cache_address
         self.cache_eviction_stop_event = threading.Event()  # Event to signal stopping
         self.keep_alive_time_threshold = keep_alive_time_threshold
@@ -26,8 +31,6 @@ class CacheEvictionService:
         if not self.cache_eviction_stop_event.is_set():
             self.cache_eviction_stop_event.set()
             logger.info(f"Cache eviction service stopped")
-
-        
 
     def _keep_alive_process(self):
         while not self.cache_eviction_stop_event.is_set():  # Check for stop signal

@@ -89,7 +89,7 @@ class CentralBatchManager:
             partition_batches[batch_set_id].batches[next_batch.batch_id] = next_batch
         
         self._clean_up_old_batches()
-        
+
         # now lets add the batch to the future batches of all active jobs that are waiting for it
         for job in self.active_jobs.values():
             if batch_set_id == job.active_bacth_set_id:
@@ -169,7 +169,6 @@ class CentralBatchManager:
             yield (start - i) % mod
 
     def allocate_batches_to_job(self, job: DLTJob):
-        
         if not job.partitions_remaining_in_current_epoch:
             #start a new epoch at the current and reset the partitions
             job.epochs_completed_count += 1
@@ -186,51 +185,28 @@ class CentralBatchManager:
 
         logger.info(f"Job '{job.job_id}' assigned batch set '{job.active_bacth_set_id}'")
 
-
-    # def allocate_batches_to_job(self, job: DLTJob):
-
-    #     if not job.partitions_remaining_in_current_epoch:
-    #         #start a new epoch at the current and reset the partitions
-    #         job.epochs_completed_count += 1
-    #         job.partitions_remaining_in_current_epoch = list(range(self.sampler.num_partitions))
-    #         #assign job the active partition and remove it from its list of partitions
-    #         job.active_partition_idx = self.active_partition_idx
-    #         job.active_bacth_set_id = self.epoch_partition_batches[self.active_epoch_idx][self.active_partition_idx].id
-    #         for batch in self.epoch_partition_batches[self.active_epoch_idx][self.active_partition_idx].batches.values():
-    #             job.future_batches[batch.batch_id] = batch
-    #         job.partitions_remaining_in_current_epoch.remove(self.active_partition_idx)
-    #         # logger.debug(f"Job '{job.job_id}' finished epoch {self.active_epoch_idx}. Assigned batch set '{job.active_bacth_set_id}'")
-    #     else:
-    #         for partition_idx in self.reverse_cycle_mod(self.active_partition_idx, self.sampler.num_partitions):
-    #             if partition_idx in job.partitions_remaining_in_current_epoch:
-    #                 job.active_partition_idx = partition_idx
-    #                 job.active_bacth_set_id = self.epoch_partition_batches[self.active_epoch_idx][self.active_partition_idx].id
-    #                 for batch in self.epoch_partition_batches[self.active_epoch_idx][partition_idx].batches.values():
-    #                     job.future_batches[batch.batch_id] = batch
-    #                 job.partitions_remaining_in_current_epoch.remove(partition_idx)
-    #                 break
-    #     logger.info(f"Job '{job.job_id}' assigned batch set '{job.active_bacth_set_id}'")
-
-
-    def update_job_progess(self, job_id,
+    def update_job_progess(self, 
+                           job_id,
                            previous_step_batch_id,
                            previous_step_wait_for_data_time,
-                           previous_step_is_cache_hit,
+                           previous_step_was_cache_hit,
                            previous_step_gpu_time,
                            previous_batch_cached_on_miss):
 
      with self.lock:
+        job = self.active_jobs.setdefault(job_id, DLTJob(job_id))
         parts = previous_step_batch_id.split('_')
-        epoch_id = int(parts[0])
-        partition_id = int(parts[1])
-        batch = self.epoch_partition_batches[epoch_id][partition_id].batches[previous_step_batch_id]
+        epoch_idx = int(parts[0])
+        partition_idx = int(parts[1]) 
+        batch_set_id = f'{epoch_idx}_{partition_idx}'
         if previous_step_is_cache_hit or previous_batch_cached_on_miss:
+            batch = self.epoch_partition_batches[partition_idx][batch_set_id].batches[previous_step_batch_id]
             batch.set_last_accessed_time()
             batch.set_cache_status(True)
         # else:
         #     batch.set_cache_status(False)
 
-        self.active_jobs[job_id].update_perf_metrics(previous_step_wait_for_data_time, previous_step_is_cache_hit, previous_step_gpu_time)
+        job.update_perf_metrics(previous_step_wait_for_data_time, previous_step_is_cache_hit, previous_step_gpu_time)
 
     
     def log_just_in_time_line(self, line):

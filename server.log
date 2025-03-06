@@ -1151,3 +1151,29 @@ Traceback (most recent call last):
   File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 224, in stop_prefetcher
     logger.info(f"Prefetcher stopped. Total requests: {self.prefetch_lambda_invocations_count}, Total execution time: {self.prefetch_lambda_execution_times.sum:.2f}s, Total cost: ${self._compute_prefeteching_cost():.4f}")
 AttributeError: 'PrefetchService' object has no attribute 'prefetch_lambda_invocations_count'
+[2025-03-05 19:28:11,975][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 19:28:11,979][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 19:28:11,994][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 19:28:16,523][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 19:28:16,525][SUPER][INFO] - Job '1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-05 19:28:16,531][SUPER][INFO] - Job '1' assigned batch set '1_0'
+[2025-03-05 19:28:16,663][SUPER][INFO] - Job '1' assigned batch set '2_0'
+[2025-03-05 19:28:16,791][SUPER][INFO] - Job '1' ended. Lifetime: 0.2669s. Active Jobs 0
+[2025-03-05 19:28:19,622][SUPER][INFO] - Prefetching stopped
+[2025-03-05 19:28:21,182][SUPER][INFO] - Cache eviction service stopped

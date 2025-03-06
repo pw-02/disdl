@@ -1,19 +1,19 @@
 import threading
 from collections import deque, OrderedDict
 from typing import  Dict, Tuple
-from batch import Batch
+from common.batch import Batch
 import time
-from logger_config import logger
-from utils import AverageMeter
+from common.logger_config import logger
+from common.utils import AverageMeter
 import concurrent.futures
 import boto3
 import json
 from botocore.config import Config
 from datetime import datetime, timedelta, timezone
-from job import DLTJob
+from common.job import DLTJob
 import math
 from typing import OrderedDict as TypingOrderedDict
-from dataset import Dataset
+from common.dataset import Dataset
 from concurrent.futures import ThreadPoolExecutor
 
 class PrefetchService:
@@ -221,7 +221,9 @@ class PrefetchService:
     def stop_prefetcher(self):
             if not self.prefetch_stop_event.is_set():
                 self.prefetch_stop_event.set()
-                logger.info(f"Prefetcher stopped. Total requests: {self.prefetch_lambda_invocations_count}, Total execution time: {self.prefetch_lambda_execution_times.sum:.2f}s, Total cost: ${self._compute_prefeteching_cost():.4f}")
+                # logger.info(f"Prefetcher stopped. Total requests: {self.prefetch_lambda_invocations_count}, Total execution time: {self.prefetch_lambda_execution_times.sum:.2f}s, Total cost: ${self._compute_prefeteching_cost():.4f}")
+                logger.info(f"Prefetching stopped")
+
 
     def _compute_prefeteching_cost(self):    
         # AWS Lambda pricing details (replace these with the latest rates from AWS)

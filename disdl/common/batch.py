@@ -5,7 +5,7 @@ import threading
 import time
 from typing import List, Optional, Dict, Tuple
 from collections import deque, OrderedDict
-from logger_config import logger
+from common.logger_config import logger
 
 class BatchSet:
     def __init__(self, id:str):
@@ -16,7 +16,7 @@ class BatchSet:
 
 class Batch:
     def __init__(self, batch_indicies, batch_id, epoch_idx, partition_idx):
-        self.indicies: List[int] = batch_indicies
+        self.indices: List[int] = batch_indicies
         self.epoch_idx:int = epoch_idx
         self.partition_idx:int = partition_idx
         self.batch_id:str = batch_id

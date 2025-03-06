@@ -1,13 +1,13 @@
 import threading
-from sampler import PartitionedBatchSampler
-from job import DLTJob
-from args import DisDLArgs
+from common.sampler import PartitionedBatchSampler
+from common.job import DLTJob
+from common.args import DisDLArgs
 from collections import deque, OrderedDict
 from typing import List, Optional, Dict, Tuple
-from dataset import Dataset
-from batch import Batch, BatchSet
+from common.dataset import Dataset
+from common.batch import Batch, BatchSet
 import time
-from logger_config import logger
+from common.logger_config import logger
 import json
 from datetime import datetime, timezone
 import copy
@@ -15,19 +15,19 @@ from itertools import cycle  # Import cycle from itertools
 from typing import OrderedDict as TypingOrderedDict
 import csv
 import os
-from cache_eviction import CacheEvictionService
-from cache_prefetching import PrefetchService
+from common.cache_eviction import CacheEvictionService
+from common.cache_prefetching import PrefetchService
 
 class CentralBatchManager:
     def __init__(self, dataset: Dataset, args: DisDLArgs):
         self.dataset = dataset
+        self.job_counter = 0
         self.sampler = PartitionedBatchSampler(
             num_files=len(dataset),
             batch_size=args.batch_size,
             num_partitions=args.num_dataset_partitions,
             drop_last=args.drop_last,
             shuffle=args.shuffle)
-           
         self.active_epoch_idx = None
         self.active_partition_idxx = None
         self.evict_from_cache_simulation_time = args.evict_from_cache_simulation_time
@@ -47,13 +47,13 @@ class CentralBatchManager:
         self.prefetch_service: Optional[PrefetchService] = None
         if args.use_prefetching:
             self.prefetch_service = PrefetchService(
-                prefetch_lambda_name=args.prefetch_lambda_name,
+                lambda_name=args.prefetch_lambda_name,
                 cache_address=args.serverless_cache_address,
                 jobs=self.active_jobs,
                 dataset=self.dataset,
                 cost_threshold_per_hour=args.prefetch_cost_cap_per_hour,
                 simulate_time=args.prefetch_simulation_time)
-            self._warm_up_cache()
+            # self._warm_up_cache()
         
         self.eviction_service: Optional[CacheEvictionService] = None
         if args.use_keep_alive:
@@ -68,6 +68,22 @@ class CentralBatchManager:
 
         self.lock = threading.Lock()  # Lock for thread safety
 
+    def add_job(self):
+        #generate a job id including the dataset_name and the curren_job_count + 1
+        self.job_counter += 1
+        # job_id = f'{self.dataset.dataset_location}_{self.job_counter}'
+        job_id = str(self.job_counter)
+        with self.lock:
+            self.active_jobs[job_id] = DLTJob(job_id)
+            return job_id
+        
+    def dataset_info(self):
+        return {
+            'dataset_location': self.dataset.dataset_location,
+            'num_samples': len(self.dataset),
+            'num_batches': self.sampler.batches_per_epoch,
+            'num_partitions': self.sampler.num_partitions,
+        }
 
     def _generate_new_batch(self):
         next_batch:Batch = next(self.sampler)
@@ -223,8 +239,9 @@ class CentralBatchManager:
         with self.lock:
             if job_id in self.active_jobs:
                 job = self.active_jobs[job_id]
-                logger.info(f"Job '{job_id}' ended. Total time: {job.total_training_time():.4f}s, Steps: {job.total_training_steps()}, Hits: {job.training_step_times_on_hit.count}, Misses: {job.training_step_times_on_miss.count}, Rate: {job.training_step_times_on_hit.count / job.total_training_steps():.4f}" )
                 self.active_jobs.pop(job_id)
+                logger.info(f"Job '{job_id}' ended. Lifetime: {job.total_lifetime():.4f}s. Active Jobs {len(self.active_jobs)}" )
+
 
             if len(self.active_jobs) == 0:
                 # logger.info("All jobs have ended. Stopping prefetcher.")

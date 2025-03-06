@@ -27,11 +27,7 @@ if _version_not_supported:
 
 
 class MiniBatchServiceStub(object):
-    """
-    Command to create stub files:
-    python -m grpc_tools.protoc --proto_path=. ./proto/minibatch_service.proto --python_out=. --grpc_python_out=.
-
-    """
+    """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
         """Constructor.
@@ -44,10 +40,10 @@ class MiniBatchServiceStub(object):
                 request_serializer=protos_dot_minibatch__service__pb2.PingRequest.SerializeToString,
                 response_deserializer=protos_dot_minibatch__service__pb2.PingResponse.FromString,
                 _registered_method=True)
-        self.RegisterDataset = channel.unary_unary(
-                '/MiniBatchService/RegisterDataset',
-                request_serializer=protos_dot_minibatch__service__pb2.RegisterDatasetRequest.SerializeToString,
-                response_deserializer=protos_dot_minibatch__service__pb2.RegisterDatasetResponse.FromString,
+        self.RegisterJob = channel.unary_unary(
+                '/MiniBatchService/RegisterJob',
+                request_serializer=protos_dot_minibatch__service__pb2.RegisterJobRequest.SerializeToString,
+                response_deserializer=protos_dot_minibatch__service__pb2.RegisterJobResponse.FromString,
                 _registered_method=True)
         self.GetNextBatchForJob = channel.unary_unary(
                 '/MiniBatchService/GetNextBatchForJob',
@@ -67,11 +63,7 @@ class MiniBatchServiceStub(object):
 
 
 class MiniBatchServiceServicer(object):
-    """
-    Command to create stub files:
-    python -m grpc_tools.protoc --proto_path=. ./proto/minibatch_service.proto --python_out=. --grpc_python_out=.
-
-    """
+    """Missing associated documentation comment in .proto file."""
 
     def Ping(self, request, context):
         """Health check
@@ -80,7 +72,7 @@ class MiniBatchServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def RegisterDataset(self, request, context):
+    def RegisterJob(self, request, context):
         """Register a dataset for a job
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -116,10 +108,10 @@ def add_MiniBatchServiceServicer_to_server(servicer, server):
                     request_deserializer=protos_dot_minibatch__service__pb2.PingRequest.FromString,
                     response_serializer=protos_dot_minibatch__service__pb2.PingResponse.SerializeToString,
             ),
-            'RegisterDataset': grpc.unary_unary_rpc_method_handler(
-                    servicer.RegisterDataset,
-                    request_deserializer=protos_dot_minibatch__service__pb2.RegisterDatasetRequest.FromString,
-                    response_serializer=protos_dot_minibatch__service__pb2.RegisterDatasetResponse.SerializeToString,
+            'RegisterJob': grpc.unary_unary_rpc_method_handler(
+                    servicer.RegisterJob,
+                    request_deserializer=protos_dot_minibatch__service__pb2.RegisterJobRequest.FromString,
+                    response_serializer=protos_dot_minibatch__service__pb2.RegisterJobResponse.SerializeToString,
             ),
             'GetNextBatchForJob': grpc.unary_unary_rpc_method_handler(
                     servicer.GetNextBatchForJob,
@@ -145,11 +137,7 @@ def add_MiniBatchServiceServicer_to_server(servicer, server):
 
  # This class is part of an EXPERIMENTAL API.
 class MiniBatchService(object):
-    """
-    Command to create stub files:
-    python -m grpc_tools.protoc --proto_path=. ./proto/minibatch_service.proto --python_out=. --grpc_python_out=.
-
-    """
+    """Missing associated documentation comment in .proto file."""
 
     @staticmethod
     def Ping(request,
@@ -179,7 +167,7 @@ class MiniBatchService(object):
             _registered_method=True)
 
     @staticmethod
-    def RegisterDataset(request,
+    def RegisterJob(request,
             target,
             options=(),
             channel_credentials=None,
@@ -192,9 +180,9 @@ class MiniBatchService(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/MiniBatchService/RegisterDataset',
-            protos_dot_minibatch__service__pb2.RegisterDatasetRequest.SerializeToString,
-            protos_dot_minibatch__service__pb2.RegisterDatasetResponse.FromString,
+            '/MiniBatchService/RegisterJob',
+            protos_dot_minibatch__service__pb2.RegisterJobRequest.SerializeToString,
+            protos_dot_minibatch__service__pb2.RegisterJobResponse.FromString,
             options,
             channel_credentials,
             insecure,

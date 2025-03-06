@@ -1,27 +1,23 @@
-from utils import S3Url
+from common.utils import S3Url
 import boto3
 import json
 from typing import List, Tuple, Dict
 import functools
 from itertools import cycle
 import random
-from batch import Batch
+from common.batch import Batch
 import random
 
 class Dataset():
     def __init__(self, 
-                 data_dir, 
-                 transforms=None,
-                 max_dataset_size = None, 
-                 use_local_folder = False):
-    
-        self.max_dataset_size = max_dataset_size
-        self.use_local_folder = use_local_folder
-        self.s3_data_dir = data_dir
-        self.s3_bucket = S3Url(self.s3_data_dir).bucket
-        self.s3_prefix = S3Url(self.s3_data_dir).key
+                 dataset_location: str, 
+                 transforms=None):
+        
+        self.dataset_location = dataset_location
+        self.s3_bucket = S3Url(self.dataset_location).bucket
+        self.s3_prefix = S3Url(self.dataset_location).key
         self.transforms = transforms
-        self.samples = self._get_sample_list_from_s3()
+        self.samples = self._get_samples_from_s3()
 
     @functools.cached_property
     def _classed_items(self) -> List[Tuple[str, int]]:
@@ -32,7 +28,7 @@ class Dataset():
     def __len__(self) -> int:
         return sum(len(class_items) for class_items in self.samples.values())
     
-    def _get_sample_list_from_s3(self, use_index_file=True, images_only=True) -> Dict[str, List[str]]:
+    def _get_samples_from_s3(self, use_index_file=True, images_only=True) -> Dict[str, List[str]]:
         s3_client = boto3.client('s3')
         index_file_key = f"{self.s3_prefix}_paired_index.json"
         paired_samples = {}
@@ -82,6 +78,11 @@ class Dataset():
             samples.append(self._classed_items[i])
         return samples
     
+    def dataset_info(self):
+        return {
+            "num_samples": len(self),
+            
+        }
 
 #main
 if __name__ == "__main__":

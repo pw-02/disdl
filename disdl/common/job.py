@@ -1,11 +1,11 @@
 
 from collections import deque, OrderedDict
-from utils import AverageMeter
-from batch import Batch
+from common.utils import AverageMeter
+from common.batch import Batch
 import threading
-from logger_config import logger
+from common.logger_config import logger
 import math
-
+import time
 class DLTJob:
     def __init__(self, job_id: str):
         self.job_id = job_id
@@ -14,6 +14,7 @@ class DLTJob:
         self.active_partition_idx = None
         self.active_bacth_set_id = None
         self.total_steps = 0
+        self.job_registered_time = time.perf_counter()
         self.future_batches: OrderedDict[str, Batch] = OrderedDict()
         self.time_waiting_on_data = AverageMeter('Time Waiting on Data')
         # self.training_step_times_on_hit = AverageMeter('Training Step Time on Hit')
@@ -55,9 +56,8 @@ class DLTJob:
         pass
 
 
-    
-    def total_training_time(self):
-        return self.training_step_times_on_hit.sum + self.training_step_times_on_miss.sum
+    def total_lifetime(self):
+        return time.perf_counter() - self.job_registered_time
     
     def total_training_steps (self):
         return self.total_steps

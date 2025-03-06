@@ -1,0 +1,1153 @@
+[2025-03-05 18:16:21,567][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 18:16:21,572][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 18:16:21,574][SUPER][ERROR] - DisDLArgs.__init__() got an unexpected keyword argument 'cache_evition_ttl_threshold'. Shutting Down.
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\server.py", line 127, in serve
+    args:DisDLArgs = DisDLArgs(
+TypeError: DisDLArgs.__init__() got an unexpected keyword argument 'cache_evition_ttl_threshold'
+[2025-03-05 18:16:32,028][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 18:16:32,032][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 18:16:32,033][SUPER][ERROR] - DisDLArgs.__init__() got an unexpected keyword argument 'cache_evition_ttl_threshold'. Shutting Down.
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\server.py", line 127, in serve
+    args:DisDLArgs = DisDLArgs(
+TypeError: DisDLArgs.__init__() got an unexpected keyword argument 'cache_evition_ttl_threshold'
+[2025-03-05 18:17:23,086][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 18:17:23,090][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 18:17:23,115][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 18:20:13,549][grpc._server][ERROR] - Exception calling application: local variable 'job_id' referenced before assignment
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server.py", line 46, in RegisterJob
+    job_id=job_id,
+UnboundLocalError: local variable 'job_id' referenced before assignment
+[2025-03-05 18:20:56,313][grpc._server][ERROR] - Exception calling application: local variable 'job_id' referenced before assignment
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server.py", line 46, in RegisterJob
+    job_id=job_id,
+UnboundLocalError: local variable 'job_id' referenced before assignment
+[2025-03-05 18:22:30,216][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 18:22:30,220][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 18:22:30,229][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 18:22:37,929][grpc._server][ERROR] - Exception calling application: local variable 'job_id' referenced before assignment
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server.py", line 50, in RegisterJob
+    job_id=job_id,
+UnboundLocalError: local variable 'job_id' referenced before assignment
+[2025-03-05 18:22:42,704][grpc._server][ERROR] - Exception calling application: local variable 'job_id' referenced before assignment
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server.py", line 50, in RegisterJob
+    job_id=job_id,
+UnboundLocalError: local variable 'job_id' referenced before assignment
+[2025-03-05 18:22:47,555][grpc._server][ERROR] - Exception calling application: local variable 'job_id' referenced before assignment
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server.py", line 50, in RegisterJob
+    job_id=job_id,
+UnboundLocalError: local variable 'job_id' referenced before assignment
+[2025-03-05 18:22:54,002][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 18:22:54,006][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 18:22:54,020][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 18:23:43,578][grpc._server][ERROR] - Exception calling application: local variable 'job_id' referenced before assignment
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server.py", line 50, in RegisterJob
+    job_id=job_id,
+UnboundLocalError: local variable 'job_id' referenced before assignment
+[2025-03-05 18:24:21,477][grpc._server][ERROR] - Exception calling application: local variable 'job_id' referenced before assignment
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server.py", line 50, in RegisterJob
+    job_id=job_id,
+UnboundLocalError: local variable 'job_id' referenced before assignment
+[2025-03-05 18:24:41,585][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 18:24:41,588][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 18:24:41,604][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 18:25:43,387][grpc._server][ERROR] - Exception calling application: local variable 'job_id' referenced before assignment
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server.py", line 50, in RegisterJob
+    job_id=job_id,
+UnboundLocalError: local variable 'job_id' referenced before assignment
+[2025-03-05 18:26:17,741][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 18:26:17,745][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 18:26:17,756][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 18:26:26,806][SUPER][ERROR] - Failed to register job with dataset 's3://sdl-cifar10/test/'. Error: PrefetchService.__init__() got an unexpected keyword argument 'prefetch_lambda_name'
+[2025-03-05 18:26:26,807][grpc._server][ERROR] - Exception calling application: local variable 'job_id' referenced before assignment
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server.py", line 51, in RegisterJob
+    job_id=job_id,
+UnboundLocalError: local variable 'job_id' referenced before assignment
+[2025-03-05 18:27:06,803][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 18:27:06,806][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 18:27:06,827][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 18:27:39,127][SUPER][ERROR] - Failed to register job with dataset 's3://sdl-cifar10/test/'. Error: 'int' object is not callable
+[2025-03-05 18:28:00,133][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 18:28:00,137][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 18:28:00,154][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 18:28:16,153][SUPER][ERROR] - Failed to register job with dataset 's3://sdl-cifar10/test/'. Error: 'int' object is not callable
+[2025-03-05 18:28:16,155][grpc._server][ERROR] - Exception calling application: local variable 'job_id' referenced before assignment
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server.py", line 51, in RegisterJob
+    job_id=job_id,
+UnboundLocalError: local variable 'job_id' referenced before assignment
+[2025-03-05 18:28:23,546][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 18:28:23,549][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 18:28:23,562][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 18:29:15,041][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 18:29:15,045][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 18:29:15,065][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 18:29:38,434][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 18:29:57,676][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 18:29:57,679][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 18:29:57,705][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 18:30:08,048][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 18:30:26,064][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 18:30:26,068][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 18:30:26,087][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 18:30:33,056][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 18:30:43,355][SUPER][ERROR] - Failed to register job with dataset 's3://sdl-cifar10/test/'. Error: 'CentralBatchManager' object has no attribute 'jobs'
+[2025-03-05 18:31:14,077][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 18:31:14,083][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 18:31:14,104][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 18:31:19,276][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 18:31:24,616][SUPER][INFO] - Job 's3://sdl-cifar10/test/_1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-05 18:31:45,606][grpc._server][ERROR] - Exception calling application: local variable 'error_message' referenced before assignment
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server.py", line 49, in RegisterJob
+    errorMessage=error_message if error_message else None)
+UnboundLocalError: local variable 'error_message' referenced before assignment
+[2025-03-05 18:32:02,878][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 18:32:02,882][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 18:32:02,897][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 18:32:22,062][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 18:32:22,066][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 18:32:22,091][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 18:32:29,125][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 18:32:29,126][SUPER][INFO] - Job 's3://sdl-cifar10/test/_1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-05 18:32:30,265][grpc._server][ERROR] - Exception calling application: bad argument type for built-in operation
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server.py", line 47, in RegisterJob
+    return minibatch_service_pb2.RegisterJobResponse(
+TypeError: bad argument type for built-in operation
+[2025-03-05 18:32:48,040][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 18:32:48,043][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 18:32:48,055][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 18:32:54,809][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 18:32:54,811][SUPER][INFO] - Job 's3://sdl-cifar10/test/_1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-05 18:32:57,173][grpc._server][ERROR] - Exception calling application: bad argument type for built-in operation
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server.py", line 47, in RegisterJob
+    return minibatch_service_pb2.RegisterJobResponse(
+TypeError: bad argument type for built-in operation
+[2025-03-05 18:33:23,301][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 18:33:23,306][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 18:33:23,328][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 18:33:26,566][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 18:33:26,567][SUPER][INFO] - Job 's3://sdl-cifar10/test/_1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-05 18:35:13,790][SUPER][ERROR] - Failed to register job with dataset 's3://sdl-cifar10/test/'. Error: 'CentralBatchManager' object has no attribute 'jobs'
+[2025-03-05 18:35:13,791][grpc._server][ERROR] - Exception calling application: local variable 'dataset_info' referenced before assignment
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server.py", line 49, in RegisterJob
+    dataset_info=str(dataset_info),
+UnboundLocalError: local variable 'dataset_info' referenced before assignment
+[2025-03-05 18:35:18,406][SUPER][ERROR] - Failed to register job with dataset 's3://sdl-cifar10/test/'. Error: 'CentralBatchManager' object has no attribute 'jobs'
+[2025-03-05 18:35:18,407][grpc._server][ERROR] - Exception calling application: local variable 'dataset_info' referenced before assignment
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server.py", line 49, in RegisterJob
+    dataset_info=str(dataset_info),
+UnboundLocalError: local variable 'dataset_info' referenced before assignment
+[2025-03-05 18:35:31,418][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 18:35:31,422][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 18:35:31,437][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 18:35:37,106][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 18:35:37,107][SUPER][INFO] - Job 's3://sdl-cifar10/test/_1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-05 18:36:53,618][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 18:36:53,622][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 18:36:53,635][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 18:37:01,551][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 18:37:01,552][SUPER][INFO] - Job '1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-05 18:37:38,764][SUPER][ERROR] - Failed to register job with dataset 's3://sdl-cifar10/test/'. Error: 'CentralBatchManager' object has no attribute 'jobs'
+[2025-03-05 18:37:38,764][grpc._server][ERROR] - Exception calling application: local variable 'dataset_info' referenced before assignment
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server.py", line 49, in RegisterJob
+    dataset_info=str(dataset_info),
+UnboundLocalError: local variable 'dataset_info' referenced before assignment
+[2025-03-05 18:37:46,617][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 18:37:46,622][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 18:37:46,636][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 18:37:51,305][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 18:37:51,306][SUPER][INFO] - Job '1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-05 18:38:17,819][SUPER][ERROR] - Failed to register job with dataset 's3://sdl-cifar10/test/'. Error: 'CentralBatchManager' object has no attribute 'jobs'
+[2025-03-05 18:38:17,820][grpc._server][ERROR] - Exception calling application: local variable 'dataset_info' referenced before assignment
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server.py", line 49, in RegisterJob
+    dataset_info=str(dataset_info),
+UnboundLocalError: local variable 'dataset_info' referenced before assignment
+[2025-03-05 18:38:30,201][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 18:38:30,209][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 18:38:30,218][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 18:38:42,968][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 18:38:42,969][SUPER][INFO] - Job '1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-05 18:39:14,727][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 18:39:14,738][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 18:39:14,791][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 18:39:22,877][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 18:39:22,878][SUPER][INFO] - Job '1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-05 18:39:29,228][SUPER][INFO] - Job '2' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 2
+[2025-03-05 18:39:29,229][grpc._server][ERROR] - Exception calling application: local variable 'dataset_info' referenced before assignment
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server.py", line 48, in RegisterJob
+    dataset_info=str(dataset_info),
+UnboundLocalError: local variable 'dataset_info' referenced before assignment
+[2025-03-05 18:39:58,040][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 18:39:58,044][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 18:39:58,066][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 18:40:06,135][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 18:40:06,136][SUPER][INFO] - Job '1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-05 18:40:11,050][SUPER][INFO] - Job '2' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 2
+[2025-03-05 18:40:16,688][SUPER][INFO] - Job '3' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 3
+[2025-03-05 18:41:13,423][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 18:41:13,428][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 18:41:13,444][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 18:41:19,421][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 18:41:19,422][SUPER][INFO] - Job '1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-05 18:41:19,423][grpc._server][ERROR] - Exception calling application: local variable 'error_message' referenced before assignment
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server.py", line 48, in RegisterJob
+    errorMessage=error_message if error_message else None)
+UnboundLocalError: local variable 'error_message' referenced before assignment
+[2025-03-05 18:41:46,828][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 18:41:46,832][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 18:41:46,855][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 18:41:53,056][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 18:41:53,056][SUPER][INFO] - Job '1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-05 18:48:01,471][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 18:48:01,476][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 18:48:01,498][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 18:48:09,181][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 18:48:09,181][SUPER][INFO] - Job '1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-05 18:48:26,669][SUPER][INFO] - Job '2' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 2
+[2025-03-05 18:48:39,174][SUPER][INFO] - Job '3' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 3
+[2025-03-05 18:48:53,350][SUPER][INFO] - Job '4' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 4
+[2025-03-05 18:49:35,287][SUPER][INFO] - Job '5' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 5
+[2025-03-05 18:51:55,748][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 18:51:55,752][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 18:51:55,775][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 18:51:59,640][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 18:51:59,640][SUPER][INFO] - Job '1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-05 18:52:05,393][grpc._server][ERROR] - Exception calling application: data_dir
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server.py", line 53, in GetNextBatchForJob
+    data_dir = request.data_dir
+AttributeError: data_dir
+[2025-03-05 18:52:28,088][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 18:52:28,092][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 18:52:28,100][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 18:52:29,542][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 18:52:29,543][SUPER][INFO] - Job '1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-05 18:52:35,302][SUPER][INFO] - Job '1' assigned batch set '1_0'
+[2025-03-05 18:52:47,594][grpc._server][ERROR] - Exception calling application: Protocol message Batch has no "indicies" field.
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server.py", line 61, in GetNextBatchForJob
+    batch=minibatch_service_pb2.Batch(batch_id=next_batch.batch_id,
+ValueError: Protocol message Batch has no "indicies" field.
+[2025-03-05 18:53:09,492][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 18:53:09,497][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 18:53:09,511][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 18:53:14,505][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 18:53:14,505][SUPER][INFO] - Job '1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-05 18:53:21,813][SUPER][INFO] - Job '1' assigned batch set '1_0'
+[2025-03-05 18:53:40,527][grpc._server][ERROR] - Exception calling application: Protocol message Batch has no "indicies" field.
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server.py", line 61, in GetNextBatchForJob
+    batch=minibatch_service_pb2.Batch(
+ValueError: Protocol message Batch has no "indicies" field.
+[2025-03-05 18:54:17,713][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 18:54:17,717][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 18:54:17,730][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 18:54:23,104][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 18:54:23,105][SUPER][INFO] - Job '1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-05 18:54:23,109][SUPER][INFO] - Job '1' assigned batch set '1_0'
+[2025-03-05 18:54:25,686][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'indicies'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server.py", line 63, in GetNextBatchForJob
+    indices=next_batch.indicies,
+AttributeError: 'Batch' object has no attribute 'indicies'
+[2025-03-05 18:54:35,300][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 18:54:35,304][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 18:54:35,323][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 18:54:37,509][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 18:54:37,510][SUPER][INFO] - Job '1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-05 18:54:37,520][SUPER][INFO] - Job '1' assigned batch set '1_0'
+[2025-03-05 18:55:39,255][SUPER][INFO] - Job '2' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 2
+[2025-03-05 18:55:39,259][SUPER][INFO] - Job '2' assigned batch set '1_0'
+[2025-03-05 18:57:46,689][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 18:57:46,693][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 18:57:46,704][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 18:57:49,629][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 18:57:49,629][SUPER][INFO] - Job '1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-05 18:57:49,636][SUPER][INFO] - Job '1' assigned batch set '1_0'
+[2025-03-05 18:57:49,640][grpc._server][ERROR] - Exception calling application: 'tuple' object cannot be interpreted as an integer
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server.py", line 62, in GetNextBatchForJob
+    batch=minibatch_service_pb2.Batch(
+TypeError: 'tuple' object cannot be interpreted as an integer
+[2025-03-05 18:57:58,367][SUPER][INFO] - Job '2' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 2
+[2025-03-05 18:57:58,369][SUPER][INFO] - Job '2' assigned batch set '1_0'
+[2025-03-05 18:57:58,370][grpc._server][ERROR] - Exception calling application: 'tuple' object cannot be interpreted as an integer
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server.py", line 62, in GetNextBatchForJob
+    batch=minibatch_service_pb2.Batch(
+TypeError: 'tuple' object cannot be interpreted as an integer
+[2025-03-05 18:58:06,723][SUPER][INFO] - Job '3' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 3
+[2025-03-05 18:58:06,726][SUPER][INFO] - Job '3' assigned batch set '1_0'
+[2025-03-05 18:58:27,762][grpc._server][ERROR] - Exception calling application: 'tuple' object cannot be interpreted as an integer
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server.py", line 62, in GetNextBatchForJob
+    batch=minibatch_service_pb2.Batch(
+TypeError: 'tuple' object cannot be interpreted as an integer
+[2025-03-05 19:02:41,135][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 19:02:41,139][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 19:02:41,148][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 19:02:45,385][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 19:02:45,386][SUPER][INFO] - Job '1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-05 19:02:45,395][SUPER][INFO] - Job '1' assigned batch set '1_0'
+[2025-03-05 19:03:36,532][SUPER][INFO] - Job '2' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 2
+[2025-03-05 19:03:36,534][SUPER][INFO] - Job '2' assigned batch set '1_0'
+[2025-03-05 19:04:18,860][SUPER][INFO] - Job '3' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 3
+[2025-03-05 19:04:18,863][SUPER][INFO] - Job '3' assigned batch set '1_0'
+[2025-03-05 19:05:12,543][SUPER][INFO] - Job '4' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 4
+[2025-03-05 19:05:12,545][SUPER][INFO] - Job '4' assigned batch set '1_0'
+[2025-03-05 19:05:57,755][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 19:05:57,759][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 19:05:57,771][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 19:06:08,329][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 19:06:08,330][SUPER][INFO] - Job '1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-05 19:06:08,335][SUPER][INFO] - Job '1' assigned batch set '1_0'
+[2025-03-05 19:12:17,589][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 19:12:17,595][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 19:12:17,627][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 19:12:19,798][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 19:12:19,798][SUPER][INFO] - Job '1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-05 19:12:19,803][SUPER][INFO] - Job '1' assigned batch set '1_0'
+[2025-03-05 19:13:38,266][SUPER][INFO] - Job '2' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 2
+[2025-03-05 19:13:38,268][SUPER][INFO] - Job '2' assigned batch set '1_0'
+[2025-03-05 19:14:26,105][SUPER][INFO] - Job '3' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 3
+[2025-03-05 19:14:26,107][SUPER][INFO] - Job '3' assigned batch set '2_0'
+[2025-03-05 19:14:55,261][SUPER][INFO] - Job '4' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 4
+[2025-03-05 19:14:55,264][SUPER][INFO] - Job '4' assigned batch set '3_0'
+[2025-03-05 19:15:45,887][SUPER][INFO] - Job '5' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 5
+[2025-03-05 19:15:45,889][SUPER][INFO] - Job '5' assigned batch set '3_0'
+[2025-03-05 19:16:03,139][SUPER][INFO] - Job '6' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 6
+[2025-03-05 19:16:03,141][SUPER][INFO] - Job '6' assigned batch set '3_0'
+[2025-03-05 19:16:21,423][SUPER][INFO] - Job '7' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 7
+[2025-03-05 19:16:21,425][SUPER][INFO] - Job '7' assigned batch set '3_0'
+[2025-03-05 19:16:37,958][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 19:16:37,962][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 19:16:37,986][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 19:16:45,598][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 19:16:45,599][SUPER][INFO] - Job '1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-05 19:16:45,605][SUPER][INFO] - Job '1' assigned batch set '1_0'
+[2025-03-05 19:17:27,116][SUPER][INFO] - Job '2' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 2
+[2025-03-05 19:17:27,118][SUPER][INFO] - Job '2' assigned batch set '2_0'
+[2025-03-05 19:17:27,270][SUPER][INFO] - Job '2' assigned batch set '3_0'
+[2025-03-05 19:17:37,516][SUPER][INFO] - Job '3' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 3
+[2025-03-05 19:17:37,518][SUPER][INFO] - Job '3' assigned batch set '4_0'
+[2025-03-05 19:17:37,656][SUPER][INFO] - Job '3' assigned batch set '5_0'
+[2025-03-05 19:22:08,218][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 19:22:08,222][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 19:22:08,233][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 19:22:25,117][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 19:22:25,118][SUPER][INFO] - Job '1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-05 19:22:25,122][SUPER][INFO] - Job '1' assigned batch set '1_0'
+[2025-03-05 19:22:25,257][SUPER][INFO] - Job '1' assigned batch set '2_0'
+[2025-03-05 19:22:38,360][SUPER][INFO] - Job '2' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 2
+[2025-03-05 19:22:38,362][SUPER][INFO] - Job '2' assigned batch set '3_0'
+[2025-03-05 19:22:38,506][SUPER][INFO] - Job '2' assigned batch set '4_0'
+[2025-03-05 19:22:42,369][grpc._server][ERROR] - Exception calling application: 'DLTJob' object has no attribute 'training_step_times_on_hit'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server.py", line 73, in JobEnded
+    self.datasets[dataset_location].handle_job_ended(job_id=job_id)
+  File "C:\Users\pw\projects\disdl\disdl\common\batch_manager.py", line 242, in handle_job_ended
+    logger.info(f"Job '{job_id}' ended. Total time: {job.total_training_time():.4f}s, Steps: {job.total_training_steps()}, Hits: {job.training_step_times_on_hit.count}, Misses: {job.training_step_times_on_miss.count}, Rate: {job.training_step_times_on_hit.count / job.total_training_steps():.4f}" )
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 60, in total_training_time
+    return self.training_step_times_on_hit.sum + self.training_step_times_on_miss.sum
+AttributeError: 'DLTJob' object has no attribute 'training_step_times_on_hit'
+[2025-03-05 19:22:52,058][SUPER][INFO] - Job '3' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 3
+[2025-03-05 19:22:52,062][SUPER][INFO] - Job '3' assigned batch set '5_0'
+[2025-03-05 19:22:52,201][SUPER][INFO] - Job '3' assigned batch set '6_0'
+[2025-03-05 19:24:03,109][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 19:24:03,113][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 19:24:03,128][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 19:24:07,751][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 19:24:07,752][SUPER][INFO] - Job '1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-05 19:24:07,756][SUPER][INFO] - Job '1' assigned batch set '1_0'
+[2025-03-05 19:24:07,888][SUPER][INFO] - Job '1' assigned batch set '2_0'
+[2025-03-05 19:24:15,256][grpc._server][ERROR] - Exception calling application: 'DLTJob' object has no attribute 'training_step_times_on_hit'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server.py", line 73, in JobEnded
+    self.datasets[dataset_location].handle_job_ended(job_id=job_id)
+  File "C:\Users\pw\projects\disdl\disdl\common\batch_manager.py", line 242, in handle_job_ended
+    logger.info(f"Job '{job_id}' ended.  Lifetime: {job.total_training_time():.4f}s" )
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 60, in total_training_time
+    return self.training_step_times_on_hit.sum + self.training_step_times_on_miss.sum
+AttributeError: 'DLTJob' object has no attribute 'training_step_times_on_hit'
+[2025-03-05 19:25:15,036][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 19:25:15,040][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 19:25:15,050][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 19:25:19,014][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 19:25:19,015][SUPER][INFO] - Job '1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-05 19:25:19,020][SUPER][INFO] - Job '1' assigned batch set '1_0'
+[2025-03-05 19:25:19,180][SUPER][INFO] - Job '1' assigned batch set '2_0'
+[2025-03-05 19:25:26,041][grpc._server][ERROR] - Exception calling application: 'DLTJob' object has no attribute 'training_step_times_on_hit'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server.py", line 73, in JobEnded
+    self.datasets[dataset_location].handle_job_ended(job_id=job_id)
+  File "C:\Users\pw\projects\disdl\disdl\common\batch_manager.py", line 243, in handle_job_ended
+    logger.info(f"Job '{job_id}' ended. Lifetime: {job.total_training_time():.4f}s. Active Jobs {len(self.active_jobs)}" )
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 60, in total_training_time
+    return self.training_step_times_on_hit.sum + self.training_step_times_on_miss.sum
+AttributeError: 'DLTJob' object has no attribute 'training_step_times_on_hit'
+[2025-03-05 19:25:45,797][SUPER][INFO] - Job '2' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-05 19:25:45,803][SUPER][INFO] - Job '2' assigned batch set '3_0'
+[2025-03-05 19:25:46,029][SUPER][INFO] - Job '2' assigned batch set '4_0'
+[2025-03-05 19:25:46,215][grpc._server][ERROR] - Exception calling application: 'DLTJob' object has no attribute 'training_step_times_on_hit'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server.py", line 73, in JobEnded
+    self.datasets[dataset_location].handle_job_ended(job_id=job_id)
+  File "C:\Users\pw\projects\disdl\disdl\common\batch_manager.py", line 243, in handle_job_ended
+    logger.info(f"Job '{job_id}' ended. Lifetime: {job.total_training_time():.4f}s. Active Jobs {len(self.active_jobs)}" )
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 60, in total_training_time
+    return self.training_step_times_on_hit.sum + self.training_step_times_on_miss.sum
+AttributeError: 'DLTJob' object has no attribute 'training_step_times_on_hit'
+[2025-03-05 19:27:14,896][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 19:27:14,900][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 19:27:14,918][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 19:27:19,465][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 19:27:19,466][SUPER][INFO] - Job '1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-05 19:27:19,472][SUPER][INFO] - Job '1' assigned batch set '1_0'
+[2025-03-05 19:27:19,604][SUPER][INFO] - Job '1' assigned batch set '2_0'
+[2025-03-05 19:27:19,737][SUPER][INFO] - Job '1' ended. Lifetime: 0.2705s. Active Jobs 0
+[2025-03-05 19:27:31,161][grpc._server][ERROR] - Exception calling application: 'PrefetchService' object has no attribute 'prefetch_lambda_invocations_count'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server.py", line 73, in JobEnded
+    self.datasets[dataset_location].handle_job_ended(job_id=job_id)
+  File "C:\Users\pw\projects\disdl\disdl\common\batch_manager.py", line 249, in handle_job_ended
+    self.prefetch_service.stop_prefetcher()
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 224, in stop_prefetcher
+    logger.info(f"Prefetcher stopped. Total requests: {self.prefetch_lambda_invocations_count}, Total execution time: {self.prefetch_lambda_execution_times.sum:.2f}s, Total cost: ${self._compute_prefeteching_cost():.4f}")
+AttributeError: 'PrefetchService' object has no attribute 'prefetch_lambda_invocations_count'

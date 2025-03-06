@@ -1,6 +1,6 @@
 /* 
 Command to create stub files:
-python -m grpc_tools.protoc --proto_path=. ./protos/minibatch_service.proto --python_out=. --grpc_python_out=.
+python -m grpc_tools.protoc --proto_path=. protos/minibatch_service.proto --python_out=. --grpc_python_out=.
 */
 
 syntax = "proto3";
@@ -13,10 +13,10 @@ service MiniBatchService {
   rpc Ping (PingRequest) returns (PingResponse);
 
   // Register a dataset for a job
-  rpc RegisterDataset (RegisterDatasetRequest) returns (RegisterDatasetResponse);
+  rpc RegisterJob(RegisterJobRequest) returns (RegisterJobResponse);
 
   // Get the next batch for a given job
-  rpc GetNextBatchForJob (GetNextBatchForJobRequest) returns (GetNextBatchForJobResponse);
+  rpc GetNextBatchForJob(GetNextBatchForJobRequest) returns (GetNextBatchForJobResponse);
 
   // Notify server when a job ends
   rpc JobEnded (JobEndedRequest) returns (google.protobuf.Empty);
@@ -31,27 +31,31 @@ message PingResponse {
 string message = 1;
 }
 
-/* --- Dataset Registration --- */
-message RegisterDatasetRequest {
-  string dataset_name = 1; //s3 bucket name
-  string storage_path = 2;  // S3 path
+/* --- Job Registration --- */
+message RegisterJobRequest {
+  string dataset_location = 1; //s3 directory, local directory, etc.
 }
 
-message RegisterDatasetResponse {
-  string dataset_id = 1;
-  bool success = 2;
-  string dataset_info = 3; // Number of files, chunks, etc.
+message RegisterJobResponse {
+  string job_id = 1;
+  string dataset_info = 2;
+  string errorMessage = 3;
 }
 
 /* --- Batch Retrieval --- */
 message GetNextBatchForJobRequest {
   string job_id = 1;
-  string dataset_id = 2;  // Optional, useful for multi-dataset scenarios
+  string dataset_location = 2;  // Optional, useful for multi-dataset scenarios
+}
+
+message Sample {
+  string data_path = 1;  // Path to the data
+  string label = 2;       // The corresponding label
 }
 
 message Batch {
   string batch_id = 1;
-  repeated uint32 indices = 2;  // Using uint32 as indices are non-negative
+  string samples = 2;  // Using uint32 as indices are non-negative
   bool is_cached = 3;  // Indicates if batch was precomputed and cached
   //int64 timestamp = 4;  // (Optional) Time when batch was created, useful for cache management
 }
@@ -65,7 +69,7 @@ message GetNextBatchForJobResponse {
 /* --- Job Management --- */
 message JobEndedRequest {
   string job_id = 1;
-  string dataset_id = 2;  // Optional, useful for multi-dataset scenarios
+  string dataset_location = 2;  // Optional, useful for multi-dataset scenarios
 }
 
 message JobUpdateRequest {

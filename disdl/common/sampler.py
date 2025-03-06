@@ -1,7 +1,7 @@
 from typing import  Dict, Sized
 from itertools import cycle
 import random
-from batch import Batch, BatchSet
+from common.batch import Batch, BatchSet
 from collections import OrderedDict
 import hashlib
 

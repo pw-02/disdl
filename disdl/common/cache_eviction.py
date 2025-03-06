@@ -1,8 +1,8 @@
 import threading
 from typing import  Dict, Tuple
 import time
-from logger_config import logger
-from job import DLTJob
+from common.logger_config import logger
+from common.job import DLTJob
 import redis
 
 class CacheEvictionService:

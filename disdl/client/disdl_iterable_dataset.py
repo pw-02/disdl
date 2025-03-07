@@ -20,6 +20,7 @@ import threading
 import queue
 import random
 from concurrent.futures import ThreadPoolExecutor, as_completed
+
 class S3Url(object):
     def __init__(self, url):
         self._parsed = urlparse(url, allow_fragments=False)
@@ -166,7 +167,7 @@ class DisDLIterableDataset(torch.utils.data.IterableDataset):
         minibatch_bytes = None
         batch_id, samples, is_cached = self.client.sampleNextMinibatch()
         if self.use_cache and is_cached:
-            minibatch_bytes = self.get_cached_minibatch_with_retries(batch_id, max_retries=3, retry_interval=0.05)
+            minibatch_bytes = self.get_cached_minibatch_with_retries(batch_id, max_retries=3, retry_interval=0.5)
         
         if minibatch_bytes  is not None and (isinstance(minibatch_bytes , bytes) or isinstance(minibatch_bytes , str)):
             start_transformation_time   = time.perf_counter()
@@ -253,10 +254,12 @@ class DisDLIterableDataset(torch.utils.data.IterableDataset):
 if __name__ == "__main__":
     dataset_location = "s3://sdl-cifar10/test/"
     service_address = 'localhost:50051'
+    cache_address = 'localhost:6379'
     client = DisDLClient(address=service_address)
     job_id, dataset_info = client.registerJob(dataset_location="s3://sdl-cifar10/test/")
     num_batchs = dataset_info["num_batches"]
     client.close()
+    
     train_transform = transforms.Compose([
             transforms.Resize(256), 
             transforms.RandomResizedCrop(224),
@@ -272,8 +275,8 @@ if __name__ == "__main__":
         prefetch_buffer_size=1,
         transform=train_transform,
         disdl_service_address=service_address,
-        cache_address=None,
-        ssl=True,
+        cache_address=cache_address,
+        ssl=False,
         use_compression=True,
         use_local_folder=False
     )

@@ -77,28 +77,41 @@ class DLTJob:
                 #     self.dataload_time_on_miss.update(previous_step_wait_for_data_time)
                 #     self.training_step_times_on_miss.update(previous_step_wait_for_data_time + previous_step_gpu_time)
 
-   
     def next_batch(self):
         with self.lock:
             next_training_batch = None
             first_available_batch_id  = None  # First batch that is not already being processed
 
             for batch_id, batch in list(self.future_batches.items()):
-                if batch.cache_status == CacheStatus.CACHED: 
+                if batch.cache_status == CacheStatus.CACHED or batch.cache_status == CacheStatus.CACHING_IN_PROGRESS: 
                     next_training_batch = self.future_batches.pop(batch_id)  # Cached batch found
                     break
-                elif not batch.cache_status == CacheStatus.CACHING_IN_PROGRESS and not first_available_batch_id:
-                    first_available_batch_id = batch_id
-            
-            if not next_training_batch and first_available_batch_id:
-                next_training_batch = self.future_batches.pop(first_available_batch_id)
-
-            if not next_training_batch:
-                # logger.debug("No cached or in-progress batch found. Returning the next batch")
-                next_training_batch = self.future_batches.pop(next(iter(self.future_batches)))
-            
+            next_training_batch = self.future_batches.pop(next(iter(self.future_batches)))
             # self.current_batch = next_training_batch
             return next_training_batch
+
+
+    # def next_batch(self):
+    #     with self.lock:
+    #         next_training_batch = None
+    #         first_available_batch_id  = None  # First batch that is not already being processed
+
+    #         for batch_id, batch in list(self.future_batches.items()):
+    #             if batch.cache_status == CacheStatus.CACHED: 
+    #                 next_training_batch = self.future_batches.pop(batch_id)  # Cached batch found
+    #                 break
+    #             elif not batch.cache_status == CacheStatus.CACHING_IN_PROGRESS and not first_available_batch_id:
+    #                 first_available_batch_id = batch_id
+            
+    #         if not next_training_batch and first_available_batch_id:
+    #             next_training_batch = self.future_batches.pop(first_available_batch_id)
+
+    #         if not next_training_batch:
+    #             # logger.debug("No cached or in-progress batch found. Returning the next batch")
+    #             next_training_batch = self.future_batches.pop(next(iter(self.future_batches)))
+            
+    #         # self.current_batch = next_training_batch
+    #         return next_training_batch
 
     
    

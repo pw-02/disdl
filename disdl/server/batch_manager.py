@@ -16,7 +16,7 @@ from typing import OrderedDict as TypingOrderedDict
 import csv
 import os
 from cache_eviction import CacheEvictionService
-from cache_prefetching import PrefetchService
+from cache_prefetching import PrefetchServiceAsync, PrefetchServiceEvent
 
 class CentralBatchManager:
     def __init__(self, dataset: Dataset, args: DisDLArgs, prefetch_workers:int = 10):
@@ -41,14 +41,10 @@ class CentralBatchManager:
 
         self.epoch_partition_batches: Dict[int, Dict[str, BatchSet]] = OrderedDict()  #first partition id, value list of bacthes for that partition
 
-        # Generate initial batches
-        # for _ in range(self.sampler.calc_num_batchs_per_partition()-1):
-        #     self._generate_new_batch()
-        
         # Initialize prefetch service
-        self.prefetch_service: Optional[PrefetchService] = None
+        self.prefetch_service: Optional[PrefetchServiceAsync] = None
         if args.use_prefetching:
-            self.prefetch_service = PrefetchService(
+            self.prefetch_service = PrefetchServiceAsync(
                 lambda_name=args.prefetch_lambda_name,
                 cache_address=args.serverless_cache_address,
                 simulate_time=args.prefetch_simulation_time,
@@ -71,7 +67,10 @@ class CentralBatchManager:
 
         for _ in range(self.lookahead_distance):
             self._generate_new_batch()
-        
+
+        #wait a few seconds for the cache to be warmed up
+        time.sleep(5)
+
         # #wait for cache to be warmed up
         # if self.prefetch_service:
         #     while self.prefetch_service.queue.qsize() > 0:
@@ -121,7 +120,7 @@ class CentralBatchManager:
                 'cache_address': self.prefetch_service.cache_address,
                 'task': 'prefetch',
             }
-            self.prefetch_service.e(next_batch, json.dumps(payload))
+            self.prefetch_service.enqueue_batch(next_batch, json.dumps(payload))
             #print queue size
 
         self._clean_up_old_batches()
@@ -274,10 +273,10 @@ class CentralBatchManager:
     
 if __name__ == "__main__":
     # Constants    
-    PREFETCH_TIME = 2
+    PREFETCH_TIME = 0.1
 
-    CACHE_MISS_DELAY = 0.1
-    CACHE_HIT_DELAY = 0.1
+    CACHE_MISS_DELAY = 10.1
+    CACHE_HIT_DELAY = 10.1
     DELAY_BETWEEN_JOBS = 1  # Delay in seconds between the start of each job
     BATCHES_PER_JOB = 20  # Number of batches each job will process
     JOB_SPEEDS = [0.1]
@@ -301,7 +300,7 @@ if __name__ == "__main__":
     )
 
     dataset = Dataset(dataset_location='s3://sdl-cifar10/test/')
-    batch_manager = CentralBatchManager(dataset=dataset, args=args, prefetch_workers =4)
+    batch_manager = CentralBatchManager(dataset=dataset, args=args, prefetch_workers=10)
 
     def run_job(job_id, job_speed):
         """Function to simulate a job processing batches."""
@@ -323,7 +322,7 @@ if __name__ == "__main__":
             )
 
             hit_rate = cache_hits / (i + 1)
-            if i % 100 == 0 or batch.cache_status != CacheStatus.CACHED:
+            if i % 1 == 0 or batch.cache_status != CacheStatus.CACHED:
                 logger.info(f'Step {i+1}, Job {job_id}, {batch.batch_id}, Hits: {cache_hits}, Misses: {cache_misses}, Rate: {hit_rate:.2f}')
 
         batch_manager.handle_job_ended(job_id)

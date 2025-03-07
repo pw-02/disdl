@@ -20,10 +20,6 @@ import queue
 import random
 
 
-
-
-
-
 def main():
     dataset_location ='s3://sdl-cifar10/test/'
     transforms = None

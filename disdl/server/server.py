@@ -12,7 +12,7 @@ from omegaconf import OmegaConf
 from typing import Dict
 from job import DLTJob
 from dataset import Dataset
-from batch import Batch
+from batch import Batch, CacheStatus
 import json
 
 class CacheAwareMiniBatchService(minibatch_service_pb2_grpc.MiniBatchServiceServicer):
@@ -56,6 +56,7 @@ class CacheAwareMiniBatchService(minibatch_service_pb2_grpc.MiniBatchServiceServ
        
         next_batch:Batch = self.datasets[dataset_location].get_next_batch_for_job(job_id)
         samples = self.datasets[dataset_location].dataset.get_samples(next_batch.indices)
+        use_cache = True if next_batch.cache_status == CacheStatus.CACHED or next_batch.cache_status == CacheStatus.CACHING_IN_PROGRESS else False
         if next_batch is None:
             return minibatch_service_pb2.GetNextBatchForJobResponse(
                 batch=minibatch_service_pb2.Batch(batch_id='None', indicies=[], is_cached=False))
@@ -64,7 +65,7 @@ class CacheAwareMiniBatchService(minibatch_service_pb2_grpc.MiniBatchServiceServ
                 batch=minibatch_service_pb2.Batch(
                     batch_id=next_batch.batch_id, 
                     samples=json.dumps(samples), 
-                    is_cached=next_batch.is_cached))
+                    is_cached=use_cache))
         # return response
     
     def JobEnded(self, request, context):
@@ -154,7 +155,7 @@ def serve(cfg: DictConfig):
             workload_kind = cfg.workload.kind)
         
         cache_service = CacheAwareMiniBatchService(args) 
-        max_workers = 1
+        max_workers = 10
         server = grpc.server(futures.ThreadPoolExecutor(max_workers=max_workers))
 
         minibatch_service_pb2_grpc.add_MiniBatchServiceServicer_to_server(cache_service, server)

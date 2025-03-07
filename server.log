@@ -2820,3 +2820,2062 @@ workload:
 [2025-03-05 21:29:33,319][SUPER][INFO] - Job '9' assigned batch set '4_0'
 [2025-03-05 21:30:08,660][SUPER][INFO] - Job '10' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 10
 [2025-03-05 21:30:15,372][SUPER][INFO] - Job '10' assigned batch set '5_0'
+[2025-03-07 12:43:46,707][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-07 12:43:46,711][SUPER][INFO] - Config: lookahead_steps: 40
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 60
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-07 12:43:46,736][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-07 12:44:27,144][SUPER][INFO] - Starting PrefetchService...
+[2025-03-07 12:45:59,494][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-07 12:45:59,498][SUPER][INFO] - Config: lookahead_steps: 40
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 60
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-07 12:45:59,509][SUPER][INFO] - Server started. Listening on port 50051 with 10 workers.
+[2025-03-07 12:51:41,301][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-07 12:51:41,305][SUPER][INFO] - Config: lookahead_steps: 40
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 60
+use_prefetching: false
+use_keep_alive: false
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-07 12:51:41,329][SUPER][INFO] - Server started. Listening on port 50051 with 10 workers.
+[2025-03-07 12:51:53,941][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-07 12:51:53,942][SUPER][INFO] - Job '1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-07 12:52:03,054][SUPER][INFO] - Job '1' assigned batch set '0_0'
+[2025-03-07 12:52:03,058][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,089][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,113][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,134][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,153][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,172][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,190][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,210][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,228][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,246][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,264][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,282][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,299][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,317][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,336][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,360][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,378][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,396][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,414][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,431][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,448][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,465][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,482][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,504][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,528][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,551][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,571][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,593][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,614][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,632][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,651][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,668][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,685][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,703][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,721][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,740][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,758][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,776][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,803][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,843][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,861][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,878][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,894][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,912][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,928][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,946][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,962][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,979][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:03,996][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,013][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,029][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,046][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,062][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,079][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,096][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,112][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,129][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,145][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,162][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,179][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,196][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,212][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,229][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,246][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,263][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,280][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,298][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,316][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,332][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,349][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,365][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,382][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,399][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,415][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,431][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,447][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,463][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,480][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,496][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,513][SUPER][INFO] - Job '1' assigned batch set '1_0'
+[2025-03-07 12:52:04,514][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,530][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,547][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,564][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,581][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,597][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,615][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,631][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,650][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,667][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,684][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,702][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,719][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,737][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,754][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,771][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,788][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,805][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,822][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,838][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,856][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,873][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,890][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,909][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,926][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,958][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,981][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:04,998][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,015][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,032][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,050][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,066][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,083][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,100][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,117][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,134][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,151][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,169][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,185][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,214][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,231][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,248][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,265][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,284][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,301][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,318][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,335][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,353][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,371][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,389][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,406][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,424][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,442][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,459][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,478][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,494][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,512][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,528][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,545][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,562][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,579][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,596][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,612][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,629][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,646][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,662][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,679][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,696][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,713][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,734][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,758][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,781][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,799][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,819][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,840][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,861][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,880][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,898][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,917][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,934][SUPER][INFO] - Job '1' assigned batch set '2_0'
+[2025-03-07 12:52:05,935][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,952][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,970][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:05,986][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,003][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,020][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,039][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,057][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,077][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,094][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,118][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,145][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,164][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,180][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,196][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,213][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,230][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,246][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,263][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,281][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,300][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,318][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,336][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,352][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,368][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,384][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,402][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,420][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,437][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,453][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,470][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,487][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,503][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,519][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,536][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,553][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,570][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,587][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,606][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,638][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,657][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,675][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,692][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,708][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,725][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,742][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,758][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,774][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,792][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,808][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,826][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,844][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,861][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,877][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,894][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,911][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,928][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,945][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,962][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,979][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:06,995][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,012][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,030][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,048][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,066][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,082][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,099][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,116][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,133][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,150][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,168][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,185][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,202][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,219][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,236][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,252][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,269][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,286][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,303][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,320][SUPER][INFO] - Job '1' assigned batch set '3_0'
+[2025-03-07 12:52:07,321][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,338][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,355][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,373][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,391][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,408][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,426][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,443][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,461][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,480][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,497][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,515][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,534][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,552][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,571][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,589][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,606][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,624][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,643][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,661][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,679][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,696][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,713][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,731][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,747][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,764][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,781][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,798][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,816][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,834][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,851][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,870][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,887][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,903][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,920][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,938][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,955][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:07,978][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:08,000][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:08,037][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:08,058][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:08,082][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:08,103][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:08,120][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:08,143][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:08,165][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:08,185][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:52:08,209][grpc._server][ERROR] - Exception calling application: 'Batch' object has no attribute 'is_cached'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
+    is_cached=next_batch.is_cached))
+AttributeError: 'Batch' object has no attribute 'is_cached'

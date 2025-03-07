@@ -61,8 +61,8 @@ class PartitionedBatchSampler():
         return self.generate_batch(sampled_indices)
     
     def generate_batch(self, batch_indices):
-        self.current_idx += 1
         batch_id = f"{self.current_epoch}_{self.active_partition_idx}_{self.current_idx}_{self.create_unique_id(batch_indices, 16)}"
+        self.current_idx += 1
         return Batch(batch_indices, batch_id, self.current_epoch, self.active_partition_idx)
 
     def create_unique_id(self,int_list, length = 32):

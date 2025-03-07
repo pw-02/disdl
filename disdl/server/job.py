@@ -1,7 +1,7 @@
 
 from collections import deque, OrderedDict
 from utils import AverageMeter
-from batch import Batch
+from batch import Batch, CacheStatus
 import threading
 from logger_config import logger
 import math
@@ -70,12 +70,12 @@ class DLTJob:
             self.total_steps += 1
             if self.total_steps > 1: #skip the first step for recording gpu times
                 self.training_step_gpu_times.update(previous_step_gpu_time)
-                if previous_step_is_cache_hit:
-                    self.dataload_time_on_hit.update(previous_step_wait_for_data_time)
-                    self.training_step_times_on_hit.update(previous_step_wait_for_data_time + previous_step_gpu_time)
-                else:
-                    self.dataload_time_on_miss.update(previous_step_wait_for_data_time)
-                    self.training_step_times_on_miss.update(previous_step_wait_for_data_time + previous_step_gpu_time)
+                # if previous_step_is_cache_hit:
+                #     self.dataload_time_on_hit.update(previous_step_wait_for_data_time)
+                #     self.training_step_times_on_hit.update(previous_step_wait_for_data_time + previous_step_gpu_time)
+                # else:
+                #     self.dataload_time_on_miss.update(previous_step_wait_for_data_time)
+                #     self.training_step_times_on_miss.update(previous_step_wait_for_data_time + previous_step_gpu_time)
 
    
     def next_batch(self):
@@ -84,10 +84,10 @@ class DLTJob:
             first_available_batch_id  = None  # First batch that is not already being processed
 
             for batch_id, batch in list(self.future_batches.items()):
-                if batch.is_cached:
+                if batch.cache_status == CacheStatus.CACHED: 
                     next_training_batch = self.future_batches.pop(batch_id)  # Cached batch found
                     break
-                elif not batch.caching_in_progress and not first_available_batch_id:
+                elif not batch.cache_status == CacheStatus.CACHING_IN_PROGRESS and not first_available_batch_id:
                     first_available_batch_id = batch_id
             
             if not next_training_batch and first_available_batch_id:

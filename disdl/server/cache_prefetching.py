@@ -1,369 +1,139 @@
 import threading
-from collections import deque, OrderedDict
-from typing import  Dict, Tuple
-from batch import Batch, CacheStatus
 import time
-from logger_config import logger
-from utils import AverageMeter
-import concurrent.futures
-import boto3
 import json
-from botocore.config import Config
-from datetime import datetime, timedelta, timezone
-from job import DLTJob
-import math
-from typing import OrderedDict as TypingOrderedDict
-from dataset import Dataset
-from concurrent.futures import ThreadPoolExecutor
-
 import boto3
-import json
-import threading
 import concurrent.futures
-import time
-from datetime import datetime, timezone
 import logging
+from queue import Queue, Empty
+from datetime import datetime, timezone
+from batch import Batch, CacheStatus  # Ensure these are properly defined
+from queue import Queue, Empty
 
-# Assuming Batch, Dataset, and other dependencies are defined elsewhere in the code
 logger = logging.getLogger(__name__)
 
 class PrefetchService:
-    def __init__(self, 
-                 lambda_name: str, 
-                 cache_address: str, 
-                 gen_next_batch_fn: callable,
-                 lookahead_threshold: int,
-                 dataset: Dataset,
-                 cost_threshold_per_hour: float = None,
-                 simulate_time: float = None):
+    def __init__(self, lambda_name: str, cache_address: str, simulate_time: float = None, num_workers: int = 4):
         """
         Initializes the PrefetchService.
+
+        Args:
+            lambda_name (str): Name of the AWS Lambda function.
+            cache_address (str): Cache storage location (e.g., S3, Redis).
+            simulate_time (float, optional): Simulated prefetch time for testing.
+            num_workers (int, optional): Number of parallel workers for prefetching. Default is 4.
+            queue_size (int, optional): Maximum size of the prefetch queue.
         """
         self.lambda_name = lambda_name
-        self.cache_address = cache_address  # Address for caching (e.g., S3, Redis)
-        self.gen_next_batch_fn = gen_next_batch_fn
-        self.dataset = dataset
+        self.cache_address = cache_address
         self.lambda_client = boto3.client("lambda")
-        self.running = False  # Control flag for the background thread
-        self.lookahead_threshold = lookahead_threshold
-        self.buffer = []  # Prefetched batches buffer
-        self.num_workers = 10  # Number of parallel workers for prefetching
+        self.num_workers = num_workers
+        self.simulate_time = simulate_time
         self.lambda_invocations_count = 0
         self.lock = threading.Lock()
-
-    def prefetch_batch(self, batch_id: str, batch_indices: list):
-        """Invoke AWS Lambda to prefetch a batch."""
-        payload = {
-            'bucket_name': self.dataset.s3_bucket,
-            'batch_id': batch_id,
-            'batch_samples': self.dataset.get_samples(batch_indices),
-            'cache_address': self.cache_address,
-            'task': 'prefetch',
-        }
-
-        try:
-            response = self.lambda_client.invoke(
-                FunctionName=self.lambda_name,
-                InvocationType='RequestResponse',
-                Payload=json.dumps(payload)
-            )
-            response_data = json.loads(response['Payload'].read().decode('utf-8'))
-            return response_data
-        except Exception as e:
-            logger.error(f"Error invoking Lambda for batch {batch_id}: {e}")
-            return {'success': False, 'message': str(e)}
-
-    def prefetch_batches(self):
-        """Continuously prefetch batches while staying under the lookahead threshold."""
-        with concurrent.futures.ThreadPoolExecutor(max_workers=self.num_workers) as executor:
-            while self.running:
-                with self.lock:
-                    num_batches = len(self.buffer)
-
-                if num_batches < self.lookahead_threshold:
-                    missing_batches = self.lookahead_threshold - num_batches
-                    futures = []
-                    batch_map = {}
-
-                    # Prefetch missing batches
-                    for _ in range(missing_batches):
-                        next_batch:Batch = self.gen_next_batch_fn()  # Generate the next batch
-                        next_batch.set_caching_in_progress()  # Mark batch as caching in progress
-                        future = executor.submit(self.prefetch_batch, next_batch.batch_id, next_batch.indices)
-                        futures.append(future)
-                        batch_map[future] = next_batch  # Track the batch associated with this future
-
-                        with self.lock:
-                            self.buffer.append(next_batch.batch_id)
-                            self.lambda_invocations_count += 1  # Track Lambda calls for cost
-
-                    # Process the futures as they complete
-                    for future in concurrent.futures.as_completed(futures):
-                        response = future.result()
-                        batch:Batch = batch_map[future]  # Retrieve corresponding batch
-
-                        if response.get('success', False):
-                            # Update the batch as successfully cached
-                            batch.set_cache_status(is_cached=True)
-                            batch.set_last_accessed_time()
-                            batch.prefetched_time_utc = datetime.now(timezone.utc)
-                        else:
-                            # Handle failed prefetching
-                            batch.set_cache_status(is_cached=False)
-                            if 'message' in response.keys():
-                                logger.error(f"Error prefetching batch '{batch.batch_id}': {response['message']}")
-                            else:
-                                logger.error(f"Error prefetching batch '{batch.batch_id}'.")
-
-                # Check for running status and control polling interval
-                if not self.running:
-                    break
-                
-                time.sleep(0.5)  # Avoid excessive polling
+        self.prefetch_stop_event = threading.Event()
+        self.prefetch_stop_event.set()
+        self.queue = Queue()  # Bounded queue to prevent memory overflow
+        self.executor = concurrent.futures.ThreadPoolExecutor(max_workers=num_workers)
 
     def start(self):
-        """Start the prefetching service."""
-        self.running = True
-        self.prefetch_thread = threading.Thread(target=self.prefetch_batches, daemon=True)
-        self.prefetch_thread.start()
+        """Starts the prefetching service."""
+        if not self.prefetch_stop_event.is_set():
+            logger.warning("Prefetcher is already running.")
+            return
+
+        logger.info("Starting PrefetchService...")
+        self.prefetch_stop_event.clear()
+
+        # Launch worker threads
+        for _ in range(self.num_workers):
+            worker_thread = threading.Thread(target=self.worker, daemon=True)
+            worker_thread.start()
 
     def stop(self):
-        """Stop the prefetching service."""
-        self.running = False
-        if hasattr(self, "prefetch_thread"):
-            self.prefetch_thread.join()
+        """Stops the prefetching service."""
+        if self.prefetch_stop_event.is_set():
+            logger.warning("Prefetcher is already stopped.")
+            return
 
-
-
-
-
-
-
-
-
-#         # self.lock = threading.Lock()
-#         # self.prefetch_stop_event = threading.Event()
-#         # self.prefetch_cycle_times = AverageMeter('Prefetch Cycle Time')
-#         # self.executor = ThreadPoolExecutor(max_workers=5)  # Reuse thread pool
-#         # self.lambda_execution_times = AverageMeter('Lambda Execution Time')
-#         # self.simulate_time:float = simulate_time
-#         # self.prefetch_delay:float = 0
-#         # self.cost_threshold_per_hour = cost_threshold_per_hour
-#         # self.dataset:Dataset = dataset
-#         # self.cache_address = cache_address
-#         # self.prefetch_lambda_configured_memory = self.get_memory_allocation_of_lambda()
-
-#     def get_memory_allocation_of_lambda(self):
-#         response = self.lambda_client.get_function_configuration(FunctionName=self.lambda_name)
-#         return response.get("MemorySize", 1024)  # Default to 1024MB if not found
-    
-#     def _prefetching_process(self):
-#         while not self.prefetch_stop_event.is_set():
-#             try:
-#                 prefetch_cycle_start_time = time.perf_counter()
-#                 prefetch_list: TypingOrderedDict[str, Tuple[Batch, str]] = OrderedDict()
-#                 prefetch_cycle_duration = self.lambda_execution_times.avg + self.prefetch_delay if self.lambda_execution_times.count > 0 else self.simulate_time if self.simulate_time else 2.5
-
-#                 for job in self.jobs.values():
-
-#                     prefetch_conncurrency = job.compute_required_prefetch_concurrency(prefetch_cycle_duration, buffer=5)
-                    
-#                     if prefetch_conncurrency <= 1:
-#                         logger.info(f"Job '{job.job_id}' requires no prefetching. Required_prefetch_bacthes_per_second: {prefetch_conncurrency}")
-#                         continue
-                    
-#                     if len(job.future_batches) < prefetch_conncurrency:
-#                         logger.info(f"Job '{job.job_id}' has {len(job.future_batches)} batches, less than the required prefetch concurrency of {prefetch_conncurrency}.")
-
-#                     prefetch_counter = 0
-#                     time_counter = 0
-#                     job_batches_snapshot = list(job.future_batches.values())
-#                     for batch in job_batches_snapshot:
-#                         if time_counter <= prefetch_cycle_duration:
-#                                 # If accessed within the cycle, add its time to the counter
-#                                 if batch.is_cached or batch.caching_in_progress:
-#                                     time_counter += job.get_gpu_batch_rate()
-#                                 else:
-#                                     time_counter += job.get_gpu_batch_rate() + job.get_data_loading_delay()
-#                                 logger.info(f"batch '{batch.batch_id}' wont be prefetched in time. Skipping.")
-#                                 continue
-                        
-#                         if prefetch_counter >= prefetch_conncurrency:
-#                             break
-#                         else: 
-#                             prefetch_counter += 1
-#                             if not batch.is_cached and not batch.caching_in_progress:
-#                                 # prefetch_counter += 1
-#                                 logger.debug(f"prefetching batch '{batch.batch_id}'")
-
-#                                 batch.set_caching_in_progress(True)
-#                                 payload = {
-#                                     'bucket_name': self.dataset.bucket_name,
-#                                     'batch_id': batch.batch_id,
-#                                     'batch_samples': self.dataset.get_samples(batch.indicies),
-#                                     'cache_address': self.cache_address,
-#                                     'task': 'prefetch',
-#                                 }
-#                                 prefetch_list[batch.batch_id] = (batch,json.dumps(payload))
-#                                 # prefetch_list.add((batch, json.dumps(payload)))
-#                             else:
-#                                 logger.debug(f"batch '{batch.batch_id}' is already being prefetched")
-                  
-#                 # Submit the prefetch list for processing
-#                 if prefetch_list:
-#                     logger.info(f"Prefetching {len(prefetch_list)} batches for {prefetch_conncurrency} concurrency.")
-#                     self.prefetch_batches_from_list(prefetch_list, prefetch_cycle_start_time)
-#                     logger.info(f"Prefetch took: {self.prefetch_cycle_times.val:.4f}s for {len(prefetch_list)} batches. (Avg Prefetch Time: {self.prefetch_cycle_times.avg:.4f}s, Avg Lambda Time: {self.prefetch_lambda_execution_times.avg:.4f}s, Running Cost: ${self._compute_prefeteching_cost():.4f})")
-
-#                 if len(self.jobs) == 0 or len(prefetch_list) == 0:
-#                     time.sleep(0.1)  # Sleep for a short while before checking again
-
-#             except Exception as e:
-#                 logger.error(f"Unexpected error in prefetching process: {e}", exc_info=True)
-
-    
-#     def start_prefetcher(self):
-#         self.start_time = time.perf_counter()
-#         self.prefetch_stop_event.clear()
-#         prefetch_thread = threading.Thread(target=self._prefetching_process)
-#         prefetch_thread.daemon = True
-#         prefetch_thread.start()
-
-#     def prefetch_batches_from_list(self, prefetch_list: TypingOrderedDict[str, Tuple[Batch, str]], 
-#                                    prefetch_cycle_start_time: float, 
-#                                    is_warm_up: bool = False):
+        logger.info("Stopping PrefetchService...")
+        self.prefetch_stop_event.set()
         
-#         with concurrent.futures.ThreadPoolExecutor() as executor:
-#             # Create client if not already initialized
-#             if self.prefetch_lambda_client is None:
-#                 self.prefetch_lambda_client = boto3.client('lambda', config= Config(max_pool_connections=50))
+        self.executor.shutdown(wait=False, cancel_futures=True)
+        logger.info(f"Prefetcher stopped. Total Lambda invocations: {self.lambda_invocations_count}")
 
-#             # Calculate the delay before invoking Lambdas
-#             delay_time = self._compute_delay_to_satisfy_cost_threshold() * len(prefetch_list)
+    def enqueue_batch(self, batch: Batch, payload: dict):
+        """Adds a batch to the prefetch queue."""
+        try:
+            self.queue.put_nowait((batch, payload))
+            logger.debug(f"Batch {batch.batch_id} added to queue. Queue size: {self.queue.qsize()}")
+        except Exception as e:
+            logger.warning("Prefetch queue is full. Skipping batch prefetch.")
 
-#             if delay_time > 0:
-#                 logger.info(f"Delaying prefetching by {delay_time:.5f} seconds to satisfy cost threshold.")
-#                 time.sleep(delay_time)
-            
-#             if self.simulate_time:
-#                 time.sleep(self.simulate_time)
+    def worker(self):
+        """Worker thread function that processes batches from the queue."""
+        while not self.prefetch_stop_event.is_set():
+            try:
+                batch, payload = self.queue.get(timeout=0.5)  # Avoids infinite blocking
+                future = self.executor.submit(self.prefetch_batch, batch, payload)
+                future.add_done_callback(self.handle_prefetch_result)
+            except Empty:
+                continue  # No tasks, continue loop
 
-#             # Map each future to its corresponding (batch, payload) tuple
-#             future_to_batch_payload = {executor.submit(self._prefetch_batch, payload): (batch, payload) for batch, payload in prefetch_list.values()}
+    def prefetch_batch(self, batch: Batch, payload: dict):
+        """
+        Prefetches a batch using AWS Lambda or simulated time.
 
-#             for future in concurrent.futures.as_completed(future_to_batch_payload):
-#                 batch, payload = future_to_batch_payload[future]
-#                 try:
-#                     response = future.result()
+        Args:
+            batch (Batch): The batch to prefetch.
+            payload (dict): Payload for the Lambda invocation.
 
-#                     batch.set_caching_in_progress(in_progress=False)
-                    
-#                     self.lambda_execution_times.update(response['execution_time'])
-#                     # self.prefetch_lambda_invocations_count += 1
-                    
-#                     if 'success' in response.keys() and response['success']:
-#                         # print(f"Batch '{batch.batch_id}' has been prefetched.")
-#                         batch.set_cache_status(is_cached=True)
-#                         batch.set_last_accessed_time()
-#                         batch.prefetched_time_utc = datetime.now(timezone.utc)
-#                     else:
-#                         batch.set_cache_status(is_cached=False)
-#                         if 'message' in response.keys():
-#                             logger.error(f"Error prefetching batch '{batch.batch_id}': {response['message']}")
-#                         else:
-#                             logger.error(f"Error prefetching batch '{batch.batch_id}'.")
-#                     # print(f'Invocation response: {response}')
-#                 except Exception as e:
-#                     logger.error(f"Error in prefetching batch: {e}", exc_info=True)
-#         self.lambda_invocations_count += len(prefetch_list)
-        
-#         if not is_warm_up:
-#             self.prefetch_cycle_times.update(time.perf_counter() - prefetch_cycle_start_time + delay_time)
+        Returns:
+            tuple: (batch, response_dict)
+        """
+        start_time = time.perf_counter()
 
-#     def _prefetch_batch(self, payload):
-#             if self.simulate_time:
-#                 return {'success': True, 'message': None, 'execution_time': self.simulate_time}
-            
-#             request_started = time.perf_counter()
-#             response = self.prefetch_lambda_client.invoke(FunctionName=self.lambda_name,
-#                                                           InvocationType='RequestResponse',
-#                                                           Payload=payload)
-            
-#             response_data = json.loads(response['Payload'].read().decode('utf-8'))
-#             response_data['execution_time'] = time.perf_counter() - request_started
-#             return response_data
-    
-    
-#     def _compute_prefetch_lambda_request_rate(self):
-#         with self.lock:
-#             elapsed_time = time.perf_counter() - self.start_time  # Calculate elapsed time
-#             if elapsed_time > 0:
-#                 request_rate = self.lambda_invocations_count / elapsed_time  # Compute request rate
-#                 return request_rate
-#             return 0.0
-        
-#     def _compute_delay_to_satisfy_cost_threshold(self):
-#         """Calculate delay based on current cost and the predefined cost threshold."""
-#         if self.cost_threshold_per_hour is None:
-#             return 0
-#         else:
-#             #  avg_request_duration = self.prefetch_lambda.get_average_request_duration(self.start_time_utc)
-#             current_prefetch_cost = self._compute_prefeteching_cost()
-#             if current_prefetch_cost == 0:
-#                 return 0
-#             # logger.info(f"Current prefetch cost: {current_prefetch_cost:.16f}, Requests: {self.prefetch_lambda_invocations_count}, Execution time: {self.prefetch_lambda_execution_times.sum:.2f} seconds")
-            
-#             cost_per_request =  current_prefetch_cost / self.lambda_invocations_count
-#             request_rate = self._compute_prefetch_lambda_request_rate() 
-#             requests_per_hour = request_rate * 3600  # Convert request rate to requests per hour
-#             # Calculate the maximum allowable requests per hour within the cost threshold
-#             max_requests_per_hour = self.cost_threshold_per_hour / cost_per_request
-#             # If the current request rate is within the threshold, no delay is needed
-#             if requests_per_hour <= max_requests_per_hour:
-#                 return 0  # No delay needed
-    
-#             # Calculate the required delay in hours between each request to stay within the cost threshold
-#             delay_per_request_hours = (1 / max_requests_per_hour) - (1 / requests_per_hour)
-#             # Convert delay from hours to seconds for practical use
-#             delay_per_request_seconds = delay_per_request_hours * 3600
-#             self.prefetch_delay = max(delay_per_request_seconds, 0)
-#             return max(delay_per_request_seconds, 0)
-        
+        try:
+            if self.simulate_time:
+                time.sleep(self.simulate_time)
+                execution_time = time.perf_counter() - start_time
+                # logger.info(f"Simulated prefetch of batch {batch.batch_id} in {execution_time:.2f}s")
+                return batch, {"success": True, "message": None, "execution_time": execution_time}
 
-#     def stop_prefetcher(self):
-#             if not self.prefetch_stop_event.is_set():
-#                 self.prefetch_stop_event.set()
-#                 # logger.info(f"Prefetcher stopped. Total requests: {self.prefetch_lambda_invocations_count}, Total execution time: {self.prefetch_lambda_execution_times.sum:.2f}s, Total cost: ${self._compute_prefeteching_cost():.4f}")
-#                 logger.info(f"Prefetching stopped")
+            response = self.lambda_client.invoke(
+                FunctionName=self.lambda_name,
+                InvocationType="RequestResponse",
+                Payload=json.dumps(payload)
+            )
+            response_data = json.loads(response["Payload"].read().decode("utf-8"))
+
+            with self.lock:
+                self.lambda_invocations_count += 1
+
+            return batch, response_data
+
+        except Exception as e:
+            logger.error(f"Error invoking Lambda for batch {batch.batch_id}: {e}")
+            return batch, {"success": False, "message": str(e)}
+
+    def handle_prefetch_result(self, future):
+        """
+        Handles the result of a completed prefetch operation.
+
+        Args:
+            future (concurrent.futures.Future): The future representing the completed task.
+        """
+        try:
+            batch, response = future.result()  # Unpack result
+            if response.get("success", False):
+                batch.set_cache_status(CacheStatus.CACHED)
+                batch.set_last_accessed_time()
+                batch.prefetched_time_utc = datetime.now(timezone.utc)
+                logger.info(f"Batch {batch.batch_id} successfully prefetched. Execution time: {response.get('execution_time', 0):.2f}s")
+            else:
+                logger.error(f"Batch {batch.batch_id} prefetch failed: {response.get('message', 'Unknown error')}. Execution time: {response.get('execution_time', 0):.2f}s")
+
+            self.queue.task_done()
 
 
-#     def _compute_prefeteching_cost(self):    
-#         # AWS Lambda pricing details (replace these with the latest rates from AWS)
-#         REQUEST_COST_PER_MILLION = 0.20  # USD per million requests
-#         GB_SECOND_COST = 0.0000166667  # USD per GB-second
-
-#         # Compute request cost
-#         request_cost = (self.prefetch_lambda_invocations_count / 1_000_000) * REQUEST_COST_PER_MILLION
-
-#         # Convert memory from MB to GB
-#         memory_gb = self.prefetch_lambda_configured_memory / 1024
-
-#         # Calculate total GB-seconds
-#         compute_time_gb_seconds = memory_gb * self.lambda_execution_times.sum
-
-#         # Calculate compute cost
-#         compute_cost = compute_time_gb_seconds * GB_SECOND_COST
-
-#         # Total cost
-#         total_cost = request_cost + compute_cost
-#         return total_cost
-    
-# if __name__ == "__main__":
-    
-#     from dataset import Dataset
-#     dataset = Dataset(
-#         data_dir="s3://sdl-cifar10/test/",
-#         transforms=None,
-#         max_dataset_size=None,
-#         use_local_folder=False)
-#     print(f"Total samples: {len(dataset)}")
+        except Exception as e:
+            logger.error(f"Unexpected error in prefetch result handling: {e}")

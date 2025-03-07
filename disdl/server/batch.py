@@ -27,7 +27,7 @@ class Batch:
         self.epoch_idx:int = epoch_idx
         self.partition_idx:int = partition_idx
         self.batch_id:str = batch_id
-        self.cache_status:CacheStatus = CacheStatus.NOT_CACHE
+        self.cache_status:CacheStatus = CacheStatus.NOT_CACHED
         self.next_access_time:float = None
         self.last_accessed_time:float = 0 #None #float('inf')
         self.is_first_access = True
@@ -48,20 +48,20 @@ class Batch:
             self.last_accessed_time = time.time()
     
 
-    def set_cache_status(self, is_cached:bool):
-        """Set the cache status and handle cache eviction timer."""
-        with self.lock:
-            if is_cached:
-                self.cache_status = CacheStatus.CACHED
-                # Set the timer for eviction if using TTL simulation
-                if self.evict_from_cache_simulation_time:
-                    if self.ttl_timer:
-                        self.ttl_timer.cancel()
-                        self.ttl_timer = None
-                    self.ttl_timer = threading.Timer(self.evict_from_cache_simulation_time, self._evict_cache)
-                    self.ttl_timer.start()
-            else:
-                self.cache_status = CacheStatus.NOT_CACHED
+    # def set_cache_status(self, is_cached:bool):
+    #     """Set the cache status and handle cache eviction timer."""
+    #     with self.lock:
+    #         if is_cached:
+    #             self.cache_status = CacheStatus.CACHED
+    #             # Set the timer for eviction if using TTL simulation
+    #             if self.evict_from_cache_simulation_time:
+    #                 if self.ttl_timer:
+    #                     self.ttl_timer.cancel()
+    #                     self.ttl_timer = None
+    #                 self.ttl_timer = threading.Timer(self.evict_from_cache_simulation_time, self._evict_cache)
+    #                 self.ttl_timer.start()
+    #         else:
+    #             self.cache_status = CacheStatus.NOT_CACHED
 
     """Evict the batch from cache due to TTL expiration."""
     def _evict_cache(self):
@@ -69,14 +69,12 @@ class Batch:
             self.cache_status = CacheStatus.NOT_CACHED
             self.ttl_timer = None
             # logger.info("Cache evicted due to TTL expiration.")
-            
-    
-    def set_caching_in_progress(self):
-        with self.lock:
-            self.cache_status = CacheStatus.CACHING_IN_PROGRESS
 
-            
-    def set_has_been_accessed_before(self, has_been_accessed_before:bool):
+    def set_cache_status(self, cache_status:CacheStatus):
         with self.lock:
-            self.has_been_accessed_before = has_been_accessed_before
+            self.cache_status = cache_status
 
+    # def set_caching_in_progress(self):
+    #     with self.lock:
+    #         self.cache_status = CacheStatus.CACHING_IN_PROGRESS
+    #         print(f"Batch {self.batch_id} is being cached.")

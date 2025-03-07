@@ -5,7 +5,7 @@ from args import DisDLArgs
 from collections import deque, OrderedDict
 from typing import List, Optional, Dict, Tuple
 from dataset import Dataset
-from batch import Batch, BatchSet
+from batch import Batch, BatchSet, CacheStatus
 import time
 from logger_config import logger
 import json
@@ -19,7 +19,7 @@ from cache_eviction import CacheEvictionService
 from cache_prefetching import PrefetchService
 
 class CentralBatchManager:
-    def __init__(self, dataset: Dataset, args: DisDLArgs):
+    def __init__(self, dataset: Dataset, args: DisDLArgs, prefetch_workers:int = 10):
         self.dataset = dataset
         self.job_counter = 0
         self.sampler = PartitionedBatchSampler(
@@ -29,7 +29,7 @@ class CentralBatchManager:
             drop_last=args.drop_last,
             shuffle=args.shuffle)
         self.active_epoch_idx = None
-        self.active_partition_idxx = None
+        self.active_partition_idx = None
         self.evict_from_cache_simulation_time = args.evict_from_cache_simulation_time
 
         # self.lookahead_distance = min((self.sampler.calc_num_batchs_per_partition() -1),args.lookahead_steps)
@@ -42,8 +42,8 @@ class CentralBatchManager:
         self.epoch_partition_batches: Dict[int, Dict[str, BatchSet]] = OrderedDict()  #first partition id, value list of bacthes for that partition
 
         # Generate initial batches
-        for _ in range(self.sampler.calc_num_batchs_per_partition()-1):
-            self._generate_new_batch()
+        # for _ in range(self.sampler.calc_num_batchs_per_partition()-1):
+        #     self._generate_new_batch()
         
         # Initialize prefetch service
         self.prefetch_service: Optional[PrefetchService] = None
@@ -51,10 +51,9 @@ class CentralBatchManager:
             self.prefetch_service = PrefetchService(
                 lambda_name=args.prefetch_lambda_name,
                 cache_address=args.serverless_cache_address,
-                jobs=self.active_jobs,
-                dataset=self.dataset,
-                cost_threshold_per_hour=args.prefetch_cost_cap_per_hour,
-                simulate_time=args.prefetch_simulation_time)
+                simulate_time=args.prefetch_simulation_time,
+                num_workers=prefetch_workers)
+            self.prefetch_service.start()
             # self._warm_up_cache()
         
         self.eviction_service: Optional[CacheEvictionService] = None
@@ -69,6 +68,15 @@ class CentralBatchManager:
             )     
 
         self.lock = threading.Lock()  # Lock for thread safety
+
+        for _ in range(self.lookahead_distance):
+            self._generate_new_batch()
+        
+        # #wait for cache to be warmed up
+        # if self.prefetch_service:
+        #     while self.prefetch_service.queue.qsize() > 0:
+        #         time.sleep(1)
+
 
     def add_job(self):
         #generate a job id including the dataset_name and the curren_job_count + 1
@@ -95,7 +103,6 @@ class CentralBatchManager:
 
         self.active_epoch_idx = next_batch.epoch_idx
         self.active_partition_idx = next_batch.partition_idx
-
         # Ensure epoch exists, initializing with an OrderedDict for partitions
         partition_batches = self.epoch_partition_batches.setdefault(next_batch.partition_idx, OrderedDict())
          # Ensure partition exists, initializing with a new BatchSet if needed
@@ -106,12 +113,24 @@ class CentralBatchManager:
             partition_batches[batch_set_id] = BatchSet(batch_set_id)
             partition_batches[batch_set_id].batches[next_batch.batch_id] = next_batch
         
+        if self.prefetch_service:
+            payload = {
+                'bucket_name': self.dataset.s3_bucket,
+                'batch_id': next_batch.batch_id,
+                'batch_samples': self.dataset.get_samples(next_batch.indices),
+                'cache_address': self.prefetch_service.cache_address,
+                'task': 'prefetch',
+            }
+            self.prefetch_service.e(next_batch, json.dumps(payload))
+            #print queue size
+
         self._clean_up_old_batches()
 
         # now lets add the batch to the future batches of all active jobs that are waiting for it
         for job in self.active_jobs.values():
             if batch_set_id == job.active_bacth_set_id:
                 job.future_batches[next_batch.batch_id] = next_batch
+        
         return next_batch
                 
     def _clean_up_old_batches(self):
@@ -156,7 +175,7 @@ class CentralBatchManager:
     def get_next_batch_for_job(self, job_id: str) -> Optional[Batch]:
         with self.lock:
             if self.prefetch_service is not None and self.prefetch_service.prefetch_stop_event.is_set():  
-                self.prefetch_service.start_prefetcher() #prefetcher is stopped, start it
+                self.prefetch_service.start()#prefetcher is stopped, start it
             
             if self.eviction_service and self.eviction_service.cache_eviction_stop_event.is_set():
                 self.eviction_service.start_cache_evictor() #cache evictor is stopped, start it
@@ -173,8 +192,8 @@ class CentralBatchManager:
 
             next_batch = current_job.next_batch()
 
-            if not next_batch.is_cached and not next_batch.caching_in_progress:
-                next_batch.set_caching_in_progress(True) #mark the batch as being prefetched by a job to avoid multiple prefetches
+            if next_batch.cache_status == CacheStatus.NOT_CACHED:
+               next_batch.cache_status == CacheStatus.CACHING_IN_PROGRESS #mark the batch as being prefetched by a job to avoid multiple prefetches
 
             if next_batch.is_first_access:
                 next_batch.is_first_access = False
@@ -218,14 +237,14 @@ class CentralBatchManager:
         epoch_idx = int(parts[0])
         partition_idx = int(parts[1]) 
         batch_set_id = f'{epoch_idx}_{partition_idx}'
-        if previous_step_is_cache_hit or previous_batch_cached_on_miss:
+        if previous_step_was_cache_hit or previous_batch_cached_on_miss:
             batch = self.epoch_partition_batches[partition_idx][batch_set_id].batches[previous_step_batch_id]
             batch.set_last_accessed_time()
-            batch.set_cache_status(True)
+            batch.set_cache_status(CacheStatus.CACHED)
         # else:
         #     batch.set_cache_status(False)
 
-        job.update_perf_metrics(previous_step_wait_for_data_time, previous_step_is_cache_hit, previous_step_gpu_time)
+        job.update_perf_metrics(previous_step_wait_for_data_time, previous_step_was_cache_hit, previous_step_gpu_time)
 
     
     def log_just_in_time_line(self, line):
@@ -243,76 +262,81 @@ class CentralBatchManager:
             if job_id in self.active_jobs:
                 job = self.active_jobs[job_id]
                 self.active_jobs.pop(job_id)
-                logger.info(f"Job '{job_id}' ended. Lifetime: {job.total_lifetime():.4f}s. Active Jobs {len(self.active_jobs)}" )
+                logger.info(f"Job '{job_id}' ended after {job.total_lifetime():.4f}s. Current active jobs {len(self.active_jobs)}" )
 
 
             if len(self.active_jobs) == 0:
                 # logger.info("All jobs have ended. Stopping prefetcher.")
                 if self.prefetch_service:
-                    self.prefetch_service.stop_prefetcher()
+                    self.prefetch_service.stop()
                 if self.eviction_service:
                     self.eviction_service.stop_cache_evictor()
     
 if __name__ == "__main__":
-    pass
-    # Constants
-    MISS_WAIT_FOR_DATA_TIME =  0.00001
-    HIT_WAIT_FOR_DATA_TIME = 0.00001
-    PREFETCH_TIME = 3
-    NUM_JOBS = 1 # Number of parallel jobs to simulate
-    DELAY_BETWEEN_JOBS = 0.1  # Delay in seconds between the start of each job
-    BATCHES_PER_JOB = 2346  # Number of batches each job will process
-    GPU_TIME = 0.01
-    args:DisDLArgs = DisDLArgs(
-            batch_size = 100,
-            num_dataset_partitions = 1,
-            lookahead_steps = 10,
-            shuffle = False,
-            drop_last = False,
-            workload_kind = 'vision',
-            serverless_cache_address = None,
-            use_prefetching = False,
-            use_keep_alive = False,
-            prefetch_lambda_name = 'CreateVisionTrainingBatch',
-            prefetch_cost_cap_per_hour=None,
-            cache_keep_alive_timeout = 60 * 3, # 3 minutes
-            prefetch_simulation_time = None,
-            evict_from_cache_simulation_time = None)
+    # Constants    
+    PREFETCH_TIME = 2
+
+    CACHE_MISS_DELAY = 0.1
+    CACHE_HIT_DELAY = 0.1
+    DELAY_BETWEEN_JOBS = 1  # Delay in seconds between the start of each job
+    BATCHES_PER_JOB = 20  # Number of batches each job will process
+    JOB_SPEEDS = [0.1]
+
+    # Initialize dataset and batch manager
+    args = DisDLArgs(
+        batch_size=10,
+        num_dataset_partitions=1,
+        lookahead_steps=20,
+        shuffle=False,
+        drop_last=False,
+        workload_kind='vision',
+        serverless_cache_address=None,
+        use_prefetching=True,
+        use_keep_alive=False,
+        prefetch_lambda_name='CreateVisionTrainingBatch',
+        prefetch_cost_cap_per_hour=None,
+        cache_keep_alive_timeout=60 * 3,  # 3 minutes
+        prefetch_simulation_time=PREFETCH_TIME,
+        evict_from_cache_simulation_time=None
+    )
 
     dataset = Dataset(dataset_location='s3://sdl-cifar10/test/')
-    batch_manager = CentralBatchManager(dataset=dataset, args=args)
-    
-    job_id = '1'
-    cache_hits = 0
-    cache_misses = 0
-    previous_step_total_time = 0
-    previous_step_is_cache_hit = False
-    cached_previous_batch = False
-    BATCHES_PER_JOB = 1000  # Number of batches each job will process
+    batch_manager = CentralBatchManager(dataset=dataset, args=args, prefetch_workers =4)
 
-    end = time.perf_counter()
+    def run_job(job_id, job_speed):
+        """Function to simulate a job processing batches."""
+        cache_hits = 0
+        cache_misses = 0
 
-    for i in range(BATCHES_PER_JOB):
-        batch:Batch = batch_manager.get_next_batch_for_job(job_id=job_id)
+        for i in range(BATCHES_PER_JOB):
+            batch = batch_manager.get_next_batch_for_job(job_id=job_id)
 
-        if batch.is_cached:
-            previous_step_wait_for_data_time = HIT_WAIT_FOR_DATA_TIME
-            previous_step_is_cache_hit = True
-            cache_hits += 1
-            time.sleep(previous_step_wait_for_data_time + GPU_TIME)
-            cached_missed_batch = False
-        else:
-            previous_step_wait_for_data_time = MISS_WAIT_FOR_DATA_TIME
-            previous_step_is_cache_hit = False
-            cache_misses += 1
-            cached_missed_batch = False
-            time.sleep(previous_step_wait_for_data_time + GPU_TIME)
-        
-        batch_manager.update_job_progess(job_id, batch.batch_id, previous_step_wait_for_data_time, previous_step_is_cache_hit, GPU_TIME, cached_missed_batch)
-        hit_rate = cache_hits / (i + 1) if (i + 1) > 0 else 0
-        if i % 100== 0 or not previous_step_is_cache_hit:
-            logger.info(f'Setp {i+1}, Job {job_id}, {batch.batch_id}, Hits: {cache_hits}, Misses: {cache_misses}, Rate: {hit_rate:.2f}')
-  
-    batch_manager.h(job_id)
+            if batch.cache_status == CacheStatus.CACHED:
+                time.sleep(CACHE_HIT_DELAY + job_speed)
+                cache_hits += 1
+            else:
+                time.sleep(CACHE_MISS_DELAY + job_speed)
+                cache_misses += 1
 
-    time.sleep(5)
+            batch_manager.update_job_progess(
+                job_id, batch.batch_id, CACHE_MISS_DELAY, batch.cache_status == CacheStatus.CACHED, job_speed, True
+            )
+
+            hit_rate = cache_hits / (i + 1)
+            if i % 100 == 0 or batch.cache_status != CacheStatus.CACHED:
+                logger.info(f'Step {i+1}, Job {job_id}, {batch.batch_id}, Hits: {cache_hits}, Misses: {cache_misses}, Rate: {hit_rate:.2f}')
+
+        batch_manager.handle_job_ended(job_id)
+
+
+    if __name__ == "__main__":
+        threads = []
+
+        for job_id, speed in enumerate(JOB_SPEEDS):
+            thread = threading.Thread(target=run_job, args=(job_id, speed,))
+            threads.append(thread)
+            thread.start()
+            time.sleep(DELAY_BETWEEN_JOBS)  # Stagger job start times
+
+        for thread in threads:
+            thread.join()  # Wait for all jobs to complete

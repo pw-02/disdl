@@ -23,6 +23,7 @@ class PrefetchServiceAsync:
             num_workers (int, optional): Number of parallel workers for prefetching. Default is 4.
             queue_size (int, optional): Maximum size of the prefetch queue.
         """
+        self.simulate_time = simulate_time
         self.lambda_name = lambda_name
         self.cache_address = cache_address
         self.lambda_client = boto3.client("lambda")

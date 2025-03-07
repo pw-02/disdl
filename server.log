@@ -4901,3 +4901,869 @@ workload:
 [2025-03-07 12:53:48,287][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
 [2025-03-07 12:53:48,288][SUPER][INFO] - Job '1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
 [2025-03-07 12:53:54,303][SUPER][INFO] - Job '1' assigned batch set '0_0'
+[2025-03-07 12:57:32,319][SUPER][INFO] - Job '2' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 2
+[2025-03-07 12:58:35,754][SUPER][INFO] - Job '3' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 3
+[2025-03-07 12:58:41,529][SUPER][INFO] - Job '3' assigned batch set '0_0'
+[2025-03-07 12:59:29,438][SUPER][INFO] - Job '4' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 4
+[2025-03-07 12:59:34,539][SUPER][INFO] - Job '4' assigned batch set '0_0'
+[2025-03-07 13:00:17,520][SUPER][INFO] - Job '5' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 5
+[2025-03-07 13:00:23,336][SUPER][INFO] - Job '5' assigned batch set '0_0'
+[2025-03-07 13:01:08,106][SUPER][INFO] - Job '6' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 6
+[2025-03-07 13:01:13,864][SUPER][INFO] - Job '6' assigned batch set '0_0'
+[2025-03-07 13:01:59,395][SUPER][INFO] - Job '7' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 7
+[2025-03-07 13:02:05,643][SUPER][INFO] - Job '7' assigned batch set '0_0'
+[2025-03-07 13:04:52,215][SUPER][INFO] - Job '8' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 8
+[2025-03-07 13:04:57,999][SUPER][INFO] - Job '8' assigned batch set '0_0'
+[2025-03-07 13:06:14,453][SUPER][INFO] - Job '9' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 9
+[2025-03-07 13:06:22,124][SUPER][INFO] - Job '9' assigned batch set '0_0'
+[2025-03-07 13:09:50,528][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-07 13:09:50,532][SUPER][INFO] - Config: lookahead_steps: 40
+serverless_cache_address: 54.69.247.89:6378
+cache_evition_ttl_threshold: 60
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-07 13:09:50,549][SUPER][INFO] - Server started. Listening on port 50051 with 10 workers.
+[2025-03-07 13:10:01,460][SUPER][INFO] - Starting PrefetchService...
+[2025-03-07 13:10:01,471][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,503][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,504][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,507][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,507][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,508][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,508][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,508][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,509][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,510][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,510][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,511][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,512][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,513][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,514][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,515][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,516][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,517][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,518][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,519][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,520][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,521][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,522][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,523][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,524][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,525][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,527][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,528][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,529][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,530][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,531][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,532][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,533][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,534][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,535][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,536][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,538][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,539][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,540][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:01,541][SUPER][ERROR] - Error prefetching batch: 'PrefetchServiceAsync' object has no attribute 'simulate_time'
+[2025-03-07 13:10:06,512][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-07 13:10:06,514][SUPER][INFO] - Job '1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-07 13:11:28,603][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-07 13:11:28,607][SUPER][INFO] - Config: lookahead_steps: 40
+serverless_cache_address: 54.69.247.89:6378
+cache_evition_ttl_threshold: 60
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-07 13:11:28,620][SUPER][INFO] - Server started. Listening on port 50051 with 10 workers.
+[2025-03-07 13:11:35,330][SUPER][INFO] - Starting PrefetchService...
+[2025-03-07 13:11:35,785][SUPER][DEBUG] - Batch 0_0_0_2b894f06d3678646  prefetch requested. Execution time: 0.00s. Queue size: 39
+[2025-03-07 13:11:36,158][SUPER][DEBUG] - Batch 0_0_1_9cbfd466f6eafefc  prefetch requested. Execution time: 0.00s. Queue size: 38
+[2025-03-07 13:11:36,496][SUPER][DEBUG] - Batch 0_0_2_5572782571c18e21  prefetch requested. Execution time: 0.00s. Queue size: 37
+[2025-03-07 13:11:36,797][SUPER][DEBUG] - Batch 0_0_3_9fad2d05fa37df96  prefetch requested. Execution time: 0.00s. Queue size: 36
+[2025-03-07 13:11:37,121][SUPER][DEBUG] - Batch 0_0_4_6071339bbb9f852f  prefetch requested. Execution time: 0.00s. Queue size: 35
+[2025-03-07 13:11:37,485][SUPER][DEBUG] - Batch 0_0_5_a7abbb5c89ab294d  prefetch requested. Execution time: 0.00s. Queue size: 34
+[2025-03-07 13:11:37,835][SUPER][DEBUG] - Batch 0_0_6_eaab51ff8baa1813  prefetch requested. Execution time: 0.00s. Queue size: 33
+[2025-03-07 13:11:38,202][SUPER][DEBUG] - Batch 0_0_7_a7e9714cc6fe8ce1  prefetch requested. Execution time: 0.00s. Queue size: 32
+[2025-03-07 13:11:38,526][SUPER][DEBUG] - Batch 0_0_8_94d52b153c77152e  prefetch requested. Execution time: 0.00s. Queue size: 31
+[2025-03-07 13:11:38,829][SUPER][DEBUG] - Batch 0_0_9_592ac8f83b0032d2  prefetch requested. Execution time: 0.00s. Queue size: 30
+[2025-03-07 13:11:39,116][SUPER][DEBUG] - Batch 0_0_10_31cd29693517487c  prefetch requested. Execution time: 0.00s. Queue size: 29
+[2025-03-07 13:11:39,434][SUPER][DEBUG] - Batch 0_0_11_4f17acf62b6fc9c5  prefetch requested. Execution time: 0.00s. Queue size: 28
+[2025-03-07 13:11:39,809][SUPER][DEBUG] - Batch 0_0_12_6df328d89909ca69  prefetch requested. Execution time: 0.00s. Queue size: 27
+[2025-03-07 13:11:40,130][SUPER][DEBUG] - Batch 0_0_13_033a417cb84f4769  prefetch requested. Execution time: 0.00s. Queue size: 26
+[2025-03-07 13:11:40,369][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-07 13:11:40,370][SUPER][INFO] - Job '1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-07 13:11:40,493][SUPER][DEBUG] - Batch 0_0_14_0acdf98ef5489098  prefetch requested. Execution time: 0.00s. Queue size: 25
+[2025-03-07 13:11:40,821][SUPER][DEBUG] - Batch 0_0_15_3586296dc43b8beb  prefetch requested. Execution time: 0.00s. Queue size: 24
+[2025-03-07 13:11:41,142][SUPER][DEBUG] - Batch 0_0_16_38404853ef69a7d5  prefetch requested. Execution time: 0.00s. Queue size: 23
+[2025-03-07 13:11:41,475][SUPER][DEBUG] - Batch 0_0_17_e94b20e08052fabf  prefetch requested. Execution time: 0.00s. Queue size: 22
+[2025-03-07 13:11:41,836][SUPER][DEBUG] - Batch 0_0_18_48a21c5c14182826  prefetch requested. Execution time: 0.00s. Queue size: 21
+[2025-03-07 13:11:42,265][SUPER][DEBUG] - Batch 0_0_19_90531fb2cebde4c8  prefetch requested. Execution time: 0.00s. Queue size: 20
+[2025-03-07 13:11:42,716][SUPER][DEBUG] - Batch 0_0_20_e662d312dfdcc138  prefetch requested. Execution time: 0.00s. Queue size: 19
+[2025-03-07 13:11:43,118][SUPER][DEBUG] - Batch 0_0_21_f2331d583f9fa6a0  prefetch requested. Execution time: 0.00s. Queue size: 18
+[2025-03-07 13:11:43,481][SUPER][DEBUG] - Batch 0_0_22_f041ff5849c3b829  prefetch requested. Execution time: 0.00s. Queue size: 17
+[2025-03-07 13:11:43,901][SUPER][DEBUG] - Batch 0_0_23_6d1cfa27ff12e1b4  prefetch requested. Execution time: 0.00s. Queue size: 16
+[2025-03-07 13:11:44,390][SUPER][DEBUG] - Batch 0_0_24_1674e533e6ec70ba  prefetch requested. Execution time: 0.00s. Queue size: 15
+[2025-03-07 13:11:44,844][SUPER][DEBUG] - Batch 0_0_25_64856d9799204af9  prefetch requested. Execution time: 0.00s. Queue size: 14
+[2025-03-07 13:11:45,269][SUPER][DEBUG] - Batch 0_0_26_5313467b039bef2a  prefetch requested. Execution time: 0.00s. Queue size: 13
+[2025-03-07 13:11:45,663][SUPER][DEBUG] - Batch 0_0_27_c123ddaf922049a7  prefetch requested. Execution time: 0.00s. Queue size: 12
+[2025-03-07 13:11:46,087][SUPER][DEBUG] - Batch 0_0_28_bc02c3244389427d  prefetch requested. Execution time: 0.00s. Queue size: 11
+[2025-03-07 13:11:46,611][SUPER][DEBUG] - Batch 0_0_29_ef2f03ff85f5d493  prefetch requested. Execution time: 0.00s. Queue size: 10
+[2025-03-07 13:11:47,191][SUPER][DEBUG] - Batch 0_0_30_60c991f17cbb4875  prefetch requested. Execution time: 0.00s. Queue size: 9
+[2025-03-07 13:11:47,635][SUPER][DEBUG] - Batch 0_0_31_0f3ae34d42f6a74f  prefetch requested. Execution time: 0.00s. Queue size: 8
+[2025-03-07 13:11:48,037][SUPER][DEBUG] - Batch 0_0_32_6c6c9a9bd0f3ffbc  prefetch requested. Execution time: 0.00s. Queue size: 7
+[2025-03-07 13:11:48,411][SUPER][DEBUG] - Batch 0_0_33_bda6f28f22f9aa01  prefetch requested. Execution time: 0.00s. Queue size: 6
+[2025-03-07 13:11:48,861][SUPER][DEBUG] - Batch 0_0_34_8c565e7fc1cd1c85  prefetch requested. Execution time: 0.00s. Queue size: 5
+[2025-03-07 13:11:49,045][SUPER][INFO] - Job '1' assigned batch set '0_0'
+[2025-03-07 13:11:49,302][SUPER][DEBUG] - Batch 0_0_35_4157f4bcfaa3167c  prefetch requested. Execution time: 0.00s. Queue size: 5
+[2025-03-07 13:11:49,691][SUPER][DEBUG] - Batch 0_0_36_4805631ccc274f76  prefetch requested. Execution time: 0.00s. Queue size: 4
+[2025-03-07 13:11:50,029][SUPER][DEBUG] - Batch 0_0_37_1bd02cbd2092f02d  prefetch requested. Execution time: 0.00s. Queue size: 3
+[2025-03-07 13:11:50,375][SUPER][DEBUG] - Batch 0_0_38_d91eeb49846d0af9  prefetch requested. Execution time: 0.00s. Queue size: 2
+[2025-03-07 13:11:50,718][SUPER][DEBUG] - Batch 0_0_39_4ac7a4f8fc479459  prefetch requested. Execution time: 0.00s. Queue size: 1
+[2025-03-07 13:11:51,042][SUPER][DEBUG] - Batch 0_0_40_f64c5d3f3b5244a6  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:16:48,758][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-07 13:16:48,762][SUPER][INFO] - Config: lookahead_steps: 40
+serverless_cache_address: 54.69.247.89:6378
+cache_evition_ttl_threshold: 60
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-07 13:16:48,787][SUPER][INFO] - Server started. Listening on port 50051 with 10 workers.
+[2025-03-07 13:16:58,722][SUPER][INFO] - Starting PrefetchService...
+[2025-03-07 13:16:59,126][SUPER][DEBUG] - Batch 0_0_0_dd3a7193d6c89be5  prefetch requested. Execution time: 0.00s. Queue size: 39
+[2025-03-07 13:16:59,518][SUPER][DEBUG] - Batch 0_0_1_13a16a6610632b1e  prefetch requested. Execution time: 0.00s. Queue size: 38
+[2025-03-07 13:16:59,825][SUPER][DEBUG] - Batch 0_0_2_14f85b1b95c0f68b  prefetch requested. Execution time: 0.00s. Queue size: 37
+[2025-03-07 13:17:00,133][SUPER][DEBUG] - Batch 0_0_3_4d9a300d9dc19249  prefetch requested. Execution time: 0.00s. Queue size: 36
+[2025-03-07 13:17:00,451][SUPER][DEBUG] - Batch 0_0_4_1b813b4e761b86be  prefetch requested. Execution time: 0.00s. Queue size: 35
+[2025-03-07 13:17:00,754][SUPER][DEBUG] - Batch 0_0_5_84c89470588246cc  prefetch requested. Execution time: 0.00s. Queue size: 34
+[2025-03-07 13:17:01,075][SUPER][DEBUG] - Batch 0_0_6_e1b2455049353c7c  prefetch requested. Execution time: 0.00s. Queue size: 33
+[2025-03-07 13:17:01,377][SUPER][DEBUG] - Batch 0_0_7_e5a4f837fc151a29  prefetch requested. Execution time: 0.00s. Queue size: 32
+[2025-03-07 13:17:01,756][SUPER][DEBUG] - Batch 0_0_8_0e024c3e11b6c356  prefetch requested. Execution time: 0.00s. Queue size: 31
+[2025-03-07 13:17:02,057][SUPER][DEBUG] - Batch 0_0_9_56ad53892fb46c34  prefetch requested. Execution time: 0.00s. Queue size: 30
+[2025-03-07 13:17:02,374][SUPER][DEBUG] - Batch 0_0_10_57a4c6dab863f104  prefetch requested. Execution time: 0.00s. Queue size: 29
+[2025-03-07 13:17:02,692][SUPER][DEBUG] - Batch 0_0_11_7edc96059b5778b4  prefetch requested. Execution time: 0.00s. Queue size: 28
+[2025-03-07 13:17:02,999][SUPER][DEBUG] - Batch 0_0_12_12535988cce3e121  prefetch requested. Execution time: 0.00s. Queue size: 27
+[2025-03-07 13:17:03,322][SUPER][DEBUG] - Batch 0_0_13_7a3e9c9da02e62c7  prefetch requested. Execution time: 0.00s. Queue size: 26
+[2025-03-07 13:17:03,626][SUPER][DEBUG] - Batch 0_0_14_a70136f3396a5ac8  prefetch requested. Execution time: 0.00s. Queue size: 25
+[2025-03-07 13:17:03,747][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-07 13:17:03,748][SUPER][INFO] - Job '1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-07 13:17:04,016][SUPER][DEBUG] - Batch 0_0_15_438b6653cfb02e20  prefetch requested. Execution time: 0.00s. Queue size: 24
+[2025-03-07 13:17:04,320][SUPER][DEBUG] - Batch 0_0_16_f044cd3f1bbf8d3a  prefetch requested. Execution time: 0.00s. Queue size: 23
+[2025-03-07 13:17:04,662][SUPER][DEBUG] - Batch 0_0_17_f5993697d6adf6bd  prefetch requested. Execution time: 0.00s. Queue size: 22
+[2025-03-07 13:17:04,991][SUPER][DEBUG] - Batch 0_0_18_48df15f0f4183a76  prefetch requested. Execution time: 0.00s. Queue size: 21
+[2025-03-07 13:17:05,304][SUPER][DEBUG] - Batch 0_0_19_86fe9c843f8f6f06  prefetch requested. Execution time: 0.00s. Queue size: 20
+[2025-03-07 13:17:05,660][SUPER][DEBUG] - Batch 0_0_20_48d76ca27dfcefc9  prefetch requested. Execution time: 0.00s. Queue size: 19
+[2025-03-07 13:17:06,003][SUPER][DEBUG] - Batch 0_0_21_41aeaaeb68f28585  prefetch requested. Execution time: 0.00s. Queue size: 18
+[2025-03-07 13:17:06,347][SUPER][DEBUG] - Batch 0_0_22_061de5a3198da6a2  prefetch requested. Execution time: 0.00s. Queue size: 17
+[2025-03-07 13:17:06,696][SUPER][DEBUG] - Batch 0_0_23_c8cd15dfb73c04da  prefetch requested. Execution time: 0.00s. Queue size: 16
+[2025-03-07 13:17:07,036][SUPER][DEBUG] - Batch 0_0_24_78e7f7a1438e70c7  prefetch requested. Execution time: 0.00s. Queue size: 15
+[2025-03-07 13:17:07,377][SUPER][DEBUG] - Batch 0_0_25_3bafd9d707b30af2  prefetch requested. Execution time: 0.00s. Queue size: 14
+[2025-03-07 13:17:07,727][SUPER][DEBUG] - Batch 0_0_26_55a39b065a911e5a  prefetch requested. Execution time: 0.00s. Queue size: 13
+[2025-03-07 13:17:08,073][SUPER][DEBUG] - Batch 0_0_27_6ddde6f256d0a2d6  prefetch requested. Execution time: 0.00s. Queue size: 12
+[2025-03-07 13:17:08,445][SUPER][DEBUG] - Batch 0_0_28_8c026d915cb443e7  prefetch requested. Execution time: 0.00s. Queue size: 11
+[2025-03-07 13:17:08,805][SUPER][DEBUG] - Batch 0_0_29_6984bf78d7a888af  prefetch requested. Execution time: 0.00s. Queue size: 10
+[2025-03-07 13:17:09,162][SUPER][DEBUG] - Batch 0_0_30_286099b2da49e19a  prefetch requested. Execution time: 0.00s. Queue size: 9
+[2025-03-07 13:17:09,674][SUPER][DEBUG] - Batch 0_0_31_c42bf54cae2fad92  prefetch requested. Execution time: 0.00s. Queue size: 8
+[2025-03-07 13:17:10,146][SUPER][DEBUG] - Batch 0_0_32_63a46cbde896b8af  prefetch requested. Execution time: 0.00s. Queue size: 7
+[2025-03-07 13:17:10,476][grpc._server][ERROR] - Exception calling application: ' s3://imagenet1k-sdl/train/'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 57, in GetNextBatchForJob
+    next_batch:Batch = self.datasets[dataset_location].get_next_batch_for_job(job_id)
+KeyError: ' s3://imagenet1k-sdl/train/'
+[2025-03-07 13:17:10,541][SUPER][DEBUG] - Batch 0_0_33_ad9415fe1f0efbab  prefetch requested. Execution time: 0.00s. Queue size: 6
+[2025-03-07 13:17:10,975][SUPER][DEBUG] - Batch 0_0_34_dfa66791a0787412  prefetch requested. Execution time: 0.00s. Queue size: 5
+[2025-03-07 13:17:11,339][SUPER][DEBUG] - Batch 0_0_35_de388cdcf2b93133  prefetch requested. Execution time: 0.00s. Queue size: 4
+[2025-03-07 13:17:11,747][SUPER][DEBUG] - Batch 0_0_36_ed7b185256773480  prefetch requested. Execution time: 0.00s. Queue size: 3
+[2025-03-07 13:17:12,149][SUPER][DEBUG] - Batch 0_0_37_ca9fcdc20e861ab9  prefetch requested. Execution time: 0.00s. Queue size: 2
+[2025-03-07 13:17:12,527][SUPER][DEBUG] - Batch 0_0_38_ecb8cda448c499f7  prefetch requested. Execution time: 0.00s. Queue size: 1
+[2025-03-07 13:17:12,945][SUPER][DEBUG] - Batch 0_0_39_c7592732eaaada40  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:18:00,621][SUPER][INFO] - Job '2' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 2
+[2025-03-07 13:18:06,882][grpc._server][ERROR] - Exception calling application: ' s3://imagenet1k-sdl/train/'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 57, in GetNextBatchForJob
+    next_batch:Batch = self.datasets[dataset_location].get_next_batch_for_job(job_id)
+KeyError: ' s3://imagenet1k-sdl/train/'
+[2025-03-07 13:18:42,278][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-07 13:18:42,283][SUPER][INFO] - Config: lookahead_steps: 40
+serverless_cache_address: 54.69.247.89:6378
+cache_evition_ttl_threshold: 60
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-07 13:18:42,308][SUPER][INFO] - Server started. Listening on port 50051 with 10 workers.
+[2025-03-07 13:18:49,690][SUPER][INFO] - Starting PrefetchService...
+[2025-03-07 13:18:50,167][SUPER][DEBUG] - Batch 0_0_0_eab741d3ecd26409  prefetch requested. Execution time: 0.00s. Queue size: 39
+[2025-03-07 13:18:50,536][SUPER][DEBUG] - Batch 0_0_1_29d931f0f334fb9b  prefetch requested. Execution time: 0.00s. Queue size: 38
+[2025-03-07 13:18:50,903][SUPER][DEBUG] - Batch 0_0_2_d30b78638b27b1b7  prefetch requested. Execution time: 0.00s. Queue size: 37
+[2025-03-07 13:18:51,252][SUPER][DEBUG] - Batch 0_0_3_a13afdcf8b73e727  prefetch requested. Execution time: 0.00s. Queue size: 36
+[2025-03-07 13:18:51,568][SUPER][DEBUG] - Batch 0_0_4_e0f5ee6b528800d1  prefetch requested. Execution time: 0.00s. Queue size: 35
+[2025-03-07 13:18:51,910][SUPER][DEBUG] - Batch 0_0_5_182495e0c5731693  prefetch requested. Execution time: 0.00s. Queue size: 34
+[2025-03-07 13:18:52,267][SUPER][DEBUG] - Batch 0_0_6_6b07a8aabf598518  prefetch requested. Execution time: 0.00s. Queue size: 33
+[2025-03-07 13:18:52,593][SUPER][DEBUG] - Batch 0_0_7_caa159c2f819485b  prefetch requested. Execution time: 0.00s. Queue size: 32
+[2025-03-07 13:18:52,900][SUPER][DEBUG] - Batch 0_0_8_af5e9c5ec92ce518  prefetch requested. Execution time: 0.00s. Queue size: 31
+[2025-03-07 13:18:53,208][SUPER][DEBUG] - Batch 0_0_9_88c1ba36bcf3382b  prefetch requested. Execution time: 0.00s. Queue size: 30
+[2025-03-07 13:18:53,513][SUPER][DEBUG] - Batch 0_0_10_d67aa748b635af4f  prefetch requested. Execution time: 0.00s. Queue size: 29
+[2025-03-07 13:18:53,836][SUPER][DEBUG] - Batch 0_0_11_26669b97f848747a  prefetch requested. Execution time: 0.00s. Queue size: 28
+[2025-03-07 13:18:54,141][SUPER][DEBUG] - Batch 0_0_12_77de50c9f012d041  prefetch requested. Execution time: 0.00s. Queue size: 27
+[2025-03-07 13:18:54,480][SUPER][DEBUG] - Batch 0_0_13_66cdbab66767a7f1  prefetch requested. Execution time: 0.00s. Queue size: 26
+[2025-03-07 13:18:54,721][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-07 13:18:54,722][SUPER][INFO] - Job '1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-07 13:18:54,837][SUPER][DEBUG] - Batch 0_0_14_9e53dbd8315aeda1  prefetch requested. Execution time: 0.00s. Queue size: 25
+[2025-03-07 13:18:55,163][SUPER][DEBUG] - Batch 0_0_15_44c6f89e447a1574  prefetch requested. Execution time: 0.00s. Queue size: 24
+[2025-03-07 13:18:55,478][SUPER][DEBUG] - Batch 0_0_16_0fd1fe2267fbfa25  prefetch requested. Execution time: 0.00s. Queue size: 23
+[2025-03-07 13:18:55,796][SUPER][DEBUG] - Batch 0_0_17_f211433802bd36da  prefetch requested. Execution time: 0.00s. Queue size: 22
+[2025-03-07 13:18:56,097][SUPER][DEBUG] - Batch 0_0_18_946f0957a9688696  prefetch requested. Execution time: 0.00s. Queue size: 21
+[2025-03-07 13:18:56,421][SUPER][DEBUG] - Batch 0_0_19_f8ddefafce91ff8f  prefetch requested. Execution time: 0.00s. Queue size: 20
+[2025-03-07 13:18:56,737][SUPER][DEBUG] - Batch 0_0_20_00881c1005476f2e  prefetch requested. Execution time: 0.00s. Queue size: 19
+[2025-03-07 13:18:57,112][SUPER][DEBUG] - Batch 0_0_21_b7f42137946d3457  prefetch requested. Execution time: 0.00s. Queue size: 18
+[2025-03-07 13:18:57,429][SUPER][DEBUG] - Batch 0_0_22_4f1379af9f584aeb  prefetch requested. Execution time: 0.00s. Queue size: 17
+[2025-03-07 13:18:57,753][SUPER][DEBUG] - Batch 0_0_23_2bba4e20d74628be  prefetch requested. Execution time: 0.00s. Queue size: 16
+[2025-03-07 13:18:58,094][SUPER][DEBUG] - Batch 0_0_24_2257631985a5a03f  prefetch requested. Execution time: 0.00s. Queue size: 15
+[2025-03-07 13:18:58,409][SUPER][DEBUG] - Batch 0_0_25_5b954a565f40642b  prefetch requested. Execution time: 0.00s. Queue size: 14
+[2025-03-07 13:18:58,751][SUPER][DEBUG] - Batch 0_0_26_1a2cf14ee37e6081  prefetch requested. Execution time: 0.00s. Queue size: 13
+[2025-03-07 13:18:59,146][SUPER][DEBUG] - Batch 0_0_27_e7f3f4268827a40c  prefetch requested. Execution time: 0.00s. Queue size: 12
+[2025-03-07 13:18:59,480][SUPER][DEBUG] - Batch 0_0_28_e0cbfe7af123bf10  prefetch requested. Execution time: 0.00s. Queue size: 11
+[2025-03-07 13:18:59,866][SUPER][DEBUG] - Batch 0_0_29_425bfca645dc1f58  prefetch requested. Execution time: 0.00s. Queue size: 10
+[2025-03-07 13:19:00,201][SUPER][DEBUG] - Batch 0_0_30_95be9c0667643023  prefetch requested. Execution time: 0.00s. Queue size: 9
+[2025-03-07 13:19:00,590][SUPER][DEBUG] - Batch 0_0_31_27d4c5188e1df658  prefetch requested. Execution time: 0.00s. Queue size: 8
+[2025-03-07 13:19:01,032][SUPER][DEBUG] - Batch 0_0_32_037a95c10008d178  prefetch requested. Execution time: 0.00s. Queue size: 7
+[2025-03-07 13:19:01,647][SUPER][DEBUG] - Batch 0_0_33_f52a12beeb1d6834  prefetch requested. Execution time: 0.00s. Queue size: 6
+[2025-03-07 13:19:01,739][grpc._server][ERROR] - Exception calling application: ' s3://imagenet1k-sdl/train/'
+Traceback (most recent call last):
+  File "c:\Users\pw\miniconda3\envs\disdl\lib\site-packages\grpc\_server.py", line 610, in _call_behavior
+    response_or_iterator = behavior(argument, context)
+  File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 57, in GetNextBatchForJob
+    next_batch:Batch = self.datasets[dataset_location].get_next_batch_for_job(job_id)
+KeyError: ' s3://imagenet1k-sdl/train/'
+[2025-03-07 13:19:02,228][SUPER][DEBUG] - Batch 0_0_34_45cd0b20d6c9a921  prefetch requested. Execution time: 0.00s. Queue size: 5
+[2025-03-07 13:19:02,736][SUPER][DEBUG] - Batch 0_0_35_faf812ea0bbeff2c  prefetch requested. Execution time: 0.00s. Queue size: 4
+[2025-03-07 13:19:03,160][SUPER][DEBUG] - Batch 0_0_36_ecb2b46b9f4bb6aa  prefetch requested. Execution time: 0.00s. Queue size: 3
+[2025-03-07 13:19:03,603][SUPER][DEBUG] - Batch 0_0_37_9d398925cc8f3534  prefetch requested. Execution time: 0.00s. Queue size: 2
+[2025-03-07 13:19:04,214][SUPER][DEBUG] - Batch 0_0_38_38b9a73ef797ed78  prefetch requested. Execution time: 0.00s. Queue size: 1
+[2025-03-07 13:19:04,718][SUPER][DEBUG] - Batch 0_0_39_af17733da389809c  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:19:13,232][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-07 13:19:13,239][SUPER][INFO] - Config: lookahead_steps: 40
+serverless_cache_address: 54.69.247.89:6378
+cache_evition_ttl_threshold: 60
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-07 13:19:13,264][SUPER][INFO] - Server started. Listening on port 50051 with 10 workers.
+[2025-03-07 13:20:05,773][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-07 13:20:05,780][SUPER][INFO] - Config: lookahead_steps: 40
+serverless_cache_address: 54.69.247.89:6378
+cache_evition_ttl_threshold: 60
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-07 13:20:05,815][SUPER][INFO] - Server started. Listening on port 50051 with 10 workers.
+[2025-03-07 13:20:25,673][SUPER][INFO] - Starting PrefetchService...
+[2025-03-07 13:20:26,623][SUPER][DEBUG] - Batch 0_0_0_191ebaad76ee6d90  prefetch requested. Execution time: 0.00s. Queue size: 39
+[2025-03-07 13:20:27,097][SUPER][DEBUG] - Batch 0_0_1_d98856b00ef984f4  prefetch requested. Execution time: 0.00s. Queue size: 38
+[2025-03-07 13:20:27,470][SUPER][DEBUG] - Batch 0_0_2_3200b79cba710d0f  prefetch requested. Execution time: 0.00s. Queue size: 37
+[2025-03-07 13:20:27,861][SUPER][DEBUG] - Batch 0_0_3_7a4502dad8dbfca0  prefetch requested. Execution time: 0.00s. Queue size: 36
+[2025-03-07 13:20:28,258][SUPER][DEBUG] - Batch 0_0_4_5b0cd9414918d411  prefetch requested. Execution time: 0.00s. Queue size: 35
+[2025-03-07 13:20:28,725][SUPER][DEBUG] - Batch 0_0_5_22f2486c5db0b711  prefetch requested. Execution time: 0.00s. Queue size: 34
+[2025-03-07 13:20:29,162][SUPER][DEBUG] - Batch 0_0_6_1a45858f05a6cf7b  prefetch requested. Execution time: 0.00s. Queue size: 33
+[2025-03-07 13:20:29,587][SUPER][DEBUG] - Batch 0_0_7_8cd1684f4d814282  prefetch requested. Execution time: 0.00s. Queue size: 32
+[2025-03-07 13:20:29,999][SUPER][DEBUG] - Batch 0_0_8_eb5ff76cade714d4  prefetch requested. Execution time: 0.00s. Queue size: 31
+[2025-03-07 13:20:30,332][SUPER][DEBUG] - Batch 0_0_9_0898292a9c664027  prefetch requested. Execution time: 0.00s. Queue size: 30
+[2025-03-07 13:20:30,919][SUPER][DEBUG] - Batch 0_0_10_06508c901bf20932  prefetch requested. Execution time: 0.00s. Queue size: 29
+[2025-03-07 13:20:31,130][SUPER][INFO] - Dataset ' s3://imagenet1k-sdl/train/' added. Total Files: 1096302, Total Batches:8565
+[2025-03-07 13:20:31,131][SUPER][INFO] - Job '1' registered for dataset ' s3://imagenet1k-sdl/train/'. Total Jobs: 1
+[2025-03-07 13:20:31,387][SUPER][DEBUG] - Batch 0_0_11_aa6a4ae99b6a0b4a  prefetch requested. Execution time: 0.00s. Queue size: 28
+[2025-03-07 13:20:31,801][SUPER][DEBUG] - Batch 0_0_12_b2d4863845b1c5f4  prefetch requested. Execution time: 0.00s. Queue size: 27
+[2025-03-07 13:20:32,259][SUPER][DEBUG] - Batch 0_0_13_373e1ab631646352  prefetch requested. Execution time: 0.00s. Queue size: 26
+[2025-03-07 13:20:32,678][SUPER][DEBUG] - Batch 0_0_14_652afd695156799d  prefetch requested. Execution time: 0.00s. Queue size: 25
+[2025-03-07 13:20:33,290][SUPER][DEBUG] - Batch 0_0_15_ec550da5bd6febb2  prefetch requested. Execution time: 0.00s. Queue size: 24
+[2025-03-07 13:20:33,850][SUPER][DEBUG] - Batch 0_0_16_1c23c3e83c0c40e3  prefetch requested. Execution time: 0.00s. Queue size: 23
+[2025-03-07 13:20:34,387][SUPER][DEBUG] - Batch 0_0_17_1d653ab1643e3b75  prefetch requested. Execution time: 0.00s. Queue size: 22
+[2025-03-07 13:20:34,882][SUPER][DEBUG] - Batch 0_0_18_7f9ab7e7f1e29edc  prefetch requested. Execution time: 0.00s. Queue size: 21
+[2025-03-07 13:20:35,556][SUPER][DEBUG] - Batch 0_0_19_96954ee083ab002a  prefetch requested. Execution time: 0.00s. Queue size: 20
+[2025-03-07 13:20:36,133][SUPER][DEBUG] - Batch 0_0_20_311fe89f8376cc7c  prefetch requested. Execution time: 0.00s. Queue size: 19
+[2025-03-07 13:20:36,707][SUPER][DEBUG] - Batch 0_0_21_1e58ad6825ffefed  prefetch requested. Execution time: 0.00s. Queue size: 18
+[2025-03-07 13:20:37,190][SUPER][DEBUG] - Batch 0_0_22_89147083c7754f32  prefetch requested. Execution time: 0.00s. Queue size: 17
+[2025-03-07 13:20:37,809][SUPER][DEBUG] - Batch 0_0_23_ecd10673bf8f1511  prefetch requested. Execution time: 0.00s. Queue size: 16
+[2025-03-07 13:20:38,418][SUPER][DEBUG] - Batch 0_0_24_e6eb48a9cd561fa7  prefetch requested. Execution time: 0.00s. Queue size: 15
+[2025-03-07 13:20:38,989][SUPER][DEBUG] - Batch 0_0_25_103a927937c24e71  prefetch requested. Execution time: 0.00s. Queue size: 14
+[2025-03-07 13:20:39,459][SUPER][DEBUG] - Batch 0_0_26_aa749523ffe35ab9  prefetch requested. Execution time: 0.00s. Queue size: 13
+[2025-03-07 13:20:39,914][SUPER][DEBUG] - Batch 0_0_27_d4afa4de76ee88ac  prefetch requested. Execution time: 0.00s. Queue size: 12
+[2025-03-07 13:20:40,442][SUPER][DEBUG] - Batch 0_0_28_2c8ab3d4fb0d0224  prefetch requested. Execution time: 0.00s. Queue size: 11
+[2025-03-07 13:20:40,953][SUPER][DEBUG] - Batch 0_0_29_bdc92750ddbf187c  prefetch requested. Execution time: 0.00s. Queue size: 10
+[2025-03-07 13:20:41,406][SUPER][DEBUG] - Batch 0_0_30_5d5981b52ce3f54c  prefetch requested. Execution time: 0.00s. Queue size: 9
+[2025-03-07 13:20:41,866][SUPER][DEBUG] - Batch 0_0_31_c8cd23920e22b6f9  prefetch requested. Execution time: 0.00s. Queue size: 8
+[2025-03-07 13:20:42,303][SUPER][DEBUG] - Batch 0_0_32_a7b2c4f7b5940923  prefetch requested. Execution time: 0.00s. Queue size: 7
+[2025-03-07 13:20:42,929][SUPER][DEBUG] - Batch 0_0_33_e7231bbade6e9499  prefetch requested. Execution time: 0.00s. Queue size: 6
+[2025-03-07 13:20:43,447][SUPER][DEBUG] - Batch 0_0_34_abe12c7980199098  prefetch requested. Execution time: 0.00s. Queue size: 5
+[2025-03-07 13:20:43,913][SUPER][DEBUG] - Batch 0_0_35_f3299a348ed7af2e  prefetch requested. Execution time: 0.00s. Queue size: 4
+[2025-03-07 13:20:44,308][SUPER][DEBUG] - Batch 0_0_36_a16ae3e48c6c1df9  prefetch requested. Execution time: 0.00s. Queue size: 3
+[2025-03-07 13:20:44,709][SUPER][DEBUG] - Batch 0_0_37_2ac95754baf76433  prefetch requested. Execution time: 0.00s. Queue size: 2
+[2025-03-07 13:20:45,194][SUPER][DEBUG] - Batch 0_0_38_ab3c70d9b02273d0  prefetch requested. Execution time: 0.00s. Queue size: 1
+[2025-03-07 13:20:45,669][SUPER][DEBUG] - Batch 0_0_39_97a84dfb76fd527b  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:20:53,418][SUPER][INFO] - Job '1' assigned batch set '0_0'
+[2025-03-07 13:20:53,820][SUPER][DEBUG] - Batch 0_0_40_55c1bd18810ced19  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:37:03,993][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-07 13:37:03,997][SUPER][INFO] - Config: lookahead_steps: 40
+serverless_cache_address: 54.69.247.89:6378
+cache_evition_ttl_threshold: 60
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-07 13:37:04,025][SUPER][INFO] - Server started. Listening on port 50051 with 10 workers.
+[2025-03-07 13:37:38,409][SUPER][INFO] - Starting PrefetchService...
+[2025-03-07 13:37:39,020][SUPER][DEBUG] - Batch 0_0_0_7a3b9a56fb3ac24d  prefetch requested. Execution time: 0.00s. Queue size: 39
+[2025-03-07 13:37:39,342][SUPER][DEBUG] - Batch 0_0_1_031ff80f494ccc99  prefetch requested. Execution time: 0.00s. Queue size: 38
+[2025-03-07 13:37:39,701][SUPER][DEBUG] - Batch 0_0_2_14aafb8fad3b07b0  prefetch requested. Execution time: 0.00s. Queue size: 37
+[2025-03-07 13:37:40,067][SUPER][DEBUG] - Batch 0_0_3_ffef08e16a22171c  prefetch requested. Execution time: 0.00s. Queue size: 36
+[2025-03-07 13:37:40,391][SUPER][DEBUG] - Batch 0_0_4_5214f2e8120e9fd6  prefetch requested. Execution time: 0.00s. Queue size: 35
+[2025-03-07 13:37:40,762][SUPER][DEBUG] - Batch 0_0_5_e367d7b2b0595511  prefetch requested. Execution time: 0.00s. Queue size: 34
+[2025-03-07 13:37:41,089][SUPER][DEBUG] - Batch 0_0_6_c31460e496c077c9  prefetch requested. Execution time: 0.00s. Queue size: 33
+[2025-03-07 13:37:41,392][SUPER][DEBUG] - Batch 0_0_7_32aafefbb151a812  prefetch requested. Execution time: 0.00s. Queue size: 32
+[2025-03-07 13:37:41,721][SUPER][DEBUG] - Batch 0_0_8_bd741c0aaaaba1ea  prefetch requested. Execution time: 0.00s. Queue size: 31
+[2025-03-07 13:37:42,026][SUPER][DEBUG] - Batch 0_0_9_bb1405d9c6bd913f  prefetch requested. Execution time: 0.00s. Queue size: 30
+[2025-03-07 13:37:42,326][SUPER][DEBUG] - Batch 0_0_10_92ddfffce3db2e9b  prefetch requested. Execution time: 0.00s. Queue size: 29
+[2025-03-07 13:37:42,673][SUPER][DEBUG] - Batch 0_0_11_c46923ee8bc850e2  prefetch requested. Execution time: 0.00s. Queue size: 28
+[2025-03-07 13:37:42,981][SUPER][DEBUG] - Batch 0_0_12_31fa7af54e915aac  prefetch requested. Execution time: 0.00s. Queue size: 27
+[2025-03-07 13:37:43,320][SUPER][DEBUG] - Batch 0_0_13_78db70de6dc107fb  prefetch requested. Execution time: 0.00s. Queue size: 26
+[2025-03-07 13:37:43,636][SUPER][INFO] - Dataset ' s3://imagenet1k-sdl/train/' added. Total Files: 1096302, Total Batches:8565
+[2025-03-07 13:37:43,637][SUPER][INFO] - Job '1' registered for dataset ' s3://imagenet1k-sdl/train/'. Total Jobs: 1
+[2025-03-07 13:37:43,664][SUPER][DEBUG] - Batch 0_0_14_6f00d199b9e6c378  prefetch requested. Execution time: 0.00s. Queue size: 25
+[2025-03-07 13:37:43,965][SUPER][DEBUG] - Batch 0_0_15_4ae047ca1c0f8e77  prefetch requested. Execution time: 0.00s. Queue size: 24
+[2025-03-07 13:37:44,277][SUPER][DEBUG] - Batch 0_0_16_b15ca9b4aee9d0a2  prefetch requested. Execution time: 0.00s. Queue size: 23
+[2025-03-07 13:37:44,581][SUPER][DEBUG] - Batch 0_0_17_b0ca33bed4fa18b2  prefetch requested. Execution time: 0.00s. Queue size: 22
+[2025-03-07 13:37:44,945][SUPER][DEBUG] - Batch 0_0_18_b91af283df245657  prefetch requested. Execution time: 0.00s. Queue size: 21
+[2025-03-07 13:37:45,263][SUPER][DEBUG] - Batch 0_0_19_f78832a00946739d  prefetch requested. Execution time: 0.00s. Queue size: 20
+[2025-03-07 13:37:45,612][SUPER][DEBUG] - Batch 0_0_20_d10d61fa2a42ab18  prefetch requested. Execution time: 0.00s. Queue size: 19
+[2025-03-07 13:37:45,938][SUPER][DEBUG] - Batch 0_0_21_70f3597c9cbd6834  prefetch requested. Execution time: 0.00s. Queue size: 18
+[2025-03-07 13:37:46,271][SUPER][DEBUG] - Batch 0_0_22_a0bfb3b3eb46614c  prefetch requested. Execution time: 0.00s. Queue size: 17
+[2025-03-07 13:37:46,583][SUPER][DEBUG] - Batch 0_0_23_37e0b12770e29d70  prefetch requested. Execution time: 0.00s. Queue size: 16
+[2025-03-07 13:37:46,888][SUPER][DEBUG] - Batch 0_0_24_7b513ec7c7fc6347  prefetch requested. Execution time: 0.00s. Queue size: 15
+[2025-03-07 13:37:47,246][SUPER][DEBUG] - Batch 0_0_25_8cc36254f400a1cd  prefetch requested. Execution time: 0.00s. Queue size: 14
+[2025-03-07 13:37:47,552][SUPER][DEBUG] - Batch 0_0_26_685764510775c445  prefetch requested. Execution time: 0.00s. Queue size: 13
+[2025-03-07 13:37:47,867][SUPER][DEBUG] - Batch 0_0_27_041935765964a626  prefetch requested. Execution time: 0.00s. Queue size: 12
+[2025-03-07 13:37:48,249][SUPER][DEBUG] - Batch 0_0_28_c2ed6b06274f77cc  prefetch requested. Execution time: 0.00s. Queue size: 11
+[2025-03-07 13:37:48,657][SUPER][DEBUG] - Batch 0_0_29_c3022a3211882c5f  prefetch requested. Execution time: 0.00s. Queue size: 10
+[2025-03-07 13:37:49,104][SUPER][DEBUG] - Batch 0_0_30_d869c33260af00e8  prefetch requested. Execution time: 0.00s. Queue size: 9
+[2025-03-07 13:37:49,586][SUPER][DEBUG] - Batch 0_0_31_270122a40df81116  prefetch requested. Execution time: 0.00s. Queue size: 8
+[2025-03-07 13:37:50,059][SUPER][DEBUG] - Batch 0_0_32_d8c3e4b369156ebe  prefetch requested. Execution time: 0.00s. Queue size: 7
+[2025-03-07 13:37:50,562][SUPER][DEBUG] - Batch 0_0_33_fb150622e2bd748d  prefetch requested. Execution time: 0.00s. Queue size: 6
+[2025-03-07 13:37:50,980][SUPER][INFO] - Job '1' assigned batch set '0_0'
+[2025-03-07 13:37:50,992][SUPER][DEBUG] - Batch 0_0_34_2c3b232dfdafd738  prefetch requested. Execution time: 0.00s. Queue size: 6
+[2025-03-07 13:37:51,477][SUPER][DEBUG] - Batch 0_0_35_6af0006c3eb531b3  prefetch requested. Execution time: 0.00s. Queue size: 5
+[2025-03-07 13:37:51,957][SUPER][DEBUG] - Batch 0_0_36_174c7157877586ec  prefetch requested. Execution time: 0.00s. Queue size: 4
+[2025-03-07 13:37:52,445][SUPER][DEBUG] - Batch 0_0_37_c82b85965b2ee72f  prefetch requested. Execution time: 0.00s. Queue size: 3
+[2025-03-07 13:37:52,833][SUPER][DEBUG] - Batch 0_0_38_0d22b2eb7a102f05  prefetch requested. Execution time: 0.00s. Queue size: 2
+[2025-03-07 13:37:53,201][SUPER][DEBUG] - Batch 0_0_39_92cadf6bcb811fe1  prefetch requested. Execution time: 0.00s. Queue size: 1
+[2025-03-07 13:37:53,579][SUPER][DEBUG] - Batch 0_0_40_0a1a83113c0f5222  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:39:11,957][SUPER][DEBUG] - Batch 0_0_41_dde8562806acc7c7  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:39:24,101][SUPER][DEBUG] - Batch 0_0_42_df524d08ba8b4af4  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:40:51,458][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-07 13:40:51,470][SUPER][INFO] - Config: lookahead_steps: 40
+serverless_cache_address: 54.69.247.89:6378
+cache_evition_ttl_threshold: 60
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-07 13:40:51,490][SUPER][INFO] - Server started. Listening on port 50051 with 10 workers.
+[2025-03-07 13:41:14,791][SUPER][INFO] - Starting PrefetchService...
+[2025-03-07 13:41:44,852][SUPER][DEBUG] - Batch 0_0_0_6be238b9d945ae76  prefetch requested. Execution time: 0.00s. Queue size: 39
+[2025-03-07 13:41:55,812][SUPER][INFO] - Dataset ' s3://imagenet1k-sdl/train/' added. Total Files: 1096302, Total Batches:8565
+[2025-03-07 13:41:55,813][SUPER][INFO] - Job '1' registered for dataset ' s3://imagenet1k-sdl/train/'. Total Jobs: 1
+[2025-03-07 13:41:56,044][SUPER][DEBUG] - Batch 0_0_1_dfff08b365aa9cc5  prefetch requested. Execution time: 0.00s. Queue size: 38
+[2025-03-07 13:42:03,887][SUPER][INFO] - Job '1' assigned batch set '0_0'
+[2025-03-07 13:42:04,156][SUPER][DEBUG] - Batch 0_0_2_c56608e978793cc3  prefetch requested. Execution time: 0.00s. Queue size: 38
+[2025-03-07 13:42:08,398][SUPER][DEBUG] - Batch 0_0_3_43fff0cb20709529  prefetch requested. Execution time: 0.00s. Queue size: 37
+[2025-03-07 13:42:10,895][SUPER][DEBUG] - Batch 0_0_4_3a0a7abcbf6bf106  prefetch requested. Execution time: 0.00s. Queue size: 36
+[2025-03-07 13:43:20,065][SUPER][DEBUG] - Batch 0_0_5_835e64bb65fd0813  prefetch requested. Execution time: 0.00s. Queue size: 36
+[2025-03-07 13:43:26,300][SUPER][DEBUG] - Batch 0_0_6_aeb869b67f500a08  prefetch requested. Execution time: 0.00s. Queue size: 35
+[2025-03-07 13:43:27,889][SUPER][DEBUG] - Batch 0_0_7_6e517f018593113e  prefetch requested. Execution time: 0.00s. Queue size: 34
+[2025-03-07 13:43:29,100][SUPER][DEBUG] - Batch 0_0_8_e0da0ce554f117d1  prefetch requested. Execution time: 0.00s. Queue size: 33
+[2025-03-07 13:43:35,593][SUPER][DEBUG] - Batch 0_0_9_6b34e9aae3ec4a42  prefetch requested. Execution time: 0.00s. Queue size: 33
+[2025-03-07 13:43:44,030][SUPER][DEBUG] - Batch 0_0_10_113bac4fc3f51ab5  prefetch requested. Execution time: 0.00s. Queue size: 33
+[2025-03-07 13:43:50,816][SUPER][DEBUG] - Batch 0_0_11_593985691ec54804  prefetch requested. Execution time: 0.00s. Queue size: 32
+[2025-03-07 13:43:51,297][SUPER][DEBUG] - Batch 0_0_12_b3ea78462b0850d4  prefetch requested. Execution time: 0.00s. Queue size: 31
+[2025-03-07 13:43:51,647][SUPER][DEBUG] - Batch 0_0_13_b4925490aa04e8ae  prefetch requested. Execution time: 0.00s. Queue size: 31
+[2025-03-07 13:43:52,041][SUPER][DEBUG] - Batch 0_0_14_b805c6b0dd5a749b  prefetch requested. Execution time: 0.00s. Queue size: 30
+[2025-03-07 13:43:52,460][SUPER][DEBUG] - Batch 0_0_15_ac4924e14f0203b9  prefetch requested. Execution time: 0.00s. Queue size: 29
+[2025-03-07 13:43:52,814][SUPER][DEBUG] - Batch 0_0_16_809de958fbd9190c  prefetch requested. Execution time: 0.00s. Queue size: 28
+[2025-03-07 13:43:53,210][SUPER][DEBUG] - Batch 0_0_17_0b3ec46decda365d  prefetch requested. Execution time: 0.00s. Queue size: 27
+[2025-03-07 13:43:53,691][SUPER][DEBUG] - Batch 0_0_18_316928107b2d2f88  prefetch requested. Execution time: 0.00s. Queue size: 26
+[2025-03-07 13:43:54,163][SUPER][DEBUG] - Batch 0_0_19_29c6bad2c6762388  prefetch requested. Execution time: 0.00s. Queue size: 25
+[2025-03-07 13:43:54,650][SUPER][DEBUG] - Batch 0_0_20_783811a18e4c7bb0  prefetch requested. Execution time: 0.00s. Queue size: 24
+[2025-03-07 13:43:55,107][SUPER][DEBUG] - Batch 0_0_21_1ba07865f12099a5  prefetch requested. Execution time: 0.00s. Queue size: 23
+[2025-03-07 13:43:55,555][SUPER][DEBUG] - Batch 0_0_22_e95061a455087317  prefetch requested. Execution time: 0.00s. Queue size: 22
+[2025-03-07 13:43:55,975][SUPER][DEBUG] - Batch 0_0_23_9646550a132402af  prefetch requested. Execution time: 0.00s. Queue size: 21
+[2025-03-07 13:43:56,435][SUPER][DEBUG] - Batch 0_0_24_99b2289d21107dae  prefetch requested. Execution time: 0.00s. Queue size: 20
+[2025-03-07 13:43:57,000][SUPER][DEBUG] - Batch 0_0_25_9548129f398da668  prefetch requested. Execution time: 0.00s. Queue size: 19
+[2025-03-07 13:43:57,505][SUPER][DEBUG] - Batch 0_0_26_1488b4c92c09377c  prefetch requested. Execution time: 0.00s. Queue size: 18
+[2025-03-07 13:43:58,039][SUPER][DEBUG] - Batch 0_0_27_113050156018117a  prefetch requested. Execution time: 0.00s. Queue size: 17
+[2025-03-07 13:43:58,585][SUPER][DEBUG] - Batch 0_0_28_fd289b1ab310b5b0  prefetch requested. Execution time: 0.00s. Queue size: 16
+[2025-03-07 13:43:59,146][SUPER][DEBUG] - Batch 0_0_29_159b9344bb2072e1  prefetch requested. Execution time: 0.00s. Queue size: 15
+[2025-03-07 13:43:59,653][SUPER][DEBUG] - Batch 0_0_30_2f685b6eb353e1c2  prefetch requested. Execution time: 0.00s. Queue size: 14
+[2025-03-07 13:44:00,154][SUPER][DEBUG] - Batch 0_0_31_39491facde70b2c5  prefetch requested. Execution time: 0.00s. Queue size: 14
+[2025-03-07 13:44:00,530][SUPER][DEBUG] - Batch 0_0_32_4f1d67b010563cd8  prefetch requested. Execution time: 0.00s. Queue size: 13
+[2025-03-07 13:44:00,865][SUPER][DEBUG] - Batch 0_0_33_0409d044c93790cc  prefetch requested. Execution time: 0.00s. Queue size: 12
+[2025-03-07 13:44:01,276][SUPER][DEBUG] - Batch 0_0_34_6ccff052bb091a93  prefetch requested. Execution time: 0.00s. Queue size: 11
+[2025-03-07 13:44:01,688][SUPER][DEBUG] - Batch 0_0_35_0a9dba4ffc8bcecd  prefetch requested. Execution time: 0.00s. Queue size: 10
+[2025-03-07 13:44:02,096][SUPER][DEBUG] - Batch 0_0_36_356e43042794da2e  prefetch requested. Execution time: 0.00s. Queue size: 9
+[2025-03-07 13:44:02,496][SUPER][DEBUG] - Batch 0_0_37_6d47fa4b83e1f0e8  prefetch requested. Execution time: 0.00s. Queue size: 8
+[2025-03-07 13:44:02,875][SUPER][DEBUG] - Batch 0_0_38_e8dec43322c4eecf  prefetch requested. Execution time: 0.00s. Queue size: 7
+[2025-03-07 13:44:03,268][SUPER][DEBUG] - Batch 0_0_39_062d3462c57d4a68  prefetch requested. Execution time: 0.00s. Queue size: 6
+[2025-03-07 13:44:03,729][SUPER][DEBUG] - Batch 0_0_40_ff0a519f62249111  prefetch requested. Execution time: 0.00s. Queue size: 5
+[2025-03-07 13:44:04,150][SUPER][DEBUG] - Batch 0_0_41_5514aab9af4248cb  prefetch requested. Execution time: 0.00s. Queue size: 4
+[2025-03-07 13:44:04,834][SUPER][DEBUG] - Batch 0_0_42_9979c0cf1bb2deb3  prefetch requested. Execution time: 0.00s. Queue size: 3
+[2025-03-07 13:44:05,442][SUPER][DEBUG] - Batch 0_0_43_e38a4c95cac2ee9c  prefetch requested. Execution time: 0.00s. Queue size: 2
+[2025-03-07 13:44:05,964][SUPER][DEBUG] - Batch 0_0_44_ae921caf21d6267a  prefetch requested. Execution time: 0.00s. Queue size: 1
+[2025-03-07 13:44:06,601][SUPER][DEBUG] - Batch 0_0_45_794fa8cbd96b334a  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:44:08,985][SUPER][DEBUG] - Batch 0_0_46_f3797d6a3d60e494  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:44:16,607][SUPER][DEBUG] - Batch 0_0_47_d6b710347003241d  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:44:25,229][SUPER][DEBUG] - Batch 0_0_48_73e77db9400c098f  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:44:33,187][SUPER][DEBUG] - Batch 0_0_49_8a2c775445fa1589  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:44:41,556][SUPER][DEBUG] - Batch 0_0_50_927cd5ff8566a70c  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:45:03,620][SUPER][INFO] - Server stopped due to keyboard interrupt
+[2025-03-07 13:46:10,989][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-07 13:46:10,995][SUPER][INFO] - Config: lookahead_steps: 40
+serverless_cache_address: 54.69.247.89:6378
+cache_evition_ttl_threshold: 60
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-07 13:46:11,022][SUPER][INFO] - Server started. Listening on port 50051 with 10 workers.
+[2025-03-07 13:46:42,835][SUPER][INFO] - Starting PrefetchService...
+[2025-03-07 13:46:43,486][SUPER][DEBUG] - Batch 0_0_0_489b08eb3742e70a  prefetch requested. Execution time: 0.00s. Queue size: 39
+[2025-03-07 13:46:43,836][SUPER][DEBUG] - Batch 0_0_1_2738d30d29495465  prefetch requested. Execution time: 0.00s. Queue size: 38
+[2025-03-07 13:46:44,186][SUPER][DEBUG] - Batch 0_0_2_2880434ec6d0255b  prefetch requested. Execution time: 0.00s. Queue size: 37
+[2025-03-07 13:46:44,544][SUPER][DEBUG] - Batch 0_0_3_cee86efabfb0e554  prefetch requested. Execution time: 0.00s. Queue size: 36
+[2025-03-07 13:46:44,833][SUPER][DEBUG] - Batch 0_0_4_49b0e465b6c873b6  prefetch requested. Execution time: 0.00s. Queue size: 35
+[2025-03-07 13:46:45,143][SUPER][DEBUG] - Batch 0_0_5_07643983579f7548  prefetch requested. Execution time: 0.00s. Queue size: 34
+[2025-03-07 13:46:45,481][SUPER][DEBUG] - Batch 0_0_6_ede7ebf19661f19b  prefetch requested. Execution time: 0.00s. Queue size: 33
+[2025-03-07 13:46:45,834][SUPER][DEBUG] - Batch 0_0_7_fd5dcef4cda310a5  prefetch requested. Execution time: 0.00s. Queue size: 32
+[2025-03-07 13:46:46,202][SUPER][DEBUG] - Batch 0_0_8_b01c4a7f4da8a594  prefetch requested. Execution time: 0.00s. Queue size: 31
+[2025-03-07 13:46:46,509][SUPER][DEBUG] - Batch 0_0_9_efc52ae7dab24b97  prefetch requested. Execution time: 0.00s. Queue size: 30
+[2025-03-07 13:46:46,827][SUPER][DEBUG] - Batch 0_0_10_217f50b3a4f8a524  prefetch requested. Execution time: 0.00s. Queue size: 29
+[2025-03-07 13:46:47,169][SUPER][DEBUG] - Batch 0_0_11_9b7e942e74265be7  prefetch requested. Execution time: 0.00s. Queue size: 28
+[2025-03-07 13:46:47,518][SUPER][DEBUG] - Batch 0_0_12_15ce339ce9077aa0  prefetch requested. Execution time: 0.00s. Queue size: 27
+[2025-03-07 13:46:47,949][SUPER][DEBUG] - Batch 0_0_13_fa8d80c20d5bafb9  prefetch requested. Execution time: 0.00s. Queue size: 26
+[2025-03-07 13:46:48,099][SUPER][INFO] - Dataset ' s3://imagenet1k-sdl/train/' added. Total Files: 1096302, Total Batches:8565
+[2025-03-07 13:46:48,100][SUPER][INFO] - Job '1' registered for dataset ' s3://imagenet1k-sdl/train/'. Total Jobs: 1
+[2025-03-07 13:46:48,376][SUPER][DEBUG] - Batch 0_0_14_7608228bcd4ad2ef  prefetch requested. Execution time: 0.00s. Queue size: 25
+[2025-03-07 13:46:48,763][SUPER][DEBUG] - Batch 0_0_15_0678f1ce9a105871  prefetch requested. Execution time: 0.00s. Queue size: 24
+[2025-03-07 13:46:49,149][SUPER][DEBUG] - Batch 0_0_16_27620034c0159297  prefetch requested. Execution time: 0.00s. Queue size: 23
+[2025-03-07 13:46:49,543][SUPER][DEBUG] - Batch 0_0_17_7533b096517e459d  prefetch requested. Execution time: 0.00s. Queue size: 22
+[2025-03-07 13:46:49,959][SUPER][DEBUG] - Batch 0_0_18_d3aa2504d5cc5bef  prefetch requested. Execution time: 0.00s. Queue size: 21
+[2025-03-07 13:46:50,534][SUPER][DEBUG] - Batch 0_0_19_3f31051f3facf382  prefetch requested. Execution time: 0.00s. Queue size: 20
+[2025-03-07 13:46:51,056][SUPER][DEBUG] - Batch 0_0_20_2f989646ec28892e  prefetch requested. Execution time: 0.00s. Queue size: 19
+[2025-03-07 13:46:51,697][SUPER][DEBUG] - Batch 0_0_21_6b9d3390316ebbed  prefetch requested. Execution time: 0.00s. Queue size: 18
+[2025-03-07 13:46:52,164][SUPER][DEBUG] - Batch 0_0_22_2dcd5e09e250b3fb  prefetch requested. Execution time: 0.00s. Queue size: 17
+[2025-03-07 13:46:52,778][SUPER][DEBUG] - Batch 0_0_23_c2bc32cd443ec47c  prefetch requested. Execution time: 0.00s. Queue size: 16
+[2025-03-07 13:46:53,262][SUPER][DEBUG] - Batch 0_0_24_9fe51493a9a1a70a  prefetch requested. Execution time: 0.00s. Queue size: 15
+[2025-03-07 13:46:53,757][SUPER][DEBUG] - Batch 0_0_25_d1bd8e3d7e994b67  prefetch requested. Execution time: 0.00s. Queue size: 14
+[2025-03-07 13:46:54,213][SUPER][DEBUG] - Batch 0_0_26_a83eb1402735d8e7  prefetch requested. Execution time: 0.00s. Queue size: 13
+[2025-03-07 13:46:54,764][SUPER][DEBUG] - Batch 0_0_27_b0b7ad29a19bf673  prefetch requested. Execution time: 0.00s. Queue size: 12
+[2025-03-07 13:46:55,322][SUPER][DEBUG] - Batch 0_0_28_a9ced9795f710fb1  prefetch requested. Execution time: 0.00s. Queue size: 11
+[2025-03-07 13:46:55,849][SUPER][DEBUG] - Batch 0_0_29_da5c15e182a85f01  prefetch requested. Execution time: 0.00s. Queue size: 10
+[2025-03-07 13:46:56,349][SUPER][DEBUG] - Batch 0_0_30_a2ab0e64753632b2  prefetch requested. Execution time: 0.00s. Queue size: 9
+[2025-03-07 13:46:56,865][SUPER][DEBUG] - Batch 0_0_31_8a0ca8b9528cf7f7  prefetch requested. Execution time: 0.00s. Queue size: 8
+[2025-03-07 13:46:57,404][SUPER][DEBUG] - Batch 0_0_32_fb975e92adcbf162  prefetch requested. Execution time: 0.00s. Queue size: 7
+[2025-03-07 13:46:57,898][SUPER][DEBUG] - Batch 0_0_33_13f6308ad8e3382c  prefetch requested. Execution time: 0.00s. Queue size: 6
+[2025-03-07 13:46:57,908][SUPER][INFO] - Job '1' assigned batch set '0_0'
+[2025-03-07 13:46:58,337][SUPER][DEBUG] - Batch 0_0_34_94211386b4bb4a84  prefetch requested. Execution time: 0.00s. Queue size: 6
+[2025-03-07 13:46:58,708][SUPER][DEBUG] - Batch 0_0_35_b6d70fbca56606c5  prefetch requested. Execution time: 0.00s. Queue size: 5
+[2025-03-07 13:46:59,131][SUPER][DEBUG] - Batch 0_0_36_088cd5d92edc89f0  prefetch requested. Execution time: 0.00s. Queue size: 4
+[2025-03-07 13:46:59,568][SUPER][DEBUG] - Batch 0_0_37_0c5ba288e6684cc6  prefetch requested. Execution time: 0.00s. Queue size: 3
+[2025-03-07 13:47:00,040][SUPER][DEBUG] - Batch 0_0_38_8d4d4e2c8bb483f6  prefetch requested. Execution time: 0.00s. Queue size: 2
+[2025-03-07 13:47:00,498][SUPER][DEBUG] - Batch 0_0_39_164714f164b659af  prefetch requested. Execution time: 0.00s. Queue size: 1
+[2025-03-07 13:47:00,902][SUPER][DEBUG] - Batch 0_0_40_c8aa71ee61c9ad02  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:47:10,895][SUPER][DEBUG] - Batch 0_0_41_b2cb26053673dedd  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:47:28,924][SUPER][DEBUG] - Batch 0_0_42_d46a9295aa5b36e6  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:47:36,733][SUPER][DEBUG] - Batch 0_0_43_9c72e8e021c9e3c7  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:47:44,867][SUPER][DEBUG] - Batch 0_0_44_c1ac541035b6da80  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:47:53,348][SUPER][DEBUG] - Batch 0_0_45_69038d6c76187008  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:48:04,218][SUPER][DEBUG] - Batch 0_0_46_5b449c138de880d2  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:48:13,168][SUPER][DEBUG] - Batch 0_0_47_a208079465ba5e2d  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:48:21,701][SUPER][DEBUG] - Batch 0_0_48_fe71f21065b28f07  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:48:31,502][SUPER][DEBUG] - Batch 0_0_49_6fd89c4edb113a2c  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:48:40,717][SUPER][DEBUG] - Batch 0_0_50_32ffb9ddf8ca2ab0  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:48:49,595][SUPER][DEBUG] - Batch 0_0_51_6cadb0229aeec075  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:48:59,550][SUPER][DEBUG] - Batch 0_0_52_794ffe3dc2cfa811  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:49:09,180][SUPER][DEBUG] - Batch 0_0_53_aef6eda3c564323c  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:51:12,326][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-07 13:51:12,332][SUPER][INFO] - Config: lookahead_steps: 40
+serverless_cache_address: 54.69.247.89:6378
+cache_evition_ttl_threshold: 60
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-07 13:51:12,347][SUPER][INFO] - Server started. Listening on port 50051 with 10 workers.
+[2025-03-07 13:51:50,095][SUPER][INFO] - Starting PrefetchService...
+[2025-03-07 13:51:50,646][SUPER][DEBUG] - Batch 0_0_0_a2497e748dae5865  prefetch requested. Execution time: 0.00s. Queue size: 39
+[2025-03-07 13:51:50,947][SUPER][DEBUG] - Batch 0_0_1_014d3e67f6c5a1ff  prefetch requested. Execution time: 0.00s. Queue size: 38
+[2025-03-07 13:51:51,285][SUPER][DEBUG] - Batch 0_0_2_8e86d54972156c71  prefetch requested. Execution time: 0.00s. Queue size: 37
+[2025-03-07 13:51:51,586][SUPER][DEBUG] - Batch 0_0_3_6dbb8919280f3c8f  prefetch requested. Execution time: 0.00s. Queue size: 36
+[2025-03-07 13:51:51,929][SUPER][DEBUG] - Batch 0_0_4_bce7d621c7b51a2d  prefetch requested. Execution time: 0.00s. Queue size: 35
+[2025-03-07 13:51:52,276][SUPER][DEBUG] - Batch 0_0_5_76ed79ae2a313e92  prefetch requested. Execution time: 0.00s. Queue size: 34
+[2025-03-07 13:51:52,599][SUPER][DEBUG] - Batch 0_0_6_b7080b49a022cc4f  prefetch requested. Execution time: 0.00s. Queue size: 33
+[2025-03-07 13:51:52,894][SUPER][DEBUG] - Batch 0_0_7_7a795545b3fbac95  prefetch requested. Execution time: 0.00s. Queue size: 32
+[2025-03-07 13:51:53,219][SUPER][DEBUG] - Batch 0_0_8_60c902641d98cb3d  prefetch requested. Execution time: 0.00s. Queue size: 31
+[2025-03-07 13:51:53,542][SUPER][DEBUG] - Batch 0_0_9_d16f12aa95fafa83  prefetch requested. Execution time: 0.00s. Queue size: 30
+[2025-03-07 13:51:53,843][SUPER][DEBUG] - Batch 0_0_10_df37fee8b8b1b440  prefetch requested. Execution time: 0.00s. Queue size: 29
+[2025-03-07 13:51:54,139][SUPER][DEBUG] - Batch 0_0_11_5ae3ba87c403189f  prefetch requested. Execution time: 0.00s. Queue size: 28
+[2025-03-07 13:51:54,507][SUPER][DEBUG] - Batch 0_0_12_c1446a251b5bec37  prefetch requested. Execution time: 0.00s. Queue size: 27
+[2025-03-07 13:51:54,829][SUPER][DEBUG] - Batch 0_0_13_d50baf843c167497  prefetch requested. Execution time: 0.00s. Queue size: 26
+[2025-03-07 13:51:55,136][SUPER][DEBUG] - Batch 0_0_14_e919df604ed1bdb2  prefetch requested. Execution time: 0.00s. Queue size: 25
+[2025-03-07 13:51:55,320][SUPER][INFO] - Dataset ' s3://imagenet1k-sdl/train/' added. Total Files: 1096302, Total Batches:8565
+[2025-03-07 13:51:55,321][SUPER][INFO] - Job '1' registered for dataset ' s3://imagenet1k-sdl/train/'. Total Jobs: 1
+[2025-03-07 13:51:55,446][SUPER][DEBUG] - Batch 0_0_15_6abc7f4e3da17f1c  prefetch requested. Execution time: 0.00s. Queue size: 24
+[2025-03-07 13:51:55,754][SUPER][DEBUG] - Batch 0_0_16_583a13443c589de8  prefetch requested. Execution time: 0.00s. Queue size: 23
+[2025-03-07 13:51:56,085][SUPER][DEBUG] - Batch 0_0_17_1eab0a042b749870  prefetch requested. Execution time: 0.00s. Queue size: 22
+[2025-03-07 13:51:56,396][SUPER][DEBUG] - Batch 0_0_18_1347d1fcbe831f7e  prefetch requested. Execution time: 0.00s. Queue size: 21
+[2025-03-07 13:51:56,748][SUPER][DEBUG] - Batch 0_0_19_183ab4415592a67a  prefetch requested. Execution time: 0.00s. Queue size: 20
+[2025-03-07 13:51:57,056][SUPER][DEBUG] - Batch 0_0_20_d09cb18204d55cd4  prefetch requested. Execution time: 0.00s. Queue size: 19
+[2025-03-07 13:51:57,366][SUPER][DEBUG] - Batch 0_0_21_a7cdff722e91cf0d  prefetch requested. Execution time: 0.00s. Queue size: 18
+[2025-03-07 13:51:57,683][SUPER][DEBUG] - Batch 0_0_22_fc79813645274308  prefetch requested. Execution time: 0.00s. Queue size: 17
+[2025-03-07 13:51:57,986][SUPER][DEBUG] - Batch 0_0_23_09aa816f7b4b246c  prefetch requested. Execution time: 0.00s. Queue size: 16
+[2025-03-07 13:51:58,304][SUPER][DEBUG] - Batch 0_0_24_92b058719e0bdd9d  prefetch requested. Execution time: 0.00s. Queue size: 15
+[2025-03-07 13:51:58,623][SUPER][DEBUG] - Batch 0_0_25_9437e19d403fb6c1  prefetch requested. Execution time: 0.00s. Queue size: 14
+[2025-03-07 13:51:58,951][SUPER][DEBUG] - Batch 0_0_26_c34a35ad20f11608  prefetch requested. Execution time: 0.00s. Queue size: 13
+[2025-03-07 13:51:59,270][SUPER][DEBUG] - Batch 0_0_27_a976a95c9ba5cb1e  prefetch requested. Execution time: 0.00s. Queue size: 12
+[2025-03-07 13:51:59,630][SUPER][DEBUG] - Batch 0_0_28_0ca0c9d94aad6249  prefetch requested. Execution time: 0.00s. Queue size: 11
+[2025-03-07 13:52:00,009][SUPER][DEBUG] - Batch 0_0_29_72016f77288065ae  prefetch requested. Execution time: 0.00s. Queue size: 10
+[2025-03-07 13:52:00,396][SUPER][DEBUG] - Batch 0_0_30_ab73baf99b94ae88  prefetch requested. Execution time: 0.00s. Queue size: 9
+[2025-03-07 13:52:00,748][SUPER][DEBUG] - Batch 0_0_31_330e09da977aeb91  prefetch requested. Execution time: 0.00s. Queue size: 8
+[2025-03-07 13:52:01,129][SUPER][DEBUG] - Batch 0_0_32_8668f24b6ffc2310  prefetch requested. Execution time: 0.00s. Queue size: 7
+[2025-03-07 13:52:01,513][SUPER][DEBUG] - Batch 0_0_33_525ebd40be584cf2  prefetch requested. Execution time: 0.00s. Queue size: 6
+[2025-03-07 13:52:01,937][SUPER][DEBUG] - Batch 0_0_34_4b3f84b98c575f80  prefetch requested. Execution time: 0.00s. Queue size: 5
+[2025-03-07 13:52:02,025][SUPER][INFO] - Job '1' assigned batch set '0_0'
+[2025-03-07 13:52:02,313][SUPER][DEBUG] - Batch 0_0_35_29c698770d8db03a  prefetch requested. Execution time: 0.00s. Queue size: 5
+[2025-03-07 13:52:02,766][SUPER][DEBUG] - Batch 0_0_36_052ebd6c862df66c  prefetch requested. Execution time: 0.00s. Queue size: 4
+[2025-03-07 13:52:03,177][SUPER][DEBUG] - Batch 0_0_37_9f405120d35863b4  prefetch requested. Execution time: 0.00s. Queue size: 3
+[2025-03-07 13:52:03,588][SUPER][DEBUG] - Batch 0_0_38_ebb717cf5066b988  prefetch requested. Execution time: 0.00s. Queue size: 2
+[2025-03-07 13:52:04,005][SUPER][DEBUG] - Batch 0_0_39_345d0f90b30d9b75  prefetch requested. Execution time: 0.00s. Queue size: 1
+[2025-03-07 13:52:04,670][SUPER][DEBUG] - Batch 0_0_40_81921c3f9eb2e697  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:52:14,743][SUPER][DEBUG] - Batch 0_0_41_496c69140ba1a738  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:52:26,280][SUPER][DEBUG] - Batch 0_0_42_000eaedae00d10a8  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:52:39,178][SUPER][DEBUG] - Batch 0_0_43_94f62fcea0d78546  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:52:48,766][SUPER][DEBUG] - Batch 0_0_44_d6168ceaff2d02a7  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:55:54,278][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-07 13:55:54,282][SUPER][INFO] - Config: lookahead_steps: 40
+serverless_cache_address: 54.69.247.89:6378
+cache_evition_ttl_threshold: 60
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-07 13:55:54,307][SUPER][INFO] - Server started. Listening on port 50051 with 10 workers.
+[2025-03-07 13:56:14,952][SUPER][INFO] - Starting PrefetchService...
+[2025-03-07 13:56:15,560][SUPER][DEBUG] - Batch 0_0_0_099132b6b20216df  prefetch requested. Execution time: 0.00s. Queue size: 39
+[2025-03-07 13:56:15,888][SUPER][DEBUG] - Batch 0_0_1_d8fa25aae6c33ac4  prefetch requested. Execution time: 0.00s. Queue size: 38
+[2025-03-07 13:56:16,209][SUPER][DEBUG] - Batch 0_0_2_0d27c6dffd2a80d9  prefetch requested. Execution time: 0.00s. Queue size: 37
+[2025-03-07 13:56:16,544][SUPER][DEBUG] - Batch 0_0_3_de9b7a252d1d03f4  prefetch requested. Execution time: 0.00s. Queue size: 36
+[2025-03-07 13:56:16,834][SUPER][DEBUG] - Batch 0_0_4_e8ad8bcb993d96d9  prefetch requested. Execution time: 0.00s. Queue size: 35
+[2025-03-07 13:56:17,135][SUPER][DEBUG] - Batch 0_0_5_55e491f2efdae13d  prefetch requested. Execution time: 0.00s. Queue size: 34
+[2025-03-07 13:56:17,474][SUPER][DEBUG] - Batch 0_0_6_2d82d6ff7110f529  prefetch requested. Execution time: 0.00s. Queue size: 33
+[2025-03-07 13:56:17,777][SUPER][DEBUG] - Batch 0_0_7_940cca7e6f6279a5  prefetch requested. Execution time: 0.00s. Queue size: 32
+[2025-03-07 13:56:18,107][SUPER][DEBUG] - Batch 0_0_8_3e5986e43518cacb  prefetch requested. Execution time: 0.00s. Queue size: 31
+[2025-03-07 13:56:18,427][SUPER][DEBUG] - Batch 0_0_9_8c70e6b8bf81954b  prefetch requested. Execution time: 0.00s. Queue size: 30
+[2025-03-07 13:56:18,773][SUPER][DEBUG] - Batch 0_0_10_df268957d9773be4  prefetch requested. Execution time: 0.00s. Queue size: 29
+[2025-03-07 13:56:19,087][SUPER][DEBUG] - Batch 0_0_11_8d28e84712db8bd2  prefetch requested. Execution time: 0.00s. Queue size: 28
+[2025-03-07 13:56:19,390][SUPER][DEBUG] - Batch 0_0_12_35026fcf64aeb89f  prefetch requested. Execution time: 0.00s. Queue size: 27
+[2025-03-07 13:56:19,743][SUPER][DEBUG] - Batch 0_0_13_de81063807c79cf8  prefetch requested. Execution time: 0.00s. Queue size: 26
+[2025-03-07 13:56:20,063][SUPER][DEBUG] - Batch 0_0_14_e15f61cbe36a8bd7  prefetch requested. Execution time: 0.00s. Queue size: 25
+[2025-03-07 13:56:20,227][SUPER][INFO] - Dataset ' s3://imagenet1k-sdl/train/' added. Total Files: 1096302, Total Batches:8565
+[2025-03-07 13:56:20,228][SUPER][INFO] - Job '1' registered for dataset ' s3://imagenet1k-sdl/train/'. Total Jobs: 1
+[2025-03-07 13:56:20,362][SUPER][DEBUG] - Batch 0_0_15_28da3e39da922c55  prefetch requested. Execution time: 0.00s. Queue size: 24
+[2025-03-07 13:56:20,685][SUPER][DEBUG] - Batch 0_0_16_166d091f55538c72  prefetch requested. Execution time: 0.00s. Queue size: 23
+[2025-03-07 13:56:20,997][SUPER][DEBUG] - Batch 0_0_17_81c2a35e7b6148e4  prefetch requested. Execution time: 0.00s. Queue size: 22
+[2025-03-07 13:56:21,326][SUPER][DEBUG] - Batch 0_0_18_fd771cbdf5bf137a  prefetch requested. Execution time: 0.00s. Queue size: 21
+[2025-03-07 13:56:21,630][SUPER][DEBUG] - Batch 0_0_19_a9d39e2db48d1a50  prefetch requested. Execution time: 0.00s. Queue size: 20
+[2025-03-07 13:56:21,987][SUPER][DEBUG] - Batch 0_0_20_728ee7054c9acd28  prefetch requested. Execution time: 0.00s. Queue size: 19
+[2025-03-07 13:56:22,307][SUPER][DEBUG] - Batch 0_0_21_f15ec183abc4afa9  prefetch requested. Execution time: 0.00s. Queue size: 18
+[2025-03-07 13:56:22,646][SUPER][DEBUG] - Batch 0_0_22_ade3f9550cb6ae87  prefetch requested. Execution time: 0.00s. Queue size: 17
+[2025-03-07 13:56:22,966][SUPER][DEBUG] - Batch 0_0_23_05924fda5244b34a  prefetch requested. Execution time: 0.00s. Queue size: 16
+[2025-03-07 13:56:23,278][SUPER][DEBUG] - Batch 0_0_24_eb21c8993ac848a8  prefetch requested. Execution time: 0.00s. Queue size: 15
+[2025-03-07 13:56:23,587][SUPER][DEBUG] - Batch 0_0_25_9aa0ed92aba9a4a3  prefetch requested. Execution time: 0.00s. Queue size: 14
+[2025-03-07 13:56:23,898][SUPER][DEBUG] - Batch 0_0_26_6eb15e70fc31eca9  prefetch requested. Execution time: 0.00s. Queue size: 13
+[2025-03-07 13:56:24,239][SUPER][DEBUG] - Batch 0_0_27_6ca1c84c4dc0adc0  prefetch requested. Execution time: 0.00s. Queue size: 12
+[2025-03-07 13:56:24,565][SUPER][DEBUG] - Batch 0_0_28_05656203e57fc1c5  prefetch requested. Execution time: 0.00s. Queue size: 11
+[2025-03-07 13:56:24,860][SUPER][DEBUG] - Batch 0_0_29_6c0690d229e38059  prefetch requested. Execution time: 0.00s. Queue size: 10
+[2025-03-07 13:56:25,173][SUPER][DEBUG] - Batch 0_0_30_7474e2b5248b6034  prefetch requested. Execution time: 0.00s. Queue size: 9
+[2025-03-07 13:56:25,480][SUPER][DEBUG] - Batch 0_0_31_a0eb7cdf611338b8  prefetch requested. Execution time: 0.00s. Queue size: 8
+[2025-03-07 13:56:25,796][SUPER][DEBUG] - Batch 0_0_32_54b88eb0f2f96114  prefetch requested. Execution time: 0.00s. Queue size: 7
+[2025-03-07 13:56:26,115][SUPER][DEBUG] - Batch 0_0_33_e73221eb8407f335  prefetch requested. Execution time: 0.00s. Queue size: 6
+[2025-03-07 13:56:26,422][SUPER][INFO] - Job '1' assigned batch set '0_0'
+[2025-03-07 13:56:26,703][SUPER][DEBUG] - Batch 0_0_34_a1580779374bbce1  prefetch requested. Execution time: 0.00s. Queue size: 6
+[2025-03-07 13:56:27,541][SUPER][DEBUG] - Batch 0_0_35_7cc08e280a02cc19  prefetch requested. Execution time: 0.00s. Queue size: 5
+[2025-03-07 13:56:28,416][SUPER][DEBUG] - Batch 0_0_36_0190831c7ebe33e6  prefetch requested. Execution time: 0.00s. Queue size: 4
+[2025-03-07 13:56:29,157][SUPER][DEBUG] - Batch 0_0_37_a3ebd8e63d36a409  prefetch requested. Execution time: 0.00s. Queue size: 3
+[2025-03-07 13:56:29,913][SUPER][DEBUG] - Batch 0_0_38_857a907f6abf0967  prefetch requested. Execution time: 0.00s. Queue size: 2
+[2025-03-07 13:56:30,616][SUPER][DEBUG] - Batch 0_0_39_1d07f3cc5ea5ef82  prefetch requested. Execution time: 0.00s. Queue size: 1
+[2025-03-07 13:56:31,285][SUPER][DEBUG] - Batch 0_0_40_ec9cfcd7fb72c66d  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:56:32,831][SUPER][DEBUG] - Batch 0_0_41_e8a2ed3701397198  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:56:38,103][SUPER][DEBUG] - Batch 0_0_42_66311c13a2cb5f32  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:56:42,879][SUPER][DEBUG] - Batch 0_0_43_73400bf00e64fdcc  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:56:48,589][SUPER][DEBUG] - Batch 0_0_44_68122f94707f8c0f  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:56:53,137][SUPER][DEBUG] - Batch 0_0_45_8f190e03da19b5de  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:56:57,802][SUPER][DEBUG] - Batch 0_0_46_9a4fe004656f90bd  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:57:02,612][SUPER][DEBUG] - Batch 0_0_47_1f0f0ddd9d5dfce7  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:57:08,096][SUPER][DEBUG] - Batch 0_0_48_7f907cee5488e4c0  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:57:13,270][SUPER][DEBUG] - Batch 0_0_49_35ac0020d587dc68  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:57:18,424][SUPER][DEBUG] - Batch 0_0_50_8038725cbf0aa461  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:57:23,402][SUPER][DEBUG] - Batch 0_0_51_8d27b9c1efe5dd6c  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:57:28,758][SUPER][DEBUG] - Batch 0_0_52_e0cba8bb961c9638  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:57:33,561][SUPER][DEBUG] - Batch 0_0_53_f4394c9e2295eae7  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:57:38,232][SUPER][DEBUG] - Batch 0_0_54_cb6b3508c7854008  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:57:42,783][SUPER][DEBUG] - Batch 0_0_55_702d00e10da1a2f9  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:57:48,036][SUPER][DEBUG] - Batch 0_0_56_71f0c65b01565aad  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 13:59:17,212][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-07 13:59:17,216][SUPER][INFO] - Config: lookahead_steps: 40
+serverless_cache_address: 54.69.247.89:6378
+cache_evition_ttl_threshold: 60
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-07 13:59:17,239][SUPER][INFO] - Server started. Listening on port 50051 with 10 workers.
+[2025-03-07 14:01:15,196][SUPER][INFO] - Starting PrefetchService...
+[2025-03-07 14:01:15,775][SUPER][DEBUG] - Batch 0_0_0_2cd34bdd8d24db42  prefetch requested. Execution time: 0.00s. Queue size: 39
+[2025-03-07 14:01:16,144][SUPER][DEBUG] - Batch 0_0_1_d4a20c0c4c86d8e9  prefetch requested. Execution time: 0.00s. Queue size: 38
+[2025-03-07 14:01:16,484][SUPER][DEBUG] - Batch 0_0_2_20d95dca6ea5cffc  prefetch requested. Execution time: 0.00s. Queue size: 37
+[2025-03-07 14:01:16,825][SUPER][DEBUG] - Batch 0_0_3_b1a814181a361d0d  prefetch requested. Execution time: 0.00s. Queue size: 36
+[2025-03-07 14:01:17,152][SUPER][DEBUG] - Batch 0_0_4_0fca3b93ee73a0fe  prefetch requested. Execution time: 0.00s. Queue size: 35
+[2025-03-07 14:01:17,523][SUPER][DEBUG] - Batch 0_0_5_8b291a1e89e44954  prefetch requested. Execution time: 0.00s. Queue size: 34
+[2025-03-07 14:01:17,838][SUPER][DEBUG] - Batch 0_0_6_7a048ef10fa3fbb8  prefetch requested. Execution time: 0.00s. Queue size: 33
+[2025-03-07 14:01:18,179][SUPER][DEBUG] - Batch 0_0_7_737d4aea81deee2c  prefetch requested. Execution time: 0.00s. Queue size: 32
+[2025-03-07 14:01:18,506][SUPER][DEBUG] - Batch 0_0_8_984b0892158ddd43  prefetch requested. Execution time: 0.00s. Queue size: 31
+[2025-03-07 14:01:18,820][SUPER][DEBUG] - Batch 0_0_9_46448d5298bf895d  prefetch requested. Execution time: 0.00s. Queue size: 30
+[2025-03-07 14:01:19,181][SUPER][DEBUG] - Batch 0_0_10_56eddf8f4081a2d0  prefetch requested. Execution time: 0.00s. Queue size: 29
+[2025-03-07 14:01:19,492][SUPER][DEBUG] - Batch 0_0_11_1210f3ff6d27b249  prefetch requested. Execution time: 0.00s. Queue size: 28
+[2025-03-07 14:01:19,810][SUPER][DEBUG] - Batch 0_0_12_49709739f9e8e106  prefetch requested. Execution time: 0.00s. Queue size: 27
+[2025-03-07 14:01:20,138][SUPER][DEBUG] - Batch 0_0_13_c2ec8f6a65453137  prefetch requested. Execution time: 0.00s. Queue size: 26
+[2025-03-07 14:01:20,417][SUPER][INFO] - Dataset ' s3://imagenet1k-sdl/train/' added. Total Files: 1096302, Total Batches:8565
+[2025-03-07 14:01:20,419][SUPER][INFO] - Job '1' registered for dataset ' s3://imagenet1k-sdl/train/'. Total Jobs: 1
+[2025-03-07 14:01:20,446][SUPER][DEBUG] - Batch 0_0_14_0cb448e72c1830cf  prefetch requested. Execution time: 0.00s. Queue size: 25
+[2025-03-07 14:01:20,749][SUPER][DEBUG] - Batch 0_0_15_683e25d57e8ca31b  prefetch requested. Execution time: 0.00s. Queue size: 24
+[2025-03-07 14:01:21,060][SUPER][DEBUG] - Batch 0_0_16_277500f9aadb9800  prefetch requested. Execution time: 0.00s. Queue size: 23
+[2025-03-07 14:01:21,414][SUPER][DEBUG] - Batch 0_0_17_9e16039606f47893  prefetch requested. Execution time: 0.00s. Queue size: 22
+[2025-03-07 14:01:21,728][SUPER][DEBUG] - Batch 0_0_18_70cd8ab9f32ae3b1  prefetch requested. Execution time: 0.00s. Queue size: 21
+[2025-03-07 14:01:22,022][SUPER][DEBUG] - Batch 0_0_19_679671bc7bb7b9d8  prefetch requested. Execution time: 0.00s. Queue size: 20
+[2025-03-07 14:01:22,336][SUPER][DEBUG] - Batch 0_0_20_d5d30332092c6dd3  prefetch requested. Execution time: 0.00s. Queue size: 19
+[2025-03-07 14:01:22,650][SUPER][DEBUG] - Batch 0_0_21_80216d39cdd21e62  prefetch requested. Execution time: 0.00s. Queue size: 18
+[2025-03-07 14:01:22,978][SUPER][DEBUG] - Batch 0_0_22_877d00e21d5a9a61  prefetch requested. Execution time: 0.00s. Queue size: 17
+[2025-03-07 14:01:23,285][SUPER][DEBUG] - Batch 0_0_23_c82644df827ebc3e  prefetch requested. Execution time: 0.00s. Queue size: 16
+[2025-03-07 14:01:23,642][SUPER][DEBUG] - Batch 0_0_24_9bdba4ac975103f6  prefetch requested. Execution time: 0.00s. Queue size: 15
+[2025-03-07 14:01:23,958][SUPER][DEBUG] - Batch 0_0_25_dbcbd02d385cbb6f  prefetch requested. Execution time: 0.00s. Queue size: 14
+[2025-03-07 14:01:24,410][SUPER][DEBUG] - Batch 0_0_26_5b4c3d5be62e99f2  prefetch requested. Execution time: 0.00s. Queue size: 13
+[2025-03-07 14:01:24,734][SUPER][DEBUG] - Batch 0_0_27_945a9c72350f63e6  prefetch requested. Execution time: 0.00s. Queue size: 12
+[2025-03-07 14:01:25,076][SUPER][DEBUG] - Batch 0_0_28_0e8356f240e3e8b4  prefetch requested. Execution time: 0.00s. Queue size: 11
+[2025-03-07 14:01:25,437][SUPER][DEBUG] - Batch 0_0_29_1b04e01c53df4879  prefetch requested. Execution time: 0.00s. Queue size: 10
+[2025-03-07 14:01:25,875][SUPER][DEBUG] - Batch 0_0_30_77eb66819a986c2b  prefetch requested. Execution time: 0.00s. Queue size: 9
+[2025-03-07 14:01:26,278][SUPER][DEBUG] - Batch 0_0_31_9f4b7513b7f48c96  prefetch requested. Execution time: 0.00s. Queue size: 8
+[2025-03-07 14:01:26,467][SUPER][INFO] - Job '1' assigned batch set '0_0'
+[2025-03-07 14:01:26,645][SUPER][DEBUG] - Batch 0_0_32_417d3009b358ec28  prefetch requested. Execution time: 0.00s. Queue size: 8
+[2025-03-07 14:01:27,039][SUPER][DEBUG] - Batch 0_0_33_552b960dc1dc321e  prefetch requested. Execution time: 0.00s. Queue size: 7
+[2025-03-07 14:01:27,422][SUPER][DEBUG] - Batch 0_0_34_d0a1f4dcfd4e3820  prefetch requested. Execution time: 0.00s. Queue size: 6
+[2025-03-07 14:01:28,079][SUPER][DEBUG] - Batch 0_0_35_80c811433c4d0dfd  prefetch requested. Execution time: 0.00s. Queue size: 5
+[2025-03-07 14:01:28,517][SUPER][DEBUG] - Batch 0_0_36_96e7f4bd879bd8a6  prefetch requested. Execution time: 0.00s. Queue size: 4
+[2025-03-07 14:01:28,971][SUPER][DEBUG] - Batch 0_0_37_f184226184a63d0d  prefetch requested. Execution time: 0.00s. Queue size: 3
+[2025-03-07 14:01:29,465][SUPER][DEBUG] - Batch 0_0_38_a76647105dfef991  prefetch requested. Execution time: 0.00s. Queue size: 2
+[2025-03-07 14:01:30,108][SUPER][DEBUG] - Batch 0_0_39_d081330198b08ae5  prefetch requested. Execution time: 0.00s. Queue size: 1
+[2025-03-07 14:01:30,724][SUPER][DEBUG] - Batch 0_0_40_40fefbc6472513cd  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 14:01:32,305][SUPER][DEBUG] - Batch 0_0_41_f5a6d72e487410f0  prefetch requested. Execution time: 0.00s. Queue size: 0
+[2025-03-07 14:02:47,664][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-07 14:02:47,668][SUPER][INFO] - Config: lookahead_steps: 40
+serverless_cache_address: 54.69.247.89:6378
+cache_evition_ttl_threshold: 60
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-07 14:02:47,690][SUPER][INFO] - Server started. Listening on port 50051 with 10 workers.
+[2025-03-07 14:03:50,793][SUPER][INFO] - Starting PrefetchService...
+[2025-03-07 14:03:51,457][SUPER][DEBUG] - Batch 0_0_0_9577ff0c0c20189d  prefetch requested. Execution time: 0.00s. Queue size: 39
+[2025-03-07 14:03:51,788][SUPER][DEBUG] - Batch 0_0_1_a83689a5420ab8c6  prefetch requested. Execution time: 0.00s. Queue size: 38
+[2025-03-07 14:03:52,117][SUPER][DEBUG] - Batch 0_0_2_1f0b7d0933edfbe8  prefetch requested. Execution time: 0.00s. Queue size: 37
+[2025-03-07 14:03:52,475][SUPER][DEBUG] - Batch 0_0_3_de61865bca10bd29  prefetch requested. Execution time: 0.00s. Queue size: 36
+[2025-03-07 14:03:52,817][SUPER][DEBUG] - Batch 0_0_4_92ef39ea5cdf95a1  prefetch requested. Execution time: 0.00s. Queue size: 35
+[2025-03-07 14:03:53,246][SUPER][DEBUG] - Batch 0_0_5_b359083fe9064aa7  prefetch requested. Execution time: 0.00s. Queue size: 34
+[2025-03-07 14:03:53,605][SUPER][DEBUG] - Batch 0_0_6_58cf995c6f8fa238  prefetch requested. Execution time: 0.00s. Queue size: 33
+[2025-03-07 14:03:53,937][SUPER][DEBUG] - Batch 0_0_7_d4817cc6169b8dad  prefetch requested. Execution time: 0.00s. Queue size: 32
+[2025-03-07 14:03:54,277][SUPER][DEBUG] - Batch 0_0_8_09a19d7c80739192  prefetch requested. Execution time: 0.00s. Queue size: 31
+[2025-03-07 14:03:54,610][SUPER][DEBUG] - Batch 0_0_9_c12400c8620b45ef  prefetch requested. Execution time: 0.00s. Queue size: 30
+[2025-03-07 14:03:54,946][SUPER][DEBUG] - Batch 0_0_10_988c93fe92edf491  prefetch requested. Execution time: 0.00s. Queue size: 29
+[2025-03-07 14:03:55,374][SUPER][DEBUG] - Batch 0_0_11_7b295a807715d973  prefetch requested. Execution time: 0.00s. Queue size: 28
+[2025-03-07 14:03:55,933][SUPER][DEBUG] - Batch 0_0_12_988c9b860ca12856  prefetch requested. Execution time: 0.00s. Queue size: 27
+[2025-03-07 14:03:56,094][SUPER][INFO] - Dataset ' s3://imagenet1k-sdl/train/' added. Total Files: 1096302, Total Batches:8565
+[2025-03-07 14:03:56,095][SUPER][INFO] - Job '1' registered for dataset ' s3://imagenet1k-sdl/train/'. Total Jobs: 1
+[2025-03-07 14:03:56,569][SUPER][DEBUG] - Batch 0_0_13_96309535c4336c23  prefetch requested. Execution time: 0.00s. Queue size: 26
+[2025-03-07 14:03:57,225][SUPER][DEBUG] - Batch 0_0_14_a8a824c71c9a272d  prefetch requested. Execution time: 0.00s. Queue size: 25
+[2025-03-07 14:03:57,877][SUPER][DEBUG] - Batch 0_0_15_859ad1e93268e32a  prefetch requested. Execution time: 0.00s. Queue size: 24
+[2025-03-07 14:03:58,505][SUPER][DEBUG] - Batch 0_0_16_c3b840cf5bb86308  prefetch requested. Execution time: 0.00s. Queue size: 23
+[2025-03-07 14:03:59,179][SUPER][DEBUG] - Batch 0_0_17_31c0e2e57fe2e6f8  prefetch requested. Execution time: 0.00s. Queue size: 22
+[2025-03-07 14:03:59,813][SUPER][DEBUG] - Batch 0_0_18_39ea395a6ce82f4a  prefetch requested. Execution time: 0.00s. Queue size: 21
+[2025-03-07 14:04:00,448][SUPER][DEBUG] - Batch 0_0_19_b6d8305837ec377c  prefetch requested. Execution time: 0.00s. Queue size: 20
+[2025-03-07 14:04:01,092][SUPER][DEBUG] - Batch 0_0_20_2a5708758445bc8e  prefetch requested. Execution time: 0.00s. Queue size: 19
+[2025-03-07 14:04:01,783][SUPER][DEBUG] - Batch 0_0_21_863f27ba4477a852  prefetch requested. Execution time: 0.00s. Queue size: 18
+[2025-03-07 14:04:01,986][SUPER][INFO] - Job '1' assigned batch set '0_0'
+[2025-03-07 14:04:02,416][SUPER][DEBUG] - Batch 0_0_22_4fdb6f1fafc3dc08  prefetch requested. Execution time: 0.00s. Queue size: 18
+[2025-03-07 14:04:03,060][SUPER][DEBUG] - Batch 0_0_23_8a62889461298bfa  prefetch requested. Execution time: 0.00s. Queue size: 17
+[2025-03-07 14:04:03,842][SUPER][DEBUG] - Batch 0_0_24_4eba122685125887  prefetch requested. Execution time: 0.00s. Queue size: 16
+[2025-03-07 14:04:04,490][SUPER][DEBUG] - Batch 0_0_25_f92ac0655da12d06  prefetch requested. Execution time: 0.00s. Queue size: 15
+[2025-03-07 14:04:05,158][SUPER][DEBUG] - Batch 0_0_26_820d22a555aca91b  prefetch requested. Execution time: 0.00s. Queue size: 14
+[2025-03-07 14:04:05,812][SUPER][DEBUG] - Batch 0_0_27_e925d60eb709a3e8  prefetch requested. Execution time: 0.00s. Queue size: 13
+[2025-03-07 14:04:06,489][SUPER][DEBUG] - Batch 0_0_28_93136b0c9c6ca73b  prefetch requested. Execution time: 0.00s. Queue size: 12
+[2025-03-07 14:04:07,104][SUPER][DEBUG] - Batch 0_0_29_4958aadfdc04b423  prefetch requested. Execution time: 0.00s. Queue size: 11
+[2025-03-07 14:04:07,715][SUPER][DEBUG] - Batch 0_0_30_61c864b5d3c870ec  prefetch requested. Execution time: 0.00s. Queue size: 11
+[2025-03-07 14:04:08,345][SUPER][DEBUG] - Batch 0_0_31_5fa85a84fbbab488  prefetch requested. Execution time: 0.00s. Queue size: 10
+[2025-03-07 14:04:09,052][SUPER][DEBUG] - Batch 0_0_32_259dfe76f323c115  prefetch requested. Execution time: 0.00s. Queue size: 9
+[2025-03-07 14:04:09,668][SUPER][DEBUG] - Batch 0_0_33_82d23ae31ee60901  prefetch requested. Execution time: 0.00s. Queue size: 8
+[2025-03-07 14:04:10,343][SUPER][DEBUG] - Batch 0_0_34_5d7becf53214ed77  prefetch requested. Execution time: 0.00s. Queue size: 7
+[2025-03-07 14:04:11,031][SUPER][DEBUG] - Batch 0_0_35_4819540966fb8174  prefetch requested. Execution time: 0.00s. Queue size: 6
+[2025-03-07 14:04:11,732][SUPER][DEBUG] - Batch 0_0_36_024a68caf00ecd9d  prefetch requested. Execution time: 0.00s. Queue size: 5
+[2025-03-07 14:04:12,378][SUPER][DEBUG] - Batch 0_0_37_9033e31a24c92a33  prefetch requested. Execution time: 0.00s. Queue size: 5
+[2025-03-07 14:04:13,037][SUPER][DEBUG] - Batch 0_0_38_94a0a8b8aa60d63c  prefetch requested. Execution time: 0.00s. Queue size: 4
+[2025-03-07 14:04:13,662][SUPER][DEBUG] - Batch 0_0_39_3d53fb81cdf649a1  prefetch requested. Execution time: 0.00s. Queue size: 3
+[2025-03-07 14:04:25,037][SUPER][DEBUG] - Batch 0_0_40_18046f2f24a52003  prefetch requested. Execution time: 0.00s. Queue size: 4
+[2025-03-07 14:08:01,222][SUPER][DEBUG] - Batch 0_0_41_fa9d6432987012b8  prefetch requested. Execution time: 0.00s. Queue size: 5

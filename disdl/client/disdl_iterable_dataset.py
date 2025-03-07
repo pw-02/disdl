@@ -85,33 +85,13 @@ class DisDLIterableDataset(torch.utils.data.IterableDataset):
                 job_id=self.job_id, 
                 dataset_location=self.dataset_location)
 
-    def _prefetch_data(self):
-        """
-        This function will run in a separate thread and pre-load batches into the prefetch_queue.
-        """
-        while not self.stop_thread:
-            if self.prefetch_queue.full():
-                time.sleep(0.1)
-                continue
-            try:
-                print(self.prefetch_queue.qsize())
-                batch, data_fetch_time, transformation_time, cache_hit, cached_after_fetch = self._get_next_batch()
-                #add all of the data to the prefetch queue
-                self.prefetch_queue.put((batch,  data_fetch_time, transformation_time, cache_hit, cached_after_fetch))  # ✅ Wrap in a tuple
-            except Exception as e:
-                print(f"Error prefetching batch: {e}")
-                continue
+    
 
     def __iter__(self):
         self.check_dsdl_client()
-        self.stop_thread = False
-        self.prefetch_queue = queue.Queue(maxsize=self.prefetch_buffer_size)
-        self._prefetch_thread = threading.Thread(target=self._prefetch_data)
-        self._prefetch_thread.daemon = True  # Ensure the thread stops when the process exits
-        self._prefetch_thread.start()
-     
-        while not self.stop_thread or not self.prefetch_queue.empty():
-            yield self.prefetch_queue.get()
+
+        while True:
+            yield self._get_next_batch()
     
     def _set_s3_client(self):
         if self.s3_client is None:
@@ -144,9 +124,10 @@ class DisDLIterableDataset(torch.utils.data.IterableDataset):
     
     def get_cached_minibatch_with_retries(self, batch_id, max_retries=3, retry_interval=0.1):
         """Attempts to load a batch from cache, retrying if it fails."""
+        self._initialize_cache_client()
         attempt = 0
         next_minibatch = None
-        while attempt < max_retries:
+        while attempt <= max_retries:
             try:
                 next_minibatch = self._load_batch_from_cache(batch_id)
                 # If successfully loaded, break out of the loop
@@ -167,7 +148,7 @@ class DisDLIterableDataset(torch.utils.data.IterableDataset):
         minibatch_bytes = None
         batch_id, samples, is_cached = self.client.sampleNextMinibatch()
         if self.use_cache and is_cached:
-            minibatch_bytes = self.get_cached_minibatch_with_retries(batch_id, max_retries=3, retry_interval=0.5)
+            minibatch_bytes = self.get_cached_minibatch_with_retries(batch_id, max_retries=0, retry_interval=0.5)
         
         if minibatch_bytes  is not None and (isinstance(minibatch_bytes , bytes) or isinstance(minibatch_bytes , str)):
             start_transformation_time   = time.perf_counter()
@@ -185,10 +166,10 @@ class DisDLIterableDataset(torch.utils.data.IterableDataset):
             transformation_time =  time.perf_counter() - start_transformation_time
             batch_data= torch.stack(batch_data)
             batch_labels = torch.tensor(batch_labels)
-            if self.use_cache:
-                bytes_tensor = self.convert_torch_tensor_to_bytes((batch_data, batch_labels))
-                if self.cache_minibatch_with_retries(batch_id, bytes_tensor, max_retries=0):
-                    cached_after_fetch = True
+            # if self.use_cache:
+            #     bytes_tensor = self.convert_torch_tensor_to_bytes((batch_data, batch_labels))
+            #     if self.cache_minibatch_with_retries(batch_id, bytes_tensor, max_retries=0):
+            #         cached_after_fetch = True
         data_fetch_time = time.perf_counter() - start_time - transformation_time
         return (batch_data,batch_labels,batch_id), data_fetch_time, transformation_time, cache_hit, cached_after_fetch
             
@@ -200,7 +181,8 @@ class DisDLIterableDataset(torch.utils.data.IterableDataset):
                 self.cache_client.set(batch_id, minibatch)
                 return True # Exit the function on success
             except Exception as e:
-                print(f"Error saving to cache: {e}, batch_id: {batch_id}, retrying {retries}...")
+                # print(f"Error saving to cache: {e}, batch_id: {batch_id}, retrying {retries}...")
+                pass
             # Increment the retry count
             retries += 1
             # Wait before retrying
@@ -212,7 +194,7 @@ class DisDLIterableDataset(torch.utils.data.IterableDataset):
     def convert_torch_tensor_to_bytes(self, data:Tuple[torch.Tensor, torch.Tensor]):    
         with BytesIO() as buffer:
             torch.save(data, buffer)
-        bytes_tensor = buffer.getvalue()
+            bytes_tensor = buffer.getvalue()
         if self.use_compression:
             bytes_tensor = lz4.frame.compress(bytes_tensor,  compression_level=0)
         return bytes_tensor
@@ -252,11 +234,11 @@ class DisDLIterableDataset(torch.utils.data.IterableDataset):
 
 
 if __name__ == "__main__":
-    dataset_location = "s3://sdl-cifar10/test/"
+    dataset_location = " s3://imagenet1k-sdl/train/"
     service_address = 'localhost:50051'
-    cache_address = 'localhost:6379'
+    cache_address = '54.69.247.89:6378'
     client = DisDLClient(address=service_address)
-    job_id, dataset_info = client.registerJob(dataset_location="s3://sdl-cifar10/test/")
+    job_id, dataset_info = client.registerJob(dataset_location=dataset_location)
     num_batchs = dataset_info["num_batches"]
     client.close()
     
@@ -284,11 +266,12 @@ if __name__ == "__main__":
     dataloader = DataLoader(dataset, batch_size=None, num_workers=1, pin_memory=True)
 
     end = time.perf_counter()
-    for idx, (bach, data_fetch_time, transformation_time, cache_hit, cached_after_fetch) in enumerate(dataloader):
-        bacth_data, batch_labels, batch_id = bach
+    for idx, (batch, data_fetch_time, transformation_time, cache_hit, cached_after_fetch) in enumerate(dataloader):
+        bacth_data, batch_labels, batch_id = batch
         delay = time.perf_counter() - end
         print(f"Batch {idx}: id: {batch_id} delay: {delay:.2f}s, fetch(s): {data_fetch_time:.2f}s, transform(s): {transformation_time:.2f}s, hit: {cache_hit}")
         end = time.perf_counter()
+        time.sleep(0.25)
 
 
         

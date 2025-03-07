@@ -1,13 +1,13 @@
 import threading
-from common.sampler import PartitionedBatchSampler
-from common.job import DLTJob
-from common.args import DisDLArgs
+from sampler import PartitionedBatchSampler
+from job import DLTJob
+from args import DisDLArgs
 from collections import deque, OrderedDict
 from typing import List, Optional, Dict, Tuple
-from common.dataset import Dataset
-from common.batch import Batch, BatchSet
+from dataset import Dataset
+from batch import Batch, BatchSet
 import time
-from common.logger_config import logger
+from logger_config import logger
 import json
 from datetime import datetime, timezone
 import copy
@@ -15,8 +15,8 @@ from itertools import cycle  # Import cycle from itertools
 from typing import OrderedDict as TypingOrderedDict
 import csv
 import os
-from common.cache_eviction import CacheEvictionService
-from common.cache_prefetching import PrefetchService
+from cache_eviction import CacheEvictionService
+from cache_prefetching import PrefetchService
 
 class CentralBatchManager:
     def __init__(self, dataset: Dataset, args: DisDLArgs):
@@ -31,6 +31,8 @@ class CentralBatchManager:
         self.active_epoch_idx = None
         self.active_partition_idxx = None
         self.evict_from_cache_simulation_time = args.evict_from_cache_simulation_time
+
+        # self.lookahead_distance = min((self.sampler.calc_num_batchs_per_partition() -1),args.lookahead_steps)
         self.lookahead_distance = args.lookahead_steps
 
         # self.lookahead_steps = min(args.lookahead_steps, self.dataset.partitions[1].num_batches)
@@ -40,7 +42,7 @@ class CentralBatchManager:
         self.epoch_partition_batches: Dict[int, Dict[str, BatchSet]] = OrderedDict()  #first partition id, value list of bacthes for that partition
 
         # Generate initial batches
-        for _ in range(self.lookahead_distance):
+        for _ in range(self.sampler.calc_num_batchs_per_partition()-1):
             self._generate_new_batch()
         
         # Initialize prefetch service
@@ -87,7 +89,7 @@ class CentralBatchManager:
 
     def _generate_new_batch(self):
         next_batch:Batch = next(self.sampler)
-        
+
         if self.evict_from_cache_simulation_time:
             next_batch.evict_from_cache_simulation_time = self.evict_from_cache_simulation_time
 
@@ -110,6 +112,7 @@ class CentralBatchManager:
         for job in self.active_jobs.values():
             if batch_set_id == job.active_bacth_set_id:
                 job.future_batches[next_batch.batch_id] = next_batch
+        return next_batch
                 
     def _clean_up_old_batches(self):
         #clean up old batches that are no longer needed
@@ -262,7 +265,7 @@ if __name__ == "__main__":
     GPU_TIME = 0.01
     args:DisDLArgs = DisDLArgs(
             batch_size = 100,
-            num_dataset_partitions = 10,
+            num_dataset_partitions = 1,
             lookahead_steps = 10,
             shuffle = False,
             drop_last = False,
@@ -276,7 +279,7 @@ if __name__ == "__main__":
             prefetch_simulation_time = None,
             evict_from_cache_simulation_time = None)
 
-    dataset = Dataset(data_dir='s3://sdl-cifar10/test/')
+    dataset = Dataset(dataset_location='s3://sdl-cifar10/test/')
     batch_manager = CentralBatchManager(dataset=dataset, args=args)
     
     job_id = '1'

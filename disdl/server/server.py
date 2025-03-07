@@ -1,18 +1,18 @@
 import grpc
 from concurrent import futures
-import protos.minibatch_service_pb2 as minibatch_service_pb2
-import protos.minibatch_service_pb2_grpc as minibatch_service_pb2_grpc
+import minibatch_service_pb2 as minibatch_service_pb2
+import minibatch_service_pb2_grpc as minibatch_service_pb2_grpc
 import google.protobuf.empty_pb2
-from common.logger_config import logger
+from logger_config import logger
 import hydra
 from omegaconf import DictConfig
-from common.args import DisDLArgs
-from common.batch_manager import CentralBatchManager
+from args import DisDLArgs
+from batch_manager import CentralBatchManager
 from omegaconf import OmegaConf
 from typing import Dict
-from common.job import DLTJob
-from common.dataset import Dataset
-from common.batch import Batch
+from job import DLTJob
+from dataset import Dataset
+from batch import Batch
 import json
 
 class CacheAwareMiniBatchService(minibatch_service_pb2_grpc.MiniBatchServiceServicer):

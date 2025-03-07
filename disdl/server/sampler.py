@@ -1,7 +1,7 @@
 from typing import  Dict, Sized
 from itertools import cycle
 import random
-from common.batch import Batch, BatchSet
+from batch import Batch, BatchSet
 from collections import OrderedDict
 import hashlib
 
@@ -96,6 +96,13 @@ class PartitionedBatchSampler():
         assert total_files == self.num_files
 
         return partitions
+    
+    def calc_num_batchs_per_partition(self):
+        # Calculate the number of batches
+        if self.drop_last:
+            return len(self.active_partition) // self.batch_size
+        else:
+            return (len(self.active_partition) + self.batch_size - 1) // self.batch_size
     
     def calc_num_batchs_per_epoch(self):
         # Calculate the number of batches

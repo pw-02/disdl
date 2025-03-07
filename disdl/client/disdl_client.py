@@ -1,17 +1,18 @@
 import grpc
-import protos.minibatch_service_pb2 as minibatch_service_pb2
-import protos.minibatch_service_pb2_grpc as minibatch_service_pb2_grpc
+import minibatch_service_pb2 as minibatch_service_pb2
+import minibatch_service_pb2_grpc as minibatch_service_pb2_grpc
 import ast
 import json
+
 class DisDLClient:
-    def __init__(self, address: str):
+    def __init__(self, address: str, job_id = None, dataset_location = None):
         self.address = address
         self.channel = grpc.insecure_channel(address)
         self.stub = minibatch_service_pb2_grpc.MiniBatchServiceStub(self.channel)
-        self.job_id = None
-        self.dataset_location = None
+        self.job_id = job_id
+        self.dataset_location = dataset_location
 
-    def registerJob(self, dataset_location: str, dataset_kind: str):
+    def registerJob(self, dataset_location: str):
         response = self.stub.RegisterJob(minibatch_service_pb2.RegisterJobRequest(
             dataset_location=dataset_location
         ))
@@ -27,7 +28,7 @@ class DisDLClient:
             dataset_location=self.dataset_location))
         
 
-    def sampleNetMinibatch(self):
+    def sampleNextMinibatch(self):
         response = self.stub.GetNextBatchForJob(minibatch_service_pb2.GetNextBatchForJobRequest(
             job_id=self.job_id,
             dataset_location=self.dataset_location
@@ -59,17 +60,3 @@ class DisDLClient:
     def close(self):
         """Closes the gRPC channel."""
         self.channel.close()
-
-if __name__ == "__main__":
-    num_epochs = 2
-    client = DisDLClient("localhost:50051")
-    jobid, dataset_info = client.registerJob("s3://sdl-cifar10/test/", "cifar10")
-    print(f"Job ID: {jobid}, Dataset Info: {dataset_info}")
-
-    num_batchs = dataset_info["num_batches"]
-    for j in range(num_epochs):
-        for i in range(num_batchs):
-            batch_id, samples, is_cached = client.sampleNetMinibatch()
-            print(f"Batch ID: {batch_id}, Num Samples: {len(samples)}, Is Cached: {is_cached}")
-    client.sendJobEndNotification()
-    client.close()

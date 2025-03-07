@@ -1,11 +1,11 @@
-from common.utils import S3Url
+from utils import S3Url
 import boto3
 import json
 from typing import List, Tuple, Dict
 import functools
 from itertools import cycle
 import random
-from common.batch import Batch
+from batch import Batch
 import random
 
 class Dataset():

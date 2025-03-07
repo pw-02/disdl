@@ -1,9 +1,9 @@
 
 from collections import deque, OrderedDict
-from common.utils import AverageMeter
-from common.batch import Batch
+from utils import AverageMeter
+from batch import Batch
 import threading
-from common.logger_config import logger
+from logger_config import logger
 import math
 import time
 class DLTJob:

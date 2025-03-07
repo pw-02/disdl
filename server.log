@@ -1177,3 +1177,1646 @@ workload:
 [2025-03-05 19:28:16,791][SUPER][INFO] - Job '1' ended. Lifetime: 0.2669s. Active Jobs 0
 [2025-03-05 19:28:19,622][SUPER][INFO] - Prefetching stopped
 [2025-03-05 19:28:21,182][SUPER][INFO] - Cache eviction service stopped
+[2025-03-05 19:38:44,707][SUPER][INFO] - Job '2' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-05 19:38:44,721][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,727][SUPER][INFO] - Job '2' assigned batch set '3_0'
+[2025-03-05 19:38:44,731][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,736][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,736][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,737][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,738][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,739][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,741][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,741][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,743][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,743][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,746][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,747][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,749][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,749][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,751][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,751][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,753][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,754][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,755][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,757][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,757][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,759][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,760][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,762][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,762][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,764][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,765][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,768][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,768][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,770][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,771][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,772][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,774][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,775][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,776][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,777][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,777][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,779][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,780][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,780][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,783][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,783][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,784][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,785][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,787][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,788][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,789][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,790][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,791][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,791][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,793][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,793][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,795][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,796][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,797][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,799][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,799][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,801][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,801][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,803][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,803][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,805][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,805][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,807][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,807][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,809][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,810][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,811][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,812][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,813][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,815][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,816][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,818][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,819][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,820][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,821][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,822][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,824][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,825][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,826][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,827][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,828][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,831][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,833][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,834][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,836][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,837][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,838][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,840][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,841][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,842][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,843][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,845][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,847][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,849][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,850][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,850][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,852][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,853][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,854][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,855][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,856][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,857][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,858][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,859][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,860][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,860][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,861][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,876][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,877][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,878][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,880][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,882][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,883][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,885][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,885][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,888][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,888][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,890][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,890][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,892][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,893][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,895][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,897][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,898][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,899][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,901][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,902][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,903][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,905][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,905][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,907][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,908][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,911][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,912][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,913][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,916][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,918][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,919][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,920][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,921][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,922][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,924][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,925][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,927][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,927][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,928][SUPER][INFO] - Job '2' assigned batch set '4_0'
+[2025-03-05 19:38:44,928][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,931][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,932][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,933][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,934][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,935][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,936][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,938][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,940][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,940][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,942][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,943][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,944][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,947][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,949][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,951][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,951][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,953][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,955][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,958][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,959][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,960][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,961][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,962][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,964][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,966][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,967][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,968][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,969][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,970][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,971][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,973][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,973][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,974][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,976][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,976][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,978][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,980][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,981][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,982][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,983][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,984][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,985][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,987][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,987][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,989][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,989][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,991][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,991][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,993][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,995][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,995][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,997][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:44,998][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,000][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,001][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,002][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,003][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,004][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,004][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,005][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,006][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,008][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,009][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,010][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,011][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,011][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,013][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,015][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,016][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,017][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,018][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,020][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,020][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,022][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,023][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,024][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,025][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,026][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,027][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,027][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,030][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,031][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,032][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,033][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,034][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,035][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,036][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,038][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,039][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,040][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,042][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,042][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,044][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,046][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,048][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,050][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,050][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,052][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,053][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,055][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,057][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,057][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,071][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,072][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,073][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,074][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,074][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,076][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,076][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,078][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,080][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,081][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,083][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,083][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,085][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,085][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,088][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,088][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,090][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,090][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,092][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,092][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,094][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,095][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,096][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,097][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,099][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,100][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,102][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,103][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,104][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,106][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,107][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,109][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,110][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,111][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,112][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,114][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,115][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,117][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,118][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,120][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,121][SUPER][ERROR] - Unexpected error in prefetching process: division by zero
+Traceback (most recent call last):
+  File "C:\Users\pw\projects\disdl\disdl\common\cache_prefetching.py", line 57, in _prefetching_process
+  File "C:\Users\pw\projects\disdl\disdl\common\job.py", line 30, in compute_required_prefetch_concurrency
+ZeroDivisionError: division by zero
+[2025-03-05 19:38:45,121][SUPER][INFO] - Job '2' ended. Lifetime: 0.4187s. Active Jobs 0
+[2025-03-05 19:44:03,080][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 19:44:03,086][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 19:44:03,107][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 19:44:17,887][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 19:44:17,888][SUPER][INFO] - Job '1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-05 19:44:17,895][SUPER][INFO] - Job '1' assigned batch set '1_0'
+[2025-03-05 19:44:18,079][SUPER][INFO] - Job '1' assigned batch set '2_0'
+[2025-03-05 19:44:18,276][SUPER][INFO] - Job '1' ended. Lifetime: 0.3881s. Active Jobs 0
+[2025-03-05 19:44:18,277][SUPER][INFO] - Prefetching stopped
+[2025-03-05 19:44:18,277][SUPER][INFO] - Cache eviction service stopped
+[2025-03-05 20:54:14,732][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 20:54:14,736][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 20:54:14,773][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 20:54:56,865][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 20:54:56,865][SUPER][INFO] - Job '1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-05 20:55:52,401][SUPER][INFO] - Job '2' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 2
+[2025-03-05 20:55:59,585][SUPER][INFO] - Job '2' assigned batch set '1_0'
+[2025-03-05 20:56:32,836][SUPER][INFO] - Job '3' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 3
+[2025-03-05 20:56:34,280][SUPER][INFO] - Job '3' assigned batch set '1_0'
+[2025-03-05 20:56:34,405][SUPER][INFO] - Job '3' assigned batch set '2_0'
+[2025-03-05 20:56:34,530][SUPER][INFO] - Job '3' assigned batch set '3_0'
+[2025-03-05 20:56:34,652][SUPER][INFO] - Job '3' assigned batch set '4_0'
+[2025-03-05 20:56:34,796][SUPER][INFO] - Job '3' assigned batch set '5_0'
+[2025-03-05 20:56:34,919][SUPER][INFO] - Job '3' assigned batch set '6_0'
+[2025-03-05 20:56:35,042][SUPER][INFO] - Job '3' assigned batch set '7_0'
+[2025-03-05 20:56:35,187][SUPER][INFO] - Job '3' assigned batch set '8_0'
+[2025-03-05 20:56:35,309][SUPER][INFO] - Job '3' assigned batch set '9_0'
+[2025-03-05 20:56:35,429][SUPER][INFO] - Job '3' assigned batch set '10_0'
+[2025-03-05 20:56:35,554][SUPER][INFO] - Job '3' assigned batch set '11_0'
+[2025-03-05 20:56:35,677][SUPER][INFO] - Job '3' assigned batch set '12_0'
+[2025-03-05 20:56:35,815][SUPER][INFO] - Job '3' assigned batch set '13_0'
+[2025-03-05 20:56:35,941][SUPER][INFO] - Job '3' assigned batch set '14_0'
+[2025-03-05 20:56:36,068][SUPER][INFO] - Job '3' assigned batch set '15_0'
+[2025-03-05 20:56:36,266][SUPER][INFO] - Job '3' assigned batch set '16_0'
+[2025-03-05 20:56:36,414][SUPER][INFO] - Job '3' assigned batch set '17_0'
+[2025-03-05 20:56:36,537][SUPER][INFO] - Job '3' assigned batch set '18_0'
+[2025-03-05 20:56:36,662][SUPER][INFO] - Job '3' assigned batch set '19_0'
+[2025-03-05 20:56:36,818][SUPER][INFO] - Job '3' assigned batch set '20_0'
+[2025-03-05 20:56:36,980][SUPER][INFO] - Job '3' assigned batch set '21_0'
+[2025-03-05 20:56:37,109][SUPER][INFO] - Job '3' assigned batch set '22_0'
+[2025-03-05 20:56:37,232][SUPER][INFO] - Job '3' assigned batch set '23_0'
+[2025-03-05 20:56:37,372][SUPER][INFO] - Job '3' assigned batch set '24_0'
+[2025-03-05 20:56:37,498][SUPER][INFO] - Job '3' assigned batch set '25_0'
+[2025-03-05 20:56:37,622][SUPER][INFO] - Job '3' assigned batch set '26_0'
+[2025-03-05 20:56:37,747][SUPER][INFO] - Job '3' assigned batch set '27_0'
+[2025-03-05 20:56:37,870][SUPER][INFO] - Job '3' assigned batch set '28_0'
+[2025-03-05 20:56:37,993][SUPER][INFO] - Job '3' assigned batch set '29_0'
+[2025-03-05 20:56:38,116][SUPER][INFO] - Job '3' assigned batch set '30_0'
+[2025-03-05 20:56:38,239][SUPER][INFO] - Job '3' assigned batch set '31_0'
+[2025-03-05 20:56:38,403][SUPER][INFO] - Job '3' assigned batch set '32_0'
+[2025-03-05 20:56:38,615][SUPER][INFO] - Job '3' assigned batch set '33_0'
+[2025-03-05 20:56:38,753][SUPER][INFO] - Job '3' assigned batch set '34_0'
+[2025-03-05 20:56:38,878][SUPER][INFO] - Job '3' assigned batch set '35_0'
+[2025-03-05 20:56:39,009][SUPER][INFO] - Job '3' assigned batch set '36_0'
+[2025-03-05 20:56:39,154][SUPER][INFO] - Job '3' assigned batch set '37_0'
+[2025-03-05 20:56:56,903][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 20:56:56,907][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 20:56:56,923][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 20:57:02,545][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 20:57:02,546][SUPER][INFO] - Job '1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-05 20:57:09,089][SUPER][INFO] - Job '1' assigned batch set '1_0'
+[2025-03-05 20:57:11,539][SUPER][INFO] - Job '1' assigned batch set '2_0'
+[2025-03-05 20:58:34,434][SUPER][INFO] - Job '2' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 2
+[2025-03-05 20:58:34,443][SUPER][INFO] - Job '2' assigned batch set '2_0'
+[2025-03-05 20:58:37,908][SUPER][INFO] - Job '2' assigned batch set '3_0'
+[2025-03-05 20:59:00,033][SUPER][INFO] - Job '3' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 3
+[2025-03-05 20:59:00,042][SUPER][INFO] - Job '3' assigned batch set '3_0'
+[2025-03-05 21:00:53,646][SUPER][INFO] - Job '4' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 4
+[2025-03-05 21:01:03,459][SUPER][INFO] - Job '4' assigned batch set '3_0'
+[2025-03-05 21:02:14,935][SUPER][INFO] - Job '5' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 5
+[2025-03-05 21:02:15,565][SUPER][INFO] - Job '5' assigned batch set '3_0'
+[2025-03-05 21:02:33,371][SUPER][INFO] - Job '6' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 6
+[2025-03-05 21:02:33,380][SUPER][INFO] - Job '6' assigned batch set '3_0'
+[2025-03-05 21:04:38,690][SUPER][INFO] - Job '7' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 7
+[2025-03-05 21:04:38,700][SUPER][INFO] - Job '7' assigned batch set '3_0'
+[2025-03-05 21:05:36,827][SUPER][INFO] - Job '8' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 8
+[2025-03-05 21:05:36,837][SUPER][INFO] - Job '8' assigned batch set '4_0'
+[2025-03-05 21:06:07,186][SUPER][INFO] - Job '9' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 9
+[2025-03-05 21:06:07,195][SUPER][INFO] - Job '9' assigned batch set '4_0'
+[2025-03-05 21:06:42,987][SUPER][INFO] - Job '10' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 10
+[2025-03-05 21:06:42,996][SUPER][INFO] - Job '10' assigned batch set '4_0'
+[2025-03-05 21:07:38,992][SUPER][INFO] - Job '11' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 11
+[2025-03-05 21:07:40,283][SUPER][INFO] - Job '11' assigned batch set '4_0'
+[2025-03-05 21:08:04,468][SUPER][INFO] - Job '12' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 12
+[2025-03-05 21:08:05,697][SUPER][INFO] - Job '12' assigned batch set '4_0'
+[2025-03-05 21:08:33,461][SUPER][INFO] - Job '13' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 13
+[2025-03-05 21:08:34,699][SUPER][INFO] - Job '13' assigned batch set '4_0'
+[2025-03-05 21:11:04,798][SUPER][INFO] - Job '14' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 14
+[2025-03-05 21:11:06,056][SUPER][INFO] - Job '14' assigned batch set '4_0'
+[2025-03-05 21:12:59,039][SUPER][INFO] - Job '15' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 15
+[2025-03-05 21:13:48,323][SUPER][INFO] - Job '16' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 16
+[2025-03-05 21:15:52,513][SUPER][INFO] - Job '17' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 17
+[2025-03-05 21:16:50,104][SUPER][INFO] - Job '18' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 18
+[2025-03-05 21:16:56,572][SUPER][INFO] - Job '18' assigned batch set '4_0'
+[2025-03-05 21:17:43,870][SUPER][INFO] - Job '18' assigned batch set '5_0'
+[2025-03-05 21:18:17,055][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-05 21:18:17,059][SUPER][INFO] - Config: lookahead_steps: 100
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 1000
+use_prefetching: true
+use_keep_alive: true
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-05 21:18:17,076][SUPER][INFO] - Server started. Listening on port 50051 with 1 workers.
+[2025-03-05 21:18:28,881][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-05 21:18:28,882][SUPER][INFO] - Job '1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-05 21:18:35,836][SUPER][INFO] - Job '1' assigned batch set '1_0'
+[2025-03-05 21:19:42,245][SUPER][INFO] - Job '1' assigned batch set '2_0'
+[2025-03-05 21:20:37,691][SUPER][INFO] - Job '2' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 2
+[2025-03-05 21:20:43,572][SUPER][INFO] - Job '2' assigned batch set '2_0'
+[2025-03-05 21:22:16,819][SUPER][INFO] - Job '3' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 3
+[2025-03-05 21:22:24,099][SUPER][INFO] - Job '3' assigned batch set '3_0'
+[2025-03-05 21:23:17,741][SUPER][INFO] - Job '4' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 4
+[2025-03-05 21:23:50,638][SUPER][INFO] - Job '4' assigned batch set '3_0'
+[2025-03-05 21:24:38,840][SUPER][INFO] - Job '5' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 5
+[2025-03-05 21:24:46,474][SUPER][INFO] - Job '5' assigned batch set '3_0'
+[2025-03-05 21:26:35,067][SUPER][INFO] - Job '6' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 6
+[2025-03-05 21:26:51,687][SUPER][INFO] - Job '6' assigned batch set '4_0'
+[2025-03-05 21:27:49,936][SUPER][INFO] - Job '7' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 7
+[2025-03-05 21:28:01,261][SUPER][INFO] - Job '7' assigned batch set '4_0'
+[2025-03-05 21:28:49,149][SUPER][INFO] - Job '8' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 8
+[2025-03-05 21:28:50,389][SUPER][INFO] - Job '8' assigned batch set '4_0'
+[2025-03-05 21:29:26,106][SUPER][INFO] - Job '9' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 9
+[2025-03-05 21:29:33,319][SUPER][INFO] - Job '9' assigned batch set '4_0'
+[2025-03-05 21:30:08,660][SUPER][INFO] - Job '10' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 10
+[2025-03-05 21:30:15,372][SUPER][INFO] - Job '10' assigned batch set '5_0'

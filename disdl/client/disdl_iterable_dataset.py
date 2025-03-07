@@ -236,7 +236,7 @@ class DisDLIterableDataset(torch.utils.data.IterableDataset):
 if __name__ == "__main__":
     dataset_location = " s3://imagenet1k-sdl/train/"
     service_address = 'localhost:50051'
-    cache_address = '54.69.247.89:6378'
+    cache_address = '10.0.25.0:6378'
     client = DisDLClient(address=service_address)
     job_id, dataset_info = client.registerJob(dataset_location=dataset_location)
     num_batchs = dataset_info["num_batches"]

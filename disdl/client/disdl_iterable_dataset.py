@@ -263,7 +263,7 @@ if __name__ == "__main__":
         use_local_folder=False
     )
 
-    dataloader = DataLoader(dataset, batch_size=None, num_workers=1, pin_memory=True)
+    dataloader = DataLoader(dataset, batch_size=None, num_workers=4, pin_memory=True)
 
     end = time.perf_counter()
     for idx, (batch, data_fetch_time, transformation_time, cache_hit, cached_after_fetch) in enumerate(dataloader):
@@ -271,7 +271,7 @@ if __name__ == "__main__":
         delay = time.perf_counter() - end
         print(f"Batch {idx}: id: {batch_id} delay: {delay:.2f}s, fetch(s): {data_fetch_time:.2f}s, transform(s): {transformation_time:.2f}s, hit: {cache_hit}")
         end = time.perf_counter()
-        time.sleep(0.25)
+        time.sleep(0.02)
 
 
         

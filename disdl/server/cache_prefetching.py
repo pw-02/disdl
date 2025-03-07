@@ -77,7 +77,7 @@ class PrefetchServiceAsync:
                     response = self.lambda_client.invoke(
                         FunctionName=self.lambda_name,
                         InvocationType="Event",  # Asynchronous invocation
-                        Payload=json.dumps(payload)
+                        Payload=payload
                         )
                 
                 batch.set_cache_status(CacheStatus.CACHING_IN_PROGRESS)

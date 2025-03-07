@@ -4879,3 +4879,25 @@ Traceback (most recent call last):
   File "C:\Users\pw\projects\disdl\disdl\server\server.py", line 67, in GetNextBatchForJob
     is_cached=next_batch.is_cached))
 AttributeError: 'Batch' object has no attribute 'is_cached'
+[2025-03-07 12:53:36,911][SUPER][INFO] - Starting DisDL ML Dataloader Service
+[2025-03-07 12:53:36,915][SUPER][INFO] - Config: lookahead_steps: 40
+serverless_cache_address: 10.0.21.36:6378
+cache_evition_ttl_threshold: 60
+use_prefetching: false
+use_keep_alive: false
+prefetch_cost_cap_per_hour: null
+prefetch_simulation_time: null
+evict_from_cache_simulation_time: null
+workload:
+  kind: vision
+  batch_size: 128
+  shuffle: true
+  drop_last: false
+  prefetch_lambda_name: CreateVisionTrainingBatch
+  max_dataset_size: null
+  num_dataset_partitions: 1
+
+[2025-03-07 12:53:36,936][SUPER][INFO] - Server started. Listening on port 50051 with 10 workers.
+[2025-03-07 12:53:48,287][SUPER][INFO] - Dataset 's3://sdl-cifar10/test/' added. Total Files: 10000, Total Batches:79
+[2025-03-07 12:53:48,288][SUPER][INFO] - Job '1' registered for dataset 's3://sdl-cifar10/test/'. Total Jobs: 1
+[2025-03-07 12:53:54,303][SUPER][INFO] - Job '1' assigned batch set '0_0'

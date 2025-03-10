@@ -1,0 +1,33 @@
+
+defaults:
+  - _self_
+  - dataloader: disdl #coordl, baseline
+  - workload: imagenet_nas
+  #albef_retrieval, 
+  #lora_finetune_tiny_llama,
+  #lora_finetune_owt, 
+  #imagenet_resnet50,
+  #cifar10_resnet18
+  - override hydra/job_logging: disabled
+  - override hydra/hydra_logging: disabled  
+
+seed: null # 42 # Seed for reproducibility
+accelerator: 'gpu' # 'cpu', 'gpu', 'tpu'
+devices: 1 # Number of devices to use for training (e.g. GPUs) per job
+log_interval: 1 # flush Log every N steps
+log_dir: logs # Directory to save logs
+checkpoint_dir: checkpoints # Save a checkpoint every N steps
+precision: 32 # 16, 32, 64
+simulation_mode: False # Run in simulation mode
+exp_id: single_job
+job_id: 1
+hydra:
+  run:
+    dir: .  # Current directory or a specific directory where Ray Tune expects to find it
+  sweep:
+    dir: .  # Same as above
+  output_subdir: null
+  job_logging:
+    level: DISABLE  # Disable job-specific logging
+  hydra_logging:
+    level: DISABLE  # Disable Hydra-specific logging

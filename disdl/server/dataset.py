@@ -7,6 +7,9 @@ from itertools import cycle
 import random
 from batch import Batch
 import random
+from torch.utils.data import Dataset
+
+
 
 class Dataset():
     def __init__(self, 

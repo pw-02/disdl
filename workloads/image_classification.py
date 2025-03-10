@@ -398,10 +398,6 @@ def validate_loop(fabric,job_id, val_logger:CSVLogger, model, dataloader, val_st
 
     return global_step_count
 
-@hydra.main(version_base=None, config_path="./conf", config_name="config")
-def main(config: DictConfig):
-    train_image_classifer(config)
-
 
 @hydra.main(version_base=None, config_path="./conf", config_name="config")
 def main(config: DictConfig):
@@ -410,11 +406,12 @@ def main(config: DictConfig):
     log_dir = os.path.normpath(log_dir)  # Normalize path for Windows
     train_logger = CSVLogger(root_dir=log_dir, name="train", prefix='', flush_logs_every_n_steps=config.log_interval)
     val_logger = CSVLogger(root_dir=log_dir, name="val", prefix='', flush_logs_every_n_steps=config.log_interval)
-    #create log folder if doesnt exist
+    #cree log dir if does not exist
     os.makedirs(log_dir, exist_ok=True)
-
+    #save config
     save_hparams_to_yaml(os.path.join(log_dir, "hparms.yaml"), config)
     train_image_classifer(config, train_logger,val_logger)
+
 
 if __name__ == "__main__":
     main()

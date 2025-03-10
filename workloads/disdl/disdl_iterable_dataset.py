@@ -1,4 +1,4 @@
-from disdl_client import DisDLClient
+from disdl.disdl_client import DisDLClient
 import torch
 import boto3
 import io
@@ -80,7 +80,8 @@ class DisDLIterableDataset(torch.utils.data.IterableDataset):
                 job_id=self.job_id, 
                 dataset_location=self.dataset_location)
 
-    
+    def __len__(self):
+        return self.num_samples
 
     def __iter__(self):
         self.check_dsdl_client()

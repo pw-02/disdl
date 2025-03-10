@@ -143,7 +143,7 @@ def serve(cfg: DictConfig):
             batch_size = cfg.workload.batch_size,
             lookahead_steps = cfg.lookahead_steps,
             serverless_cache_address = cfg.serverless_cache_address,
-            cache_keep_alive_timeout = cfg.cache_evition_ttl_threshold,
+            cache_keep_alive_timeout = cfg.cache_keep_alive_timeout,
             use_prefetching = cfg.use_prefetching,
             use_keep_alive = cfg.use_keep_alive,
             prefetch_lambda_name = cfg.workload.prefetch_lambda_name,

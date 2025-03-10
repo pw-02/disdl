@@ -218,7 +218,7 @@ class DisDLIterableDataset(torch.utils.data.IterableDataset):
             return batch_data, batch_labels
         else:
             self._set_s3_client()
-            with ThreadPoolExecutor(max_workers=5) as executor:
+            with ThreadPoolExecutor(max_workers=None) as executor:
                 futures = {executor.submit(self.read_data_from_s3, data_path, label): (data_path, label) for data_path, label in samples}
                 for future in as_completed(futures):
                     data_sample, label = future.result()

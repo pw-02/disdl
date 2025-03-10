@@ -263,7 +263,7 @@ if __name__ == "__main__":
         use_local_folder=False
     )
 
-    dataloader = DataLoader(dataset, batch_size=None, num_workers=1, pin_memory=True)
+    dataloader = DataLoader(dataset, batch_size=None, num_workers=8, pin_memory=True)
 
     end = time.perf_counter()
     for idx, (batch, data_fetch_time, transformation_time, cache_hit, cached_after_fetch) in enumerate(dataloader):

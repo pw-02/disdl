@@ -20,17 +20,15 @@ from baselines.tensorsocket.tensorsocket_dataset import TensorSockerDataset
 from baselines.tensorsocket.producer import TensorProducer
 from baselines.tensorsocket.consumer import TensorConsumer
 from baselines.tensorsocket.tensorsocket_sampler import TensorSocketSampler
-
-
-
-
-
+from lightning.pytorch.core.saving import save_hparams_to_yaml
+from disdl.disdl_client import DisDLClient
+from disdl.disdl_iterable_dataset import DisDLIterableDataset
 
 def train_image_classifer(config: DictConfig,  train_logger: CSVLogger, val_logger: CSVLogger):
     if config.simulation_mode:
         config.accelerator = 'cpu'
         
-    fabric = Fabric(accelerator=config.accelerator, devices=config.devices, precision=config.workload.precision   )
+    fabric = Fabric(accelerator=config.accelerator, devices=config.devices, precision=config.workload.precision)
 
     if config.seed is not None:
         seed_everything(config.seed) 
@@ -47,6 +45,7 @@ def train_image_classifer(config: DictConfig,  train_logger: CSVLogger, val_logg
         model = timm.create_model('mixer_b32_224', pretrained=False, num_classes=config.workload.num_classes)
     else:
         model = get_model(name=config.workload.model_architecture, weights=None, num_classes=config.workload.num_classes)
+    
     optimizer = optim.Adam(model.parameters(), lr=config.workload.learning_rate)
     model, optimizer = fabric.setup(model, optimizer)
 
@@ -57,52 +56,52 @@ def train_image_classifer(config: DictConfig,  train_logger: CSVLogger, val_logg
     tensorsocket_procuder:TensorProducer = None
     tensorsoket_consumer:TensorConsumer = None
 
-    if config.dataloader.name == 'super':
-        if config.workload.run_training:
-            train_dataset = SUPERMappedDataset(
-                s3_data_dir=config.workload.s3_train_prefix,
-                transform=train_transform,
-                cache_address=config.dataloader.cache_address,
-                use_compression=config.dataloader.use_compression,
-                use_local_folder=config.dataloader.use_local_folder,
-                ssl=config.dataloader.ssl_enabled)
-              
-            train_sampler = SUPERSampler(
-                dataset=train_dataset,
-                grpc_server_address=config.dataloader.grpc_server_address,
-                batch_size=config.workload.batch_size
-                )
-            
-            train_dataloader = DataLoader(train_dataset, 
-                                          batch_size=None,
-                                          sampler=train_sampler, 
-                                          num_workers=config.workload.num_pytorch_workers,
-                                          prefetch_factor=8,
-                                          pin_memory=True)
-            train_dataloader = fabric.setup_dataloaders(train_dataloader, move_to_device=True)
+    if config.dataloader.name == 'disdl':
+        client = DisDLClient(address=config.dataloader.grpc_server_address)
+        job_id, dataset_info = client.registerJob(dataset_location=config.workload.s3_train_prefix)
+        num_batchs = dataset_info["num_batches"]
+        client.close()
 
-            
+        train_dataset = DisDLIterableDataset(
+            job_id=client.job_id,
+            dataset_location=client.dataset_location,
+            num_samples=num_batchs,
+            batch_size=config.workload.batch_size,
+            transform=train_transform,
+            disdl_service_address=config.dataloader.grpc_server_address,
+            cache_address=config.dataloader.cache_address,
+            ssl=config.dataloader.ssl_enabled,
+            use_compression=config.dataloader.use_compression,
+            use_local_folder=config.dataloader.use_local_folder
+            )
+        
+        train_dataloader = DataLoader(
+            train_dataset, 
+            batch_size=None,
+            num_workers=config.workload.num_pytorch_workers,
+            pin_memory=True if config.accelerator != 'cpu' else False)
+        
+        train_dataloader = fabric.setup_dataloaders(train_dataloader, move_to_device=True if config.accelerator != 'cpu' else False)
+    
     elif config.dataloader.name == 'tensorsocket':
         # PyTorch DataLoader
         if config.dataloader.mode == 'producer':
-            train_dataset = TensorSockerDataset(s3_data_dir=config.workload.s3_train_prefix,
-                                                transform=train_transform,
-                                                # cache_address=config.dataloader.cache_address,
-                                                # cache_transformations=True,
-                                                # use_compression=config.dataloader.use_compression,
-                                                # use_local_folder=config.dataloader.use_local_folder,
-                                                # ssl=config.dataloader.ssl_enabled
-                                                )
+            train_dataset = TensorSockerDataset(
+                s3_data_dir=config.workload.s3_train_prefix,
+                transform=train_transform,)
             
-            tensor_socket_sampler = TensorSocketSampler(data_source=train_dataset,
-                                                        batch_size=config.workload.batch_size)
-            train_dataloader = DataLoader(train_dataset,
-                                          sampler=tensor_socket_sampler,
-                                          batch_size=None,
-                                          num_workers=config.workload.num_pytorch_workers,
-                                          pin_memory=True)
+            tensor_socket_sampler = TensorSocketSampler(
+                data_source=train_dataset,
+                batch_size=config.workload.batch_size)
             
-            train_dataloader = fabric.setup_dataloaders(train_dataloader, move_to_device=False)
+            train_dataloader = DataLoader(
+                train_dataset,
+                sampler=tensor_socket_sampler,
+                batch_size=None,
+                num_workers=config.workload.num_pytorch_workers,
+                pin_memory=True if config.accelerator != 'cpu' else False)
+            
+            train_dataloader = fabric.setup_dataloaders(train_dataloader,  move_to_device=True if config.accelerator != 'cpu' else False)
 
             tensorsocket_procuder = TensorProducer(
                 data_loader=train_dataloader,
@@ -119,36 +118,6 @@ def train_image_classifer(config: DictConfig,  train_logger: CSVLogger, val_logg
                 batch_size=config.workload.batch_size,
             )
 
-
-    elif config.dataloader.name == 'baseline':
-        # PyTorch DataLoader
-        if config.workload.run_training:
-            train_dataset = S3MappedDataset(s3_data_dir=config.workload.s3_train_prefix,
-                                                transform=train_transform,
-                                                cache_address=config.dataloader.cache_address,
-                                                cache_transformations=True,
-                                                use_compression=config.dataloader.use_compression,
-                                                use_local_folder=config.dataloader.use_local_folder,
-                                                ssl=config.dataloader.ssl_enabled)
-            
-            train_sampler = S3BatchSamplerWithID(
-                            data_source=train_dataset,
-                            batch_size=config.workload.batch_size,
-                            drop_last=False,
-                            shuffle=True,
-                            seed=42
-                            )
-            
-            train_dataloader = DataLoader(train_dataset, 
-                                          batch_size=None, 
-                                          sampler=train_sampler, 
-                                          num_workers=config.workload.num_pytorch_workers,
-                                          pin_memory=True)
-            train_dataloader = fabric.setup_dataloaders(train_dataloader, move_to_device=True)
-        
-    # # # Start training
-    # metric_collector = ResourceMonitor(interval=1, flush_interval=10, file_path= f'{log_dir}/resource_usage_metrics.json')
-    # # metric_collector.start()
     global_train_step_count = 0
     global_val_step_count = 0
     current_epoch=0
@@ -162,7 +131,6 @@ def train_image_classifer(config: DictConfig,  train_logger: CSVLogger, val_logg
         
     while not should_stop:
         current_epoch += 1
-        
         global_train_step_count = train_loop(
             fabric=fabric,
             job_id=config.job_id,
@@ -207,53 +175,22 @@ def train_image_classifer(config: DictConfig,  train_logger: CSVLogger, val_logg
     fabric.print(f"Training completed in {elapsed_time:.2f} seconds")
     # metric_collector.stop()
 
-def get_transforms(workload_name):
-    if 'imagenet' in workload_name or 'cifar10' in workload_name:
-        # Set up data transforms for ImageNet on image classification workloads
-        # train_transform = transforms.Compose([
-        #     transforms.Resize(256), 
-        #     transforms.RandomResizedCrop(224),
-        #     transforms.RandomHorizontalFlip(),
-        #     transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1),  # Randomly change brightness, contrast, saturation, and hue
-        #     transforms.ToTensor(),
-        #     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-        # ])
-        
-        # Set up data transforms for ImageNet on transformer workloads
-        train_transform = transforms.Compose([
-            transforms.Resize(256), 
-            transforms.RandomResizedCrop(224),
-            transforms.RandomHorizontalFlip(),
-            transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1),  # Randomly change brightness, contrast, saturation, and hue
-            transforms.ToTensor(),
-            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-        ])
-        val_transform = transforms.Compose([
-            transforms.Resize(256),
-            transforms.CenterCrop(224),
-            transforms.ToTensor(),
-            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-        ])
-
-    # elif 'cifar10' in workload_name:
-    #       # Set up data transforms for ImageNet
-    #     train_transform = transforms.Compose([
-    #         transforms.Resize(224),
-    #         transforms.RandomHorizontalFlip(),
-    #         transforms.RandomCrop(32, padding=4),
-    #         # transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1),  # Randomly change brightness, contrast, saturation, and hue
-    #         # transforms.RandomRotation(15),      # Randomly rotate images by up to 15 degrees
-    #         transforms.ToTensor(),                    # Convert to tensor
-    #         transforms.Normalize(mean=[0.4914, 0.4822, 0.4465], std=[0.2023, 0.1994, 0.2010])  # Normalize
-    #     ])
-        
-    #     val_transform = transforms.Compose([
-    #         transforms.Resize(224),
-    #         transforms.ToTensor(),                    # Convert to tensor
-    #         transforms.Normalize(mean=[0.4914, 0.4822, 0.4465], std=[0.2023, 0.1994, 0.2010])  # Normalize
-    #    ])        
-    else:
-        raise ValueError(f"Invalid workload: {workload_name}")
+def get_transforms(workload_name):    
+    # Set up data transforms for ImageNet on transformer workloads
+    train_transform = transforms.Compose([
+        transforms.Resize(256), 
+        transforms.RandomResizedCrop(224),
+        transforms.RandomHorizontalFlip(),
+        transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1),  # Randomly change brightness, contrast, saturation, and hue
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+    ])
+    val_transform = transforms.Compose([
+        transforms.Resize(256),
+        transforms.CenterCrop(224),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+    ])
     return train_transform, val_transform
 
 def train_loop(fabric:Fabric, job_id, 
@@ -279,8 +216,6 @@ def train_loop(fabric:Fabric, job_id,
     end = time.perf_counter()
     if tensorsocker_procuder is not None:
         for i, _ in enumerate(tensorsocker_procuder):
-            #move data to all gpus (4)
-
             #dont do anything as the producer will send the data to gpu of the consumers
             time.sleep(0.001)
     else:
@@ -342,13 +277,13 @@ def train_loop(fabric:Fabric, job_id,
             cache_hit_samples = batch[0].size(0) if is_cache_hit == True else 0
             cache_hit_bacth = 1 if is_cache_hit == True else 0
 
-            if not isinstance(train_dataloader, TensorConsumer):
-                train_dataloader.sampler.send_job_update_to_super(
-                    batch_id,
-                    data_load_time,
-                    is_cache_hit,
-                    gpu_processing_time,
-                    cached_on_miss)
+            # if not isinstance(train_dataloader, TensorConsumer):
+            #     train_dataloader.sampler.send_job_update_to_super(
+            #         batch_id,
+            #         data_load_time,
+            #         is_cache_hit,
+            #         gpu_processing_time,
+            #         cached_on_miss)
           
             metrics= OrderedDict({
                             "Batch Id": batch_id,
@@ -470,15 +405,16 @@ def main(config: DictConfig):
 
 @hydra.main(version_base=None, config_path="./conf", config_name="config")
 def main(config: DictConfig):
+    log_dir = f"{config.log_dir}/{config.workload.name}/{config.job_id}".lower()
 
-    log_dir = f"{config.log_dir}/{config.workload.name}/{config.dataloader.name}/{config.exp_id}/{config.job_id}".lower()
     log_dir = os.path.normpath(log_dir)  # Normalize path for Windows
-    
     train_logger = CSVLogger(root_dir=log_dir, name="train", prefix='', flush_logs_every_n_steps=config.log_interval)
     val_logger = CSVLogger(root_dir=log_dir, name="val", prefix='', flush_logs_every_n_steps=config.log_interval)
-    train_image_classifer(config, train_logger,val_logger)
+    #create log folder if doesnt exist
+    os.makedirs(log_dir, exist_ok=True)
 
-  
+    save_hparams_to_yaml(os.path.join(log_dir, "hparms.yaml"), config)
+    train_image_classifer(config, train_logger,val_logger)
 
 if __name__ == "__main__":
     main()

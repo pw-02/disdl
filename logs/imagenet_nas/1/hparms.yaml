@@ -1,0 +1,41 @@
+seed: null
+accelerator: gpu
+devices: 1
+log_interval: 1
+log_dir: logs
+checkpoint_dir: checkpoints
+precision: 32
+simulation_mode: false
+exp_id: single_job
+job_id: 1
+dataloader:
+  name: super
+  grpc_server_address: 10.0.25.0:50051
+  cache_address: 10.0.25.0:6378
+  drop_last: false
+  shuffle: true
+  use_compression: true
+  use_local_folder: false
+  ssl_enabled: false
+workload:
+  name: imagenet_nas
+  s3_bucket: imagenet1k-sdl
+  s3_train_prefix: s3://imagenet1k-sdl/train/
+  s3_val_prefix: s3://imagenet1k-sdl/val/
+  num_pytorch_workers: 8
+  model_architecture: null
+  learning_rate: 0.0006
+  weight_decay: 0.1
+  precision: 32
+  num_classes: 1000
+  max_dataset_size: null
+  run_training: true
+  run_validation: false
+  validation_frequency: 1000000
+  checkpoint_frequency: .inf
+  max_epochs: 1
+  max_steps: 2500
+  batch_size: 128
+  limit_train_batches: null
+  limit_val_batches: .inf
+  gpu_time: null

@@ -270,7 +270,7 @@ if __name__ == "__main__":
         delay = time.perf_counter() - end
         bacth_data, batch_labels, batch_id = batch
         print(f"Batch {idx}: id: {batch_id} delay: {delay:.2f}s, fetch(s): {data_fetch_time:.2f}s, transform(s): {transformation_time:.2f}s, hit: {cache_hit}")
-        time.sleep(0.8)
+        time.sleep(0.05)
         end = time.perf_counter()
 
         

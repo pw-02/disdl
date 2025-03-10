@@ -25,8 +25,8 @@ def get_python_command():
 def main(config: DictConfig):
     workload = "imagenet_nas"
     dataloader = "disdl"
-    # models = ["resnet18", "resnet50", "shufflenet_v2_x1_0", "vgg16"]
-    models = ["resnet18"]
+    models = ["resnet18", "resnet50", "shufflenet_v2_x1_0", "vgg16"]
+    #models = ["resnet18"]
 
     # Generate experiment ID and log directory
     current_datetime = datetime.now(timezone.utc).strftime("%Y-%m-%d_%H-%M-%S")

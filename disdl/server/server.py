@@ -155,7 +155,7 @@ def serve(cfg: DictConfig):
             workload_kind = cfg.workload.kind)
         
         cache_service = CacheAwareMiniBatchService(args) 
-        max_workers = 10
+        max_workers = 1
         server = grpc.server(futures.ThreadPoolExecutor(max_workers=max_workers))
 
         minibatch_service_pb2_grpc.add_MiniBatchServiceServicer_to_server(cache_service, server)

@@ -86,7 +86,11 @@ class DLTJob:
                 if batch.cache_status == CacheStatus.CACHED or batch.cache_status == CacheStatus.CACHING_IN_PROGRESS: 
                     next_training_batch = self.future_batches.pop(batch_id)  # Cached batch found
                     break
-            next_training_batch = self.future_batches.pop(next(iter(self.future_batches)))
+                elif not first_available_batch_id:
+                    first_available_batch_id = batch_id
+
+            if not next_training_batch and first_available_batch_id:
+                next_training_batch = self.future_batches.pop(first_available_batch_id)
             # self.current_batch = next_training_batch
             return next_training_batch
 

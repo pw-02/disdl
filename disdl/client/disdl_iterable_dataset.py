@@ -267,10 +267,10 @@ if __name__ == "__main__":
 
     end = time.perf_counter()
     for idx, (batch, data_fetch_time, transformation_time, cache_hit, cached_after_fetch) in enumerate(dataloader):
-        bacth_data, batch_labels, batch_id = batch
         delay = time.perf_counter() - end
+        bacth_data, batch_labels, batch_id = batch
         print(f"Batch {idx}: id: {batch_id} delay: {delay:.2f}s, fetch(s): {data_fetch_time:.2f}s, transform(s): {transformation_time:.2f}s, hit: {cache_hit}")
-        time.sleep(0.1)
+        time.sleep(0.8)
         end = time.perf_counter()
 
         

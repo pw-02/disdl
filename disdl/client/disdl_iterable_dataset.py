@@ -148,7 +148,7 @@ class DisDLIterableDataset(torch.utils.data.IterableDataset):
         minibatch_bytes = None
         batch_id, samples, is_cached = self.client.sampleNextMinibatch()
         if self.use_cache and is_cached:
-            minibatch_bytes = self.get_cached_minibatch_with_retries(batch_id, max_retries=0, retry_interval=0.5)
+            minibatch_bytes = self.get_cached_minibatch_with_retries(batch_id, max_retries=3, retry_interval=0.25)
         
         if minibatch_bytes  is not None and (isinstance(minibatch_bytes , bytes) or isinstance(minibatch_bytes , str)):
             start_transformation_time   = time.perf_counter()

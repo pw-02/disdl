@@ -15,23 +15,6 @@ s3_client = boto3.client('s3', config=botocore.config.Config(
     max_pool_connections=500
 ))
 redis_client = None
-# compressor = zstd.ZstdCompressor(level=-1)
-
-# def dict_to_torchvision_transform(transform_dict):
-#     """
-#     Converts a dictionary of transformations to a PyTorch transform object.
-#     """
-#     transform_list = []
-#     for transform_name, params in transform_dict.items():
-#         if transform_name == 'Resize':
-#             transform_list.append(transforms.Resize(params))
-#         elif transform_name == 'Normalize':
-#             transform_list.append(transforms.Normalize(mean=params['mean'], std=params['std']))
-#         elif params is None:
-#             transform_list.append(getattr(transforms, transform_name)())
-#         else:
-#             raise ValueError(f"Unsupported transform: {transform_name}")
-#     return transforms.Compose(transform_list)
 
 def is_image_file(path: str) -> bool:
     """
@@ -39,47 +22,31 @@ def is_image_file(path: str) -> bool:
     """
     return any(path.lower().endswith(ext) for ext in ['.jpg', '.jpeg', '.png', '.ppm', '.bmp'])
 
+
 def get_transform(bucket_name: str):
     # Load image
-    if 'imagenet1k-sdl' in bucket_name or 'sdl-cifar10' in bucket_name:
-       normalize = transforms.Normalize(
-            mean=[0.485, 0.456, 0.406], 
-            std=[0.229, 0.224, 0.225],
-        )
-       return transforms.Compose([
-            transforms.Resize(256),                    # Resize the image to 256x256 pixels
-            transforms.RandomResizedCrop(224),   # Randomly crop a 224x224 patch
-            transforms.RandomHorizontalFlip(), # Randomly flip the image horizontally
-            transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1),  # Randomly change brightness, contrast, saturation, and hue
-            transforms.ToTensor(),  # Convert the image to a PyTorch tensor
-            normalize,
-        ])
-
-    # elif 'sdl-cifar10' in bucket_name:
-    #      return transforms.Compose([
-    #     transforms.Resize(224),
-    #         transforms.RandomHorizontalFlip(),        # Random horizontal flip
-    #         transforms.RandomCrop(32, padding=4),
-    #         # transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1),  # Randomly change brightness, contrast, saturation, and hue
-    #         # transforms.RandomRotation(15),      # Randomly rotate images by up to 15 degrees
-    #         transforms.ToTensor(),                    # Convert to tensor
-    #         transforms.Normalize(mean=[0.4914, 0.4822, 0.4465], std=[0.2023, 0.1994, 0.2010]) ]) # Normalize
-    #     # return transforms.Compose([
-    #     #     transforms.Resize(224),                    # Resize the image to 224x224 pixels
-    #     #     transforms.RandomHorizontalFlip(),     # Randomly flip the image horizontally
-    #     #     transforms.ToTensor(),                 # Convert the image to a PyTorch tensor
-    #     #      transforms.Normalize(mean=[0.4914, 0.4822, 0.4465], std=[0.2023, 0.1994, 0.2010])  # Normalize
-    #     #     ])
-    elif 'coco' in bucket_name:
-        return transforms.Compose([
-            transforms.Resize(256),                    # Resize the image to 256x256 pixels
-            transforms.RandomResizedCrop(224),   # Randomly crop a 224x224 patch
-            transforms.RandomHorizontalFlip(), # Randomly flip the image horizontally
-            transforms.ToTensor(),  # Convert the image to a PyTorch tensor
+    if 'imagenet1k-sdl' in bucket_name:
+       transform = transforms.Compose([
+        transforms.Resize(256), 
+        transforms.RandomResizedCrop(224),
+        transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1),  # Randomly change brightness, contrast, saturation, and hue
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+     ])
+    elif 'disdlopenimages' in bucket_name:
+        transform = transforms.Compose([
+            transforms.Resize(256), 
+            transforms.RandomResizedCrop(224),
+            transforms.RandomHorizontalFlip(),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
         ])
     else:
-        return None
- 
+        transform = transforms.Compose([
+            transforms.ToTensor(),
+        ])
+    return transform
+        
 
 def bytes_to_mb(byte_data):
     size_in_bytes = len(byte_data)  # Get size in bytes
@@ -160,7 +127,7 @@ def lambda_handler(event, context):
         cache_host, cache_port = cache_address.split(":")
         transformformation = get_transform(bucket_name)
         minibatch = create_minibatch(bucket_name, batch_samples, transformformation, s3_client)
-        minibatch_size_mb = bytes_to_mb(minibatch)
+        # minibatch_size_mb = bytes_to_mb(minibatch)
         
         if redis_client is None:
             redis_client = redis.StrictRedis(host=cache_host, port=int(cache_port))

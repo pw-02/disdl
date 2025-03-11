@@ -1,0 +1,6 @@
+kind: 'coco'
+batch_size: 128 #chunk_size  = number of files per chunk
+shuffle: True
+drop_last: False
+prefetch_lambda_name: 'CreateMultiModalBatch'
+# num_dataset_partitions: 1

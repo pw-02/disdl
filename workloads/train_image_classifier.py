@@ -175,7 +175,7 @@ def train_image_classifer(config: DictConfig,  train_logger: CSVLogger, val_logg
     fabric.print(f"Training completed in {elapsed_time:.2f} seconds")
     # metric_collector.stop()
 
-def get_transforms(workload_name):    
+def get_transforms():    
     # Set up data transforms for ImageNet on transformer workloads
     train_transform = transforms.Compose([
         transforms.Resize(256), 

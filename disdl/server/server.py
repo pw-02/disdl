@@ -11,7 +11,7 @@ from batch_manager import CentralBatchManager
 from omegaconf import OmegaConf
 from typing import Dict
 from job import DLTJob
-from dataset import ImageNetDataset,MSCOCODataset, LibSpeechDataset
+from dataset import ImageNetDataset,MSCOCODataset, LibSpeechDataset, OpenImagesDataset
 from batch import Batch, CacheStatus
 import json
 
@@ -41,7 +41,8 @@ class CacheAwareMiniBatchService(minibatch_service_pb2_grpc.MiniBatchServiceServ
                     dataset = ImageNetDataset(dataset_location, transforms)
                 elif self.args.workload == 'librispeech':
                     dataset = LibSpeechDataset(dataset_location, transforms)
-                
+                elif self.args.workload == 'openimages':
+                    dataset = OpenImagesDataset(dataset_location, transforms)
                 
                 self.datasets[dataset_location] = CentralBatchManager(dataset=dataset, args=self.args)
                 dataset_info = self.datasets[dataset_location].dataset_info()

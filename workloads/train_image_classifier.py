@@ -166,7 +166,8 @@ def train_image_classifer(config: DictConfig,  train_logger: CSVLogger, val_logg
             should_stop = True
 
     if not isinstance(train_dataloader, TensorConsumer):
-        train_dataloader.sampler.send_job_ended_notfication()
+        # train_dataloader.sampler.send_job_ended_notfication()
+        pass
     
     if config.dataloader.name == 'tensorsocket' and config.dataloader.mode == 'producer':
         tensorsocket_procuder.join() #shutdown the producer

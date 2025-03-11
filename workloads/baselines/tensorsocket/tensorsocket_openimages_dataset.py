@@ -43,7 +43,7 @@ class S3Url(object):
         return self._parsed.geturl()
 
 
-class TensorSockerDataset(Dataset):
+class TensorSocketOpenImagesDataset(Dataset):
     def __init__(self, s3_data_dir: str, 
                  transform=None,
                  cache_address=None,  

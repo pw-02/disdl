@@ -16,7 +16,7 @@ from collections import OrderedDict
 import numpy as np
 from datetime import datetime, timezone
 import timm
-from workloads.baselines.tensorsocket.tensorsocket_imagenet_dataset import TensorSockerDataset
+from workloads.baselines.tensorsocket.tensorsocket_imagenet_dataset import TensorSocketImageNetDataset
 from baselines.tensorsocket.producer import TensorProducer
 from baselines.tensorsocket.consumer import TensorConsumer
 from baselines.tensorsocket.tensorsocket_sampler import TensorSocketSampler
@@ -86,7 +86,7 @@ def train_image_classifer(config: DictConfig,  train_logger: CSVLogger, val_logg
     elif config.dataloader.name == 'tensorsocket':
         # PyTorch DataLoader
         if config.dataloader.mode == 'producer':
-            train_dataset = TensorSockerDataset(
+            train_dataset = TensorSocketImageNetDataset(
                 s3_data_dir=config.workload.s3_train_prefix,
                 transform=train_transform,)
             

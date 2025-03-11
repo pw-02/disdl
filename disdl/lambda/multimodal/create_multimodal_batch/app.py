@@ -5,7 +5,6 @@ import redis
 from PIL import Image
 import torch
 import torchvision.transforms as transforms
-# import lz4.frame
 import botocore.config
 import re
 from transformers.models.bert.tokenization_bert import BertTokenizer
@@ -13,7 +12,7 @@ from typing import Any, List, Optional, Tuple, Union
 from torch.nn.utils.rnn import pad_sequence
 from torch.nn import Module
 import time
-import zstandard as zstd
+import lz4.frame
 
 # mean and standard deviation from the ALBEF repo:
 # https://github.com/salesforce/ALBEF/blob/main/dataset/__init__.py#L16
@@ -21,15 +20,13 @@ MEAN = (0.48145466, 0.4578275, 0.40821073)
 STD_DEV = (0.26862954, 0.26130258, 0.27577711)
 
 tokenizer = BertTokenizer.from_pretrained("/var/task/bert-tokenizer")
-# tokenizer = BertTokenizer.from_pretrained("awslambda\\multimodal\\create_multimodal_batch\\bert-tokenizer")
 
 # Create the S3 client with the custom config
+# Create the S3 client with the custom config
 s3_client = boto3.client('s3', config=botocore.config.Config(
-    max_pool_connections=51
+    max_pool_connections=500
 ))
 redis_client = None
-compressor = zstd.ZstdCompressor(level=4)
-
 
 class Truncate(Module):
     r"""Truncate input sequence
@@ -245,7 +242,7 @@ def create_minibatch(bucket_name: str, samples: list, image_transform, text_tran
     Creates a minibatch from the samples, compresses it, and encodes it in base64.
     """
     image_list, text_list, image_id_list  = [], [], []
-    with ThreadPoolExecutor(max_workers=1) as executor:
+    with ThreadPoolExecutor(max_workers=None) as executor:
         futures = {executor.submit(get_data_sample, bucket_name, sample, image_transform, text_transform, s3_client): sample for sample in samples}
         for future in as_completed(futures):
             image, caption, id = future.result()
@@ -260,7 +257,7 @@ def create_minibatch(bucket_name: str, samples: list, image_transform, text_tran
         bytes_minibatch = buffer.getvalue()
         # Encode the serialized tensor with base64
         # compressed_minibatch = lz4.frame.compress(bytes_minibatch)
-        compressed_minibatch = compressor.compress(bytes_minibatch)
+        compressed_minibatch = lz4.frame.compress(bytes_minibatch)
 
     return compressed_minibatch
 
@@ -302,20 +299,18 @@ def lambda_handler(event, context):
             return {'success': False, 'message': 'Missing parameters'}
         
         cache_host, cache_port = cache_address.split(":")
-        # cache_host = '127.0.0.1'
-        # cache_port = 6379
         image_transform = training_image_transform()
-        text_transform = ALBEFTextTransform(truncate=True, pad_to_max_seq_len=True, max_seq_len=30, add_end_token=False)
+        text_transform = ALBEFTextTransform(
+            truncate=True, pad_to_max_seq_len=True, max_seq_len=30, add_end_token=False)
 
         minibatch = create_minibatch(bucket_name, batch_samples, image_transform, text_transform, s3_client)
-        minibatch_size_mb = bytes_to_mb(minibatch)
+        # minibatch_size_mb = bytes_to_mb(minibatch)
         redis_client = None
         if redis_client is None:
             redis_client = redis.StrictRedis(host=cache_host, port=int(cache_port))
-        
+            # redis_client = redis.StrictRedis(host=cache_host, port=int(cache_port), ssl=True )
+      
         cache_minibatch_with_retries(redis_client, batch_id, minibatch)
-
-        # redis_client.set(batch_id, minibatch)
 
         return {
             'success': True,

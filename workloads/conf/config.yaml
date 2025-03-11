@@ -2,7 +2,7 @@
 defaults:
   - _self_
   - dataloader: disdl #coordl, baseline
-  - workload: imagenet_resnet18
+  - workload: albef_retrieval
   #albef_retrieval, 
   #lora_finetune_tiny_llama,
   #lora_finetune_owt, 

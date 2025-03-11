@@ -193,7 +193,8 @@ def get_transforms():
     ])
     return train_transform, val_transform
 
-def train_loop(fabric:Fabric, job_id, 
+def train_loop(fabric:Fabric, 
+               job_id, 
                train_logger:CSVLogger,
                model,
                optimizer,

@@ -4,7 +4,7 @@ from job import DLTJob
 from args import DisDLArgs
 from collections import deque, OrderedDict
 from typing import List, Optional, Dict, Tuple
-from dataset import Dataset
+from dataset import MSCOCODataset
 from batch import Batch, BatchSet, CacheStatus
 import time
 from logger_config import logger
@@ -19,7 +19,7 @@ from cache_eviction import CacheEvictionService
 from cache_prefetching import PrefetchServiceAsync, PrefetchServiceEvent
 
 class CentralBatchManager:
-    def __init__(self, dataset: Dataset, args: DisDLArgs, prefetch_workers:int = 10):
+    def __init__(self, dataset, args: DisDLArgs, prefetch_workers:int = 10):
         self.dataset = dataset
         self.job_counter = 0
         self.sampler = PartitionedBatchSampler(
@@ -199,6 +199,7 @@ class CentralBatchManager:
                 self._generate_new_batch()
 
             # logger.debug(f"Job '{job_id}' given batch '{next_batch.batch_id}'")
+            samples = self.dataset.get_samples(next_batch.indices)
             return next_batch
         
     def reverse_cycle_mod(self, start: int, mod: int):
@@ -270,7 +271,8 @@ class CentralBatchManager:
                     self.prefetch_service.stop()
                 if self.eviction_service:
                     self.eviction_service.stop_cache_evictor()
-    
+
+
 if __name__ == "__main__":
     # Constants    
     PREFETCH_TIME = 0.1
@@ -288,9 +290,9 @@ if __name__ == "__main__":
         lookahead_steps=20,
         shuffle=False,
         drop_last=False,
-        workload_kind='vision',
+        workload='coco',
         serverless_cache_address=None,
-        use_prefetching=True,
+        use_prefetching=False,
         use_keep_alive=False,
         prefetch_lambda_name='CreateVisionTrainingBatch',
         prefetch_cost_cap_per_hour=None,
@@ -299,7 +301,7 @@ if __name__ == "__main__":
         evict_from_cache_simulation_time=None
     )
 
-    dataset = Dataset(dataset_location='s3://sdl-cifar10/test/')
+    dataset = MSCOCODataset(dataset_location='s3://coco-dataset/coco_train.json')
     batch_manager = CentralBatchManager(dataset=dataset, args=args, prefetch_workers=10)
 
     def run_job(job_id, job_speed):
@@ -329,13 +331,74 @@ if __name__ == "__main__":
 
 
     if __name__ == "__main__":
-        threads = []
+        run_job(1,1)
 
-        for job_id, speed in enumerate(JOB_SPEEDS):
-            thread = threading.Thread(target=run_job, args=(job_id, speed,))
-            threads.append(thread)
-            thread.start()
-            time.sleep(DELAY_BETWEEN_JOBS)  # Stagger job start times
+    
+# if __name__ == "__main__":
+#     # Constants    
+#     PREFETCH_TIME = 0.1
 
-        for thread in threads:
-            thread.join()  # Wait for all jobs to complete
+#     CACHE_MISS_DELAY = 10.1
+#     CACHE_HIT_DELAY = 10.1
+#     DELAY_BETWEEN_JOBS = 1  # Delay in seconds between the start of each job
+#     BATCHES_PER_JOB = 20  # Number of batches each job will process
+#     JOB_SPEEDS = [0.1]
+
+#     # Initialize dataset and batch manager
+#     args = DisDLArgs(
+#         batch_size=10,
+#         num_dataset_partitions=1,
+#         lookahead_steps=20,
+#         shuffle=False,
+#         drop_last=False,
+#         workload_kind='vision',
+#         serverless_cache_address=None,
+#         use_prefetching=True,
+#         use_keep_alive=False,
+#         prefetch_lambda_name='CreateVisionTrainingBatch',
+#         prefetch_cost_cap_per_hour=None,
+#         cache_keep_alive_timeout=60 * 3,  # 3 minutes
+#         prefetch_simulation_time=PREFETCH_TIME,
+#         evict_from_cache_simulation_time=None
+#     )
+
+#     dataset = Dataset(dataset_location='s3://sdl-cifar10/test/')
+#     batch_manager = CentralBatchManager(dataset=dataset, args=args, prefetch_workers=10)
+
+#     def run_job(job_id, job_speed):
+#         """Function to simulate a job processing batches."""
+#         cache_hits = 0
+#         cache_misses = 0
+
+#         for i in range(BATCHES_PER_JOB):
+#             batch = batch_manager.get_next_batch_for_job(job_id=job_id)
+
+#             if batch.cache_status == CacheStatus.CACHED:
+#                 time.sleep(CACHE_HIT_DELAY + job_speed)
+#                 cache_hits += 1
+#             else:
+#                 time.sleep(CACHE_MISS_DELAY + job_speed)
+#                 cache_misses += 1
+
+#             batch_manager.update_job_progess(
+#                 job_id, batch.batch_id, CACHE_MISS_DELAY, batch.cache_status == CacheStatus.CACHED, job_speed, True
+#             )
+
+#             hit_rate = cache_hits / (i + 1)
+#             if i % 1 == 0 or batch.cache_status != CacheStatus.CACHED:
+#                 logger.info(f'Step {i+1}, Job {job_id}, {batch.batch_id}, Hits: {cache_hits}, Misses: {cache_misses}, Rate: {hit_rate:.2f}')
+
+#         batch_manager.handle_job_ended(job_id)
+
+
+#     if __name__ == "__main__":
+#         threads = []
+
+#         for job_id, speed in enumerate(JOB_SPEEDS):
+#             thread = threading.Thread(target=run_job, args=(job_id, speed,))
+#             threads.append(thread)
+#             thread.start()
+#             time.sleep(DELAY_BETWEEN_JOBS)  # Stagger job start times
+
+#         for thread in threads:
+#             thread.join()  # Wait for all jobs to complete

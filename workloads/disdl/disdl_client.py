@@ -34,7 +34,8 @@ class DisDLClient:
             dataset_location=self.dataset_location
         ))
         batch_id = response.batch.batch_id
-        samples = [(sample[0], sample[1]) for sample in json.loads(response.batch.samples)] #data, label pairs
+        # samples = [(sample[0], sample[1]) for sample in json.loads(response.batch.samples)] #data, label pairs
+        samples = [tuple(sample) for sample in json.loads(response.batch.samples)]
 
         is_cached = response.batch.is_cached
         return batch_id, samples, is_cached

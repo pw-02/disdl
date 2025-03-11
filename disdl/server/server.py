@@ -35,7 +35,9 @@ class CacheAwareMiniBatchService(minibatch_service_pb2_grpc.MiniBatchServiceServ
                 dataset_info = self.datasets[dataset_location].dataset_info()
             else:
                 #register dataset and add job
-                dataset = MSCOCODataset(dataset_location, transforms)
+                if self.args.workload == 'coco':
+                    dataset = MSCOCODataset(dataset_location, transforms)
+                
                 self.datasets[dataset_location] = CentralBatchManager(dataset=dataset, args=self.args)
                 dataset_info = self.datasets[dataset_location].dataset_info()
                 logger.info(f"Dataset '{dataset_location}' added. Total Files: {len(dataset)}, Total Batches:{dataset_info['num_batches']}")
@@ -152,7 +154,7 @@ def serve(cfg: DictConfig):
             evict_from_cache_simulation_time = cfg.evict_from_cache_simulation_time,
             shuffle = cfg.workload.shuffle,
             drop_last = cfg.workload.drop_last,
-            workload_kind = cfg.workload.kind)
+            workload = cfg.workload.kind)
         
         cache_service = CacheAwareMiniBatchService(args) 
         max_workers = 1

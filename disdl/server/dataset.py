@@ -6,6 +6,7 @@ import functools
 import pandas as pd
 from io import StringIO
 
+
 class MSCOCODataset():
     def __init__(self, 
                  dataset_location: str, 
@@ -33,7 +34,15 @@ class MSCOCODataset():
     
     def __len__(self) -> int:
         return sum(len(class_items) for class_items in self.samples.values())
-
+    
+    def get_samples(self, indices: List[int]):
+        samples = []
+        for i in indices:
+            sample, image_id = self._classed_items[i]
+            image, cpation = sample
+            samples.append((image, cpation, image_id))
+        return samples
+    
 
 
 class OpenImagesDataset():

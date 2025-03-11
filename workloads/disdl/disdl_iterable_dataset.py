@@ -327,6 +327,104 @@ class DisDLImageNetIterableDataset(DisDLIterableDataset):
         obj = self.s3_client.get_object(Bucket=s3_bucket, Key=data_path)
         data = Image.open(BytesIO(obj['Body'].read())).convert("RGB")
         return data, label
+    
+      
+class DisDLOpenImagesDataset(DisDLIterableDataset):
+    def __init__(self, 
+                 job_id,
+                 dataset_location,
+                 num_samples,
+                 batch_size, 
+                 disdl_service_address,
+                 transform=None,
+                 cache_address=None,
+                 ssl=True,
+                 use_compression=True,
+                 use_local_folder=False,
+                 custom_attribute=None):
+        super().__init__(job_id, dataset_location, num_samples, batch_size, 
+                         disdl_service_address, cache_address, 
+                         ssl, use_compression, use_local_folder)
+        self.transform = transform
+        
+        # Define additional attributes
+        self.custom_attribute = custom_attribute
+
+    def _get_next_batch(self):
+
+        start_time = time.perf_counter()
+        cached_after_fetch = False
+        minibatch_bytes = None
+        batch_id, samples, is_cached = self.client.sampleNextMinibatch()
+        if self.use_cache and is_cached:
+            minibatch_bytes = self.get_cached_minibatch_with_retries(batch_id, max_retries=3, retry_interval=0.25)
+        
+        if minibatch_bytes  is not None and (isinstance(minibatch_bytes , bytes) or isinstance(minibatch_bytes , str)):
+            start_transformation_time   = time.perf_counter()
+            batch_data, batch_labels = self.convert_bytes_to_torch_tensor(minibatch_bytes)
+            transformation_time  =  time.perf_counter() - start_transformation_time
+            cache_hit = True
+        else:
+            batch_data, batch_labels = self.load_batch_data(samples)
+            cache_hit = False
+             # Apply transformations if provided
+            start_transformation_time = time.perf_counter()
+            if self.transform is not None:
+                for i in range(len(batch_data)):
+                    batch_data[i] = self.transform(batch_data[i])        
+            transformation_time =  time.perf_counter() - start_transformation_time
+            batch_data= torch.stack(batch_data)
+            batch_labels = torch.tensor(batch_labels)
+            # if self.use_cache:
+            #     bytes_tensor = self.convert_torch_tensor_to_bytes((batch_data, batch_labels))
+            #     if self.cache_minibatch_with_retries(batch_id, bytes_tensor, max_retries=0):
+            #         cached_after_fetch = True
+        data_fetch_time = time.perf_counter() - start_time - transformation_time
+        return (batch_data,batch_labels,batch_id), data_fetch_time, transformation_time, cache_hit, cached_after_fetch
+    
+    
+    def load_batch_data(self, samples) -> Tuple[List[torch.Tensor], List[int]]:
+        batch_data, batch_labels = [], []
+        if self.use_local_folder:
+            for  data_path, label in samples:
+                with open(data_path, 'rb') as f:
+                    data = Image.open(f).convert("RGB")
+                batch_data.append(data)
+                batch_labels.append(label)
+            return batch_data, batch_labels
+        else:
+            self._set_s3_client()
+            with ThreadPoolExecutor(max_workers=None) as executor:
+                futures = {executor.submit(self.read_data_from_s3, data_path, label): (data_path, label) for data_path, label in samples}
+                for future in as_completed(futures):
+                    data_sample, label = future.result()
+                    batch_data.append(data_sample)
+                    batch_labels.append(label)
+            return batch_data, batch_labels
+        
+    def read_data_from_s3(self,data_path, label) -> tuple: 
+        s3_bucket = S3Url(self.dataset_location).bucket
+        obj = self.s3_client.get_object(Bucket=s3_bucket, Key=data_path)
+        data = Image.open(BytesIO(obj['Body'].read())).convert("RGB")
+        return data, label
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 class DisDLCocoIterableDataset(DisDLIterableDataset):

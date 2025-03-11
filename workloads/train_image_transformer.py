@@ -22,7 +22,7 @@ from baselines.tensorsocket.consumer import TensorConsumer
 from baselines.tensorsocket.tensorsocket_sampler import TensorSocketSampler
 from lightning.pytorch.core.saving import save_hparams_to_yaml
 from disdl.disdl_client import DisDLClient
-from disdl.disdl_iterable_dataset import DisDLIterableDataset
+from disdl.disdl_iterable_dataset import DisDLOpenImagesDataset
 
 def train_image_classifer(config: DictConfig,  train_logger: CSVLogger, val_logger: CSVLogger):
     if config.simulation_mode:
@@ -49,7 +49,7 @@ def train_image_classifer(config: DictConfig,  train_logger: CSVLogger, val_logg
     optimizer = optim.Adam(model.parameters(), lr=config.workload.learning_rate)
     model, optimizer = fabric.setup(model, optimizer)
     
-    train_transform, val_transform = get_transforms(config.workload.name)
+    train_transform, val_transform = get_transforms()
 
     train_dataloader = None
     val_dataloader = None
@@ -62,7 +62,7 @@ def train_image_classifer(config: DictConfig,  train_logger: CSVLogger, val_logg
         num_batchs = dataset_info["num_batches"]
         client.close()
 
-        train_dataset = DisDLIterableDataset(
+        train_dataset = DisDLOpenImagesDataset(
             job_id=client.job_id,
             dataset_location=client.dataset_location,
             num_samples=num_batchs,
@@ -165,8 +165,8 @@ def train_image_classifer(config: DictConfig,  train_logger: CSVLogger, val_logg
         if config.workload.max_epochs is not None and current_epoch >= config.workload.max_epochs:
             should_stop = True
 
-    if not isinstance(train_dataloader, TensorConsumer):
-        train_dataloader.sampler.send_job_ended_notfication()
+    # if not isinstance(train_dataloader, TensorConsumer):
+    #     train_dataloader.sampler.send_job_ended_notfication()
     
     if config.dataloader.name == 'tensorsocket' and config.dataloader.mode == 'producer':
         tensorsocket_procuder.join() #shutdown the producer
@@ -175,15 +175,14 @@ def train_image_classifer(config: DictConfig,  train_logger: CSVLogger, val_logg
     fabric.print(f"Training completed in {elapsed_time:.2f} seconds")
     # metric_collector.stop()
 
-def get_transforms(workload_name):    
+def get_transforms():    
     # Set up data transforms for ImageNet on transformer workloads
     train_transform = transforms.Compose([
-        transforms.Resize(256), 
-        transforms.RandomResizedCrop(224),
-        transforms.RandomHorizontalFlip(),
-        transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1),  # Randomly change brightness, contrast, saturation, and hue
-        transforms.ToTensor(),
-        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+            transforms.Resize(256), 
+            transforms.RandomResizedCrop(224),
+            transforms.RandomHorizontalFlip(),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
     ])
     val_transform = transforms.Compose([
         transforms.Resize(256),

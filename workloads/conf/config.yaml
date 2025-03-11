@@ -2,7 +2,7 @@
 defaults:
   - _self_
   - dataloader: disdl #disdl, tensorsocket
-  - workload: imagenet_nas #albef_retrieval
+  - workload: openimages_nas #albef_retrieval
   #albef_retrieval, 
   #lora_finetune_tiny_llama,
   #lora_finetune_owt, 

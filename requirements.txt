@@ -11,6 +11,8 @@ zmq
 tornado
 lz4
 psutil
+torchmultimodal-nightly
+transformers
 # torchvision
 # transformers
 # hydra

@@ -1,8 +1,6 @@
 
 # No 'default_generator' in torch/__init__.pyi
 from typing import TypeVar, List, Tuple, Dict
-from datetime import datetime
-import random
 import PIL.Image as Image
 import numpy as np
 import io
@@ -20,8 +18,7 @@ import os
 import redis
 import torch
 from io import BytesIO
-import pandas as pd
-from io import StringIO
+from torch.nn.utils.rnn import pad_sequence
 
 class S3Url(object):
     def __init__(self, url):
@@ -43,9 +40,12 @@ class S3Url(object):
         return self._parsed.geturl()
 
 
-class TensorSockerDataset(Dataset):
-    def __init__(self, s3_data_dir: str, 
-                 transform=None,
+class TensorSocketCocoDataset(Dataset):
+    def __init__(self, 
+                 s3_data_dir: str,
+                 
+                image_transform=None,
+                 text_transform=None,                  
                  cache_address=None,  
                  simulate_mode=False, 
                  simulate_time_for_cache_miss=0,
@@ -59,7 +59,8 @@ class TensorSockerDataset(Dataset):
         self.s3_prefix = S3Url(s3_data_dir).key
         self.s3_data_dir = s3_data_dir
         self.s3_client = None
-        self.transform = transform
+        self.image_transform = image_transform
+        self.text_transform = text_transform
         self.using_local_folder = use_local_folder
         self.samples = self._get_samples_from_s3()
         self.simulate_mode = simulate_mode
@@ -97,64 +98,23 @@ class TensorSockerDataset(Dataset):
         if self.s3_client is None:
             self.s3_client = boto3.client('s3', config=botocore.config.Config(
                 max_pool_connections=100))
+    
+    @functools.cached_property
+    def _classed_items(self) -> List[Tuple[str, int]]:
+        return [(blob, class_index)
+            for class_index, blob_class in enumerate(self.samples)
+            for blob in self.samples[blob_class]]
             
 
     def _get_samples_from_s3(self, use_index_file=True, images_only=True) -> Dict[str, List[str]]:
         s3_client = boto3.client('s3')
-        index_file_key = f"{self.s3_prefix}_paired_index.json"
-        paired_samples = {}
+        index_object = s3_client.get_object(Bucket=self.s3_bucket, Key=self.s3_prefix)
+        file_content = index_object['Body'].read().decode('utf-8')
+        # samples = json.loads(file_content)
+        paired_samples = json.loads(file_content)
+        return paired_samples
 
-        if use_index_file:
-            try:
-                index_object = s3_client.get_object(Bucket=self.s3_bucket, Key=index_file_key)
-                file_content = index_object['Body'].read().decode('utf-8')
-                paired_samples = json.loads(file_content)
-                return list(paired_samples.values())
-            except Exception as e:
-                print(f"Error reading index file '{index_file_key}': {e}")
 
-        #fist lets get all of the images ids and paths
-        images ={}
-        image_label_dict = {}
-        paginator = s3_client.get_paginator('list_objects_v2')
-        for page in paginator.paginate(Bucket=self.s3_bucket, Prefix=self.s3_prefix):
-            for blob in page.get('Contents', []):
-                blob_path = blob.get('Key')
-                
-                if blob_path.endswith("/"):
-                    continue  # Skip folders
-                
-                stripped_path = blob_path[len(self.s3_prefix):].lstrip("/")
-                if stripped_path == blob_path:
-                    continue  # No matching prefix, skip
-
-                if images_only and not blob_path.lower().endswith(('.jpg', '.jpeg', '.png')):
-                    print(f"Skipping non-image file: {blob_path}")
-                    if 'annotations' in blob_path:
-                        response = s3_client.get_object(Bucket=self.s3_bucket, Key=blob_path)
-                        csv_content = response["Body"].read().decode("utf-8")  # Decode bytes to string
-                        df = pd.read_csv(StringIO(csv_content))  # Convert string to DataFrame
-                        image_label_dict = df.set_index("ImageID")["LabelName"].to_dict()
-
-                    continue  # Skip non-image files
-                if 'index.json' in blob_path:
-                    continue  # Skip index file
-
-                fileid = stripped_path.split("/")[-1].split(".")[0]
-                images[fileid] = blob_path
-
-        for image_id in image_label_dict:
-            if image_id in images:
-                paired_samples[image_id] = (images[image_id], image_label_dict[image_id])
-
-        if not use_index_file and paired_samples:
-            s3_client.put_object(
-                Bucket=self.s3_bucket,
-                Key=index_file_key,
-                Body=json.dumps(paired_samples, indent=4).encode('utf-8'))
-
-        return list(paired_samples.values())
-    
     def __len__(self) -> int:
         return sum(len(class_items) for class_items in self.samples.values())
     
@@ -162,53 +122,42 @@ class TensorSockerDataset(Dataset):
     def __getitem__(self, idx: int) -> Tuple[torch.Tensor, torch.Tensor, float, float]:
         batch_id, batch_indices = idx
         start_loading_time = time.perf_counter()
-        samples, labels, cache_hit_count = self.fetch_batch_data(batch_indices)
-        start_transformation_time  = time.perf_counter()
-
+        images, captions, image_ids, cache_hit_count = self.fetch_batch_data(batch_indices)
+         # Apply transformations if provided
         start_transformation_time = time.perf_counter()
-        if self.transform is not None:
-            for i in range(len(samples)):
-                samples[i] = self.transform(samples[i])        
+        for i in range(len(images)):
+            images[i] = self.image_transform(images[i])      
+        
+        for i in range(len(captions)):
+            captions[i] = self.text_transform(captions[i]) 
+         # Convert to tensors
+        images = torch.stack(images, dim=0)
+        captions = pad_sequence(captions, batch_first=True)
+        text_atts = (captions != 0).type(torch.long)
+        image_ids =  torch.Tensor(image_ids).type(torch.long)
+        
         transformation_time =  time.perf_counter() - start_transformation_time
-        # Convert to tensors
-        samples= torch.stack(samples)
-        labels = torch.tensor(labels)
         data_fetch_time  = time.perf_counter() - start_loading_time - transformation_time
-        return samples, labels
+        return images, captions, text_atts, image_ids
 
         # return samples, labels,batch_id,data_fetch_time,transformation_time
 
     def fetch_batch_data(self, batch_indices: List[str]):
-        data_samples, labels = [], []
+        data_samples,captions, image_ids = [], [], []
         cache_hits = 0
-        if self.using_local_folder:
-            data = None
-            for idx in batch_indices:
-                data_path, label = self.samples[idx]
-                if self.use_cache:
-                    data = self.fetch_item_from_cache(idx)
-                if data is not None:
+
+        self.check_s3_client()
+        with ThreadPoolExecutor() as executor:
+            futures = {executor.submit(self.get_data_sample, idx): idx for idx in batch_indices}
+            for future in as_completed(futures):
+                data_sample, caption, imageid, cahe_hit = future.result()
+                if cahe_hit:
                     cache_hits += 1
-                else:
-                    data_path = os.path.join('data/cifar10/', data_path) 
-                    # with open(data_path, 'rb') as f:
-                    data = Image.open(data_path)
-                    if self.use_cache:
-                        self.put_item_in_cache(idx, data)
-                data_samples.append(data.convert("RGB") )
-                labels.append(label)
-            return data_samples, labels, cache_hits
-        else:
-            self.check_s3_client()
-            with ThreadPoolExecutor() as executor:
-                futures = {executor.submit(self.get_data_sample, idx): idx for idx in batch_indices}
-                for future in as_completed(futures):
-                    data_sample, label, cahe_hit = future.result()
-                    if cahe_hit:
-                        cache_hits += 1
-                    data_samples.append(data_sample)
-                    labels.append(label)
-            return data_samples, labels, cache_hits
+                data_samples.append(data_sample)
+                captions.append(caption)
+                image_ids.append(imageid)
+
+        return data_samples, captions, image_ids, cache_hits
         
 
     def _initialize_cache_client(self):
@@ -238,17 +187,18 @@ class TensorSockerDataset(Dataset):
         self.cache_client.set(idx, img_byte_arr.read())
 
     def get_data_sample(self,idx) -> tuple:  
-        data_path, label = self.samples[idx]
+        sample, image_id = self._classed_items[idx]
+        data_path, caption = sample
         cache_hit = False
         if self.use_cache:
             data = self.fetch_item_from_cache(idx)
             cache_hit = True
         else:
             obj = self.s3_client.get_object(Bucket=self.s3_bucket, Key=data_path)
-            data = Image.open(BytesIO(obj['Body'].read()))
+            data = Image.open(BytesIO(obj['Body'].read())).convert("RGB")
             if self.use_cache:
                 self.put_item_in_cache(idx, data)
-        return data.convert("RGB"), label, cache_hit
+        return data.convert("RGB"), caption, image_id, cache_hit
 
     def fetch_image_from_s3(self, data_path):
         if self.s3_client is None:

@@ -140,6 +140,7 @@ class TensorSocketCocoDataset(Dataset):
         data_fetch_time  = time.perf_counter() - start_loading_time - transformation_time
         return images, captions, text_atts, image_ids
 
+
         # return samples, labels,batch_id,data_fetch_time,transformation_time
 
     def fetch_batch_data(self, batch_indices: List[str]):
@@ -255,3 +256,4 @@ class TensorSocketCocoDataset(Dataset):
 
         return paired_samples
        
+

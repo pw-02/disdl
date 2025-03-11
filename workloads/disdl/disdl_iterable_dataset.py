@@ -1,5 +1,5 @@
-# from disdl.disdl_client import DisDLClient
-from disdl_client import DisDLClient
+from disdl.disdl_client import DisDLClient
+#from disdl_client import DisDLClient
 
 import torch
 import boto3

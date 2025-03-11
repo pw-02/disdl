@@ -94,7 +94,7 @@ class OpenImagesDataset():
                         response = s3_client.get_object(Bucket=self.s3_bucket, Key=blob_path)
                         csv_content = response["Body"].read().decode("utf-8")  # Decode bytes to string
                         df = pd.read_csv(StringIO(csv_content))  # Convert string to DataFrame
-                        image_label_dict = df.set_index("ImageID")["LabelName"].to_dict()
+                        image_label_dict = df.set_index("ImageID")["Ids"].to_dict()
 
                     continue  # Skip non-image files
                 if 'index.json' in blob_path:

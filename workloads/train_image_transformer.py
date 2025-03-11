@@ -234,10 +234,10 @@ def train_loop(fabric:Fabric, job_id,
             if fabric.device.type == 'cuda':
                 torch.cuda.synchronize()
                 #remove batch from GPU
-                if isinstance(train_dataloader, TensorConsumer):
-                    #need to free the memory for the producer to send more data
-                    inputs = inputs.cpu()
-                    labels = labels.cpu()
+                # if isinstance(train_dataloader, TensorConsumer):
+                #     #need to free the memory for the producer to send more data
+                #     inputs = inputs.cpu()
+                #     labels = labels.cpu()
 
             
             # print(inputs)

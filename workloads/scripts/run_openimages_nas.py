@@ -46,6 +46,14 @@ def main(config: DictConfig):
         monitor_process = subprocess.Popen(monitor_cmd, shell=True, stdout=log_file, stderr=log_file)
     monitor_pid = monitor_process.pid
 
+    if dataloader == 'tensorsocket':
+        # print("Starting TensorSocket producer...")
+        producer_cmd = f"{python_cmd} workloads/train_image_transformer.py workload={workload} dataloader={dataloader} dataloader.mode=producer workload.model_architecture={models[0]}"
+        producer_process = subprocess.Popen(producer_cmd, shell=True)
+        producer_pid = producer_process.pid
+        time.sleep(5)  # Adjust as necessary
+
+
     # Track training start time
     training_started_datetime =  datetime.now(timezone.utc).strftime("%Y-%m-%d_%H-%M-%S")
     print(f"Training started UTC Time: {training_started_datetime}")
@@ -54,7 +62,12 @@ def main(config: DictConfig):
     job_pids = []
     for idx, model in enumerate(models):
         print(f"Starting job on GPU {idx} with model {model} and exp_id {expid}_{idx}")
-        run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/train_image_transformer.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model}"
+        if dataloader == 'disdl':
+            run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/train_image_transformer.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model}"
+        elif dataloader == 'tensorsocket':
+            run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/train_image_transformer.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model} dataloader.mode=consumer"
+
+        
         #run_cmd = f"{python_cmd} workloads/image_classification.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model}"
         process = subprocess.Popen(run_cmd, shell=True)
         job_pids.append(process)
@@ -72,6 +85,10 @@ def main(config: DictConfig):
     # Stop resource monitor
     print("Stopping Resource Monitor...")
     monitor_process.kill()
+
+    if dataloader == 'tensorsocket':
+        producer_process.kill()
+
 
     print("Experiment completed.")
 

@@ -84,9 +84,9 @@ def train_image_classifer(config: DictConfig,  train_logger: CSVLogger, val_logg
         train_dataloader = fabric.setup_dataloaders(train_dataloader, move_to_device=True if config.accelerator != 'cpu' else False)
     
     elif config.dataloader.name == 'tensorsocket':
-        # PyTorch DataLoader
+
         if config.dataloader.mode == 'producer':
-            print("Starting TensorSocket producer...")
+            print("Starting TensorSocket producer!")
             train_dataset = TensorSocketImageNetDataset(
                 s3_data_dir=config.workload.s3_train_prefix,
                 transform=train_transform,)

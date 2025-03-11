@@ -85,8 +85,8 @@ def train_image_classifer(config: DictConfig,  train_logger: CSVLogger, val_logg
     
     elif config.dataloader.name == 'tensorsocket':
         # PyTorch DataLoader
+        print(config.dataloader.mode)
         if config.dataloader.mode == 'producer':
-            print(config.dataloader.mode)
             train_dataset = TensorSocketOpenImagesDataset(
                 s3_data_dir=config.workload.s3_train_prefix,
                 transform=train_transform,)

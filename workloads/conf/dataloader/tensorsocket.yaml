@@ -1,6 +1,6 @@
 name: tensorsocket
 
-mode: consumer #producer, consumer
+mode: producer #producer, consumer
 producer_port: 5556
 producer_ackport: 5557
 producer_heartports: [4444, 4445]

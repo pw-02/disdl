@@ -145,8 +145,8 @@ def train_image_classifer(config: DictConfig,  train_logger: CSVLogger, val_logg
             max_steps=config.workload.max_steps,
             limit_train_batches=config.workload.limit_train_batches,
             criterion=nn.CrossEntropyLoss(reduction = 'none'), # if isinstance(train_dataloader.sampler, ShadeSampler) else nn.CrossEntropyLoss(),
-            tensorsocker_procuder=tensorsocket_procuder,
-            tensorsocket_consumer=tensorsoket_consumer,
+            tensorsocket_procuder=tensorsocket_procuder,
+            tensorsoket_consumer=tensorsoket_consumer,
             sim=config.simulation_mode,
             sim_time=config.workload.gpu_time)
     
@@ -204,7 +204,7 @@ def train_loop(fabric:Fabric, job_id,
                max_steps = None, 
                limit_train_batches = np.inf, 
                criterion=nn.CrossEntropyLoss(),
-               tensorsocker_procuder:TensorProducer=None,
+               tensorsocket_procuder:TensorProducer=None,
                tensorsocket_consumer:TensorConsumer=None,
                sim=False,
                sim_time=0):
@@ -214,12 +214,13 @@ def train_loop(fabric:Fabric, job_id,
     total_train_loss = 0.0
     correct_preds = 0
     end = time.perf_counter()
-    if tensorsocker_procuder is not None:
+    if tensorsocket_procuder is not None:
         print("starting producer!..")
-        for i, _ in enumerate(tensorsocker_procuder):
+        for i, _ in enumerate(tensorsocket_procuder):
             #dont do anything as the producer will send the data to gpu of the consumers
             time.sleep(0.001)
     else:
+        print("starting normal training loop")
         to_enmerate = tensorsocket_consumer if tensorsocket_consumer is not None else train_dataloader
         for batch_idx, (batch, data_load_time, transformation_time, is_cache_hit, cached_on_miss) in enumerate(to_enmerate):
             wait_for_data_time = time.perf_counter() - end

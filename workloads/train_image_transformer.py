@@ -146,7 +146,7 @@ def train_image_classifer(config: DictConfig,  train_logger: CSVLogger, val_logg
             limit_train_batches=config.workload.limit_train_batches,
             criterion=nn.CrossEntropyLoss(reduction = 'none'), # if isinstance(train_dataloader.sampler, ShadeSampler) else nn.CrossEntropyLoss(),
             tensorsocket_procuder=tensorsocket_procuder,
-            tensorsoket_consumer=tensorsoket_consumer,
+            tensorsocket_consumer=tensorsoket_consumer,
             sim=config.simulation_mode,
             sim_time=config.workload.gpu_time)
     

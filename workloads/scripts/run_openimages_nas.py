@@ -54,7 +54,7 @@ def main(config: DictConfig):
     job_pids = []
     for idx, model in enumerate(models):
         print(f"Starting job on GPU {idx} with model {model} and exp_id {expid}_{idx}")
-        run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/image_classification.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model}"
+        run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/train_image_transformer.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model}"
         #run_cmd = f"{python_cmd} workloads/image_classification.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model}"
         process = subprocess.Popen(run_cmd, shell=True)
         job_pids.append(process)

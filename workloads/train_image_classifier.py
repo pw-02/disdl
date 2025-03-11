@@ -53,8 +53,8 @@ def train_image_classifer(config: DictConfig,  train_logger: CSVLogger, val_logg
 
     train_dataloader = None
     val_dataloader = None
-    tensorsocket_procuder:TensorProducer = None
-    tensorsoket_consumer:TensorConsumer = None
+    tensorsocket_producer:TensorProducer = None
+    tensorsocket_consumer:TensorConsumer = None
 
     if config.dataloader.name == 'disdl':
         client = DisDLClient(address=config.dataloader.grpc_server_address)
@@ -104,7 +104,7 @@ def train_image_classifer(config: DictConfig,  train_logger: CSVLogger, val_logg
             
             train_dataloader = fabric.setup_dataloaders(train_dataloader, move_to_device=False)
 
-            tensorsocket_procuder = TensorProducer(
+            tensorsocket_producer = TensorProducer(
                 data_loader=train_dataloader,
                 port=config.dataloader.producer_port,
                 consumer_max_buffer_size=config.dataloader.consumer_maxbuffersize,
@@ -113,7 +113,7 @@ def train_image_classifer(config: DictConfig,  train_logger: CSVLogger, val_logg
                 )
             
         elif config.dataloader.mode == 'consumer':
-            tensorsoket_consumer = TensorConsumer(
+            tensorsocket_consumer = TensorConsumer(
                 port=config.dataloader.consumer_port,
                 ack_port=config.dataloader.consumer_ackport,
                 batch_size=config.workload.batch_size,
@@ -124,8 +124,8 @@ def train_image_classifer(config: DictConfig,  train_logger: CSVLogger, val_logg
     current_epoch=0
     should_stop = False
     train_start_time = time.perf_counter()
-    if tensorsoket_consumer is not None:
-        train_dataloader = tensorsoket_consumer
+    if tensorsocket_consumer is not None:
+        train_dataloader = tensorsocket_consumer
 
     if config.workload.limit_train_batches is None:
         config.workload.limit_train_batches = len(train_dataloader)
@@ -145,8 +145,8 @@ def train_image_classifer(config: DictConfig,  train_logger: CSVLogger, val_logg
             max_steps=config.workload.max_steps,
             limit_train_batches=config.workload.limit_train_batches,
             criterion=nn.CrossEntropyLoss(reduction = 'none'), # if isinstance(train_dataloader.sampler, ShadeSampler) else nn.CrossEntropyLoss(),
-            tensorsocker_procuder=tensorsocket_procuder,
-            tensorsocket_consumer=tensorsoket_consumer,
+            tensorsocket_producer=tensorsocket_producer,
+            tensorsocket_consumer=tensorsocket_consumer,
             sim=config.simulation_mode,
             sim_time=config.workload.gpu_time)
     
@@ -171,7 +171,7 @@ def train_image_classifer(config: DictConfig,  train_logger: CSVLogger, val_logg
         pass
     
     if config.dataloader.name == 'tensorsocket' and config.dataloader.mode == 'producer':
-        tensorsocket_procuder.join() #shutdown the producer
+        tensorsocket_producer.join() #shutdown the producer
 
     elapsed_time = time.perf_counter() - train_start_time
     fabric.print(f"Training completed in {elapsed_time:.2f} seconds")
@@ -207,7 +207,7 @@ def train_loop(fabric:Fabric,
                max_steps = None, 
                limit_train_batches = np.inf, 
                criterion=nn.CrossEntropyLoss(),
-               tensorsocker_procuder:TensorProducer=None,
+               tensorsocket_producer:TensorProducer=None,
                tensorsocket_consumer:TensorConsumer=None,
                sim=False,
                sim_time=0):
@@ -217,9 +217,9 @@ def train_loop(fabric:Fabric,
     total_train_loss = 0.0
     correct_preds = 0
     end = time.perf_counter()
-    if tensorsocker_procuder is not None:
-        print ("Starting TensorSocket producer..")
-        for i, _ in enumerate(tensorsocker_procuder):
+    if tensorsocket_producer is not None:
+        print ("Starting TensorSocket producer(image classifer)..")
+        for i, _ in enumerate(tensorsocket_producer):
             #dont do anything as the producer will send the data to gpu of the consumers
             time.sleep(0.001)
     else:

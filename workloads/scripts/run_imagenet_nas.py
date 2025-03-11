@@ -25,6 +25,7 @@ def get_python_command():
 def main(config: DictConfig):
     workload = "imagenet_nas"
     dataloader = "tensorsocket" #tensorsocket, disdl
+    producer_only = True
     models = ["resnet18", "resnet50", "shufflenet_v2_x1_0", "vgg16"]
     #models = ["resnet18"]
 
@@ -51,6 +52,13 @@ def main(config: DictConfig):
         producer_process = subprocess.Popen(producer_cmd, shell=True)
         producer_pid = producer_process.pid
         time.sleep(5)  # Adjust as necessary
+        
+        if producer_only:
+            job_pids = []
+            job_pids.append(producer_process)
+            for process in job_pids:
+                process.wait()
+
 
     # Track training start time
     training_started_datetime =  datetime.now(timezone.utc).strftime("%Y-%m-%d_%H-%M-%S")
@@ -63,7 +71,7 @@ def main(config: DictConfig):
 
         if dataloader == 'disdl':
             run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/train_image_classifier.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model}"
-        elif dataloader == 'tensorsocket':
+        elif dataloader == 'tensorsocket' and not producer_only:
             run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/train_image_classifier.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model} dataloader.mode=consumer"
         
         #run_cmd = f"{python_cmd} workloads/image_classification.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model}"

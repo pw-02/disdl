@@ -25,9 +25,8 @@ def get_python_command():
 def main(config: DictConfig):
     workload = "openimages_nas"
     dataloader = "tensorsocket" #tensorsocket, disdl
+    producer_only = True
     models = ["vit_b_32", "vit_small_patch32_224", "levit_128", "mixer_b32_224"]
-
-    #models = ["resnet18"]
 
     # Generate experiment ID and log directory
     current_datetime = datetime.now(timezone.utc).strftime("%Y-%m-%d_%H-%M-%S")
@@ -44,14 +43,18 @@ def main(config: DictConfig):
     monitor_cmd = f"{python_cmd} workloads/resource_monitor.py start --interval 1 --flush_interval 10 --file_path {log_dir}/resource_usage_metrics.json"
     with open(os.path.join(log_dir, "resource_usage.log"), "w") as log_file:
         monitor_process = subprocess.Popen(monitor_cmd, shell=True, stdout=log_file, stderr=log_file)
-    monitor_pid = monitor_process.pid
 
     if dataloader == 'tensorsocket':
         # print("Starting TensorSocket producer...")
         producer_cmd = f"{python_cmd} workloads/train_image_transformer.py workload={workload} dataloader={dataloader} dataloader.mode=producer workload.model_architecture={models[0]}"
         producer_process = subprocess.Popen(producer_cmd, shell=True)
-        producer_pid = producer_process.pid
         time.sleep(5)  # Adjust as necessary
+
+        if producer_only:
+            job_pids = []
+            job_pids.append(producer_process)
+            for process in job_pids:
+                process.wait()
 
 
     # Track training start time
@@ -64,7 +67,7 @@ def main(config: DictConfig):
         print(f"Starting job on GPU {idx} with model {model} and exp_id {expid}_{idx}")
         if dataloader == 'disdl':
             run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/train_image_transformer.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model}"
-        elif dataloader == 'tensorsocket':
+        elif dataloader == 'tensorsocket' and not producer_only:
             run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/train_image_transformer.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model} dataloader.mode=consumer"
 
         

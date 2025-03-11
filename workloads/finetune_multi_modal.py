@@ -114,7 +114,7 @@ def finetune_multi_modal(config: DictConfig, train_logger: CSVLogger, val_logger
                 num_workers=config.workload.num_pytorch_workers,
                 pin_memory=True if config.accelerator != 'cpu' else False)
             
-            train_dataloader = fabric.setup_dataloaders(train_dataloader,  move_to_device=True if config.accelerator != 'cpu' else False)
+            train_dataloader = fabric.setup_dataloaders(train_dataloader, move_to_device=False)
 
             tensorsocket_procuder = TensorProducer(
                 data_loader=train_dataloader,
@@ -169,8 +169,8 @@ def finetune_multi_modal(config: DictConfig, train_logger: CSVLogger, val_logger
         if config.workload.max_epochs is not None and current_epoch >= config.workload.max_epochs:
             should_stop = True
 
-    if not isinstance(train_dataloader, TensorConsumer):
-        train_dataloader.sampler.send_job_ended_notfication()
+    # if not isinstance(train_dataloader, TensorConsumer):
+    #     train_dataloader.sampler.send_job_ended_notfication()
     
     if config.dataloader.name == 'tensorsocket' and config.dataloader.mode == 'producer':
         tensorsocket_procuder.join() #shutdown the producer
@@ -242,12 +242,12 @@ def train_loop(fabric:Fabric,
             if fabric.device.type == 'cuda':
                     torch.cuda.synchronize()
                     #remove batch from GPU
-                    if isinstance(train_dataloader, TensorConsumer):
-                        #needed to free the memory for the producer to send more data
-                        images = images.cpu()
-                        captions = captions.cpu()
-                        text_atts = text_atts.cpu()
-                        image_ids = image_ids.cpu()
+                    # if isinstance(train_dataloader, TensorConsumer):
+                    #     #needed to free the memory for the producer to send more data
+                    #     images = images.cpu()
+                    #     captions = captions.cpu()
+                    #     text_atts = text_atts.cpu()
+                    #     image_ids = image_ids.cpu()
 
             gpu_processing_started = time.perf_counter()
             if sim:

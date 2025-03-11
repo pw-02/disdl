@@ -101,7 +101,7 @@ def train_image_classifer(config: DictConfig,  train_logger: CSVLogger, val_logg
                 num_workers=config.workload.num_pytorch_workers,
                 pin_memory=True if config.accelerator != 'cpu' else False)
             
-            train_dataloader = fabric.setup_dataloaders(train_dataloader,  move_to_device=True if config.accelerator != 'cpu' else False)
+            train_dataloader = fabric.setup_dataloaders(train_dataloader, move_to_device=False)
 
             tensorsocket_procuder = TensorProducer(
                 data_loader=train_dataloader,

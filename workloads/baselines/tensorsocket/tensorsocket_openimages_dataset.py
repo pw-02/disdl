@@ -147,7 +147,7 @@ class TensorSocketOpenImagesDataset(Dataset):
             if image_id in images:
                 paired_samples[image_id] = (images[image_id], image_label_dict[image_id])
 
-        if not use_index_file and paired_samples:
+        if use_index_file and paired_samples:
             s3_client.put_object(
                 Bucket=self.s3_bucket,
                 Key=index_file_key,

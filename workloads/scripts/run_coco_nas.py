@@ -24,10 +24,10 @@ def get_python_command():
 @hydra.main(version_base=None, config_path="../conf", config_name="config")
 def main(config: DictConfig):
     workload = "coco_nas"
-    dataloader = "disdl"
+    dataloader = "tensorsocket" # or "tensorsocket", "disdl"
     vision_encoder_hiddern_layer_sizes = [4, 8, 16, 32]
-
-    #models = ["resnet18"]
+    vision_encoder_hiddern_layer_sizes = [4]
+    producer_only = False
 
     # Generate experiment ID and log directory
     current_datetime = datetime.now(timezone.utc).strftime("%Y-%m-%d_%H-%M-%S")
@@ -53,6 +53,12 @@ def main(config: DictConfig):
         producer_pid = producer_process.pid
         time.sleep(5)  # Adjust as necessary
 
+        if producer_only:
+            job_pids = []
+            job_pids.append(producer_process)
+            for process in job_pids:
+                process.wait()
+
 
     # Track training start time
     training_started_datetime =  datetime.now(timezone.utc).strftime("%Y-%m-%d_%H-%M-%S")
@@ -64,7 +70,7 @@ def main(config: DictConfig):
         print(f"Starting job on GPU {idx} with albef model with {num_hidden_layers} hidden layers and exp_id {expid}_{idx}")
         if dataloader == 'disdl':
             run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/finetune_multi_modal.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.vision_encoder_args.num_hidden_layers={num_hidden_layers}"
-        elif dataloader == 'tensorsocket':
+        elif dataloader == 'tensorsocket' and not producer_only:
             run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/finetune_multi_modal.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.vision_encoder_args.num_hidden_layers={num_hidden_layers} dataloader.mode=consumer"
 
         

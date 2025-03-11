@@ -25,7 +25,7 @@ def get_python_command():
 def main(config: DictConfig):
     workload = "openimages_nas"
     dataloader = "tensorsocket" #tensorsocket, disdl
-    producer_only = True
+    producer_only = False
     models = ["vit_b_32", "vit_small_patch32_224", "levit_128", "mixer_b32_224"]
 
     # Generate experiment ID and log directory

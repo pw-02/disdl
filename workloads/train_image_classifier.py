@@ -49,7 +49,7 @@ def train_image_classifer(config: DictConfig,  train_logger: CSVLogger, val_logg
     optimizer = optim.Adam(model.parameters(), lr=config.workload.learning_rate)
     model, optimizer = fabric.setup(model, optimizer)
 
-    train_transform, val_transform = get_transforms(config.workload.name)
+    train_transform, val_transform = get_transforms()
 
     train_dataloader = None
     val_dataloader = None

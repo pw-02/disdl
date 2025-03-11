@@ -47,7 +47,7 @@ def main(config: DictConfig):
 
     if dataloader == 'tensorsocket':
         # print("Starting TensorSocket producer...")
-        producer_cmd = f"{python_cmd} mlworkloads/train_image_classifier.py workload={workload} dataloader={dataloader} dataloader.mode=producer workload.model_architecture={models[0]}"
+        producer_cmd = f"{python_cmd} workloads/train_image_classifier.py workload={workload} dataloader={dataloader} dataloader.mode=producer workload.model_architecture={models[0]}"
         producer_process = subprocess.Popen(producer_cmd, shell=True)
         producer_pid = producer_process.pid
         time.sleep(5)  # Adjust as necessary

@@ -16,7 +16,7 @@ from collections import OrderedDict
 import numpy as np
 from datetime import datetime, timezone
 import timm
-from workloads.baselines.tensorsocket.tensorsocket_openimages_dataset import TensorSocketOpenImagesDataset
+from baselines.tensorsocket.tensorsocket_openimages_dataset import TensorSocketOpenImagesDataset
 from baselines.tensorsocket.producer import TensorProducer
 from baselines.tensorsocket.consumer import TensorConsumer
 from baselines.tensorsocket.tensorsocket_sampler import TensorSocketSampler

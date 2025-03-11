@@ -86,6 +86,7 @@ def train_image_classifer(config: DictConfig,  train_logger: CSVLogger, val_logg
     elif config.dataloader.name == 'tensorsocket':
         # PyTorch DataLoader
         if config.dataloader.mode == 'producer':
+            print(config.dataloader.mode)
             train_dataset = TensorSocketOpenImagesDataset(
                 s3_data_dir=config.workload.s3_train_prefix,
                 transform=train_transform,)
@@ -214,7 +215,7 @@ def train_loop(fabric:Fabric, job_id,
     correct_preds = 0
     end = time.perf_counter()
     if tensorsocker_procuder is not None:
-        print("starting producer..")
+        print("starting producer!..")
         for i, _ in enumerate(tensorsocker_procuder):
             #dont do anything as the producer will send the data to gpu of the consumers
             time.sleep(0.001)

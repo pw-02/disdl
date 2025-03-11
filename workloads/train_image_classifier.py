@@ -21,8 +21,8 @@ from baselines.tensorsocket.producer import TensorProducer
 from baselines.tensorsocket.consumer import TensorConsumer
 from baselines.tensorsocket.tensorsocket_sampler import TensorSocketSampler
 from lightning.pytorch.core.saving import save_hparams_to_yaml
-from disdll.disdl_client import DisDLClient
-from disdll.disdl_iterable_dataset import DisDLImageNetIterableDataset
+from disdl.disdl_iterable_dataset import DisDLImageNetIterableDataset
+from disdl.disdl_client import DisDLClient
 
 def train_image_classifer(config: DictConfig,  train_logger: CSVLogger, val_logger: CSVLogger):
     if config.simulation_mode:

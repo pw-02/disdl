@@ -156,7 +156,7 @@ class TensorSocketOpenImagesDataset(Dataset):
         return list(paired_samples.values())
     
     def __len__(self) -> int:
-        return sum(len(class_items) for class_items in self.samples.values())
+        return len(self.samples)
     
 
     def __getitem__(self, idx: int) -> Tuple[torch.Tensor, torch.Tensor, float, float]:

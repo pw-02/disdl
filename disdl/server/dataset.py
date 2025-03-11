@@ -120,7 +120,9 @@ class OpenImagesDataset():
         for i in indices:
             samples.append(self._classed_items[i])
         return samples
-    
+    def __len__(self) -> int:
+        return len(self.samples)
+
     def dataset_info(self):
         return {
             "num_samples": len(self)}

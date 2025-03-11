@@ -1,6 +1,8 @@
 import grpc
-import disdl.minibatch_service_pb2 as minibatch_service_pb2
-import disdl.minibatch_service_pb2_grpc as minibatch_service_pb2_grpc
+# import disdl.minibatch_service_pb2 as minibatch_service_pb2
+# import disdl.minibatch_service_pb2_grpc as minibatch_service_pb2_grpc
+import minibatch_service_pb2 as minibatch_service_pb2
+import minibatch_service_pb2_grpc as minibatch_service_pb2_grpc
 import ast
 import json
 

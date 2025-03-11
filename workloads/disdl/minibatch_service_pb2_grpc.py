@@ -4,7 +4,9 @@ import grpc
 import warnings
 
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
-import disdl.minibatch_service_pb2 as protos_dot_minibatch__service__pb2
+# import disdl.minibatch_service_pb2 as protos_dot_minibatch__service__pb2
+import minibatch_service_pb2 as protos_dot_minibatch__service__pb2
+
 
 GRPC_GENERATED_VERSION = '1.70.0'
 GRPC_VERSION = grpc.__version__

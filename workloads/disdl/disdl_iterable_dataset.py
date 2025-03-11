@@ -1,4 +1,6 @@
-from disdl.disdl_client import DisDLClient
+# from disdl.disdl_client import DisDLClient
+from disdl_client import DisDLClient
+
 import torch
 import boto3
 import io
@@ -17,6 +19,8 @@ import lz4.frame
 import botocore.config
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from torch.nn.utils.rnn import pad_sequence
+import torchaudio
+import torchaudio.transforms as T
 
 class S3Url(object):
     def __init__(self, url):
@@ -158,6 +162,91 @@ class DisDLIterableDataset(torch.utils.data.IterableDataset):
         with BytesIO(data) as buffer:
             batch_data, batch_labels = torch.load(buffer)
         return batch_data, batch_labels
+
+class DisDLLibrSpeechIterableDataset(DisDLIterableDataset):
+    def __init__(self, 
+                 job_id,
+                 dataset_location,
+                 num_samples,
+                 batch_size, 
+                 disdl_service_address,
+                 transform=None,
+                 cache_address=None,
+                 ssl=True,
+                 use_compression=True,
+                 use_local_folder=False,
+                 custom_attribute=None):
+        super().__init__(job_id, dataset_location, num_samples, batch_size, 
+                         disdl_service_address, cache_address, 
+                         ssl, use_compression, use_local_folder)
+        self.transform = transform
+        
+        # Define additional attributes
+        self.custom_attribute = custom_attribute
+
+    def _get_next_batch(self):
+
+        start_time = time.perf_counter()
+        cached_after_fetch = False
+        minibatch_bytes = None
+        batch_id, samples, is_cached = self.client.sampleNextMinibatch()
+        if self.use_cache and is_cached:
+            minibatch_bytes = self.get_cached_minibatch_with_retries(batch_id, max_retries=3, retry_interval=0.25)
+        
+        if minibatch_bytes  is not None and (isinstance(minibatch_bytes , bytes) or isinstance(minibatch_bytes , str)):
+            start_transformation_time   = time.perf_counter()
+            waveforms, sample_rates, transcripts = self.convert_bytes_to_torch_tensor(minibatch_bytes)
+            transformation_time  =  time.perf_counter() - start_transformation_time
+            cache_hit = True
+        else:
+            waveforms, sample_rates, transcripts = self.load_batch_data(samples)
+            cache_hit = False
+             # Apply transformations if provided
+            start_transformation_time = time.perf_counter()
+            if self.transform is not None:
+                for i in range(len(waveforms)):
+                    waveforms[i] = self.transform(waveforms[i])      
+
+            transformation_time =  time.perf_counter() - start_transformation_time
+            waveforms= torch.stack(waveforms)
+            sample_rates = torch.tensor(sample_rates)
+            transcripts = torch.tensor(transcripts)
+            # if self.use_cache:
+            #     bytes_tensor = self.convert_torch_tensor_to_bytes((batch_data, batch_labels))
+            #     if self.cache_minibatch_with_retries(batch_id, bytes_tensor, max_retries=0):
+            #         cached_after_fetch = True
+        data_fetch_time = time.perf_counter() - start_time - transformation_time
+        return (waveforms,sample_rates,transcripts,batch_id), data_fetch_time, transformation_time, cache_hit, cached_after_fetch
+    
+    
+    def load_batch_data(self, samples) -> Tuple[List[torch.Tensor], List[int]]:
+        waveforms, sample_rates, transcripts = [], [], []
+        if self.use_local_folder:
+            for  data_path, label in samples:
+                with open(data_path, 'rb') as f:
+                    data = Image.open(f)
+
+                waveforms.append(data)
+                transcripts.append(label)
+            return waveforms, sample_rates, transcripts
+        else:
+            self._set_s3_client()
+            with ThreadPoolExecutor(max_workers=None) as executor:
+                futures = {executor.submit(self.read_data_from_s3, data_path, label): (data_path, label) for data_path, label in samples}
+                for future in as_completed(futures):
+                    waveform,sample_rate, transcript = future.result()
+                    waveforms.append(waveform)
+                    sample_rates.append(sample_rate)
+                    transcripts.append(transcript)
+            return waveforms, sample_rates, transcripts
+        
+    def read_data_from_s3(self,data_path, transcript) -> tuple: 
+        s3_bucket = S3Url(self.dataset_location).bucket
+        audio_data = self.s3_client.get_object(Bucket=s3_bucket, Key=data_path)["Body"].read()
+        waveform, sample_rate = torchaudio.load(io.BytesIO(audio_data))
+
+        return waveform, sample_rate, transcript
+
     
   
 class DisDLImageNetIterableDataset(DisDLIterableDataset):
@@ -336,7 +425,7 @@ class DisDLCocoIterableDataset(DisDLIterableDataset):
 if __name__ == "__main__":
     service_address = 'localhost:50051'
     cache_address = None
-    test_dataset = 'COCO' # 'COCO', 'ImageNet'
+    test_dataset = 'LibriSpeech' # 'COCO', 'ImageNet', 'LibriSpeech'
 
     if test_dataset == 'ImageNet':
         dataset_location = " s3://imagenet1k-sdl/train/"
@@ -365,6 +454,28 @@ if __name__ == "__main__":
             use_compression=True,
             use_local_folder=False
         )
+    elif test_dataset == 'LibriSpeech':
+        dataset_location = "s3://disdlspeech/test-clean/"
+        client = DisDLClient(address=service_address)
+        job_id, dataset_info = client.registerJob(
+            dataset_location=dataset_location)
+        num_batchs = dataset_info["num_batches"]
+        client.close()
+
+        transform = T.MelSpectrogram(sample_rate=16000, n_mels=128)
+        dataset = DisDLLibrSpeechIterableDataset(
+            job_id=job_id,
+            dataset_location=dataset_location,
+            num_samples=num_batchs,
+            batch_size=128,
+            transform=transform,
+            disdl_service_address=service_address,
+            cache_address=cache_address,
+            ssl=False,
+            use_compression=True,
+            use_local_folder=False
+        )
+
     elif test_dataset == 'COCO':
         from albef_transforms import ALBEFTextTransform, image_transform
         dataset_location = "s3://coco-dataset/coco_train.json"

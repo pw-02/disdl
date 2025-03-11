@@ -12,6 +12,7 @@ from typing import Dict, List
 import json
 from urllib.parse import urlparse
 import torchaudio.datasets.librispeech as librispeech
+torchaudio.set_audio_backend('soundfile')
 
 class S3Url(object):
     def __init__(self, url):
@@ -113,14 +114,20 @@ class LibriSpeechS3Dataset(Dataset):
         """Loads a file from S3 into memory."""
         obj = self.s3.get_object(Bucket=self.s3_bucket, Key=s3_path)
         return io.BytesIO(obj["Body"].read())
+    
 
     def __getitem__(self, idx):
         # Load audio
+        s3_client = boto3.client('s3')
+
         audio_key, transcript = self.paired_samples[idx]
 
+        # Convert bytes to a file-like object and load using torchaudio
+        torchaudio.set_audio_backend("ffmpeg")
+
         # Load audio from S3
-        audio_data = self.s3_client.get_object(Bucket=self.s3_bucket, Key=audio_key)["Body"].read()
-        waveform, sample_rate = torchaudio.load(io.BytesIO(audio_data))
+        audio_stream = s3_client.get_object(Bucket=self.s3_bucket, Key=audio_key)["Body"].read()
+        waveform, sample_rate = torchaudio.load(audio_stream)
 
         if self.transform:
             waveform = self.transform(waveform)
@@ -134,16 +141,16 @@ def train_speech_model(dataset_location, num_epochs=5):
     # Create dataset and dataloader
     dataset = LibriSpeechS3Dataset(dataset_location, transform=transform)
     dataloader = DataLoader(dataset, batch_size=8, shuffle=True)
-    model = torchaudio.models.Conformer()
+    # model = torchaudio.models.Conformer()
      # Training loop
     for epoch in range(num_epochs):
-        model.train()
+        # model.train()
         total_loss = 0
 
         for batch in dataloader:
             waveforms, sample_rates, transcripts = batch
             # Convert audio to Mel spectrograms
-            outputs = model(waveforms)  # Pass through model
+            # outputs = model(waveforms)  # Pass through model
             print(outputs.shape)  # (batch, time, classes)
         print(f"Epoch [{epoch+1}/{num_epochs}], Loss: {total_loss/len(dataloader):.4f}")
 

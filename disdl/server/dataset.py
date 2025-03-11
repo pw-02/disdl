@@ -59,7 +59,7 @@ class OpenImagesDataset():
         self.samples = self._get_samples_from_s3()
         pass
         
-    def _get_samples_from_s3(self, use_index_file=False, images_only=True) -> Dict[str, List[str]]:
+    def _get_samples_from_s3(self, use_index_file=True, images_only=True) -> Dict[str, List[str]]:
         s3_client = boto3.client('s3')
         index_file_key = f"{self.s3_prefix}_paired_index.json"
         paired_samples = {}

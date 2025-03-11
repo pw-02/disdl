@@ -1,7 +1,7 @@
 
 defaults:
   - _self_
-  - dataloader: disdl #disdl, tensorsocket
+  - dataloader: tensorsocket #disdl, tensorsocket
   - workload: albef_retrieval
   #albef_retrieval, 
   #lora_finetune_tiny_llama,

@@ -4,7 +4,7 @@ from job import DLTJob
 from args import DisDLArgs
 from collections import deque, OrderedDict
 from typing import List, Optional, Dict, Tuple
-from dataset import MSCOCODataset
+from dataset import MSCOCODataset, LibSpeechDataset
 from batch import Batch, BatchSet, CacheStatus
 import time
 from logger_config import logger
@@ -199,7 +199,7 @@ class CentralBatchManager:
                 self._generate_new_batch()
 
             # logger.debug(f"Job '{job_id}' given batch '{next_batch.batch_id}'")
-            samples = self.dataset.get_samples(next_batch.indices)
+            # samples = self.dataset.get_samples(next_batch.indices)
             return next_batch
         
     def reverse_cycle_mod(self, start: int, mod: int):
@@ -290,7 +290,7 @@ if __name__ == "__main__":
         lookahead_steps=20,
         shuffle=False,
         drop_last=False,
-        workload='coco',
+        workload='speech',
         serverless_cache_address=None,
         use_prefetching=False,
         use_keep_alive=False,
@@ -301,7 +301,10 @@ if __name__ == "__main__":
         evict_from_cache_simulation_time=None
     )
 
-    dataset = MSCOCODataset(dataset_location='s3://coco-dataset/coco_train.json')
+    # dataset = MSCOCODataset(dataset_location='s3://coco-dataset/coco_train.json')
+    # batch_manager = CentralBatchManager(dataset=dataset, args=args, prefetch_workers=10)
+
+    dataset = LibSpeechDataset(dataset_location="s3://disdlspeech/test-clean")
     batch_manager = CentralBatchManager(dataset=dataset, args=args, prefetch_workers=10)
 
     def run_job(job_id, job_speed):

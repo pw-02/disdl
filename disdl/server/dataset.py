@@ -43,6 +43,9 @@ class MSCOCODataset():
             samples.append((image, cpation, image_id))
         return samples
     
+    def dataset_info(self):
+        return {
+            "num_samples": len(self)}
 
 
 class OpenImagesDataset():
@@ -196,6 +199,82 @@ class ImageNetDataset():
     def dataset_info(self):
         return {
             "num_samples": len(self)}
+
+class LibSpeechDataset():
+    def __init__(self, 
+                 dataset_location: str, 
+                 transforms=None):
+        
+        self.dataset_location = dataset_location
+        self.s3_bucket = S3Url(self.dataset_location).bucket
+        self.s3_prefix = S3Url(self.dataset_location).key
+        self.transforms = transforms
+        self.samples = self._get_samples_from_s3()
+    
+    def __len__(self) -> int:
+        return len(self.samples)
+    
+    def _get_samples_from_s3(self, use_index_file=False) -> Dict[str, List[str]]:
+        s3_client = boto3.client('s3')
+        paginator = s3_client.get_paginator('list_objects_v2')
+        transcripts ={}
+        paired_samples = {}
+        index_file_key = f"{self.s3_prefix}_paired_index.json"
+
+        if use_index_file:
+            try:
+                index_object = s3_client.get_object(Bucket=self.s3_bucket, Key=index_file_key)
+                file_content = index_object['Body'].read().decode('utf-8')
+                paired_samples = json.loads(file_content)
+                return list(paired_samples.values())
+            except Exception as e:
+                print(f"Error reading index file '{index_file_key}': {e}")
+        
+        for page in paginator.paginate(Bucket=self.s3_bucket, Prefix=self.s3_prefix):
+            for blob in page.get('Contents', []):
+                key = blob.get('Key')
+                if key.endswith(".txt"):
+                    response = s3_client.get_object(Bucket=self.s3_bucket, Key=key)
+                    transcript_stream = response["Body"].iter_lines()
+
+                    for line in transcript_stream:
+                        # Decode the line from bytes to string
+                        line = line.decode("utf-8").strip()
+                        
+                        # Assuming each line is structured like: 'fileid_text transcript'
+                        try:
+                            fileid_text, transcript = line.split(" ", 1)
+                            transcripts[fileid_text] = transcript
+                        except ValueError:
+                            # Handle lines that don't have the expected format
+                            continue
+        #now get the audio paths
+        for page in paginator.paginate(Bucket=self.s3_bucket, Prefix=self.s3_prefix):
+            for blob in page.get('Contents', []):
+                key = blob.get('Key')
+                if key.endswith(".flac"):
+                    #get file name withput_Extenstion FROM KEY
+                    fileid = key.split("/")[-1].split(".")[0]
+                    transcript = None
+                    if fileid in transcripts:
+                        transcript = transcripts[fileid]
+                    if transcript:
+                        paired_samples[fileid] = (key, transcript)
+
+        if use_index_file and paired_samples:
+            s3_client.put_object(
+                Bucket=self.s3_bucket,
+                Key=index_file_key,
+                Body=json.dumps(paired_samples, indent=4).encode('utf-8'))
+        
+        #returnd values as a list
+        return list(paired_samples.values())
+
+    def get_samples(self, indices: List[int]):
+        samples = []
+        for i in indices:
+            samples.append(self.samples[i])
+        return samples
 
 #main
 if __name__ == "__main__":

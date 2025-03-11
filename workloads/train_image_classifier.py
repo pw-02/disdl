@@ -218,7 +218,7 @@ def train_loop(fabric:Fabric,
     correct_preds = 0
     end = time.perf_counter()
     if tensorsocker_procuder is not None:
-        print ("Waiting for data from producer")
+        print ("Starting TensorSocket producer..")
         for i, _ in enumerate(tensorsocker_procuder):
             #dont do anything as the producer will send the data to gpu of the consumers
             time.sleep(0.001)
@@ -239,10 +239,10 @@ def train_loop(fabric:Fabric,
             if fabric.device.type == 'cuda':
                 torch.cuda.synchronize()
                 #remove batch from GPU
-                if isinstance(train_dataloader, TensorConsumer):
-                    #need to free the memory for the producer to send more data
-                    inputs = inputs.cpu()
-                    labels = labels.cpu()
+                # if isinstance(train_dataloader, TensorConsumer):
+                #     #need to free the memory for the producer to send more data
+                #     inputs = inputs.cpu()
+                #     labels = labels.cpu()
 
             
             # print(inputs)

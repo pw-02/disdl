@@ -1,6 +1,6 @@
 import torch
 import sys
-print(sys.path)
+# print(sys.path)
 import torch.nn as nn
 import torch.optim as optim
 from torchvision import transforms
@@ -21,8 +21,8 @@ from baselines.tensorsocket.producer import TensorProducer
 from baselines.tensorsocket.consumer import TensorConsumer
 from baselines.tensorsocket.tensorsocket_sampler import TensorSocketSampler
 from lightning.pytorch.core.saving import save_hparams_to_yaml
-from disdl.disdl_client import DisDLClient
-from disdl.disdl_iterable_dataset import DisDLIterableDataset
+from disdl_client import DisDLClient
+from disdl_iterable_dataset import DisDLIterableDataset
 
 def train_image_classifer(config: DictConfig,  train_logger: CSVLogger, val_logger: CSVLogger):
     if config.simulation_mode:

@@ -29,7 +29,7 @@ Resources:
         - subnet-076f5a2c0e07e6b1e
       ImageUri: createmultimodalbatchfunction:python3.9-v1
     Metadata:
-      DockerContext: C:\Users\pw\projects\super-dataloader\awslambda\multimodal\create_multimodal_batch
+      DockerContext: C:\Users\pw\projects\disdl\disdl\lambda\multimodal\create_multimodal_batch
       DockerTag: python3.9-v1
       Dockerfile: Dockerfile
       SamResourceId: CreateMultiModalBatchFunction

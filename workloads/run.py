@@ -411,15 +411,15 @@ def get_model(config: DictConfig):
 
 @hydra.main(version_base=None, config_path="./conf", config_name="config")
 def main(config: DictConfig):
-    log_dir = f"{config.log_dir}/{config.workload.name}/{config.job_id}".lower()
 
-    log_dir = os.path.normpath(log_dir)  # Normalize path for Windows
-    train_logger = CSVLogger(root_dir=log_dir, name="train", prefix='', flush_logs_every_n_steps=config.log_interval)
-    val_logger = CSVLogger(root_dir=log_dir, name="val", prefix='', flush_logs_every_n_steps=config.log_interval)
+    # log_dir = f"{config.log_dir}/{config.workload.name}/{config.job_id}".lower()
+    # log_dir = os.path.normpath(log_dir)  # Normalize path for Windows
+    train_logger = CSVLogger(root_dir=config.log_dir, name="train", prefix='', flush_logs_every_n_steps=config.log_interval)
+    val_logger = CSVLogger(root_dir=config.log_dir, name="val", prefix='', flush_logs_every_n_steps=config.log_interval)
     #cree log dir if does not exist
-    os.makedirs(log_dir, exist_ok=True)
+    os.makedirs(config.log_dir, exist_ok=True)
     #save config
-    save_hparams_to_yaml(os.path.join(log_dir, "hparms.yaml"), config)
+    save_hparams_to_yaml(os.path.join(config.log_dir, "hparms.yaml"), config)
     run_training_job(config, train_logger,val_logger)
 
 

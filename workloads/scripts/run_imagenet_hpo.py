@@ -26,7 +26,8 @@ def main(config: DictConfig):
     workload = "imagenet_hpo"
     dataloader = "disdl" #tensorsocket, disdl
     producer_only = False
-    models = ["resnet18", "resnet18", "resnet18", "resnet18"]
+    model = "resnet18"
+    models = [model,model,model,model]
     learning_rates = [0.1, 0.01, 0.001, 0.0001]  # Add your learning rates here
 
     # Generate experiment ID and log directory
@@ -34,7 +35,7 @@ def main(config: DictConfig):
     expid = f"{current_datetime}"
     root_log_dir = "logs"
     # log_dir = os.path.join(root_log_dir, wokload_name, dataset, dataloader, expid)
-    log_dir = os.path.join(root_log_dir, workload, dataloader, expid)
+    log_dir = os.path.join(root_log_dir, workload, model, dataloader, expid)
 
     os.makedirs(log_dir, exist_ok=True)  # Ensure the log directory exists
 

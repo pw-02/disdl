@@ -25,7 +25,7 @@ def get_python_command():
 def main(config: DictConfig):
 
     workload = "openimages_hpo"
-    dataloader = "disdl" #tensorsocket, disdl
+    dataloader = "tensorsocket" #tensorsocket, disdl
     producer_only = False
     model = "levit_128" #"vit_b_32", "vit_small_patch32_224", "levit_128", "mixer_b32_224"
     models = [model,model,model,model]

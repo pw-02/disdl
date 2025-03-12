@@ -25,6 +25,7 @@ from torch.nn import Module
 import re
 from torch.nn.utils.rnn import pad_sequence
 from transformers.models.bert.tokenization_bert import BertTokenizer
+from torchvision import transforms
 
 class Truncate(Module):
     r"""Truncate input sequence
@@ -133,6 +134,29 @@ class PadTransform(Module):
             pad_amount = self.max_length - max_encoded_length
             x = torch.nn.functional.pad(x, (0, pad_amount), value=self.pad_value)
         return x
+
+def albef_image_transform(
+    image_size: int = 384,
+    scale: Tuple[float, float] = (0.5, 1.0),
+    image_interpolation=transforms.InterpolationMode.BICUBIC,
+    mean: Tuple[float, float, float] = (0.48145466, 0.4578275, 0.40821073),
+    std_dev: Tuple[float, float, float] = (0.26862954, 0.26130258, 0.27577711),
+) -> transforms.Compose:
+    # mean and standard deviation from the ALBEF repo:
+    # https://github.com/salesforce/ALBEF/blob/main/dataset/__init__.py#L16
+    return transforms.Compose(
+        [
+            transforms.RandomResizedCrop(
+                image_size, scale=scale, interpolation=image_interpolation
+            ),
+            transforms.RandomHorizontalFlip(),
+            transforms.RandAugment(2, 7),
+            transforms.ToTensor(),
+            transforms.Normalize(mean, std_dev),
+        ]
+    )
+
+
 
 class ALBEFTextTransform:
     def __init__(
@@ -811,6 +835,12 @@ def albef_model_for_vqa(
         )
         model.load_state_dict(checkpoint)
     return model
+
+
+
+
+
+
 
 
 def albef_model_for_retrieval(

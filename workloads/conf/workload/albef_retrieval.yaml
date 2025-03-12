@@ -8,7 +8,7 @@ alpha: 0.4
 weight_decay: 0.02
 learning_rate: 1e-5
 precision: 16-mixed
-
+model_architecture: albef_retrieval
 run_training: True
 run_validation: False
 validation_frequency: 1000000 #every n epochs
@@ -32,7 +32,7 @@ vision_encoder_args:
   hidden_size: *hidden_size
   image_size: 384
   patch_size: 48
-  num_hidden_layers: 4
+  num_hidden_layers: 8
   num_attention_heads: 4
   mlp_dim: 2048
   dropout: 0.1

@@ -23,7 +23,8 @@ def get_python_command():
 #get config
 @hydra.main(version_base=None, config_path="../conf", config_name="config")
 def main(config: DictConfig):
-    workload = "coco_nas"
+    workload = "coco_hpo"
+    model = "albef"
     dataloader = "disdl" # or "tensorsocket", "disdl"
     vision_encoder_hiddern_layer_sizes = [4, 4, 4, 4]
     learning_rates = [0.1, 0.01, 0.001, 0.0001]  # Add your learning rates here
@@ -36,7 +37,7 @@ def main(config: DictConfig):
     expid = f"{current_datetime}"
     root_log_dir = "logs"
     # log_dir = os.path.join(root_log_dir, wokload_name, dataset, dataloader, expid)
-    log_dir = os.path.join(root_log_dir, workload, dataloader, expid)
+    log_dir = os.path.join(root_log_dir, workload, model, dataloader, expid)
 
     os.makedirs(log_dir, exist_ok=True)  # Ensure the log directory exists
 

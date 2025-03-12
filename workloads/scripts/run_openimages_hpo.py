@@ -27,7 +27,7 @@ def main(config: DictConfig):
     workload = "openimages_hpo"
     dataloader = "tensorsocket" #tensorsocket, disdl
     producer_only = False
-    model = "levit_128" #"vit_b_32", "vit_small_patch32_224", "levit_128", "mixer_b32_224"
+    model = "vit_b_32" #"vit_b_32", "vit_small_patch32_224", "levit_128", "mixer_b32_224"
     models = [model,model,model,model]
     learning_rates = [0.1, 0.01, 0.001, 0.0001]  # Add your learning rates here
 

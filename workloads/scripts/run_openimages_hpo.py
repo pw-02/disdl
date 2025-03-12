@@ -36,7 +36,7 @@ def main(config: DictConfig):
     expid = f"{current_datetime}"
     root_log_dir = "logs"
     # log_dir = os.path.join(root_log_dir, wokload_name, dataset, dataloader, expid)
-    log_dir = os.path.join(root_log_dir, workload, dataloader, expid)
+    log_dir = os.path.join(root_log_dir, workload, model, dataloader, expid)
 
     os.makedirs(log_dir, exist_ok=True)  # Ensure the log directory exists
 

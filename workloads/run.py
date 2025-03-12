@@ -231,8 +231,12 @@ def train_loop(fabric:Fabric,
 
                 # Backpropagation and optimization
                 optimizer.zero_grad()  # Clear previous gradients
-                fabric.backward(loss)  # Backpropagation
-                optimizer.step()  # Update weights
+                try:
+                    fabric.backward(loss)  # Backpropagation
+                    optimizer.step()  # Update weights
+                except Exception as e:
+                    print(e)
+                
                 total_train_loss += loss.item() * inputs.size(0)  # Convert loss to CPU for accumulation
                 
                 # Accumulate metrics directly on GPU to avoid synchronization

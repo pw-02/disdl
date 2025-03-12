@@ -48,7 +48,7 @@ def main(config: DictConfig):
 
     if dataloader == 'tensorsocket':
         # print("Starting TensorSocket producer...")
-        producer_cmd = f"{python_cmd} workloads/finetune_multi_modal.py workload={workload} dataloader={dataloader} dataloader.mode=producer"
+        producer_cmd = f"{python_cmd} workloads/run.py workload={workload} dataloader={dataloader} dataloader.mode=producer"
         producer_process = subprocess.Popen(producer_cmd, shell=True)
         producer_pid = producer_process.pid
         time.sleep(5)  # Adjust as necessary
@@ -69,9 +69,9 @@ def main(config: DictConfig):
     for idx, num_hidden_layers in enumerate(vision_encoder_hiddern_layer_sizes):
         print(f"Starting job on GPU {idx} with albef model with {num_hidden_layers} hidden layers and exp_id {expid}_{idx}")
         if dataloader == 'disdl':
-            run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/finetune_multi_modal.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.vision_encoder_args.num_hidden_layers={num_hidden_layers}"
+            run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/run.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.vision_encoder_args.num_hidden_layers={num_hidden_layers}"
         elif dataloader == 'tensorsocket' and not producer_only:
-            run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/finetune_multi_modal.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.vision_encoder_args.num_hidden_layers={num_hidden_layers} dataloader.mode=consumer"
+            run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/run.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.vision_encoder_args.num_hidden_layers={num_hidden_layers} dataloader.mode=consumer"
 
         
         #run_cmd = f"{python_cmd} workloads/image_classification.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model}"

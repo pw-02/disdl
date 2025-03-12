@@ -23,11 +23,11 @@ def get_python_command():
 #get config
 @hydra.main(version_base=None, config_path="../conf", config_name="config")
 def main(config: DictConfig):
-    workload = "imagenet_nas"
-    dataloader = "tensorsocket" #tensorsocket, disdl
+    workload = "imagenet_hpo"
+    dataloader = "disdl" #tensorsocket, disdl
     producer_only = False
-    models = ["resnet18", "resnet50", "shufflenet_v2_x1_0", "vgg16"]
-
+    models = ["resnet18", "resnet18", "resnet18", "resnet18"]
+    learning_rates = [0.1, 0.01, 0.001, 0.0001]  # Add your learning rates here
 
     # Generate experiment ID and log directory
     current_datetime = datetime.now(timezone.utc).strftime("%Y-%m-%d_%H-%M-%S")
@@ -67,12 +67,13 @@ def main(config: DictConfig):
     # Loop over jobs
     job_pids = []
     for idx, model in enumerate(models):
-        print(f"Starting job on GPU {idx} with model {model} and exp_id {expid}_{idx}")
+        learning_rate = learning_rates[idx]
+        print(f"Starting job on GPU {idx} with model {model}, learining rate {learning_rate}, and exp_id {expid}_{idx}")
         
         if dataloader == 'disdl':
-            run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/run.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model}"
+            run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/run.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model} workload.learning_rate={learning_rates[idx]}"
         elif dataloader == 'tensorsocket' and not producer_only:
-            run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/run.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model} dataloader.mode=consumer"
+            run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/run.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model} workload.learning_rate={learning_rates[idx]} dataloader.mode=consumer"
         
         #run_cmd = f"{python_cmd} workloads/image_classification.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model}"
         process = subprocess.Popen(run_cmd, shell=True)

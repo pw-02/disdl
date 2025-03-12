@@ -27,7 +27,7 @@ from baselines.tensorsocket.consumer import TensorConsumer
 from baselines.tensorsocket.tensorsocket_sampler import TensorSocketSampler
 from lightning.pytorch.core.saving import save_hparams_to_yaml
 from disdl.disdl_client import DisDLClient
-from disdl.disdl_iterable_dataset import DisDLLibrSpeechIterableDataset,DisDLImageNetIterableDataset, DisDLOpenImagesDataset, DisDLCocoIterableDataset
+from disdl.disdl_iterable_dataset import DisDLImageNetIterableDataset, DisDLOpenImagesDataset, DisDLCocoIterableDataset
 from models.albef import albef_model_for_retrieval, albef_image_transform, ALBEFTextTransform
 
 

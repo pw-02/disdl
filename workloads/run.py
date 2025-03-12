@@ -217,9 +217,13 @@ def train_loop(fabric:Fabric,
             if sim:
                 time.sleep(sim_time)
             else:
-                
+                error = False
                 if 'coco' in dataset_location:
-                    loss = model(inputs, captions, text_atts, image_ids, alpha, is_train=True)
+                    try:
+                        loss = model(inputs, captions, text_atts, image_ids, alpha, is_train=True)
+                    except Exception as e:
+                        error = True
+                        print(e)
                 else:
                     outputs  = model(inputs)
                     item_loss = criterion(outputs, labels)
@@ -238,7 +242,7 @@ def train_loop(fabric:Fabric,
             gpu_processing_time = time.perf_counter() - gpu_processing_started
             # Metrics calculation
             total_samples += inputs.size(0)
-            avg_train_loss = total_train_loss / total_samples if not sim else 0
+            avg_train_loss = total_train_loss / total_samples if not error else 0
             global_step_count +=1
             cache_hit_samples = batch[0].size(0) if is_cache_hit == True else 0
             cache_hit_bacth = 1 if is_cache_hit == True else 0

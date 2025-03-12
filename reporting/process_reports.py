@@ -303,7 +303,7 @@ if __name__ == "__main__":
  
     paths = [
         # "C:\\Users\\pw\\Desktop\\image_classification\\coordl\\cifar10",
-        Path(r"C:\Users\pw\Desktop\disdl(today)\openimages_nas")
+        Path(r"C:\Users\pw\Desktop\disdl(today)\coco_nas")
         # Path(r"C:\Users\pw\Desktop\super_results\\\image_transformer")
         # "C:\\Users\\pw\\Desktop\\vision transformer\\coordl\\imagenet"
         ]

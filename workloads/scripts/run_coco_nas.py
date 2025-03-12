@@ -25,7 +25,9 @@ def get_python_command():
 def main(config: DictConfig):
     workload = "coco_nas"
     dataloader = "tensorsocket" # or "tensorsocket", "disdl"
-    vision_encoder_hiddern_layer_sizes = [4, 8, 16, 32]
+    # vision_encoder_hiddern_layer_sizes = [4, 8, 16, 32]
+    vision_encoder_hiddern_layer_sizes = [8, 16, 32, 64]
+
     # vision_encoder_hiddern_layer_sizes = [4]
     producer_only = False
 

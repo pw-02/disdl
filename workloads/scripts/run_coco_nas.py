@@ -26,7 +26,7 @@ def main(config: DictConfig):
     workload = "coco_nas"
     dataloader = "tensorsocket" # or "tensorsocket", "disdl"
     vision_encoder_hiddern_layer_sizes = [4, 8, 16, 32]
-    vision_encoder_hiddern_layer_sizes = [4]
+    # vision_encoder_hiddern_layer_sizes = [4]
     producer_only = False
 
     # Generate experiment ID and log directory
@@ -48,7 +48,7 @@ def main(config: DictConfig):
 
     if dataloader == 'tensorsocket':
         # print("Starting TensorSocket producer...")
-        producer_cmd = f"{python_cmd} workloads/finetune_multi_modal.py workload={workload} dataloader={dataloader} dataloader.mode=producer workload.model_architecture={models[0]}"
+        producer_cmd = f"{python_cmd} workloads/finetune_multi_modal.py workload={workload} dataloader={dataloader} dataloader.mode=producer"
         producer_process = subprocess.Popen(producer_cmd, shell=True)
         producer_pid = producer_process.pid
         time.sleep(5)  # Adjust as necessary

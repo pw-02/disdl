@@ -25,9 +25,9 @@ def get_python_command():
 def main(config: DictConfig):
     workload = "imagenet_nas"
     dataloader = "tensorsocket" #tensorsocket, disdl
-    producer_only = True
+    producer_only = False
     models = ["resnet18", "resnet50", "shufflenet_v2_x1_0", "vgg16"]
-    #models = ["resnet18"]
+    models = ["resnet18"]
 
     # Generate experiment ID and log directory
     current_datetime = datetime.now(timezone.utc).strftime("%Y-%m-%d_%H-%M-%S")
@@ -48,7 +48,7 @@ def main(config: DictConfig):
 
     if dataloader == 'tensorsocket':
         # print("Starting TensorSocket producer...")
-        producer_cmd = f"{python_cmd} workloads/train_image_classifier.py workload={workload} dataloader={dataloader} dataloader.mode=producer workload.model_architecture={models[0]}"
+        producer_cmd = f"{python_cmd} workloads/run.py workload={workload} dataloader={dataloader} dataloader.mode=producer workload.model_architecture={models[0]}"
         producer_process = subprocess.Popen(producer_cmd, shell=True)
         producer_pid = producer_process.pid
         time.sleep(5)  # Adjust as necessary
@@ -68,11 +68,11 @@ def main(config: DictConfig):
     job_pids = []
     for idx, model in enumerate(models):
         print(f"Starting job on GPU {idx} with model {model} and exp_id {expid}_{idx}")
-
+        
         if dataloader == 'disdl':
-            run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/train_image_classifier.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model}"
+            run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/run.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model}"
         elif dataloader == 'tensorsocket' and not producer_only:
-            run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/train_image_classifier.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model} dataloader.mode=consumer"
+            run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/run.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model} dataloader.mode=consumer"
         
         #run_cmd = f"{python_cmd} workloads/image_classification.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model}"
         process = subprocess.Popen(run_cmd, shell=True)

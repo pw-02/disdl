@@ -4,7 +4,7 @@ name: openimages_nas
 s3_bucket: disdlopenimages
 s3_train_prefix: s3://disdlopenimages/validation/
 s3_val_prefix: s3://disdlopenimages/validation/
-num_pytorch_workers: 0
+num_pytorch_workers: 4
 
 
 

@@ -99,7 +99,7 @@ def run_training_job(config: DictConfig, train_logger: CSVLogger, val_logger: CS
     current_epoch=0
     should_stop = False
     train_start_time = time.perf_counter()
-    
+    max_training_time = config.workload.max_training_time_sec
     if tensorsocket_consumer is not None:
         train_dataloader = tensorsocket_consumer
 
@@ -125,7 +125,9 @@ def run_training_job(config: DictConfig, train_logger: CSVLogger, val_logger: CS
             tensorsocket_producer=tensorsocket_producer,
             tensorsocket_consumer=tensorsocket_consumer,
             sim=config.simulation_mode,
-            sim_time=config.workload.gpu_time)
+            sim_time=config.workload.gpu_time,
+            max_training_time = max_training_time
+            )
     
         # if val_dataloader is not None and current_epoch % config.workload.validation_frequency == 0:
         #     global_val_step_count=  validate_loop(fabric, config.job_id,val_logger,model, val_dataloader,
@@ -142,6 +144,10 @@ def run_training_job(config: DictConfig, train_logger: CSVLogger, val_logger: CS
             should_stop = True
         if config.workload.max_epochs is not None and current_epoch >= config.workload.max_epochs:
             should_stop = True
+        elapsed_time = time.perf_counter() - train_start_time
+        if max_training_time is not None and elapsed_time >= max_training_time:
+            should_stop = True
+
 
     # if not isinstance(train_dataloader, TensorConsumer):
     #     train_dataloader.sampler.send_job_ended_notfication()
@@ -168,7 +174,8 @@ def train_loop(fabric:Fabric,
                tensorsocket_producer:TensorProducer=None,
                tensorsocket_consumer:TensorConsumer=None,
                sim=False,
-               sim_time=0):
+               sim_time=0,
+               max_training_time = None):
     
     model.train()
     total_samples = 0
@@ -251,9 +258,11 @@ def train_loop(fabric:Fabric,
             cache_hit_samples = batch[0].size(0) if is_cache_hit == True else 0
             cache_hit_bacth = 1 if is_cache_hit == True else 0
 
+            elapsed_time = time.perf_counter() - train_start_time
+
             metrics= OrderedDict({
                             "Batch Id": batch_id,
-                            "Elapsed Time (s)": time.perf_counter() - train_start_time,
+                            "Elapsed Time (s)":elapsed_time,
                             # "Num Torch Workers": train_dataloader.num_workers,
                             "Device": fabric.global_rank,
                             "Epoch Index": current_epoch,
@@ -286,6 +295,9 @@ def train_loop(fabric:Fabric,
                     # f" acc: {metrics['Train Accuracy (Avg)']:.3f} |"
                     F" cache hit: {metrics['Cache_Hit (Batch)']} |"
                     )
+            
+            if max_training_time is not None and elapsed_time >= max_training_time:
+                break
 
             # stopping criterion on step level
             if max_steps is not None and global_step_count >= max_steps:

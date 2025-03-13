@@ -69,7 +69,7 @@ class TensorSocketImageNetDataset(Dataset):
         self.use_compression = use_compression
         self.ssl = ssl
         self.cache_client = None
-        self.log_dir = None
+        self.log_dir = log_dir
 
         if cache_address is not None:
             self.cache_host, self.cache_port = cache_address.split(":")

@@ -78,7 +78,7 @@ def main(config: DictConfig):
         #run_cmd = f"{python_cmd} workloads/image_classification.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model}"
         process = subprocess.Popen(run_cmd, shell=True)
         job_pids.append(process)
-        time.sleep(2)  # Adjust as necessary
+        # time.sleep(2)  # Adjust as necessary
     
     # Wait for all jobs to complete
     for process in job_pids:

@@ -24,7 +24,7 @@ def get_python_command():
 @hydra.main(version_base=None, config_path="../conf", config_name="config")
 def main(config: DictConfig):
     workload = "coco_nas"
-    dataloader = "tensorsocket" # or "tensorsocket", "disdl"
+    dataloader = "disdl" # or "tensorsocket", "disdl"
     vision_encoder_hiddern_layer_sizes = [2, 8, 16, 32]
     max_train_time_seconds = 600
 

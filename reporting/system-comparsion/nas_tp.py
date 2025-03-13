@@ -27,8 +27,8 @@ visual_map_plot = {
 workload = {
     "imagenet": {
         "over_time_data": {
-            disdl_label: r"C:\Users\pw\Desktop\disdl(today)\nas\imagenet_nas\disdl\2025-03-11_15-54-09\2025-03-11_15-54-09_imagenet_nas_disdl_batches_over_time.csv",
-            tensorsocket_label: r"C:\Users\pw\Desktop\disdl(today)\nas\imagenet_nas\tensorsocket\2025-03-11_17-16-11\2025-03-11_17-16-11_imagenet_nas_tensorsocket_batches_over_time.csv"}
+            disdl_label: r"C:\Users\pw\Desktop\disdl(600)\imagenet_nas\disdl\2025-03-13_20-34-34\2025-03-13_20-34-34_imagenet_nas_disdl_over_time.csv",
+            tensorsocket_label: r"C:\Users\pw\Desktop\disdl(600)\imagenet_nas\tensorsocket\2025-03-13_19-41-51\2025-03-13_19-41-51_imagenet_nas_tensorsocket_over_time.csv"}
     },"openimages": {
         "over_time_data": {
             disdl_label: r"C:\Users\pw\Desktop\disdl(today)\nas\openimages_nas\disdl\2025-03-11_16-40-21\2025-03-11_16-40-21_openimages_nas_disdl_batches_over_time.csv",
@@ -53,6 +53,9 @@ for workload_name, workload_data in workload.items():
     elapsed_times = df["elapsed_time"].values
     time_steps = list(set(int(x) for x in elapsed_times))
     time_steps = list(set(time_steps))
+
+    #trim off the first 100 time steps
+    time_steps = time_steps[100:]
 
     #now get the throughput for each time step
     disdl_throughput = []

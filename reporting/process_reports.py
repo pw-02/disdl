@@ -82,6 +82,13 @@ def get_optimal_batches_processed_over_time(metrics_csv):
     cumulative_iteration_times = list(itertools.accumulate(csv_data['GPU Processing Time (s)']))
     return cumulative_iteration_times
 
+# def create_tensor_socker_with_redis_report(folder_path, workload, dataloader, max_batches = None):
+#     #take exisitng metrics.csv and 
+
+
+
+
+
 
 
 def compute_ec2_costs(instance_type: str, time_seconds: float):
@@ -135,8 +142,9 @@ def get_training_summary(folder_path, dataloader, max_batches =None):
         job_metrics['cache_hits'] = sum(csv_data["Cache_Hits (Samples)"])
         job_metrics['max_cached_batches'] = max(csv_data["Cache_Size"])
         job_metrics["throughput(samples/s)"] = job_metrics["total_samples"] / job_metrics["total_time(s)"]
-        job_metrics["optiaml_throughput(samples/s)"] = job_metrics["total_samples"] / (sum(csv_data["GPU Processing Time (s)"])/len(csv_data["GPU Processing Time (s)"])) 
-
+        job_metrics["throughput(batch/s)"] = job_metrics["num_batches"] / job_metrics["total_time(s)"]
+        job_metrics["optiaml_throughput(batches/s)"] = 1 / (sum(csv_data["GPU Processing Time (s)"])/len(csv_data["GPU Processing Time (s)"])) 
+        job_metrics["optiaml_throughput(samples/s)"] =  job_metrics["optiaml_throughput(batches/s)"] * csv_data["Batch Size"][0]
         job_metrics["cache_hit(%)"] = job_metrics["cache_hits"] / job_metrics["total_samples"]
         job_metrics["compute_time(%)"] = job_metrics["gpu_processing_time(s)"] / job_metrics["total_time(s)"]
         job_metrics["waiting_on_data_time(%)"] = job_metrics["wait_on_data_time(s)"] / job_metrics["total_time(s)"]
@@ -146,7 +154,7 @@ def get_training_summary(folder_path, dataloader, max_batches =None):
         data_fetch_percent = job_metrics["data_fetch_time(s)"] / (job_metrics["transformation_time(s)"] + job_metrics["data_fetch_time(s)"])
         job_metrics["transform_delay(%)"] = transform_percent *  job_metrics["waiting_on_data_time(%)"] 
         job_metrics["data_fetch_delay(%)"] = data_fetch_percent *  job_metrics["waiting_on_data_time(%)"]
-        job_metrics["throughout_over_time"] = get_throughput_over_epoch_timepoints(metrics_csv, job_metrics['total_epochs'])
+        # job_metrics["throughout_over_time"] = get_throughput_over_epoch_timepoints(metrics_csv, job_metrics['total_epochs'])
         jobs_metric_list.append(job_metrics)
         elapsed_times.extend(get_batches_processed_over_time(metrics_csv))
         optimal_times.extend(get_optimal_batches_processed_over_time(metrics_csv))
@@ -167,6 +175,8 @@ def get_training_summary(folder_path, dataloader, max_batches =None):
          "data_fetch_time(s)": 0,
          "transformation_time(s)": 0,
          "cache_hits": 0,
+        "optimal_throughput(batches/s)": 0,
+            "optimal_throughput(samples/s)": 0,
     })
 
     aggegared_throughput_overtime = {}
@@ -186,17 +196,19 @@ def get_training_summary(folder_path, dataloader, max_batches =None):
         overall_metrics["data_fetch_time(s)"] += csv_data["data_fetch_time(s)"]
         overall_metrics["transformation_time(s)"] += csv_data["transformation_time(s)"]
         overall_metrics["cache_hits"] += csv_data["cache_hits"]
+        overall_metrics["optimal_throughput(batches/s)"] += csv_data["optiaml_throughput(batches/s)"]
+        overall_metrics["optimal_throughput(samples/s)"] += csv_data["optiaml_throughput(samples/s)"]
         if csv_data["max_cached_batches"] > overall_metrics["max_cached_batches"]:
             overall_metrics["max_cached_batches"] = csv_data["max_cached_batches"]
         
-        for epoch_throughput in csv_data["throughout_over_time"]:
-            if epoch_throughput['epoch'] not in aggegared_throughput_overtime:
-                aggegared_throughput_overtime[epoch_throughput['epoch']] = {'epoch_id': epoch_throughput['epoch'], 'total_samples': 0, 'total_time(s)': 0}
-            aggegared_throughput_overtime[epoch_throughput['epoch']]['total_samples'] += epoch_throughput['total_samples']
-            aggegared_throughput_overtime[epoch_throughput['epoch']]['total_time(s)'] += epoch_throughput['total_time(s)']
-            aggegared_throughput_overtime[epoch_throughput['epoch']]['throughput(samples/s)'] = aggegared_throughput_overtime[epoch_throughput['epoch']]['total_samples'] / aggegared_throughput_overtime[epoch_throughput['epoch']]['total_time(s)']
+    #     for epoch_throughput in csv_data["throughout_over_time"]:
+    #         if epoch_throughput['epoch'] not in aggegared_throughput_overtime:
+    #             aggegared_throughput_overtime[epoch_throughput['epoch']] = {'epoch_id': epoch_throughput['epoch'], 'total_samples': 0, 'total_time(s)': 0}
+    #         aggegared_throughput_overtime[epoch_throughput['epoch']]['total_samples'] += epoch_throughput['total_samples']
+    #         aggegared_throughput_overtime[epoch_throughput['epoch']]['total_time(s)'] += epoch_throughput['total_time(s)']
+    #         aggegared_throughput_overtime[epoch_throughput['epoch']]['throughput(samples/s)'] = aggegared_throughput_overtime[epoch_throughput['epoch']]['total_samples'] / aggegared_throughput_overtime[epoch_throughput['epoch']]['total_time(s)']
     
-    overall_metrics["throughout_over_time"] = aggegared_throughput_overtime
+    # overall_metrics["throughout_over_time"] = aggegared_throughput_overtime
     if overall_metrics['num_jobs'] > 0:
         for key in ['total_time(s)', "wait_on_data_time(s)", "gpu_processing_time(s)", "data_fetch_time(s)", "transformation_time(s)"]:
             overall_metrics[key] = overall_metrics[key] / overall_metrics['num_jobs']

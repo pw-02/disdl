@@ -31,12 +31,12 @@ workload = {
             tensorsocket_label: r"C:\Users\pw\Desktop\disdl(600)\imagenet_nas\tensorsocket\2025-03-13_19-41-51\2025-03-13_19-41-51_imagenet_nas_tensorsocket_over_time.csv"}
     },"openimages": {
         "over_time_data": {
-            disdl_label: r"C:\Users\pw\Desktop\disdl(today)\nas\openimages_nas\disdl\2025-03-11_16-40-21\2025-03-11_16-40-21_openimages_nas_disdl_batches_over_time.csv",
-            tensorsocket_label: r"C:\Users\pw\Desktop\disdl(today)\nas\openimages_nas\tensorsocket\2025-03-12_16-20-16\2025-03-12_16-20-16_openimages_nas_tensorsocket_batches_over_time.csv",}
+            disdl_label: r"C:\Users\pw\Desktop\disdl(600)\openimages_nas\disdl\2025-03-13_20-48-17\2025-03-13_20-48-17_openimages_nas_disdl_over_time.csv",
+            tensorsocket_label: r"C:\Users\pw\Desktop\disdl(600)\openimages_nas\tensorsocket\2025-03-13_19-55-06\2025-03-13_19-55-06_openimages_nas_tensorsocket_over_time.csv"}
     },"coco": {
         "over_time_data": {
-            disdl_label: r"C:\Users\pw\Desktop\disdl(today)\nas\coco_nas\disdl\2025-03-12_18-44-30\2025-03-12_18-44-30_coco_nas_disdl_batches_over_time.csv",
-            tensorsocket_label: r"C:\Users\pw\Desktop\disdl(today)\nas\coco_nas\tensorsocket\2025-03-12_16-46-57\2025-03-12_16-46-57_coco_nas_tensorsocket_batches_over_time.csv"}
+            disdl_label: r"C:\Users\pw\Desktop\disdl(600)\coco_nas\disdl\2025-03-13_21-10-51\2025-03-13_21-10-51_coco_nas_disdl_over_time.csv",
+            tensorsocket_label: r"C:\Users\pw\Desktop\disdl(600)\coco_nas\tensorsocket\2025-03-13_20-08-04\2025-03-13_20-08-04_coco_nas_tensorsocket_over_time.csv"}
             }
     }
 
@@ -55,7 +55,7 @@ for workload_name, workload_data in workload.items():
     time_steps = list(set(time_steps))
 
     #trim off the first 100 time steps
-    time_steps = time_steps[100:]
+    # time_steps = time_steps[100:]
 
     #now get the throughput for each time step
     disdl_throughput = []
@@ -78,7 +78,7 @@ for workload_name, workload_data in workload.items():
     #plot throughput over time
     ax1.plot(time_steps, disdl_throughput, label=disdl_label, **visual_map_plot[disdl_label])
     ax1.plot(time_steps, tensorsocket_throughput, label=tensorsocket_label, **visual_map_plot[tensorsocket_label])
-    ax1.set_ylim(0, 25)
+    # ax1.set_ylim(0, 25)
     ax1.yaxis.set_major_locator(MaxNLocator(integer=True))
     ax1.set_xlabel("Time (s)")
     ax1.set_ylabel("Throughput (batches/sec)")

@@ -341,9 +341,9 @@ if __name__ == "__main__":
  
     paths = [
         # "C:\\Users\\pw\\Desktop\\image_classification\\coordl\\cifar10",
-        Path(r"C:\Users\pw\Desktop\disdl(today)\nas\imagenet_nas"),
-        Path(r"C:\Users\pw\Desktop\disdl(today)\nas\coco_nas"),
-        Path(r"C:\Users\pw\Desktop\disdl(today)\nas\openimages_nas")
+        Path(r"C:\Users\pw\Desktop\disdl(600)\imagenet_nas"),
+        # Path(r"C:\Users\pw\Desktop\disdl(today)\nas\coco_nas"),
+        # Path(r"C:\Users\pw\Desktop\disdl(today)\nas\openimages_nas")
 
         # Path(r"C:\Users\pw\Desktop\super_results\\\image_transformer")
         # "C:\\Users\\pw\\Desktop\\vision transformer\\coordl\\imagenet"
@@ -388,8 +388,8 @@ if __name__ == "__main__":
             exp_summary['prefetch_cost'] = prefetch_cost
     
             save_dict_list_to_csv(job_metrics, os.path.join(exp_folder, f'{exp_name}_{dataset}_{dataloader}_summary.csv'))
-            save_dict_list_to_csv(aggegared_throughput_overtime_list, os.path.join(exp_folder, f'{exp_name}_{dataset}_{dataloader}_throughput_over_time.csv'))
-            save_dict_list_to_csv(elapsed_times, os.path.join(exp_folder, f'{exp_name}_{dataset}_{dataloader}_batches_over_time.csv'))
+            # save_dict_list_to_csv(aggegared_throughput_overtime_list, os.path.join(exp_folder, f'{exp_name}_{dataset}_{dataloader}_over_time.csv'))
+            save_dict_list_to_csv(elapsed_times, os.path.join(exp_folder, f'{exp_name}_{dataset}_{dataloader}_over_time.csv'))
 
             
             # write_batches_over_time_to_file(os.path.join(exp_folder, f"{exp_name}_{dataset}_{dataloader}_batches_over_time.csv"), elapsed_times)

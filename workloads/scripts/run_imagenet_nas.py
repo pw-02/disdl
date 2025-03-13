@@ -94,7 +94,9 @@ def main(config: DictConfig):
     monitor_process.kill()
 
     if dataloader == 'tensorsocket':
-        producer_process.terminate()
+        #kill process based on pid
+        os.kill(monitor_pid, 9)
+        # producer_process.terminate()
 
     print("Experiment completed.")
 

@@ -19,6 +19,7 @@ import redis
 import torch
 from io import BytesIO
 from torch.nn.utils.rnn import pad_sequence
+import csv
 
 class S3Url(object):
     def __init__(self, url):
@@ -53,8 +54,10 @@ class TensorSocketCocoDataset(Dataset):
                  cache_transformations=True,
                  use_compression=False,
                  use_local_folder=False,
-                 ssl=True):
+                 ssl=True,
+                log_dir='logs'):
         
+        self.log_dir = log_dir
         self.s3_bucket = S3Url(s3_data_dir).bucket
         self.s3_prefix = S3Url(s3_data_dir).key
         self.s3_data_dir = s3_data_dir
@@ -77,7 +80,15 @@ class TensorSocketCocoDataset(Dataset):
             self.use_cache = True
         else:
             self.use_cache = False
-    
+
+    def record_metrics(self, line):
+        file_name = os.path.join(self.log_dir, 'tensordataset_coco.csv')
+        file_exists = os.path.isfile(file_name)
+        with open(file_name, mode='a', newline='') as file:
+            writer = csv.DictWriter(file, fieldnames=line.keys())
+            if not file_exists:
+                writer.writeheader()
+            writer.writerow(line)
     
     def __getstate__(self):
             state = self.__dict__.copy()
@@ -138,6 +149,7 @@ class TensorSocketCocoDataset(Dataset):
         
         transformation_time =  time.perf_counter() - start_transformation_time
         data_fetch_time  = time.perf_counter() - start_loading_time - transformation_time
+        self.record_metrics({'s3': self.s3_data_dir, 'batch_id': batch_id, 'data_fetch_time': data_fetch_time, 'transformation_time': transformation_time, 'cache_hit_count': cache_hit_count, 'total_time': data_fetch_time + transformation_time})
         return images, captions, text_atts, image_ids
 
 

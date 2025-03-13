@@ -333,12 +333,15 @@ def get_tensorsocker_dataset(config: DictConfig):
         train_dataset = TensorSocketImageNetDataset(
             s3_data_dir=dataset_location,
             transform=get_tansform(dataset_location),
-            log_dir=config.log_dir)
+            log_dir=config.log_dir
+            )
     
     if 'disdlopenimages' in dataset_location:
         train_dataset = TensorSocketOpenImagesDataset(
             s3_data_dir=config.workload.s3_train_prefix,
-            transform=get_tansform(dataset_location))
+            transform=get_tansform(dataset_location),
+            log_dir=config.log_dir
+            )
         
     elif 'coco' in dataset_location:
         train_dataset = TensorSocketCocoDataset(

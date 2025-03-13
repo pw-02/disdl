@@ -197,6 +197,8 @@ class CentralBatchManager:
             if next_batch.is_first_access:
                 next_batch.is_first_access = False
                 self._generate_new_batch()
+            
+            next_batch.set_last_accessed_time()
 
             # logger.debug(f"Job '{job_id}' given batch '{next_batch.batch_id}'")
             # samples = self.dataset.get_samples(next_batch.indices)

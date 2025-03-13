@@ -22,7 +22,7 @@ import torch
 from io import BytesIO
 import pandas as pd
 from io import StringIO
-
+import csv
 class S3Url(object):
     def __init__(self, url):
         self._parsed = urlparse(url, allow_fragments=False)
@@ -53,7 +53,8 @@ class TensorSocketOpenImagesDataset(Dataset):
                  cache_transformations=True,
                  use_compression=False,
                  use_local_folder=False,
-                 ssl=True):
+                 ssl=True,
+                 log_dir='logs'):
         
         self.s3_bucket = S3Url(s3_data_dir).bucket
         self.s3_prefix = S3Url(s3_data_dir).key
@@ -69,7 +70,7 @@ class TensorSocketOpenImagesDataset(Dataset):
         self.use_compression = use_compression
         self.ssl = ssl
         self.cache_client = None
-
+        self.log_dir = log_dir
         if cache_address is not None:
             self.cache_host, self.cache_port = cache_address.split(":")
             self.cache_port = int(self.cache_port)
@@ -77,6 +78,17 @@ class TensorSocketOpenImagesDataset(Dataset):
         else:
             self.use_cache = False
     
+    def record_metrics(self, line):
+
+        file_name = os.path.join(self.log_dir, 'tensordataset_openimages.csv')
+        # folder_exists = os.path.isdir(self.log_dir)
+        # if folder_exists:
+        file_exists = os.path.isfile(file_name)
+        with open(file_name, mode='a', newline='') as file:
+            writer = csv.DictWriter(file, fieldnames=line.keys())
+            if not file_exists:
+                writer.writeheader()
+            writer.writerow(line)
     
     def __getstate__(self):
             state = self.__dict__.copy()
@@ -174,6 +186,7 @@ class TensorSocketOpenImagesDataset(Dataset):
         samples= torch.stack(samples)
         labels = torch.tensor(labels)
         data_fetch_time  = time.perf_counter() - start_loading_time - transformation_time
+        self.record_metrics({'s3': self.s3_data_dir, 'batch_id': batch_id, 'data_fetch_time': data_fetch_time, 'transformation_time': transformation_time, 'cache_hit_count': cache_hit_count, 'total_time': data_fetch_time + transformation_time})
         return samples, labels
 
         # return samples, labels,batch_id,data_fetch_time,transformation_time

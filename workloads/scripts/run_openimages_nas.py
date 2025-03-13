@@ -27,6 +27,7 @@ def main(config: DictConfig):
     dataloader = "tensorsocket" #tensorsocket, disdl
     producer_only = False
     models = ["vit_b_32", "vit_small_patch32_224", "levit_128", "mixer_b32_224"]
+    max_train_time_seconds = 5000
 
     # Generate experiment ID and log directory
     current_datetime = datetime.now(timezone.utc).strftime("%Y-%m-%d_%H-%M-%S")
@@ -66,9 +67,9 @@ def main(config: DictConfig):
     for idx, model in enumerate(models):
         print(f"Starting job on GPU {idx} with model {model} and exp_id {expid}_{idx}")
         if dataloader == 'disdl':
-            run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/run.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model}"
+            run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/run.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model} workload.max_training_time_sec={max_train_time_seconds}"
         elif dataloader == 'tensorsocket' and not producer_only:
-            run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/run.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model} dataloader.mode=consumer"
+            run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/run.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model} dataloader.mode=consumer workload.max_training_time_sec={max_train_time_seconds}"
 
         
         #run_cmd = f"{python_cmd} workloads/image_classification.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model}"
@@ -90,7 +91,7 @@ def main(config: DictConfig):
     monitor_process.kill()
 
     if dataloader == 'tensorsocket':
-        producer_process.kill()
+        producer_process.terminate()
 
 
     print("Experiment completed.")

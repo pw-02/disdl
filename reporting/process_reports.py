@@ -91,11 +91,25 @@ def compute_ec2_costs(instance_type: str, time_seconds: float):
     instance_cost = hourly_rate * hours
     return instance_cost
 
+def compute_cost_efficiency(time_seconds, batches_processed, dataloader, instance_type='p3.8xlarge'):
+    instance_prices = {'p3.8xlarge':  12.24, 'c5n.xlarge': 0.4} #per hour
+    cache_cost = 0
+    total_lambda_cost = 3
+    if dataloader == 'disdl':
+        proxy_cost_per_second = instance_prices['c5n.xlarge'] / 3600
+        proxy_cost = proxy_cost_per_second * time_seconds
+        lambda_cost = total_lambda_cost/batches_processed
+        cache_cost = proxy_cost + lambda_cost
+
+    compute_cost_per_second = instance_prices[instance_type] / 3600
+    compute_cost = compute_cost_per_second * time_seconds
+    total_cost = compute_cost + cache_cost
+    cost_efficiency = batches_processed / total_cost
+    return total_cost, cost_efficiency
 
 
 
-
-def get_training_summary(folder_path, max_batches =None):
+def get_training_summary(folder_path, dataloader, max_batches =None):
     search_pattern = os.path.join(folder_path, '**', 'metrics.csv')
     jobs_metric_list = []
     elapsed_times = []
@@ -206,15 +220,39 @@ def get_training_summary(folder_path, max_batches =None):
                          'total_time(s)': vlaue['total_time(s)'] / overall_metrics['num_jobs'], 
                          'throughput(samples/s)': vlaue['total_samples']/(vlaue['total_time(s)'] / overall_metrics['num_jobs'])}
             aggegared_throughput_overtime_list.append(dict_line)
+    
+    #find the duration of the shortest job
+    shortest_job = min(jobs_metric_list, key=lambda x: x['total_time(s)'])
+    shortest_job_duration = shortest_job['total_time(s)']
+
+    #now for all jobs, get all rows that are less than the shortest job duration
+    elapsed_times = [x for x in elapsed_times if x <= shortest_job_duration]
+
+    #i want get the number of bacthes processsed by that time for each job
 
     elapsed_times = sorted(elapsed_times)
+    before = len(elapsed_times)
+
+    #now trim off the first 30 seconds of the elapsed times, and count how many were removed
+    elapsed_times = [x for x in elapsed_times if x > 30]
+    trimmed = before - len(elapsed_times)
+    batches_over_time = []
+    for idx, time in enumerate(elapsed_times):
+        cost, cost_efficiecny = compute_cost_efficiency(time, idx + trimmed, dataloader)
+        batches_over_time.append({'index': idx + trimmed, 'elapsed_time': time, 'throughput': (idx + trimmed)/time,
+                                'cost': cost,
+                                'cost_efficiency': cost_efficiecny})
+
+
+
+
     #trime elapsed times to max_batches
-    if max_batches is not None and  len(elapsed_times) > max_batches:
-        elapsed_times = elapsed_times[:max_batches]
-    if elapsed_times is None:
-        elapsed_times = []
+    # if max_batches is not None and  len(elapsed_times) > max_batches:
+    #     elapsed_times = elapsed_times[:max_batches]
+    # if elapsed_times is None:
+    #     elapsed_times = []
     optimal_times = sorted(optimal_times)
-    return overall_metrics,jobs_metric_list, aggegared_throughput_overtime_list,elapsed_times,optimal_times, start_time_stamp, end_time_stamp
+    return overall_metrics,jobs_metric_list, aggegared_throughput_overtime_list,batches_over_time,optimal_times, start_time_stamp, end_time_stamp
 
 def get_avergae_batch_size_gb(workload):
     if 'cifar10' in workload:
@@ -230,7 +268,7 @@ def compute_costs(dataloader_name,
                   exp_folder_path,
                   start_timestamp = None,
                   end_timestamp = None):
-    ec2_cost = compute_ec2_costs('p3.8xlarge', elapsed_time)
+    ec2_cost = compute_ec2_costs('p3.8xlarge', elapsed_time['elapsed_time'])
     cache_cost = 0
     prefetch_cost = 0
     if dataloader_name == 'coordl':
@@ -303,7 +341,10 @@ if __name__ == "__main__":
  
     paths = [
         # "C:\\Users\\pw\\Desktop\\image_classification\\coordl\\cifar10",
-        Path(r"C:\Users\pw\Desktop\disdl(today)\coco_nas")
+        Path(r"C:\Users\pw\Desktop\disdl(today)\nas\imagenet_nas"),
+        Path(r"C:\Users\pw\Desktop\disdl(today)\nas\coco_nas"),
+        Path(r"C:\Users\pw\Desktop\disdl(today)\nas\openimages_nas")
+
         # Path(r"C:\Users\pw\Desktop\super_results\\\image_transformer")
         # "C:\\Users\\pw\\Desktop\\vision transformer\\coordl\\imagenet"
         ]
@@ -328,7 +369,7 @@ if __name__ == "__main__":
                 model_name = get_subfolder_names(exp_folder, include_children=False)[0]
                 exp_summary['model_name'] = model_name
 
-            summary, job_metrics, aggegared_throughput_overtime_list, elapsed_times,optimal_times, start_timestamp, end_timestamp = get_training_summary(exp_folder)
+            summary, job_metrics, aggegared_throughput_overtime_list, elapsed_times,optimal_times, start_timestamp, end_timestamp = get_training_summary(exp_folder, dataloader)
             
             total_cost, ec2_cost, cache_cost, prefetch_cost = compute_costs(
                 dataloader_name=dataloader,
@@ -348,14 +389,17 @@ if __name__ == "__main__":
     
             save_dict_list_to_csv(job_metrics, os.path.join(exp_folder, f'{exp_name}_{dataset}_{dataloader}_summary.csv'))
             save_dict_list_to_csv(aggegared_throughput_overtime_list, os.path.join(exp_folder, f'{exp_name}_{dataset}_{dataloader}_throughput_over_time.csv'))
-            write_batches_over_time_to_file(os.path.join(exp_folder, f"{exp_name}_{dataset}_{dataloader}_batches_over_time.csv"), elapsed_times)
+            save_dict_list_to_csv(elapsed_times, os.path.join(exp_folder, f'{exp_name}_{dataset}_{dataloader}_batches_over_time.csv'))
+
+            
+            # write_batches_over_time_to_file(os.path.join(exp_folder, f"{exp_name}_{dataset}_{dataloader}_batches_over_time.csv"), elapsed_times)
             # write_batches_over_time_to_file(os.path.join(exp_folder, f"{exp_name}_{dataset}_{dataloader}_optimal_batches_over_time.csv"), optimal_times)
-            costs_over_time = compute_costs_over_time(
-                elapsed_times,
-                cache_cost,
-                prefetch_cost)
-            # write_batches_over_time_to_file(os.path.join(exp_folder, f"{exp_name}_{dataset}_{dataloader}_costs_over_time.csv"), costs_over_time)
-            save_dict_list_to_csv(costs_over_time, os.path.join(exp_folder, f"{exp_name}_{dataset}_{dataloader}_costs_over_time.csv"))
+            # costs_over_time = compute_costs_over_time(
+            #     elapsed_times,
+            #     cache_cost,
+            #     prefetch_cost)
+            # # write_batches_over_time_to_file(os.path.join(exp_folder, f"{exp_name}_{dataset}_{dataloader}_costs_over_time.csv"), costs_over_time)
+            # save_dict_list_to_csv(costs_over_time, os.path.join(exp_folder, f"{exp_name}_{dataset}_{dataloader}_costs_over_time.csv"))
             exp_summary.update(summary)
             # save_dict_list_to_csv([exp_summary], os.path.join(exp_folder, f'{exp_name}_summary.csv'))
             overall_summary.append(exp_summary)

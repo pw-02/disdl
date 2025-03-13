@@ -26,6 +26,7 @@ def main(config: DictConfig):
     workload = "coco_nas"
     dataloader = "disdl" # or "tensorsocket", "disdl"
     vision_encoder_hiddern_layer_sizes = [4, 8, 16, 32]
+    max_train_time_seconds = 5000
 
     # vision_encoder_hiddern_layer_sizes = [4]
     producer_only = False
@@ -70,9 +71,9 @@ def main(config: DictConfig):
     for idx, num_hidden_layers in enumerate(vision_encoder_hiddern_layer_sizes):
         print(f"Starting job on GPU {idx} with albef model with {num_hidden_layers} hidden layers and exp_id {expid}_{idx}")
         if dataloader == 'disdl':
-            run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/run.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.vision_encoder_args.num_hidden_layers={num_hidden_layers}"
+            run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/run.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.vision_encoder_args.num_hidden_layers={num_hidden_layers} workload.max_training_time_sec={max_train_time_seconds}"
         elif dataloader == 'tensorsocket' and not producer_only:
-            run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/run.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.vision_encoder_args.num_hidden_layers={num_hidden_layers} dataloader.mode=consumer"
+            run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/run.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.vision_encoder_args.num_hidden_layers={num_hidden_layers} dataloader.mode=consumer workload.max_training_time_sec={max_train_time_seconds}"
 
         
         #run_cmd = f"{python_cmd} workloads/image_classification.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model}"
@@ -94,7 +95,7 @@ def main(config: DictConfig):
     monitor_process.kill()
 
     if dataloader == 'tensorsocket':
-        producer_process.kill()
+        producer_process.terminate()
 
 
     print("Experiment completed.")

@@ -108,12 +108,15 @@ class TensorSocketImageNetDataset(Dataset):
     def record_metrics(self, line):
 
         file_name = os.path.join(self.log_dir, 'tensordataset.csv')
-        file_exists = os.path.isfile(file_name)
-        with open(file_name, mode='a', newline='') as file:
-            writer = csv.DictWriter(file, fieldnames=line.keys())
-            if not file_exists:
-                writer.writeheader()
-            writer.writerow(line)
+
+        folder_exists = os.path.isdir(self.log_dir)
+        if folder_exists:
+            file_exists = os.path.isfile(file_name)
+            with open(file_name, mode='a', newline='') as file:
+                writer = csv.DictWriter(file, fieldnames=line.keys())
+                if not file_exists:
+                    writer.writeheader()
+                writer.writerow(line)
     
     def _get_sample_list_from_s3(self, use_index_file=True, images_only=True) -> Dict[str, List[str]]:
         s3_client = boto3.client('s3')

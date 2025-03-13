@@ -24,7 +24,7 @@ def get_python_command():
 @hydra.main(version_base=None, config_path="../conf", config_name="config")
 def main(config: DictConfig):
     workload = "openimages_nas"
-    dataloader = "tensorsocket" #tensorsocket, disdl
+    dataloader = "disdl" #tensorsocket, disdl
     producer_only = False
     models = ["vit_b_32", "vit_small_patch32_224", "levit_128", "mixer_b32_224"]
     max_train_time_seconds = 600

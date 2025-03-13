@@ -367,8 +367,8 @@ if __name__ == "__main__":
             summary, job_metrics, aggegared_throughput_overtime_list, elapsed_times,optimal_times, start_timestamp, end_timestamp = get_training_summary(exp_folder, dataloader)
             
             total_cost, cost_efficiency, compute_cost, cache_cost, prefetch_cost = compute_cost_efficiency(
-                time_seconds=elapsed_times[-1],
-                batches_processed=len(elapsed_times),
+                time_seconds=summary['total_time(s)'],
+                batches_processed=summary['total_batches'],
                 dataloader=dataloader
                 # dataset_name=dataset,
                 # max_cached_batches=summary['max_cached_batches'],
@@ -379,6 +379,7 @@ if __name__ == "__main__":
         )
             
             exp_summary['total_cost'] = total_cost
+            exp_summary['efficiency(batches/$)'] = cost_efficiency
             exp_summary['ec2_cost'] = compute_cost
             exp_summary['cache_cost'] = cache_cost
             exp_summary['prefetch_cost'] = prefetch_cost

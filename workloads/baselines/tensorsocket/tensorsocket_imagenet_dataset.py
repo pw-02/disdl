@@ -20,6 +20,7 @@ import os
 import redis
 import torch
 from io import BytesIO
+import csv
 
 class S3Url(object):
     def __init__(self, url):
@@ -51,7 +52,8 @@ class TensorSocketImageNetDataset(Dataset):
                  cache_transformations=True,
                  use_compression=False,
                  use_local_folder=False,
-                 ssl=True):
+                 ssl=True,
+                 log_dir='logs'):
         
         self.s3_bucket = S3Url(s3_data_dir).bucket
         self.s3_prefix = S3Url(s3_data_dir).key
@@ -67,6 +69,7 @@ class TensorSocketImageNetDataset(Dataset):
         self.use_compression = use_compression
         self.ssl = ssl
         self.cache_client = None
+        self.log_dir = None
 
         if cache_address is not None:
             self.cache_host, self.cache_port = cache_address.split(":")
@@ -102,6 +105,15 @@ class TensorSocketImageNetDataset(Dataset):
         return [(blob, class_index)
             for class_index, blob_class in enumerate(self.samples)
             for blob in self.samples[blob_class]]
+    def record_metrics(self, line):
+
+        file_name = os.path.join(self.log_dir, 'tensordataset.csv')
+        file_exists = os.path.isfile(file_name)
+        with open(file_name, mode='a', newline='') as file:
+            writer = csv.DictWriter(file, fieldnames=line.keys())
+            if not file_exists:
+                writer.writeheader()
+            writer.writerow(line)
     
     def _get_sample_list_from_s3(self, use_index_file=True, images_only=True) -> Dict[str, List[str]]:
         s3_client = boto3.client('s3')
@@ -170,6 +182,7 @@ class TensorSocketImageNetDataset(Dataset):
         samples= torch.stack(samples)
         labels = torch.tensor(labels)
         data_fetch_time  = time.perf_counter() - start_loading_time - transformation_time
+        self.record_metrics({'s3': self.s3_data_dir, 'batch_id': batch_id, 'data_fetch_time': data_fetch_time, 'transformation_time': transformation_time, 'cache_hit_count': cache_hit_count, 'total_time': data_fetch_time + transformation_time})
         return samples, labels
 
         # return samples, labels,batch_id,data_fetch_time,transformation_time

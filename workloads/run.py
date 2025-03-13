@@ -332,7 +332,8 @@ def get_tensorsocker_dataset(config: DictConfig):
     if 'imagenet' in dataset_location:
         train_dataset = TensorSocketImageNetDataset(
             s3_data_dir=dataset_location,
-            transform=get_tansform(dataset_location))
+            transform=get_tansform(dataset_location),
+            log_dir=config.log_dir)
     
     if 'disdlopenimages' in dataset_location:
         train_dataset = TensorSocketOpenImagesDataset(
@@ -367,7 +368,7 @@ def get_disdl_dataset(config: DictConfig, client: DisDLClient, num_batchs: int):
             cache_address=config.dataloader.cache_address,
             ssl=config.dataloader.ssl_enabled,
             use_compression=config.dataloader.use_compression,
-            use_local_folder=config.dataloader.use_local_folder
+            use_local_folder=config.dataloader.use_local_folder,
             )
     elif 'coco' in dataset_location:
        

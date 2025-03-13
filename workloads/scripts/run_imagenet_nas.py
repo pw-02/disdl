@@ -26,6 +26,7 @@ def main(config: DictConfig):
     workload = "imagenet_nas"
     dataloader = "tensorsocket" #tensorsocket, disdl
     producer_only = False
+    max_train_time_seconds = 5000
     models = ["resnet18", "resnet50", "shufflenet_v2_x1_0", "vgg16"]
 
 
@@ -70,9 +71,9 @@ def main(config: DictConfig):
         print(f"Starting job on GPU {idx} with model {model} and exp_id {expid}_{idx}")
         
         if dataloader == 'disdl':
-            run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/run.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model}"
+            run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/run.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model} workload.max_training_time_sec={max_train_time_seconds}"
         elif dataloader == 'tensorsocket' and not producer_only:
-            run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/run.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model} dataloader.mode=consumer"
+            run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/run.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model} dataloader.mode=consumer workload.max_training_time_sec={max_train_time_seconds}"
         
         #run_cmd = f"{python_cmd} workloads/image_classification.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model}"
         process = subprocess.Popen(run_cmd, shell=True)
@@ -93,7 +94,7 @@ def main(config: DictConfig):
     monitor_process.kill()
 
     if dataloader == 'tensorsocket':
-        producer_process.kill()
+        producer_process.terminate()
 
     print("Experiment completed.")
 

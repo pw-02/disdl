@@ -30,6 +30,16 @@ def compute_lambda_requests_cost(total_requests, cost_per_million_requests=0.20)
     proxy_cost = 0.108* (simulation_time / 3600)
     return lambda_request_cost + proxy_cost
 
+def fill_range(int_list):
+    """Generate a list of all integers between the min and max values in int_list."""
+    if not int_list:
+        return []
+    
+    min_val = min(int_list)
+    max_val = max(int_list)
+    
+    return list(range(min_val, max_val + 1))
+
 
 # Simulate buffered execution of jobs
 def simulate_jobs_with_buffer(job_speeds, buffer_size, simulation_time=3600):
@@ -40,6 +50,7 @@ def simulate_jobs_with_buffer(job_speeds, buffer_size, simulation_time=3600):
     lambda_request_cost = 0
     job_speeds.append(5) # the last job is the prefetch lambda function that warms up cached functions
     warm_up_job = len(job_speeds) - 1
+    last_invocation_time = {}
     # Initialize event queue with first batch completion times
     for job_id, speed in enumerate(job_speeds):
         heapq.heappush(event_queue, (speed, job_id))  # (time to complete first batch, job_id)
@@ -49,9 +60,17 @@ def simulate_jobs_with_buffer(job_speeds, buffer_size, simulation_time=3600):
     while time_elapsed < simulation_time:
         time_elapsed, job_id = heapq.heappop(event_queue)  # Get next job event
 
+        #here is the warm up part to keep data in cache until it is used
         if job_id == warm_up_job:
-            # print(f"Warm Up: {(max(job_progress) - min(job_progress))}")
-            lambda_request_cost +=  (max(job_progress) - min(job_progress))
+            filled_list = fill_range(job_progress)
+            for i in filled_list:
+                if i not in last_invocation_time:
+                    last_invocation_time[i] = time_elapsed
+                elif i in last_invocation_time and (time_elapsed - last_invocation_time[i]) > 60: #1 minute
+                    lambda_request_cost += 1
+                    last_invocation_time[i] = time_elapsed
+                else:
+                    continue
             next_event_time = time_elapsed + (job_speeds[job_id])
             heapq.heappush(event_queue, (next_event_time, job_id))
             continue
@@ -117,6 +136,15 @@ def run_simulation_case(case_name, job_speeds, buffer_size, simulation_time, hou
 
 
 if __name__ == "__main__":
+
+    '''This script simulates the execution of multiple jobs with different speeds and buffer sizes.
+    It serves as motivation for my work as it shows how caching bacthes can be used to imporve throughput, yet it comes with a cost. 
+    When using Redis there is a sinfificant reduction in cost efficiency to achive higher throughput. With AWS Lambda the cost is 
+    much lower there is still a reduction in cost efficiency. If we find a way to limit the number of requests to the cache we can
+    achive a higher cost efficiency. This is the motivation for my work to find a way to limit the number of requests to the cache
+    while still achiving high throughput. Note some organization may only care about throughput and not cost efficiency. While others
+    may care about cost efficiency and not throughput.'''
+
    # Define simulation parameters
     job_speeds = [0.1, 0.05, 0.2, 0.15]  # Speeds in batches per second
     simulation_time = 3600 * 1 # Simulate 1 hour

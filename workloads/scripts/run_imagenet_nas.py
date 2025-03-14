@@ -26,7 +26,7 @@ def main(config: DictConfig):
     workload = "imagenet_nas"
     dataloader = "disdl" #tensorsocket, disdl
     producer_only = False
-    max_train_time_seconds = 600
+    max_train_time_seconds = 3600 # 1 hour
     models = ["resnet18", "resnet50", "shufflenet_v2_x1_0", "vgg16"]
 
 

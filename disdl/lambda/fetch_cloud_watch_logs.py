@@ -107,33 +107,33 @@ def get_cloud_watch_logs_for_experiment(download_dir, s3_bucket_name, from_time,
     log_groups = get_all_log_groups()
     lambda_functions = list_lambda_functions()
     # log_groups.append({'logGroupName': '/aws/lambda/lambda_function'})
-    with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
         # Export logs in parallel
-        futures = []
-        for log_group_name in log_groups:
-            if log_group_name not in lambda_functions:
-                continue
+        # futures = []
+        # for log_group_name in log_groups:
+        #     if log_group_name not in lambda_functions:
+        #         continue
 
-            s3_prefix = f'disdl/{log_group_name.replace("/", "_")}'
-            futures.append(executor.submit(export_logs_to_s3, 
-                                           log_group_name, 
-                                           s3_bucket_name, 
-                                           s3_prefix,
-                                           '2025-03-11 00:00:00', 
-                                            None))
+        #     s3_prefix = f'disdl/{log_group_name.replace("/", "_")}'
+        #     futures.append(executor.submit(export_logs_to_s3, 
+        #                                    log_group_name, 
+        #                                    s3_bucket_name, 
+        #                                    s3_prefix,
+        #                                    '2025-03-11 00:00:00', 
+        #                                     None))
         
-        # Wait for all export tasks to complete
-        for future in concurrent.futures.as_completed(futures):
-            try:
-                future.result()  # re-raise any exceptions that occurred during export
-            except Exception as e:
-                print(f'Exception during log export: {e}')
+        # # Wait for all export tasks to complete
+        # for future in concurrent.futures.as_completed(futures):
+        #     try:
+        #         future.result()  # re-raise any exceptions that occurred during export
+        #     except Exception as e:
+        #         print(f'Exception during log export: {e}')
 
         # Download logs from S3 in parallel
         for log_group_name in log_groups:
             if log_group_name not in lambda_functions:
                 continue
-            s3_prefix = f'cloudwatchresnet/{log_group_name.replace("/", "_")}'
+            s3_prefix = f'disdl/{log_group_name.replace("/", "_")}'
             executor.submit(download_logs_from_s3, s3_bucket_name, s3_prefix, download_dir)
             
         # Wait for all download tasks to complete
@@ -156,7 +156,7 @@ def convert_to_millis(timestamp_str):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Export CloudWatch logs to S3 and download them.")
-    parser.add_argument("--download_dir", help="Directory to download the logs to", default="logs")
+    parser.add_argument("--download_dir", help="Directory to download the logs to", default="data")
     parser.add_argument("--s3_bucket_name", help="S3 bucket name for exporting logs", default="supercloudwtachexports")
     parser.add_argument("--start_time", help="", default='2025-03-11_00-32-19')
     parser.add_argument("--end_time", help="",  default='2025-03-05_13-06-19')

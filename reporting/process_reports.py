@@ -5,14 +5,16 @@ from collections import OrderedDict
 import csv
 from pathlib import Path
 import itertools
+import datetime
+import numpy as np
 
 def convert_csv_to_dict(csv_file, start_timestamp = None, end_timestamp = None):
     df = pd.read_csv(csv_file)
     if 'bill.csv' in csv_file:
         df['Timestamp'] = pd.to_datetime(df['Timestamp'])
         # Filter the DataFrame based on the timestamp range
-        filtered_df = df[(df['Timestamp'] >= start_timestamp) & (df['Timestamp'] <= end_timestamp)]
-        return filtered_df.to_dict(orient='list')
+        # filtered_df = df[(df['Timestamp'] >= start_timestamp) & (df['Timestamp'] <= end_timestamp)]
+        return df.to_dict(orient='list')
     # Filter the rows where 'Epoch Index' is equal to 1
 
     # if df[df['Epoch Index'] > 1].empty:
@@ -69,26 +71,27 @@ def get_throughput_over_epoch_timepoints(metrics_csv, total_epochs):
     return throughput_over_time_points
 
 
-def get_batches_processed_over_time(metrics_csv):
+def get_batches_processed_over_time(csv_data):
     #get elapsed time in each row
-    csv_data = convert_csv_to_dict(metrics_csv)
-    cumulative_iteration_times = list(itertools.accumulate(csv_data['Iteration Time (s)']))
+    elapsed_times = list(itertools.accumulate(csv_data['Iteration Time (s)']))
+    #remove the first element
+    #get a dict of elapsed time and timestamp for each row
+    # elapsed_times = csv_data['Elapsed Time (s)']
+    time_stamps = csv_data['Timestamp (UTC)']
 
-    return cumulative_iteration_times
+    #take these two list and create a dict of elapsed time and timestamp
+    data = {}
+    for idx, time in enumerate(elapsed_times):
+        data[time] = time_stamps[idx]
+  
 
-def get_optimal_batches_processed_over_time(metrics_csv):
+    return  data
+
+
+def get_optimal_batches_processed_over_time(csv_data):
     #get elapsed time in each row
-    csv_data = convert_csv_to_dict(metrics_csv)
     cumulative_iteration_times = list(itertools.accumulate(csv_data['GPU Processing Time (s)']))
     return cumulative_iteration_times
-
-# def create_tensor_socker_with_redis_report(folder_path, workload, dataloader, max_batches = None):
-#     #take exisitng metrics.csv and 
-
-
-
-
-
 
 
 def compute_ec2_costs(instance_type: str, time_seconds: float):
@@ -98,18 +101,22 @@ def compute_ec2_costs(instance_type: str, time_seconds: float):
     instance_cost = hourly_rate * hours
     return instance_cost
 
-def compute_cost_efficiency(time_seconds, batches_processed, dataloader, instance_type='p3.8xlarge'):
+def compute_cost_efficiency(time_seconds, batches_processed, dataloader, timestamp, time_cost_df):
     instance_prices = {'p3.8xlarge':  12.24, 'c5n.xlarge': 0.4} #per hour
     cache_cost = 0
     prefetch_cost = 0
-    total_lambda_cost = 3
     if dataloader == 'disdl':
         proxy_cost_per_second = instance_prices['c5n.xlarge'] / 3600
         proxy_cost = proxy_cost_per_second * time_seconds
-        lambda_cost = total_lambda_cost/batches_processed
-        cache_cost = proxy_cost + lambda_cost
+        # Convert reference timestamp to datetime
+        # reference_timestamp = np.datetime64(timestamp)
+        reference_timestamp = datetime.datetime.fromisoformat(timestamp)
+        # Verify types again
+        # Compute sum of costs for timestamps before the reference
+        lambda_cost = time_cost_df.loc[time_cost_df['Timestamp'] < reference_timestamp, 'Cost'].sum()
+        cache_cost = lambda_cost + proxy_cost
 
-    compute_cost_per_second = instance_prices[instance_type] / 3600
+    compute_cost_per_second = instance_prices['p3.8xlarge'] / 3600
     compute_cost = compute_cost_per_second * time_seconds
     total_cost = compute_cost + cache_cost + prefetch_cost
     cost_efficiency = batches_processed / total_cost
@@ -120,12 +127,19 @@ def compute_cost_efficiency(time_seconds, batches_processed, dataloader, instanc
 def get_training_summary(folder_path, dataloader, max_batches =None):
     search_pattern = os.path.join(folder_path, '**', 'metrics.csv')
     jobs_metric_list = []
-    elapsed_times = []
+    elapsed_times_and_timestamps = {}
     optimal_times = []
- 
+    lambda_cost_data = None
+
+    if dataloader == 'disdl':
+        for cost_csv in Path(folder_path).rglob('*_bill.csv'):
+            lambda_cost_data = convert_csv_to_dict(str(cost_csv))
+
     for metrics_csv in glob.iglob(search_pattern, recursive=True):
         job_metrics = {}
         csv_data = convert_csv_to_dict(metrics_csv)
+        #remove the first 20 element of each list as its warm up
+        csv_data = {k: v[:] for k, v in csv_data.items()}
         model_name = Path(metrics_csv).parts[-5]  
         job_metrics['model_name'] = model_name
         job_metrics['path'] = metrics_csv
@@ -156,8 +170,8 @@ def get_training_summary(folder_path, dataloader, max_batches =None):
         job_metrics["data_fetch_delay(%)"] = data_fetch_percent *  job_metrics["waiting_on_data_time(%)"]
         # job_metrics["throughout_over_time"] = get_throughput_over_epoch_timepoints(metrics_csv, job_metrics['total_epochs'])
         jobs_metric_list.append(job_metrics)
-        elapsed_times.extend(get_batches_processed_over_time(metrics_csv))
-        optimal_times.extend(get_optimal_batches_processed_over_time(metrics_csv))
+        elapsed_times_and_timestamps.update(get_batches_processed_over_time(csv_data))
+        optimal_times.extend(get_optimal_batches_processed_over_time(csv_data))
         # epoch_throughputs = get_epoch_throughput(metrics_csv, job_metrics['total_epochs'])
         pass
     #now get the overall summary for all jobs
@@ -175,8 +189,8 @@ def get_training_summary(folder_path, dataloader, max_batches =None):
          "data_fetch_time(s)": 0,
          "transformation_time(s)": 0,
          "cache_hits": 0,
-        "optimal_throughput(batches/s)": 0,
-            "optimal_throughput(samples/s)": 0,
+          "optimal_throughput(batches/s)": 0,
+          "optimal_throughput(samples/s)": 0,
     })
 
     aggegared_throughput_overtime = {}
@@ -233,40 +247,37 @@ def get_training_summary(folder_path, dataloader, max_batches =None):
                          'total_time(s)': vlaue['total_time(s)'] / overall_metrics['num_jobs'], 
                          'throughput(samples/s)': vlaue['total_samples']/(vlaue['total_time(s)'] / overall_metrics['num_jobs'])}
             aggegared_throughput_overtime_list.append(dict_line)
-    
-    #find the duration of the shortest job
-    # shortest_job = min(jobs_metric_list, key=lambda x: x['total_time(s)'])
-    # shortest_job_duration = shortest_job['total_time(s)']
 
-    # #now for all jobs, get all rows that are less than the shortest job duration
-    # elapsed_times = [x for x in elapsed_times if x <= shortest_job_duration]
 
-    #i want get the number of bacthes processsed by that time for each job
+    elapsed_times_and_timestamps = sorted(elapsed_times_and_timestamps.items())
+    _, timestamps = zip(*elapsed_times_and_timestamps)
 
-    elapsed_times = sorted(elapsed_times)
-    # before = len(elapsed_times)
-
-    #now trim off the first 30 seconds of the elapsed times, and count how many were removed
-    # elapsed_times = [x for x in elapsed_times if x > 30]
-    # trimmed = before - len(elapsed_times)
     trimmed =1
     batches_over_time = []
-    for idx, time in enumerate(elapsed_times):
-        cost, cost_efficiency, compute_cost, cache_cost, prefetch_cost = compute_cost_efficiency(time, idx + trimmed, dataloader)
-        batches_over_time.append({'index': idx + trimmed, 'elapsed_time': time, 'throughput': (idx + trimmed)/time,
-                                'cost': cost,
-                                'cost_efficiency': cost_efficiency})
 
+    if lambda_cost_data is not None:
+        time_cost_df = pd.DataFrame({
+        'Timestamp': lambda_cost_data['Timestamp'],
+        'Cost': lambda_cost_data['Total Cost']})
+    else:
+        time_cost_df = None
+    for idx, (elpasedtime, timestamp) in enumerate(elapsed_times_and_timestamps):
+        total_cost, cost_efficiency, compute_cost, cache_cost, prefetch_cost = compute_cost_efficiency(elpasedtime, 
+                                                                                                 idx + trimmed, 
+                                                                                                 dataloader, 
+                                                                                                 timestamp, 
+                                                                                                 time_cost_df)        
+        batches_over_time.append({'index': idx + trimmed, 
+                                  'elapsed_time': elpasedtime, 
+                                  'throughput': (idx + trimmed)/elpasedtime,
+                                  'cost': total_cost,
+                                  'compute_cost': compute_cost,
+                                  'cache_cost': cache_cost,
+                                  'cost_efficiency': cost_efficiency})
+    
 
-
-
-    #trime elapsed times to max_batches
-    # if max_batches is not None and  len(elapsed_times) > max_batches:
-    #     elapsed_times = elapsed_times[:max_batches]
-    # if elapsed_times is None:
-    #     elapsed_times = []
     optimal_times = sorted(optimal_times)
-    return overall_metrics,jobs_metric_list, aggegared_throughput_overtime_list,batches_over_time,optimal_times, start_time_stamp, end_time_stamp
+    return overall_metrics,jobs_metric_list,batches_over_time, lambda_cost_data
 
 def get_avergae_batch_size_gb(workload):
     if 'cifar10' in workload:
@@ -320,33 +331,6 @@ def compute_serverless_redis_costs(total_durtion_seconds, cache_size_gb, through
     exp_cost = total_monhtly_cost/seconds_in_a_month * total_durtion_seconds
     return exp_cost
 
-def write_costs_over_time_to_file(filename, costs):
-     with open(filename, "w", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow(["Index", "Elapsed Time"])  # Write header
-        for index, num in enumerate(elapsed_times):
-            writer.writerow([index + 1, f"{num:.6f}"])  # Write each row with consistent decimal places
-
-
-
-def write_batches_over_time_to_file(filename, elapsed_times):
-    with open(filename, "w", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow(["Index", "Elapsed Time", "Throughput"])  # Write header
-        for index, num in enumerate(elapsed_times):
-            writer.writerow([index + 1, f"{num:.6f}", (index + 1)/num])  # Write each row with consistent decimal places
-
-def compute_costs_over_time(elapsed_times, total_cache_cost, total_prefetch_cost):
-    costs = []
-    cache_cost = total_cache_cost/len(elapsed_times) #spread cost oveer all the time
-    prefetch_cost = total_prefetch_cost/len(elapsed_times) #spread cost oveer all the time
-    for idx, time in enumerate(elapsed_times):
-        ec2_cost = compute_ec2_costs('p3.8xlarge', time)
-        total_cost = ec2_cost + cache_cost + prefetch_cost
-        costs.append({'time': time, 'ec2_cost': ec2_cost, 'cache_cost': cache_cost, 'prefetch_cost': prefetch_cost, 'total_cost': total_cost})
-    return costs
-
-
 
 if __name__ == "__main__":
  
@@ -371,35 +355,22 @@ if __name__ == "__main__":
             exp_summary['dataloader'] = dataloader
             exp_summary['dataset'] = dataset
             exp_summary['path'] = exp_folder
+            
             if 'hpo' in str(folder_path):
                 #get the first fodler name under  exp_summary['path'] and use it as the model name
                 model_name = get_subfolder_names(exp_folder, include_children=False)[0]
                 exp_summary['model_name'] = model_name
 
-            summary, job_metrics, aggegared_throughput_overtime_list, elapsed_times,optimal_times, start_timestamp, end_timestamp = get_training_summary(exp_folder, dataloader)
-            
-            total_cost, cost_efficiency, compute_cost, cache_cost, prefetch_cost = compute_cost_efficiency(
-                time_seconds=summary['total_time(s)'],
-                batches_processed=summary['total_batches'],
-                dataloader=dataloader
-                # dataset_name=dataset,
-                # max_cached_batches=summary['max_cached_batches'],
-                # batches_per_second=summary['throughput(batches/s)'],
-                # exp_folder_path=exp_folder,
-                # start_timestamp=start_timestamp,
-                # end_timestamp=end_timestamp
-        )
-            
-            exp_summary['total_cost'] = total_cost
-            exp_summary['efficiency(batches/$)'] = cost_efficiency
-            exp_summary['ec2_cost'] = compute_cost
-            exp_summary['cache_cost'] = cache_cost
-            exp_summary['prefetch_cost'] = prefetch_cost
-    
-            save_dict_list_to_csv(job_metrics, os.path.join(exp_folder, f'{exp_name}_{dataset}_{dataloader}_summary.csv'))
-            save_dict_list_to_csv(elapsed_times, os.path.join(exp_folder, f'{exp_name}_{dataset}_{dataloader}_over_time.csv'))
+            overall_metrics,jobs_metric_list, batches_over_time, lambda_cost_data = get_training_summary(exp_folder, dataloader)
+            exp_summary['lamda_requests'] = 0 if lambda_cost_data is None else len(lambda_cost_data['Total Cost'])
+            exp_summary['ec2_cost'] =  compute_ec2_costs('p3.8xlarge', overall_metrics['total_time(s)'])
+            exp_summary['lambda_cost'] = 0 if lambda_cost_data is None else sum(lambda_cost_data['Total Cost'])
+            exp_summary['total_cost'] =  exp_summary['lambda_cost']+ exp_summary['ec2_cost']
+            exp_summary['cost_efficiency'] = overall_metrics['total_batches'] / exp_summary['total_cost']
+            save_dict_list_to_csv(jobs_metric_list, os.path.join(exp_folder, f'{exp_name}_{dataset}_{dataloader}_summary.csv'))
+            save_dict_list_to_csv(batches_over_time, os.path.join(exp_folder, f'{exp_name}_{dataset}_{dataloader}_over_time.csv'))
 
-            exp_summary.update(summary)
+            exp_summary.update(overall_metrics)
             # save_dict_list_to_csv([exp_summary], os.path.join(exp_folder, f'{exp_name}_summary.csv'))
             overall_summary.append(exp_summary)
 

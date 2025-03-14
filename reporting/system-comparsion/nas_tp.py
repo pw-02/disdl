@@ -55,7 +55,7 @@ for workload_name, workload_data in workload.items():
     time_steps = list(set(time_steps))
 
     #trim off the first 100 time steps
-    # time_steps = time_steps[100:]
+    time_steps = time_steps[100:]
 
     #now get the throughput for each time step
     disdl_throughput = []

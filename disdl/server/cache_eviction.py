@@ -52,6 +52,7 @@ class CacheEvictionService:
                         
                         if batch.time_since_last_access() > self.keep_alive_time_threshold:
                             try:
+                                logger.info(f"Keeping batch '{batch.batch_id}' alive")
                                 if self.simulate_keep_alvive:
                                         batch.set_cache_status(is_cached=True)
                                         batch.set_last_accessed_time()

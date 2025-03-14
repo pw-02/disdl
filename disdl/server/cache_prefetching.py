@@ -231,7 +231,7 @@ class PrefetchServiceEvent:
                 batch.set_cache_status(CacheStatus.CACHED)
                 batch.set_last_accessed_time()
                 batch.prefetched_time_utc = datetime.now(timezone.utc)
-                logger.debug(f"Batch {batch.batch_id} successfully prefetched. Execution time: {response.get('execution_time', 0):.2f}s. Queue size: {self.queue.qsize()}")
+                # logger.debug(f"Batch {batch.batch_id} successfully prefetched. Execution time: {response.get('execution_time', 0):.2f}s. Queue size: {self.queue.qsize()}")
             else:
                 logger.error(f"Batch {batch.batch_id} prefetch failed: {response.get('message', 'Unknown error')}. Execution time: {response.get('execution_time', 0):.2f}s. Queue size: {self.queue.qsize()}")
 

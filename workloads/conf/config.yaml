@@ -2,7 +2,7 @@
 defaults:
   - _self_
   - dataloader: disdl #disdl, tensorsocket,
-  - workload: albef_retrieval  #albef_retrieval, coco_nas, openimages_nas, imagenet_resnet18
+  - workload: imagenet_resnet18  #albef_retrieval, coco_nas, openimages_nas, imagenet_resnet18
  
   - override hydra/job_logging: disabled
   - override hydra/hydra_logging: disabled  

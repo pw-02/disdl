@@ -105,7 +105,7 @@ def compute_cost_efficiency(time_seconds, batches_processed, dataloader, timesta
     instance_prices = {'p3.8xlarge':  12.24, 'c5n.xlarge': 0.4} #per hour
     cache_cost = 0
     prefetch_cost = 0
-    if dataloader == 'disdl':
+    if dataloader == 'disdl' and time_cost_df is not None:
         proxy_cost_per_second = instance_prices['c5n.xlarge'] / 3600
         proxy_cost = proxy_cost_per_second * time_seconds
         # Convert reference timestamp to datetime
@@ -140,7 +140,9 @@ def get_training_summary(folder_path, dataloader, max_batches =None):
         csv_data = convert_csv_to_dict(metrics_csv)
         #remove the first 20 element of each list as its warm up
         csv_data = {k: v[:] for k, v in csv_data.items()}
-        model_name = Path(metrics_csv).parts[-5]  
+        dataloader_name = Path(metrics_csv).parts[-5]
+        model_name = Path(metrics_csv).parts[-2]
+        job_metrics['dataloader_name'] = dataloader_name
         job_metrics['model_name'] = model_name
         job_metrics['path'] = metrics_csv
         job_metrics['start_time'] = csv_data['Timestamp (UTC)'][0]
@@ -313,6 +315,42 @@ def calculaute_costs(
     return total_cost, ec2_cost, cache_cost, prefetch_cost
 
 
+def get_dataset_size(dataset):
+    if 'imagenet' in dataset:
+        return 1.3e6
+ 
+def gen_job_level_repot(jobs_metric_list, exp_folder_path):
+
+    final_data = []
+    for job_metrics in jobs_metric_list:
+        model_name = job_metrics['model_name']
+        dataloader_name = job_metrics['dataloader_name']
+        samples_per_sec = job_metrics['throughput(samples/s)']
+        sample_size_per_epoch = get_dataset_size(job_metrics['path'])
+        epoch_time_seconds = (sample_size_per_epoch / samples_per_sec)
+        compute_cost = compute_ec2_costs('p3.8xlarge', epoch_time_seconds)
+        compute_cost_efficiency = job_metrics['total_batches'] / compute_cost
+        report_line = {
+            'model_name': model_name,
+            'dataloader_name': dataloader_name,
+            'samples_per_sec': samples_per_sec,
+            'sample_size_per_epoch': sample_size_per_epoch,
+            'epoch_time_seconds': epoch_time_seconds,
+            'compute_cost': compute_cost,
+
+        }
+        final_data.append(report_line)
+    
+
+       
+    report_name = "job_level_report.csv"
+    report_path = os.path.join(exp_folder_path, report_name)
+    save_dict_list_to_csv(final_data, report_path)
+
+
+
+
+
 def compute_serverless_redis_costs(total_durtion_seconds, cache_size_gb, throughput_per_s, avg_size_per_request_kb):
     # Duration is in seconds
     # Memory size is in GB
@@ -336,14 +374,15 @@ if __name__ == "__main__":
  
     paths = [
         Path(r"C:\Users\pw\Desktop\disdl(600)\imagenet_nas"),
-        Path(r"C:\Users\pw\Desktop\disdl(600)\coco_nas"),
-        Path(r"C:\Users\pw\Desktop\disdl(600)\openimages_nas"), 
+        # Path(r"C:\Users\pw\Desktop\disdl(600)\coco_nas"),
+        # Path(r"C:\Users\pw\Desktop\disdl(600)\openimages_nas"), 
         ]
     
     for folder_path in paths:
         experiment_folders = [str(folder) for folder in folder_path.rglob("2025*") if folder.is_dir()]
         workload_kind = os.path.basename(os.path.normpath(folder_path))
         overall_summary = []
+        job_summary = []
         throuhgput_over_time_summary = []
         for exp_folder in experiment_folders:
             exp_name = os.path.basename(os.path.normpath(exp_folder))
@@ -367,11 +406,14 @@ if __name__ == "__main__":
             exp_summary['lambda_cost'] = 0 if lambda_cost_data is None else sum(lambda_cost_data['Total Cost'])
             exp_summary['total_cost'] =  exp_summary['lambda_cost']+ exp_summary['ec2_cost']
             exp_summary['cost_efficiency'] = overall_metrics['total_batches'] / exp_summary['total_cost']
+            job_summary.extend(jobs_metric_list)
             save_dict_list_to_csv(jobs_metric_list, os.path.join(exp_folder, f'{exp_name}_{dataset}_{dataloader}_summary.csv'))
             save_dict_list_to_csv(batches_over_time, os.path.join(exp_folder, f'{exp_name}_{dataset}_{dataloader}_over_time.csv'))
 
             exp_summary.update(overall_metrics)
             # save_dict_list_to_csv([exp_summary], os.path.join(exp_folder, f'{exp_name}_summary.csv'))
             overall_summary.append(exp_summary)
+        
+        gen_job_level_repot(job_summary, folder_path)
 
         save_dict_list_to_csv(overall_summary, os.path.join(folder_path, f'overall_summary_{workload_kind}.csv'))

@@ -111,6 +111,10 @@ def simulate_jobs_with_buffer(job_speeds, buffer_size, simulation_time=3600):
 
         # Process batch completion
         job_progress[job_id] += 1
+
+        if job_progress[job_id] in last_invocation_time:
+             last_invocation_time[job_progress[job_id]] = time_elapsed
+
         lambda_get_request_count += 1
         # Schedule the next batch completion if still within time limit
         next_event_time = time_elapsed + (job_speeds[job_id])
@@ -132,7 +136,7 @@ def simulate_jobs_with_buffer(job_speeds, buffer_size, simulation_time=3600):
 
 
 
-
+# 
 
 def run_simulation_case(case_name, 
                         job_speeds, 
@@ -188,6 +192,7 @@ def run_simulation_case(case_name,
 
 
 if __name__ == "__main__":
+
 
     '''This script simulates the execution of multiple jobs with different speeds and buffer sizes.
     It serves as motivation for my work as it shows how caching bacthes can be used to imporve throughput, yet it comes with a cost. 

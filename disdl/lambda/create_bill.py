@@ -117,20 +117,6 @@ def parse_cloudwatch_logs(data_folder = 'data', prefix = 'disdl', skip_unzip = F
                         "log_type": log_type,
                         **report_details,
                     })
-        # # Convert to DataFrame
-        # df = pd.DataFrame(log_entries)
-
-        # # Convert timestamps to datetime
-        # df["timestamp"] = pd.to_datetime(df["timestamp"])
-
-        # # Sort by Lambda name and timestamp to ensure correct order
-        # df = df.sort_values(by=["name", "timestamp"])
-
-        # # Compute elapsed time in milliseconds
-        # df["elapsed_time_ms"] = df.groupby("name")["timestamp"].diff().dt.total_seconds() * 1000
-
-        # # Fill NaN values (first entry per Lambda) with 0
-        # df["elapsed_time_ms"].fillna(0, inplace=True)   
        
         # Write parsed data to CSV
         with open(output_file, 'w', newline='') as csv_file:
@@ -140,22 +126,8 @@ def parse_cloudwatch_logs(data_folder = 'data', prefix = 'disdl', skip_unzip = F
             writer.writeheader()
             writer.writerows(log_entries)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 if __name__ == '__main__':
 
-    export_prefix = 'disdl'
+    export_prefix = 'disdlin'
     destination_folder = 'data'
     parse_cloudwatch_logs(destination_folder,export_prefix, False)

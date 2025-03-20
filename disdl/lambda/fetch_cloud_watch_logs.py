@@ -5,7 +5,6 @@ import argparse
 from datetime import datetime
 from datetime import datetime, timezone
 import concurrent.futures
-from create_bill import prarse_exported_logs
 
 def export_logs_to_s3(log_group, s3_bucket_name, s3_prefix, from_time, to_time):
 
@@ -106,15 +105,16 @@ def get_cloud_watch_logs_for_experiment(download_dir, s3_bucket_name, from_time,
     os.makedirs(download_dir, exist_ok=True)
     log_groups = get_all_log_groups()
     lambda_functions = list_lambda_functions()
+    
     # log_groups.append({'logGroupName': '/aws/lambda/lambda_function'})
     with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
         # Export logs in parallel
-        # futures = []
+        futures = []
         # for log_group_name in log_groups:
         #     if log_group_name not in lambda_functions:
         #         continue
 
-        #     s3_prefix = f'disdl/{log_group_name.replace("/", "_")}'
+        #     s3_prefix = f'disdlin/{log_group_name.replace("/", "_")}'
         #     futures.append(executor.submit(export_logs_to_s3, 
         #                                    log_group_name, 
         #                                    s3_bucket_name, 
@@ -133,8 +133,8 @@ def get_cloud_watch_logs_for_experiment(download_dir, s3_bucket_name, from_time,
         for log_group_name in log_groups:
             if log_group_name not in lambda_functions:
                 continue
-            s3_prefix = f'disdl/{log_group_name.replace("/", "_")}'
-            executor.submit(download_logs_from_s3, s3_bucket_name, s3_prefix, download_dir)
+            s3_prefix = f'disdlin/{log_group_name.replace("/", "_")}'
+            executor.submit(download_logs_from_s3, s3_bucket_name, s3_prefix, download_dir )
             
         # Wait for all download tasks to complete
         # (You may need to use additional synchronization here depending on your needs)

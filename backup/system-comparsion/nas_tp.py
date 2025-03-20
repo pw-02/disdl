@@ -30,15 +30,34 @@ tensorsocket_label = "TensorSocket"
 disdl_label = "DisDL"
 line_width = 2
 font_size = 14
-
 visual_map_plot = {
     disdl_label: {'color': '#007777', 'linestyle': '-', 'linewidth': line_width},
     tensorsocket_label: {'color': 'red', 'linestyle': '-', 'linewidth': line_width}}
 
 workload = {
-    "imagenet": {"C:\\Users\\pw\Desktop\\disdl(600)\\imagenet_nas\\overall_summary_imagenet_nas.csv"},
-    "openimages": {"C:\\Users\\pw\Desktop\\disdl(600)\\openimages_nas\\overall_summary_openimages_nas.csv"},
-    "coco": {"C:\\Users\\pw\Desktop\\disdl(600)\\coco_nas\\overall_summary_coco_nas.csv"}
+    "imagenet": {
+        "over_time_data": {
+            disdl_label: r"C:\Users\pw\Desktop\disdl(600)\imagenet_nas\disdl\2025-03-13_20-34-34\2025-03-13_20-34-34_imagenet_nas_disdl_over_time.csv",
+            tensorsocket_label: r"C:\Users\pw\Desktop\disdl(600)\imagenet_nas\tensorsocket\2025-03-13_19-41-51\2025-03-13_19-41-51_imagenet_nas_tensorsocket_over_time.csv"},
+        "resource_usage": {
+            disdl_label: r"C:\Users\pw\Desktop\disdl(600)\imagenet_nas\disdl\2025-03-13_20-34-34\resource_usage_metrics.json" ,
+            tensorsocket_label: r"C:\Users\pw\Desktop\disdl(600)\imagenet_nas\tensorsocket\2025-03-13_19-41-51\resource_usage_metrics.json"}
+
+    },"openimages": {
+        "over_time_data": {
+            disdl_label: r"C:\Users\pw\Desktop\disdl(600)\openimages_nas\disdl\2025-03-13_20-48-17\2025-03-13_20-48-17_openimages_nas_disdl_over_time.csv",
+            tensorsocket_label: r"C:\Users\pw\Desktop\disdl(600)\openimages_nas\tensorsocket\2025-03-13_19-55-06\2025-03-13_19-55-06_openimages_nas_tensorsocket_over_time.csv"},
+        "resource_usage": {
+            disdl_label: r"C:\Users\pw\Desktop\disdl(600)\openimages_nas\disdl\2025-03-13_20-48-17\resource_usage_metrics.json" ,
+            tensorsocket_label: r"C:\Users\pw\Desktop\disdl(600)\openimages_nas\tensorsocket\2025-03-13_19-55-06\resource_usage_metrics.json"},
+    },"coco": {
+        "over_time_data": {
+            disdl_label: r"C:\Users\pw\Desktop\disdl(600)\coco_nas\disdl\2025-03-13_21-10-51\2025-03-13_21-10-51_coco_nas_disdl_over_time.csv",
+            tensorsocket_label: r"C:\Users\pw\Desktop\disdl(600)\coco_nas\tensorsocket\2025-03-13_20-08-04\2025-03-13_20-08-04_coco_nas_tensorsocket_over_time.csv"},
+        "resource_usage": {
+            disdl_label: r"C:\Users\pw\Desktop\disdl(600)\coco_nas\disdl\2025-03-13_21-10-51\resource_usage_metrics.json" ,
+            tensorsocket_label: r"C:\Users\pw\Desktop\disdl(600)\coco_nas\tensorsocket\2025-03-13_20-08-04\resource_usage_metrics.json"},
+            }
     }
 
 

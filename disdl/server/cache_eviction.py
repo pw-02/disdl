@@ -35,9 +35,9 @@ class CacheEvictionService:
     def _keep_alive_process(self):
         while not self.cache_eviction_stop_event.is_set():  # Check for stop signal
             try:
-                cache_host, cache_port = self.cache_address.split(":")
 
                 if self.redis_client is None and not self.simulate_keep_alvive:
+                    cache_host, cache_port = self.cache_address.split(":")
                     self.redis_client = redis.StrictRedis(host=cache_host, port=cache_port)
 
                 #Take a snapshot
@@ -49,7 +49,7 @@ class CacheEvictionService:
                         continue
                     # job_batches_snapshot = list(job.future_batches.values())
                     for batch in job.future_batches.values():
-                        
+                        print(f"Checking batch {batch.batch_id}. {batch.time_since_last_access()} > {self.keep_alive_time_threshold}")
                         if batch.time_since_last_access() > self.keep_alive_time_threshold:
                             try:
                                 logger.info(f"Keeping batch '{batch.batch_id}' alive")

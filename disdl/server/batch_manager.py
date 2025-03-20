@@ -59,8 +59,7 @@ class CentralBatchManager:
                 cache_address=args.serverless_cache_address,
                 jobs=self.active_jobs,
                 keep_alive_time_threshold=args.cache_keep_alive_timeout,
-                simulate_keep_alvive= True if self.evict_from_cache_simulation_time is not None else False
-                # simulate_time=args.evict_from_cache_simulation_time
+                simulate_keep_alvive=True
             )     
 
         self.lock = threading.Lock()  # Lock for thread safety
@@ -176,7 +175,7 @@ class CentralBatchManager:
             if self.prefetch_service is not None and self.prefetch_service.prefetch_stop_event.is_set():  
                 self.prefetch_service.start()#prefetcher is stopped, start it
             
-            if self.eviction_service and self.eviction_service.cache_eviction_stop_event.is_set():
+            if self.eviction_service is not None and self.eviction_service.cache_eviction_stop_event.is_set():
                 self.eviction_service.start_cache_evictor() #cache evictor is stopped, start it
 
             #if this is a new job, lets add it to the active jobs
@@ -279,8 +278,8 @@ if __name__ == "__main__":
     # Constants    
     PREFETCH_TIME = 0.1
 
-    CACHE_MISS_DELAY = 10.1
-    CACHE_HIT_DELAY = 10.1
+    CACHE_MISS_DELAY = 0.1
+    CACHE_HIT_DELAY = 0.1
     DELAY_BETWEEN_JOBS = 1  # Delay in seconds between the start of each job
     BATCHES_PER_JOB = 20  # Number of batches each job will process
     JOB_SPEEDS = [0.1]
@@ -295,10 +294,10 @@ if __name__ == "__main__":
         workload='speech',
         serverless_cache_address=None,
         use_prefetching=False,
-        use_keep_alive=False,
+        use_keep_alive=True,
         prefetch_lambda_name='CreateVisionTrainingBatch',
         prefetch_cost_cap_per_hour=None,
-        cache_keep_alive_timeout=60 * 3,  # 3 minutes
+        cache_keep_alive_timeout=60,  # 3 minutes
         prefetch_simulation_time=PREFETCH_TIME,
         evict_from_cache_simulation_time=None
     )
@@ -336,6 +335,7 @@ if __name__ == "__main__":
 
 
     if __name__ == "__main__":
+        from dataset import ImageNetDataset
         run_job(1,1)
 
     
@@ -343,8 +343,8 @@ if __name__ == "__main__":
 #     # Constants    
 #     PREFETCH_TIME = 0.1
 
-#     CACHE_MISS_DELAY = 10.1
-#     CACHE_HIT_DELAY = 10.1
+#     CACHE_MISS_DELAY = 0.1
+#     CACHE_HIT_DELAY = 0.1
 #     DELAY_BETWEEN_JOBS = 1  # Delay in seconds between the start of each job
 #     BATCHES_PER_JOB = 20  # Number of batches each job will process
 #     JOB_SPEEDS = [0.1]
@@ -358,17 +358,17 @@ if __name__ == "__main__":
 #         drop_last=False,
 #         workload_kind='vision',
 #         serverless_cache_address=None,
-#         use_prefetching=True,
-#         use_keep_alive=False,
+#         use_prefetching=False,
+#         use_keep_alive=True,
 #         prefetch_lambda_name='CreateVisionTrainingBatch',
 #         prefetch_cost_cap_per_hour=None,
-#         cache_keep_alive_timeout=60 * 3,  # 3 minutes
+#         cache_keep_alive_timeout=60,  # 3 minutes
 #         prefetch_simulation_time=PREFETCH_TIME,
-#         evict_from_cache_simulation_time=None
+#         evict_from_cache_simulation_time=60
 #     )
 
-#     dataset = Dataset(dataset_location='s3://sdl-cifar10/test/')
-#     batch_manager = CentralBatchManager(dataset=dataset, args=args, prefetch_workers=10)
+#     dataset = ImageNetDataset(dataset_location='s3://imagenet-dataset/train/')
+#     batch_manager = CentralBatchManager(dataset=dataset, args=args, prefetch_workers=0)
 
 #     def run_job(job_id, job_speed):
 #         """Function to simulate a job processing batches."""

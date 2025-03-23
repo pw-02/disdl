@@ -109,7 +109,13 @@ for workload_name, workload_data in workload.items():
     disdl_epoch_cost = [hourly_cost * _ for _ in disdl_times_to_complete_one_epoch]
     tensorsocket_epoch_cost = [hourly_cost * _ for _ in tensorsocket_times_to_complete_one_epoch]
     # Bars for DISDL and TensorSocket
-  
+
+    #print the aggregated cost for each system
+    print(f"Aggregated cost for {workload_name} workload")
+    print(f"DisDL: {sum(disdl_epoch_cost)}")
+    print(f"TensorSocket: {sum(tensorsocket_epoch_cost)}")
+    print(f"Cost difference:{abs(sum(disdl_epoch_cost) - sum(tensorsocket_epoch_cost))}")
+
     # Bars for DISDL and TensorSocket
     x = np.arange(len(model_names))  # X-axis positions for models
     ax2.bar(x + bar_width/2, disdl_epoch_cost, bar_width, label=disdl_label,

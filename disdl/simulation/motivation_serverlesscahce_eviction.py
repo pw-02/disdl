@@ -3,7 +3,7 @@ import logging
 import numpy as np
 # Set up logging
 format = "%(asctime)s: %(message)s"
-logging.basicConfig(format=format, level=logging.DEBUG, datefmt="%H:%M:%S")
+logging.basicConfig(format=format, level=logging.INFO, datefmt="%H:%M:%S")
 logger = logging.getLogger(__name__)
 
 class TTLCache:
@@ -18,7 +18,7 @@ class TTLCache:
         self.num_jobs = num_jobs
         self.usage_counter = {}
         self.cache_requests = {} #request type, counter
-        self.cache_size_log = []
+        self.cache_size_log = {}
 
     def calculate_hit_ratio(self):
         total_accesses = self.cache_hits + self.cache_misses
@@ -26,7 +26,7 @@ class TTLCache:
 
     
     def check_cache(self, batch_id, current_time):
-        self.cache_size_log.append((current_time, len(self.cache)))  # Track cache size over time
+        self.cache_size_log[current_time] = len(self.cache)  # Track cache size over time
         self.cache_requests["get/put"] = self.cache_requests.get("get/put", 0) + 1
         self._evict_expired(current_time)
         if batch_id in self.cache:
@@ -102,6 +102,7 @@ class Job:
    
         if self.current_batch > self.total_batches:
             self.job_complete = True
+            logger.info(f"Time {current_time}s: Job {self.job_id} completed processing all batches.")
             return  # Stop processing if all batches are done
         if self.cache.check_cache(self.current_batch, current_time):
             logger.debug(f"Time {current_time}s: Job {self.job_id} processed batch {self.current_batch} from cache. Hits = {self.cache.cache_hits}, Misses = {self.cache.cache_misses}")
@@ -154,8 +155,17 @@ def run_sim(num_batches, max_cache_size, ttl_seconds, job_speeds, keep_alive_int
     
     logger.info(f"Duration of simulation: {current_time:.2f}s")
     if cache.cache_size_log:
-        max_cache_size = max(cache.cache_size_log, key=lambda x: x[1])
-        logger.info(f"Max cache size reached: {max_cache_size[1]} at time {max_cache_size[0]:.2f}s")
+        max_cache_size = max(cache.cache_size_log.values())
+        mean_cache_size = np.mean(list(cache.cache_size_log.values()))
+        logger.info(f"Mean cache size: {mean_cache_size:.2f}, Max cache size: {max_cache_size}")
+        logger.info(f"Max cache size reached: {max_cache_size}")
+        #plot cache size over time
+        import matplotlib.pyplot as plt
+        plt.plot(list(cache.cache_size_log.keys()), list(cache.cache_size_log.values()))
+        plt.xlabel("Time (s)")
+        plt.ylabel("Cache Size")
+        plt.title("Cache Size Over Time")
+        plt.show()
     else:
         logger.info(f"No batches were stored in the cache.")
     logger.info(f"Cache Hits: {cache.cache_hits}, Cache Misses: {cache.cache_misses},  Cache hit ratio: {cache.calculate_hit_ratio() * 100:.2f}%")
@@ -170,9 +180,9 @@ def run_sim(num_batches, max_cache_size, ttl_seconds, job_speeds, keep_alive_int
 
 
 # Run the simulation
-num_batches = 9000 * 60
+num_batches = 9000 * 30
 max_cache_size = np.inf
 job_speeds = [1, 1.03]
-ttl_seconds = 120
+ttl_seconds = np.inf
 keep_alive_interval = np.inf  # Keep-alive runs every 30 seconds
 run_sim(num_batches, max_cache_size, ttl_seconds, job_speeds, keep_alive_interval)

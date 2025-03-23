@@ -137,17 +137,31 @@ class CentralBatchManager:
             #check if there are more than two batch sets in the partition_batches
             if len(partition_batches) >= 2:
                 #check if any job is processing the oldest batch set
-                oldest_batch_set_id = list(partition_batches.keys())[0]
-                not_in_use = True
-                for job in self.active_jobs.values():
-                    if oldest_batch_set_id == job.active_bacth_set_id:
-                        not_in_use = False
-                        break
-                if not_in_use:
-                    #remove the entire batch set from the partition_batches
-                    partition_batches.pop(oldest_batch_set_id)
+                #get all the batch sets in the partition_batches except the last one
+
+                candidate_batch_sets = list(partition_batches.keys())[:-1]
+                for bacth_set_id in candidate_batch_sets:
+                    not_in_use = True
+                    for job in self.active_jobs.values():
+                        if bacth_set_id == job.active_bacth_set_id:
+                            not_in_use = False
+                            break
+                    if not_in_use:
+                        #remove the entire batch set from the partition_batches
+                        partition_batches.pop(bacth_set_id)
+                
+            
     
     def total_active_batches(self):
+
+        count = 0
+        for epoch in self.epoch_partition_batches.values():
+            for partition_batches in epoch.values():
+                count += len(partition_batches.batches)
+        return count
+
+    
+    def total_active_partitions(self):
         return sum(len(partition_batches) for partition_batches in self.epoch_partition_batches.values())
     
 

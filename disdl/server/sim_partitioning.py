@@ -1,7 +1,7 @@
 
 from batch_manager import CentralBatchManager
 from args import DisDLArgs
-from dataset import Dataset
+from dataset import ImageNetDataset
 from batch import Batch
 import time
 import heapq
@@ -78,7 +78,7 @@ args:DisDLArgs = DisDLArgs(
             lookahead_steps = 10,
             shuffle = False,
             drop_last = False,
-            workload_kind = 'vision',
+            workload = 'vision',
             serverless_cache_address = None,
             use_prefetching = False,
             use_keep_alive = False,
@@ -88,7 +88,7 @@ args:DisDLArgs = DisDLArgs(
             prefetch_simulation_time = None,
             evict_from_cache_simulation_time = None)
 
-dataset = Dataset(data_dir='s3://sdl-cifar10/test/')
+dataset = ImageNetDataset(dataset_location='s3://imagenet1k-sdl/train/')
 batch_manager = CentralBatchManager(dataset=dataset, args=args)
 
 simulator = NextEventSimulator(batch_manager, job_speeds)

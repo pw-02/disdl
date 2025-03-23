@@ -31,9 +31,12 @@ disdl_label = "DisDL"
 line_width = 2
 font_size = 14
 
+
 visual_map_plot = {
-    disdl_label: {'color': '#007777', 'linestyle': '-', 'linewidth': line_width},
-    tensorsocket_label: {'color': 'red', 'linestyle': '-', 'linewidth': line_width}}
+    tensorsocket_label: {'color': '#FDA300', 'linestyle': '-', 'linewidth': line_width, 'edgecolor': 'black', 'hatch': '...','alpha': 1.0}, #indianred
+    disdl_label: {'color': 'black', 'linestyle': '-', 'linewidth': line_width,'edgecolor': 'black', 'hatch':'', 'alpha': 1.0}, #steelblue
+}
+
 
 workload = {
     "imagenet": {"C:\\Users\\pw\Desktop\\disdl(600)\\imagenet_nas\\overall_summary_imagenet_nas.csv"},

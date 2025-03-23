@@ -3,7 +3,7 @@ import time
 import io
 
 
-host = '54.200.19.61'
+host = '35.166.232.0'
 port = 6378
 
 #add some data to redis and then check if it is there every 30 seconds and print it out. When it is not there, print out that it is not there
@@ -12,28 +12,30 @@ port = 6378
 # keys = list(range(170))
 
 def put(keys):
-    r = redis.StrictRedis(host=host, port=port) 
+    r = redis.StrictRedis(host=host, port=port)
+    toal_mb = 0
     for _ in keys:
         try:
             memory_file = io.BytesIO(b"\0" * (8 * 1024 * 1024))  # 8mb
-            r.set(f'{_}file', memory_file.getvalue())
-            print(r.get(f'{_}file'))
-         
+            toal_mb += 8
+            r.set(f'{_}', memory_file.getvalue())
+            print(f"Put: {_}, Total MB: {toal_mb}")
+            time.sleep(5)
         except Exception as e:
             print(f"Error: {e}")
-            time.sleep(15)
+            time.sleep(5)
 def get(keys):
     r = redis.StrictRedis(host=host, port=port) 
     started = time.perf_counter()
-    sleep_time = 30
+    sleep_time = 1
     while True:
         for key in keys:
             try:
-                response = r.get(f'{key}file')
+                response = r.get(f'{key}')
                 if response == None:
                     break
                 else:
-                    print(f"Response: {response}. Total time: {time.perf_counter() - started}")
+                    print(f"Response: {key}. Total time: {time.perf_counter() - started}")
                 time.sleep(sleep_time)
                 sleep_time += 30
             except Exception as e:

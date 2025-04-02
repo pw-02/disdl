@@ -156,6 +156,10 @@ class DisDLIterableDataset(torch.utils.data.IterableDataset):
         with BytesIO(data) as buffer:
             batch_data, batch_labels = torch.load(buffer)
         return batch_data, batch_labels
+    
+
+    # def report_job_progress(self, progress):
+    #     self.client.reportJobProgress(progress)
 
 # class DisDLLibrSpeechIterableDataset(DisDLIterableDataset):
 #     def __init__(self, 

@@ -260,6 +260,20 @@ def train_loop(fabric:Fabric,
 
             elapsed_time = time.perf_counter() - train_start_time
 
+            # if isinstance(train_dataloader.dataset, DisDLImageNetIterableDataset):
+            #     train_dataloader.dataset.report_job_progress(
+            #         job_id=job_id,
+            #         batch_id=batch_id,
+            #         epoch=current_epoch,
+            #         batch_size=batch[0].size(0),
+            #         elapsed_time=elapsed_time,
+            #         gpu_processing_time=gpu_processing_time,
+            #         data_load_time=data_load_time,
+            #         transformation_time=transformation_time,
+            #         cache_hit_bacth=cache_hit_bacth,
+            #         cache_hit_samples=cache_hit_samples
+            #     )
+
             metrics= OrderedDict({
                             "Batch Id": batch_id,
                             "Elapsed Time (s)":elapsed_time,

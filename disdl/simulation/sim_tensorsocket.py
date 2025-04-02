@@ -42,7 +42,7 @@ class TensorSoketCache:
             cache_hit = True
             self.cache[requested_batch] += 1
             access_count = self.cache[requested_batch]
-            if access_count + 1 >= self.total_jobs:
+            if access_count >= self.total_jobs:
                 del self.cache[requested_batch]
         return cache_hit
 
@@ -118,7 +118,7 @@ class Consumer:
         return self.next_available_time < other.next_available_time  
     
     def process_next_batch(self):
-        if not self.batches_remaining:
+        if not self.batches_remaining or len(self.batches_remaining) == 0:
             return False  # No more batches to process, prevent popping an empty list
         #peek at the next batch
         next_batch = self.batches_remaining[0]
@@ -134,8 +134,9 @@ class Consumer:
                 self.cahe_hits.append(next_batch)
             self.next_available_time += self.time_per_batch
             next_batch = self.batches_remaining.pop(0)
+            self.batches_processed_count += 1
         
-        if self.batches_processed_count % self.total_batches_per_epoch == 0:
+        if self.batches_processed_count == self.total_batches_per_epoch:
             self.epochs_processed_count += 1
             # self.cache_size_over_time.append(self.cache.get_cache_len())
     
@@ -211,7 +212,7 @@ def run(config):
     logging.info(f"max_cache_size_gb: {cache.get_max_num_of_cache_items()}")
     logging.info(f"max_cache_size_gb: {cache.get_max_cache_size_gb()}")
 
-    final_metrics = [job.compute_final_metrics() for job in consumers]
+    final_metrics = [job.gen_perf_metrics() for job in consumers]
     save_dict_list_to_csv(final_metrics, "sim_final_metrics.csv")
     summary = {}
     summary['dataset_size(num_batches)'] = config['batches_per_epoch'] * config['total_epochs']
@@ -244,12 +245,12 @@ if __name__ == "__main__":
     np.random.seed(42)
 
     config :Dict = {
-        'batches_per_epoch': 100,
-        'total_epochs': 3,
-        'job_speeds': [1, 2, 4],
-        'producer_speed': 3,
+        'batches_per_epoch': 8564,
+        'total_epochs': 1,
+        'job_speeds': [0.523961767,0.523961767,0.523961767,0.523961767],
+        'producer_speed': 0.2,
         'consumer_buffer_size': 10,
-        'producer_time_to_load_batch:': 2
+        'producer_time_to_load_batch': 2
         }
     
     if  os.path.isfile("sim_final_metrics.csv"):

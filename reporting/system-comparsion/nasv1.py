@@ -36,11 +36,12 @@ def fill_range(int_list):
 tensorsocket_label = "TensorSocket"
 disdl_label = "DisDL"
 line_width = 2
-font_size = 14
+font_size = 16
 bar_width = 0.35
 
 visual_map_plot = {
-    tensorsocket_label: {'color': '#FDA300', 'linestyle': '-', 'linewidth': line_width, 'edgecolor': 'black', 'hatch': '...','alpha': 1.0}, #indianred
+    tensorsocket_label: {'color': '#FDA300', 'linestyle': '-', 'linewidth': line_width, 'edgecolor': 'black', 'hatch': '..','alpha': 1.0}, #indianred
+    # tensorsocket_label: {'color': '#FDA300', 'linestyle': '-', 'linewidth': line_width, 'edgecolor': 'black', 'hatch': '...','alpha': 1.0}, #indianred
     disdl_label: {'color': 'black', 'linestyle': '-', 'linewidth': line_width,'edgecolor': 'black', 'hatch':'', 'alpha': 1.0}, #steelblue
 }
 
@@ -57,13 +58,26 @@ workload = {
          "ec2_instance_cost_per_hour": 12.24,
          "summary": r"C:\Users\pw\Desktop\disdl(600)\imagenet_nas\jobsummary.csv"
     },
+       "openimages":{
+         "samples_per_epoch": 9000000,
+         "samples_per_batch": 128,
+         "ec2_instance_cost_per_hour": 12.24,
+         "summary": r"C:\Users\pw\Desktop\disdl(600)\openimages_nas\jobsummary.csv"
+    },
+       "coco":
+     {
+         "samples_per_epoch": 118287,
+         "samples_per_batch": 128,
+         "ec2_instance_cost_per_hour": 12.24,
+         "summary": r"C:\Users\pw\Desktop\disdl(600)\coco_nas\jobsummary.csv"
+    },
     # "openimages": {"C:\\Users\\pw\Desktop\\disdl(600)\\openimages_nas\\overall_summary_openimages_nas.csv"},
     # "coco": {"C:\\Users\\pw\Desktop\\disdl(600)\\coco_nas\\overall_summary_coco_nas.csv"}
     }
 
 for workload_name, workload_data in workload.items():
-    fig = plt.figure(figsize=(14, 2.4))
-    gs = gridspec.GridSpec(1, 3, width_ratios=[1, 1, 1])  # First two plots are twice as wide
+    fig = plt.figure(figsize=(17, 3))
+    gs = gridspec.GridSpec(1, 3, width_ratios=[0.9, 0.9, 1.1])  # First two plots are twice as wide
     ax1 = fig.add_subplot(gs[0, 0])  # First plot
     ax2 = fig.add_subplot(gs[0, 1])  # Second plot
     ax4 = fig.add_subplot(gs[0, 2])  # Third plot
@@ -93,9 +107,10 @@ for workload_name, workload_data in workload.items():
     # Labels and formatting
     ax1.set_xticks(x)
     ax1.set_xticklabels(model_names, rotation=0, ha="center")
-    ax1.set_ylabel("Epoch Time (min)", fontsize=font_size)
-    ax1.legend()
+    ax1.set_ylabel("Avg epoch time (min)", fontsize=font_size)
+    # ax1.legend()
     #set font size for all lables and ticks
+    ax1.tick_params(axis='both', which='major', labelsize=font_size)
     ax1.tick_params(axis='both', which='major', labelsize=font_size)
 
 
@@ -132,8 +147,10 @@ for workload_name, workload_data in workload.items():
 
     ax2.set_xticks(x)
     ax2.set_xticklabels(model_names, rotation=0, ha="center")
-    ax2.set_ylabel("Epoch Cost ($)", fontsize=font_size)
-    ax2.legend()
+    ax2.set_ylabel("Avg epoch Cost ($)", fontsize=font_size)
+    ax2.tick_params(axis='both', which='major', labelsize=font_size)
+    ax2.tick_params(axis='both', which='major', labelsize=font_size)
+    # ax2.legend()
     #set font size for all lables and ticks
 
 
@@ -178,23 +195,45 @@ for workload_name, workload_data in workload.items():
     disdl_compute_pct, disdl_io_pct, disdl_transform_pct = compute_percentage_breakdown(disdl_compute, disdl_io, disdl_transform)
     tensorsocket_compute_pct, tensorsocket_io_pct, tensorsocket_transform_pct = compute_percentage_breakdown(tensorsocket_compute, tensorsocket_io, tensorsocket_transform)
     # Bars for DISDL and TensorSocket
+    
+    visual_map_plot = {
+    tensorsocket_label: {'color': '#FDA300', 'linestyle': '-', 'linewidth': line_width, 'edgecolor': 'black', 'hatch': '..','alpha': 1.0}, #indianred
+    # tensorsocket_label: {'color': '#FDA300', 'linestyle': '-', 'linewidth': line_width, 'edgecolor': 'black', 'hatch': '...','alpha': 1.0}, #indianred
+    disdl_label: {'color': 'black', 'linestyle': '-', 'linewidth': line_width,'edgecolor': 'black', 'hatch':'', 'alpha': 1.0}, #steelblue
+    }
+
+    
     x = np.arange(len(model_names))  # X-axis positions for models
-    ax4.bar(x, disdl_compute_pct, bar_width, label="Compute", color=visual_map_plot[disdl_label]["color"], edgecolor="black", hatch='///', alpha=visual_map_plot[disdl_label]['alpha'])
-    ax4.bar(x, disdl_io_pct, bar_width, label="I/O", color=visual_map_plot[disdl_label]["color"], edgecolor="black", hatch="...", bottom=disdl_compute_pct, alpha=0.8)
-    ax4.bar(x, disdl_transform_pct, bar_width, label="Transform", color=visual_map_plot[disdl_label]["color"], edgecolor="black", hatch="---", alpha=0.6,
+  
+   
+
+    ax4.bar(x + bar_width, disdl_compute_pct, bar_width, label="GPU", color=visual_map_plot[disdl_label]["color"], edgecolor="black", hatch='', alpha=visual_map_plot[disdl_label]['alpha'])
+    ax4.bar(x + bar_width, disdl_io_pct, bar_width, label="I/O", color=visual_map_plot[disdl_label]["color"], edgecolor="black", hatch="///", bottom=disdl_compute_pct, alpha=0.4)
+    ax4.bar(x + bar_width, disdl_transform_pct, bar_width, label="Trans", color='white', edgecolor="black", hatch="---",
             bottom=disdl_compute_pct + disdl_io_pct)
-    ax4.bar(x + bar_width, tensorsocket_compute_pct, bar_width, label="Compute", color=visual_map_plot[tensorsocket_label]["color"], edgecolor="black", hatch='///', alpha=visual_map_plot[tensorsocket_label]['alpha'])
-    ax4.bar(x + bar_width, tensorsocket_io_pct, bar_width, label="I/O", color=visual_map_plot[tensorsocket_label]["color"], edgecolor="black", hatch="...", bottom=tensorsocket_compute_pct,   alpha=0.8)
-    ax4.bar(x + bar_width, tensorsocket_transform_pct, bar_width, label="Transform", color=visual_map_plot[tensorsocket_label]["color"], edgecolor="black", hatch="---", alpha=0.6,
-             bottom=tensorsocket_compute_pct + tensorsocket_io_pct)
+    ax4.bar(x, tensorsocket_compute_pct, bar_width, label="GPU", color=visual_map_plot[tensorsocket_label]["color"], edgecolor="black", hatch='', alpha=visual_map_plot[tensorsocket_label]['alpha'])
+    ax4.bar(x, tensorsocket_io_pct, bar_width, label="I/O", color=visual_map_plot[tensorsocket_label]["color"], edgecolor="black", hatch="///", bottom=tensorsocket_compute_pct,  alpha=0.6)
+    ax4.bar(x, tensorsocket_transform_pct, bar_width, label="Trans", color=visual_map_plot[tensorsocket_label]["color"], edgecolor="black", hatch="---",
+                 bottom=tensorsocket_compute_pct + tensorsocket_io_pct)
+    bars = [ax4.patches[i:i + 3] for i in range(0, len(ax4.patches), 3)]  # Group bars for each model together
+    # Manually enforce black edges (removes transparency from edges)
+    # Manually enforce black edges (removes transparency from edges)
+    for bar_group in bars:
+        for bar in bar_group:
+            if bar:  # Ensure bar object exists
+                bar.set_edgecolor("black")  # Ensure fully black edges
+                bar.set_linewidth(1.5)  # Set edge thickness
+                bar.set_zorder(3)  # Bring the edges to the front
+
+    ax4.legend(ncol=6, fontsize=9, loc="upper center")  # Moves legend above plot
     ax4.set_xticks(x + bar_width / 2)
     ax4.set_xticklabels(model_names, rotation=0, ha="center")
     ax4.set_ylabel("Time Breakdown (%)", fontsize=font_size)
-    # ax4.legend()
     #set font size for all lables and ticks
     ax4.tick_params(axis='both', which='major', labelsize=font_size)
     ax4.set_yticks(ticks=np.arange(0, 101, 20), labels=[f'{i}%' for i in np.arange(0, 101, 20)])
     # ax4.legend(loc="upper center", ncol=3, fontsize=9)  # Moves legend above plot
+    ax4.set_ylim(0, 120)
 
 
     plt.tight_layout()

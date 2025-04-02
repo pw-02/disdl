@@ -72,7 +72,9 @@ class PrefetchServiceAsync:
             try:
                 batch, payload = self.queue.get(timeout=0.25)
                 if self.simulate_time:
-                    time.sleep(0.01)  # Simulate a small delay for async processing
+                    time.sleep(self.simulate_time)  # Simulate a small delay for async processing
+                    # self.lambda_invocations_count += 1
+                    batch.set_cache_status(CacheStatus.CACHING_IN_PROGRESS)
                 else:
                     response = self.lambda_client.invoke(
                         FunctionName=self.lambda_name,

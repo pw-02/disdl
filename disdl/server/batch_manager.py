@@ -32,6 +32,7 @@ class CentralBatchManager:
         self.active_partition_idx = None
         self.evict_from_cache_simulation_time = args.evict_from_cache_simulation_time
 
+        print(f"Number of batches per partition: {self.sampler.calc_num_batchs_per_partition()}")
         # self.lookahead_distance = min((self.sampler.calc_num_batchs_per_partition() -1),args.lookahead_steps)
         self.lookahead_distance = args.lookahead_steps
 
@@ -63,7 +64,7 @@ class CentralBatchManager:
             )     
 
         self.lock = threading.Lock()  # Lock for thread safety
-
+        self.job_cache_request_counts = {}
         for _ in range(self.lookahead_distance):
             self._generate_new_batch()
 
@@ -92,7 +93,29 @@ class CentralBatchManager:
             'num_batches': self.sampler.batches_per_epoch,
             'num_partitions': self.sampler.num_partitions,
         }
+    
+    def cacl_lamda_invocation_counts(self):
+        prefetch_counts = 0
+        warm_counts = 0
+        get_set_counts = 0
+        
+        if self.prefetch_service:
+            prefetch_counts = self.prefetch_service.lambda_invocations_count
+            get_set_counts = self.prefetch_service.lambda_invocations_count
 
+        if self.eviction_service:
+            eviction_counts = self.eviction_service.lambda_invocations_count
+        
+        get_set_counts = sum(self.job_cache_request_counts.values())
+
+        total_counts = prefetch_counts + warm_counts + get_set_counts
+        return {
+            'num_prefetches': prefetch_counts,
+            'num_warmup_requests': warm_counts,
+            'num_getset_requests': get_set_counts,
+            'total': total_counts
+        }
+ 
     def _generate_new_batch(self):
         next_batch:Batch = next(self.sampler)
 
@@ -212,6 +235,7 @@ class CentralBatchManager:
                 self._generate_new_batch()
             
             next_batch.set_last_accessed_time()
+            self.job_cache_request_counts[job_id] = self.job_cache_request_counts.get(job_id, 0) + 1
 
             # logger.debug(f"Job '{job_id}' given batch '{next_batch.batch_id}'")
             # samples = self.dataset.get_samples(next_batch.indices)
@@ -226,7 +250,7 @@ class CentralBatchManager:
             #start a new epoch at the current and reset the partitions
             job.epochs_completed_count += 1
             job.partitions_remaining_in_current_epoch = list(range(self.sampler.num_partitions))
-            self._clean_up_old_batches()
+            # self._clean_up_old_batches()
 
         #get the next partition for the job by popping the first one
         job.active_partition_idx = job.partitions_remaining_in_current_epoch.pop(0)
@@ -236,7 +260,9 @@ class CentralBatchManager:
         for batch in batch_set.batches.values():
             job.future_batches[batch.batch_id] = batch
 
-        logger.info(f"Job '{job.job_id}' assigned batch set '{job.active_bacth_set_id}'")
+        # logger.info(f"Job '{job.job_id}' assigned batch set '{job.active_bacth_set_id}'")
+        logger.info(f"Job '{job.job_id}' assigned partion '{job.active_partition_idx}' epoch '{self.active_epoch_idx}'")
+                    
 
     def update_job_progess(self, 
                            job_id,

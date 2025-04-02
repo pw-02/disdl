@@ -7,7 +7,7 @@ import matplotlib.gridspec as gridspec
 tensorsocket_label = "TensorSocket"
 disdl_label = "DisDL"
 line_width = 2
-font_size = 14
+font_size = 12
 
 visual_map_plot = {
     tensorsocket_label: {'color': '#FDA300', 'linestyle': '-', 'linewidth': line_width, 'edgecolor': 'black', 'hatch': '...','alpha': 1.0}, #indianred
@@ -28,7 +28,7 @@ disdl_values = [1537.38446459459,2565.0288440519,1452.79088984116,2837.916028394
 tenorsocket_values = [x/128 for x in tenorsocket_values]
 disdl_values = [x/128 for x in disdl_values]
 
-fig = plt.figure(figsize=(12, 2.4))
+fig = plt.figure(figsize=(12, 2.7))
 gs = gridspec.GridSpec(1, 1, width_ratios=[1])
 ax1 = fig.add_subplot(gs[0, 0])
 
@@ -46,16 +46,16 @@ ax1.bar(x, disdl_values, width, label=disdl_label, color=visual_map_plot[disdl_l
           alpha=visual_map_plot[disdl_label]['alpha'],
           hatch=visual_map_plot[disdl_label]['hatch'])
 
-ax1.set_ylabel("Throughput (batches/sec)")
+ax1.set_ylabel("Aggregated samples/s", fontsize=12)
 ax1.set_xticks(x - width / 2)
 ax1.set_xticklabels(categories)
-ax1.legend(loc='upper left', fontsize=font_size, ncol=1, frameon=True)
-
+ax1.legend(loc='upper center', fontsize=font_size, ncol=2, frameon=True)
+ax1.set_ylim(0, 28)
 #set font size for all lables and ticks
 ax1.tick_params(axis='both', which='major', labelsize=font_size)
 ax1.tick_params(axis='both', which='minor', labelsize=font_size)
 ax1.xaxis.label.set_size(font_size)
 ax1.yaxis.label.set_size(font_size)
-ax1.yaxis.set_major_locator(mticker.MaxNLocator(integer=True))
+ax1.yaxis.set_major_locator(mticker.MaxNLocator(nbins=6, integer=True))
 plt.tight_layout()
 plt.show()

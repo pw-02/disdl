@@ -50,58 +50,55 @@ def fill_range(int_list):
 
 
 # Simulate buffered execution of jobs
-def simulate_jobs_with_buffer(job_speeds, buffer_size, bacthes_per_job):
+def simulate_jobs_with_buffer(job_speeds, buffer_size, simulation_time=3600):
     num_jobs = len(job_speeds)
     job_progress = [0] * num_jobs  # Tracks how many batches each job has completed
     event_queue = []  # Priority queue for next event times
     largest_distance_to_slowest = 0
     lambda_get_request_count = 0
-    # job_speeds.append(5) # the last job is the prefetch lambda function that warms up cached functions
-    # # warm_up_job = len(job_speeds) - 1
-    # job_speeds.append(1) # the second to last job is the lambda function that fetches data from the cache
-    # compute_efficiency_job = len(job_speeds) - 1
+    job_speeds.append(5) # the last job is the prefetch lambda function that warms up cached functions
+    warm_up_job = len(job_speeds) - 1
+    job_speeds.append(1) # the second to last job is the lambda function that fetches data from the cache
+    compute_efficiency_job = len(job_speeds) - 1
     last_invocation_time = {}
-    last_job_completion_time = 0
- 
-   
+    cost_efficiency_over_time ={}
     # Initialize event queue with first batch completion times
     for job_id, speed in enumerate(job_speeds):
         heapq.heappush(event_queue, (speed, job_id))  # (time to complete first batch, job_id)
 
     time_elapsed = 0  # Global simulation time
 
-    #check if all jobs have completed processing bacthes per job
-    while not all([progress >= bacthes_per_job for progress in job_progress]):
+    while time_elapsed < simulation_time:
         time_elapsed, job_id = heapq.heappop(event_queue)  # Get next job event
 
-        # if job_id == compute_efficiency_job:
-        #     total_batches_processed = sum(job_progress)
-        #     #total cost so far
-        #     lambda_get_cost = compute_lambda_requests_cost(lambda_get_request_count, time_elapsed)
-        #     lambda_prefetch_cost = compute_prefetch_lambda_requests_cost(max(job_progress))
-        #     compute_cost = calc_ec2_compute_cost(time_elapsed)
-        #     total_cost = compute_cost + lambda_get_cost + lambda_prefetch_cost
-        #     cost_efficiency = total_batches_processed / total_cost
-        #     cost_efficiency_over_time[time_elapsed] = cost_efficiency
-        #     next_event_time = time_elapsed + (job_speeds[job_id])
-        #     heapq.heappush(event_queue, (next_event_time, job_id))
-        #     continue
-        # #here is the warm up part to keep data in cache until it is used
-        # if job_id == warm_up_job:
-        #     #also compute current cost efficiency
+        if job_id == compute_efficiency_job:
+            total_batches_processed = sum(job_progress)
+            #total cost so far
+            lambda_get_cost = compute_lambda_requests_cost(lambda_get_request_count, time_elapsed)
+            lambda_prefetch_cost = compute_prefetch_lambda_requests_cost(max(job_progress))
+            compute_cost = calc_ec2_compute_cost(time_elapsed)
+            total_cost = compute_cost + lambda_get_cost + lambda_prefetch_cost
+            cost_efficiency = total_batches_processed / total_cost
+            cost_efficiency_over_time[time_elapsed] = cost_efficiency
+            next_event_time = time_elapsed + (job_speeds[job_id])
+            heapq.heappush(event_queue, (next_event_time, job_id))
+            continue
+        #here is the warm up part to keep data in cache until it is used
+        if job_id == warm_up_job:
+            #also compute current cost efficiency
 
-        #     filled_list = fill_range(job_progress)
-        #     for i in filled_list:
-        #         if i not in last_invocation_time:
-        #             last_invocation_time[i] = time_elapsed
-        #         elif i in last_invocation_time and (time_elapsed - last_invocation_time[i]) > 60: #1 minute
-        #             lambda_get_request_count += 1
-        #             last_invocation_time[i] = time_elapsed
-        #         else:
-        #             continue
-        #     next_event_time = time_elapsed + (job_speeds[job_id])
-        #     heapq.heappush(event_queue, (next_event_time, job_id))
-        #     continue
+            filled_list = fill_range(job_progress)
+            for i in filled_list:
+                if i not in last_invocation_time:
+                    last_invocation_time[i] = time_elapsed
+                elif i in last_invocation_time and (time_elapsed - last_invocation_time[i]) > 60: #1 minute
+                    lambda_get_request_count += 1
+                    last_invocation_time[i] = time_elapsed
+                else:
+                    continue
+            next_event_time = time_elapsed + (job_speeds[job_id])
+            heapq.heappush(event_queue, (next_event_time, job_id))
+            continue
 
         # Ensure buffer constraint is met before progressing
         slowest_progress = min(job_progress)
@@ -121,20 +118,21 @@ def simulate_jobs_with_buffer(job_speeds, buffer_size, bacthes_per_job):
         lambda_get_request_count += 1
         # Schedule the next batch completion if still within time limit
         next_event_time = time_elapsed + (job_speeds[job_id])
-
-        if job_progress[job_id] != bacthes_per_job:
+        if next_event_time < simulation_time:
             heapq.heappush(event_queue, (next_event_time, job_id))
         else:
-            last_job_completion_time = time_elapsed
+            break
 
     total_batches_processed = sum(job_progress)
-    throughput = total_batches_processed / last_job_completion_time  # Batches per second
-    # #plot cost efficiency over time
-    # plt.plot(cost_efficiency_over_time.values())
-    # plt.xlabel('Time (s)')
-    # plt.ylabel('Cost Efficiency (batches/s)')
-    # plt.show()
-    return time_elapsed, throughput, job_progress, largest_distance_to_slowest
+    throughput = total_batches_processed / simulation_time  # Batches per second
+    lambda_prefetch_count = max(job_progress)
+
+    #plot cost efficiency over time
+    plt.plot(cost_efficiency_over_time.values())
+    plt.xlabel('Time (s)')
+    plt.ylabel('Cost Efficiency (batches/s)')
+    plt.show()
+    return total_batches_processed, throughput, job_progress, largest_distance_to_slowest, lambda_get_request_count, lambda_prefetch_count
 
 
 
@@ -143,13 +141,14 @@ def simulate_jobs_with_buffer(job_speeds, buffer_size, bacthes_per_job):
 def run_simulation_case(case_name, 
                         job_speeds, 
                         buffer_size,
-                        batches_per_job, 
+                        simulation_time, 
                         hourly_ec2_cost=12.24, 
                         hourly_cache_cost_per_gb=0.10, 
                         batch_size_mb=10,
-                        files_per_batch=128):
+                        lambda_cost_per_get_request=0.00000904466,
+                        lambda_cost_per_prefetch_request=0.00012546):
     """Runs a simulation and prints the results for a given scenario."""
-    simulation_time, throughput, job_progress, max_buffer_size = simulate_jobs_with_buffer(job_speeds, buffer_size, batches_per_job)
+    total_batches, throughput, job_progress, max_buffer_size, lambda_get_request_count,lambda_prefetch_count = simulate_jobs_with_buffer(job_speeds, buffer_size, simulation_time)
 
     # Assume each batch in the buffer needs 10MB of storage
     cache_size_gb = (max_buffer_size * batch_size_mb) / 1024  # Convert MB to GB
@@ -158,19 +157,23 @@ def run_simulation_case(case_name,
     
     if buffer_size > 1:
         redis_cost = (hourly_cache_cost_per_gb * cache_size_gb) * (simulation_time / 3600)
+        lambda_get_cost = compute_lambda_requests_cost(lambda_get_request_count, simulation_time)
+        lambda_prefetch_cost = compute_prefetch_lambda_requests_cost(lambda_prefetch_count)
+        lambda_cache_cost = lambda_get_cost + lambda_prefetch_cost
     else:
         redis_cost = 0
+        lambda_cache_cost = 0
 
-    total_batches= batches_per_job * len(job_speeds)
-    toal_samples = total_batches * files_per_batch
-    samples_per_second = throughput * files_per_batch
+        
     total_cost_with_redis = compute_cost + redis_cost
     cost_efficiency_with_redis = total_batches / total_cost_with_redis  # Batches per dollar
+        
+    total_cost_with_lambda = compute_cost + lambda_cache_cost
+    cost_efficiency_with_lambda = total_batches / total_cost_with_lambda  # Batches per dollar
 
+    
     print(f"{case_name}:")
     print(f"  Total Batches Processed: {total_batches}")
-    print(f"  Overall Throughput: {samples_per_second:.2f} smaples/sec")
-
     print(f"  Overall Throughput: {throughput:.2f} batches/sec")
     print(f"  Max Buffer Size Used: {max_buffer_size} batches")
     print(f"  Cache Size Used: {cache_size_gb:.2f} GB")
@@ -178,9 +181,14 @@ def run_simulation_case(case_name,
     print(f"  Redis Cache Cost: ${redis_cost:.2f}")
     print(f"  Total Cost (with Redis): ${total_cost_with_redis:.2f}")
     print(f"  Cost Efficiency (with Redis): {cost_efficiency_with_redis:.2f} batches per dollar")
+    print(f"  Lambda Get Requests: {lambda_get_request_count}")
+    print(f"  Lambda Prefetch Requests: {lambda_prefetch_count}")
+    print(f"  Lambda Cache Cost: ${lambda_cache_cost:.2f}")
+    print(f"  Total Cost (with Lambda): ${total_cost_with_lambda:.2f}")
+    print(f"  Cost Efficiency (with Lambda): {cost_efficiency_with_lambda:.2f} batches per dollar")
     print("-" * 40)
 
-    return samples_per_second, cost_efficiency_with_redis, total_cost_with_redis, cache_size_gb, max_buffer_size
+    return throughput, cost_efficiency_with_redis, total_cost_with_redis, cache_size_gb, max_buffer_size
 
 
 if __name__ == "__main__":
@@ -195,50 +203,39 @@ if __name__ == "__main__":
     may care about cost efficiency and not throughput.'''
 
    # Define simulation parameters
-    throughpurs = []
-    costs = []
-    num_jobs = [2,4,6,8,10,12]
-    job_speed = 0.523961767  # Speed of each job in batches per second
-    inatcnes_cost_per_hour = 12.24 / 4
-    for jobs in num_jobs:
-        job_speeds = [0.523961767] * jobs
-        print(len(job_speeds))
-        batches_per_job = 8564  # Number of batches to process per job
-        hourly_ec2_cost = inatcnes_cost_per_hour * jobs # Example: $3 per hour for an EC2 instance
-        hourly_cache_cost_per_gb = 0.125  # aws serverless redis
-        files_per_batch = 37  # Size of each batch in MB
-        lambda_cost_per_get_request = 0.000010017  # Cost per AWS Lambda request
-        lambda_cost_per_prefetch_request = 0.00012546  # Cost per AWS Lambda request
-        # Worst-case scenario: All jobs are constrained by the slowest speed
-        worst_case_buffer = 10
-        batch_size = 128
-        worst_case_throughput, worst_case_cost_efficiency, wost_case_cost, cache_size_gb, max_buffer_size = run_simulation_case(
-            "Worst-Case Scenario (No Cache)", 
-            job_speeds, 
-            worst_case_buffer, 
-            batches_per_job, 
-            hourly_ec2_cost, 
-            hourly_cache_cost_per_gb, 
-            files_per_batch)
-        throughpurs.append(worst_case_throughput)
-        costs.append(wost_case_cost)
-    print(throughpurs)
-    print(costs)
-        
+    job_speeds = [0.137222914, 0.14272167, 0.351509787, 0.519805225]  # Speeds in batches per second
+    simulation_time =  600 * 1 # Simulate 1 hour
+    hourly_ec2_cost = 12.24  # Example: $3 per hour for an EC2 instance
+    hourly_cache_cost_per_gb = 0.125  # aws serverless redis
+    batch_size_mb = 37  # Size of each batch in MB
+    lambda_cost_per_get_request = 0.000010017  # Cost per AWS Lambda request
+    lambda_cost_per_prefetch_request = 0.00012546  # Cost per AWS Lambda request
+    # Worst-case scenario: All jobs are constrained by the slowest speed
+    worst_case_buffer = 10
+    worst_case_throughput, worst_case_cost_efficiency, wost_case_cost, cache_size_gb, max_buffer_size = run_simulation_case(
+        "Worst-Case Scenario (No Cache)", 
+        job_speeds, 
+        worst_case_buffer, 
+        simulation_time, 
+        hourly_ec2_cost, 
+        hourly_cache_cost_per_gb, 
+        batch_size_mb,
+        lambda_cost_per_get_request,
+        lambda_cost_per_prefetch_request)
 
-    # # Best-case scenario: Jobs run at their full speed (infinite buffer)
-    # best_case_buffer = np.inf
-    # bestcase_throughput, bestcase_cost_efficiency, best_case_cost, cache_size_gb, max_buffer_best = run_simulation_case(
-    #     "Best-Case Scenario (Throughput)", 
-    #     job_speeds, 
-    #     best_case_buffer, 
-    #     batches_per_job, 
-    #     hourly_ec2_cost, 
-    #     hourly_cache_cost_per_gb, 
-    #     batch_size_mb,
-    #     lambda_cost_per_get_request,
-    #     lambda_cost_per_prefetch_request)
+    # Best-case scenario: Jobs run at their full speed (infinite buffer)
+    best_case_buffer = np.inf
+    bestcase_throughput, bestcase_cost_efficiency, best_case_cost, cache_size_gb, max_buffer_best = run_simulation_case(
+        "Best-Case Scenario (Throughput)", 
+        job_speeds, 
+        best_case_buffer, 
+        simulation_time, 
+        hourly_ec2_cost, 
+        hourly_cache_cost_per_gb, 
+        batch_size_mb,
+        lambda_cost_per_get_request,
+        lambda_cost_per_prefetch_request)
     
     #so by running at best scenario we can achive a speed up of x in terms of throughput and cost efficiency
-    # speedup_throughput = worst_case_throughput / bestcase_throughput
-    # speedup_cost_efficiency = worst_case_cost_efficiency / bestcase_cost_efficiency
+    speedup_throughput = worst_case_throughput / bestcase_throughput
+    speedup_cost_efficiency = worst_case_cost_efficiency / bestcase_cost_efficiency

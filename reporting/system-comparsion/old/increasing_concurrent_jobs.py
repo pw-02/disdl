@@ -18,11 +18,11 @@ baseline_label = 'Pytorch'
 dataset_label = 'ImageNet'
 line_width = 1.5
 
-# visual_map_plot_1 = {
-#     coordl_label: {'color': 'black', 'linestyle': ':', 'marker': '', 'linewidth': line_width},
-#     disdl_label: {'color': 'black', 'linestyle': '-', 'marker': '', 'linewidth': line_width},
-#     baseline_label: {'color': 'black', 'linestyle': '-', 'marker': '', 'linewidth': line_width},
-# }
+visual_map_plot_1 = {
+    coordl_label: {'color': 'black', 'linestyle': ':', 'marker': '', 'linewidth': line_width},
+    disdl_label: {'color': 'black', 'linestyle': '-', 'marker': '', 'linewidth': line_width},
+    baseline_label: {'color': 'black', 'linestyle': '-', 'marker': '', 'linewidth': line_width},
+}
 
 
 

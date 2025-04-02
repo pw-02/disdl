@@ -369,10 +369,10 @@ class DisDLOpenImagesDataset(DisDLIterableDataset):
             transformation_time =  time.perf_counter() - start_transformation_time
             batch_data= torch.stack(batch_data)
             batch_labels = torch.tensor(batch_labels)
-            # if self.use_cache:
-            #     bytes_tensor = self.convert_torch_tensor_to_bytes((batch_data, batch_labels))
-            #     if self.cache_minibatch_with_retries(batch_id, bytes_tensor, max_retries=0):
-            #         cached_after_fetch = True
+            if self.use_cache:
+                bytes_tensor = self.convert_torch_tensor_to_bytes((batch_data, batch_labels))
+                if self.cache_minibatch_with_retries(batch_id, bytes_tensor, max_retries=0):
+                    cached_after_fetch = True
         data_fetch_time = time.perf_counter() - start_time - transformation_time
         return (batch_data,batch_labels,batch_id), data_fetch_time, transformation_time, cache_hit, cached_after_fetch
     

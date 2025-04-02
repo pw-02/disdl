@@ -125,6 +125,12 @@ def simulate_jobs_with_buffer(job_speeds, buffer_size, bacthes_per_job):
         if job_progress[job_id] != bacthes_per_job:
             heapq.heappush(event_queue, (next_event_time, job_id))
         else:
+            #compute throuhgput for job
+            job_throuhgputput = (job_progress[job_id] / (next_event_time)) * 128
+            job_cost = calc_ec2_compute_cost(next_event_time) / 4
+            print(f"Job {job_id} completed {job_progress[job_id]} batches in {next_event_time:.2f} seconds. Throughput: {job_throuhgputput:.2f} samples/sec. Cost: ${job_cost:.2f}")
+            
+
             last_job_completion_time = time_elapsed
 
     total_batches_processed = sum(job_progress)
@@ -135,9 +141,6 @@ def simulate_jobs_with_buffer(job_speeds, buffer_size, bacthes_per_job):
     # plt.ylabel('Cost Efficiency (batches/s)')
     # plt.show()
     return time_elapsed, throughput, job_progress, largest_distance_to_slowest
-
-
-
 # 
 
 def run_simulation_case(case_name, 
@@ -175,7 +178,7 @@ def run_simulation_case(case_name,
     print(f"  Max Buffer Size Used: {max_buffer_size} batches")
     print(f"  Cache Size Used: {cache_size_gb:.2f} GB")
     print(f"  Compute Cost: ${compute_cost:.2f}")
-    print(f"  Redis Cache Cost: ${redis_cost:.2f}")
+    print(f"  Redis Cache Cost: ${redis_cost:.2f}. Per Job: ${redis_cost / len(job_speeds):.2f}")
     print(f"  Total Cost (with Redis): ${total_cost_with_redis:.2f}")
     print(f"  Cost Efficiency (with Redis): {cost_efficiency_with_redis:.2f} batches per dollar")
     print("-" * 40)
@@ -195,22 +198,22 @@ if __name__ == "__main__":
     may care about cost efficiency and not throughput.'''
 
    # Define simulation parameters
-    throughpurs = []
+    throughputs = []
     costs = []
-    num_jobs = [2,4,6,8,10,12]
+    num_jobs = [4]
     job_speed = 0.523961767  # Speed of each job in batches per second
-    inatcnes_cost_per_hour = 12.24 / 4
+    inatcnes_cost_per_hour = 12.24
     for jobs in num_jobs:
-        job_speeds = [0.523961767] * jobs
+        job_speeds = [0.137222914, 0.14272167, 0.351509787, 0.519805225]  
         print(len(job_speeds))
         batches_per_job = 8564  # Number of batches to process per job
-        hourly_ec2_cost = inatcnes_cost_per_hour * jobs # Example: $3 per hour for an EC2 instance
+        hourly_ec2_cost = inatcnes_cost_per_hour 
         hourly_cache_cost_per_gb = 0.125  # aws serverless redis
         files_per_batch = 37  # Size of each batch in MB
         lambda_cost_per_get_request = 0.000010017  # Cost per AWS Lambda request
         lambda_cost_per_prefetch_request = 0.00012546  # Cost per AWS Lambda request
         # Worst-case scenario: All jobs are constrained by the slowest speed
-        worst_case_buffer = 10
+        worst_case_buffer = 5000
         batch_size = 128
         worst_case_throughput, worst_case_cost_efficiency, wost_case_cost, cache_size_gb, max_buffer_size = run_simulation_case(
             "Worst-Case Scenario (No Cache)", 
@@ -220,9 +223,9 @@ if __name__ == "__main__":
             hourly_ec2_cost, 
             hourly_cache_cost_per_gb, 
             files_per_batch)
-        throughpurs.append(worst_case_throughput)
+        throughputs.append(worst_case_throughput)
         costs.append(wost_case_cost)
-    print(throughpurs)
+    print(throughputs)
     print(costs)
         
 

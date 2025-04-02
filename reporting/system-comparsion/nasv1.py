@@ -58,19 +58,19 @@ workload = {
          "ec2_instance_cost_per_hour": 12.24,
          "summary": r"C:\Users\pw\Desktop\disdl(600)\imagenet_nas\jobsummary.csv"
     },
-       "openimages":{
-         "samples_per_epoch": 9000000,
-         "samples_per_batch": 128,
-         "ec2_instance_cost_per_hour": 12.24,
-         "summary": r"C:\Users\pw\Desktop\disdl(600)\openimages_nas\jobsummary.csv"
-    },
-       "coco":
-     {
-         "samples_per_epoch": 118287,
-         "samples_per_batch": 128,
-         "ec2_instance_cost_per_hour": 12.24,
-         "summary": r"C:\Users\pw\Desktop\disdl(600)\coco_nas\jobsummary.csv"
-    },
+    #    "openimages":{
+    #      "samples_per_epoch": 9000000,
+    #      "samples_per_batch": 128,
+    #      "ec2_instance_cost_per_hour": 12.24,
+    #      "summary": r"C:\Users\pw\Desktop\disdl(600)\openimages_nas\jobsummary.csv"
+    # },
+    #    "coco":
+    #  {
+    #      "samples_per_epoch": 118287,
+    #      "samples_per_batch": 128,
+    #      "ec2_instance_cost_per_hour": 12.24,
+    #      "summary": r"C:\Users\pw\Desktop\disdl(600)\coco_nas\jobsummary.csv"
+    # },
     # "openimages": {"C:\\Users\\pw\Desktop\\disdl(600)\\openimages_nas\\overall_summary_openimages_nas.csv"},
     # "coco": {"C:\\Users\\pw\Desktop\\disdl(600)\\coco_nas\\overall_summary_coco_nas.csv"}
     }

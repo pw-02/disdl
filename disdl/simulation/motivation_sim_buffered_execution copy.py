@@ -127,11 +127,11 @@ def simulate_jobs_with_buffer(job_speeds, buffer_size, simulation_time=3600):
     throughput = total_batches_processed / simulation_time  # Batches per second
     lambda_prefetch_count = max(job_progress)
 
-    #plot cost efficiency over time
-    plt.plot(cost_efficiency_over_time.values())
-    plt.xlabel('Time (s)')
-    plt.ylabel('Cost Efficiency (batches/s)')
-    plt.show()
+    # #plot cost efficiency over time
+    # plt.plot(cost_efficiency_over_time.values())
+    # plt.xlabel('Time (s)')
+    # plt.ylabel('Cost Efficiency (batches/s)')
+    # plt.show()
     return total_batches_processed, throughput, job_progress, largest_distance_to_slowest, lambda_get_request_count, lambda_prefetch_count
 
 

@@ -24,7 +24,7 @@ def get_python_command():
 @hydra.main(version_base=None, config_path="../conf", config_name="config")
 def main(config: DictConfig):
     workload = "batch_sizes"
-    dataloader = "disdl" #tensorsocket, disdl
+    dataloader = "tensorsocket" #tensorsocket, disdl
     producer_only = False
     max_train_time_seconds = 300 # 1 hour
     models = ["resnet18", "resnet50", "shufflenet_v2_x1_0", "vgg16"]

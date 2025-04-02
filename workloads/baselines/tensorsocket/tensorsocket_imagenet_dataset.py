@@ -180,8 +180,7 @@ class TensorSocketImageNetDataset(Dataset):
         if self.transform is not None:
             for i in range(len(samples)):
                 samples[i] = self.transform(samples[i])        
-        transformation_time =  time.perf_counter() - start_transformati
-        on_time
+        transformation_time =  time.perf_counter() - start_transformation_time
         # Convert to tensors
         samples= torch.stack(samples)
         labels = torch.tensor(labels)

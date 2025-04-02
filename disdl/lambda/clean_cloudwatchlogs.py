@@ -67,7 +67,7 @@ def empty_s3_bucket(bucket_name):
     
 def cleanup_cloudwtachlogs_for_experiment():
     delete_all_log_groups()
-    # empty_s3_bucket("supercloudwtachexports")
+    empty_s3_bucket("supercloudwtachexports")
 
 
 if __name__ == "__main__":

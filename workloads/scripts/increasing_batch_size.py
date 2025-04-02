@@ -28,7 +28,7 @@ def main(config: DictConfig):
     producer_only = False
     max_train_time_seconds = 300 # 1 hour
     models = ["resnet18", "resnet50", "shufflenet_v2_x1_0", "vgg16"]
-    batch_size = 128
+    batch_size = 256
 
     # Generate experiment ID and log directory
     current_datetime = datetime.now(timezone.utc).strftime("%Y-%m-%d_%H-%M-%S")

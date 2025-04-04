@@ -204,7 +204,7 @@ class CoorDLDataset(torch.utils.data.IterableDataset):
         return False
 
 
-    def convert_torch_tensor_to_bytes(self, data:Tuple[torch.Tensor, torch.Tensor, int]):    
+    def convert_torch_tensor_to_bytes(self, data):    
         with BytesIO() as buffer:
             torch.save(data, buffer)
             bytes_tensor = buffer.getvalue()
@@ -413,7 +413,205 @@ class CoorDLImageNetIterableDataset(CoorDLDataset):
         obj = self.s3_client.get_object(Bucket=s3_bucket, Key=data_path)
         data = Image.open(BytesIO(obj['Body'].read())).convert("RGB")
         return data, label
+
+#-------------------------------------------------------------------------------------------------
+
+
+class CoorDLMSCOCOIterableDataset(CoorDLDataset):
+    def __init__(self, 
+                     job_id,
+                     dataset_location,
+                     batch_size, 
+                    image_transform=None,
+                    text_transform=None,
+                     cache_address=None,
+                     ssl=True,
+                     use_compression=True,
+                     use_local_folder=False
+                     ):
+            super().__init__(job_id, dataset_location, batch_size, cache_address, ssl, use_compression, use_local_folder)
+            self.s3_client = None
+            self.cache_client = None
+            self.s3_bucket = S3Url(self.dataset_location).bucket
+            self.s3_prefix = S3Url(self.dataset_location).key
+            self.annotation_file = self.s3_prefix
+            self.samples = self._get_samples_from_s3()
+            self.batches_to_process = len(self.samples)
+            self.image_transform = image_transform
+            self.text_transform = text_transform            
+            self.sampler = CustomBatchSampler(self.count_image_samples(), self.batch_size, drop_last=False, shuffle=True)
+            self.batches:List = []
+            self.get_batches()
+            pass
     
+    def __getstate__(self):
+        state = self.__dict__.copy()
+        del state['cache_client']  # Remove the Redis connection before pickling
+        return state
+    
+    def __setstate__(self, state):
+        self.__dict__.update(state)
+        if self.ssl:
+            self.cache_client = redis.StrictRedis(host=self.cache_host, port=self.cache_port, ssl=True)
+        else:
+            self.cache_client = redis.StrictRedis(host=self.cache_host, port=self.cache_port)
+
+    
+    @functools.cached_property
+    def _classed_items(self) -> List[Tuple[str, int]]:
+        return [(blob, class_index)
+            for class_index, blob_class in enumerate(self.samples)
+            for blob in self.samples[blob_class]]
+    
+    def __len__(self) -> int:
+        return self.sampler.batches_per_epoch
+    
+    def count_image_samples(self):
+        """Count the number of image samples in the dataset."""
+        return sum(len(class_items) for class_items in self.samples.values())
+    
+    def get_batches(self):
+        batches_per_epoch = self.sampler.batches_per_epoch
+        # batches = []
+        for idx in range(batches_per_epoch):
+            batch_indices, batch_id = next(self.sampler)
+            this_job_fetch = False
+            if (idx-self.job_id) % 4 == 0:
+                this_job_fetch = True
+                
+                # batch_samples = [self._classed_items[i] for i in batch_indices]
+            self.batches.append((batch_indices, batch_id, this_job_fetch))
+
+    def _get_samples_from_s3(self, use_index_file=True, images_only=True) -> Dict[str, List[str]]:
+        s3_client = boto3.client('s3')
+        index_object = s3_client.get_object(Bucket=self.s3_bucket, Key=self.annotation_file)
+        file_content = index_object['Body'].read().decode('utf-8')
+        # samples = json.loads(file_content)
+        paired_samples = json.loads(file_content)
+        return paired_samples
+    
+    def _find_next_batch_to_process(self):
+        next_batch = None
+        cache_hit = False
+        for batch in self.batches:
+            batch_indices, batch_id, this_job_fetch = batch
+            if self.use_cache:
+                self._initialize_cache_client()
+                if self.cache_client.exists(batch_id): #cached by another job use it
+                    next_batch = batch
+                    cache_hit = True
+                    break
+            
+            if this_job_fetch:
+                next_batch = batch
+                break
+        if next_batch is not None:
+            next_batch = self.batches[0]
+
+        self.batches.remove(next_batch)
+        return next_batch, cache_hit
+
+
+    def _get_next_batch(self):
+        start_time = time.perf_counter()
+        cached_after_fetch = False
+        minibatch_bytes = None
+
+        next_batch, is_cached = self._find_next_batch_to_process()
+        batch_indices, batch_id, this_job_fetch = next_batch
+        samples = []
+        
+
+
+        if self.use_cache and is_cached:
+            minibatch_bytes = self.get_cached_minibatch_with_retries(batch_id, max_retries=3, retry_interval=0.25)
+        
+        if minibatch_bytes  is not None and (isinstance(minibatch_bytes , bytes) or isinstance(minibatch_bytes , str)):
+            start_transformation_time   = time.perf_counter()
+            images, captions, text_atts, image_ids, processed_count = self.convert_bytes_to_torch_tensor(minibatch_bytes)
+            if processed_count == 4:
+                #remove from cache
+                self.cache_client.delete(batch_id)
+            transformation_time  =  time.perf_counter() - start_transformation_time
+            cache_hit = True
+        else:
+            samples = []
+            for i in batch_indices:
+                sample, image_id = self._classed_items[i]
+                image, cpation = sample
+            samples.append((image, cpation, image_id))
+
+            images, captions, image_ids = self.load_batch_data(samples)
+            cache_hit = False
+             # Apply transformations if provided
+            start_transformation_time = time.perf_counter()
+            if self.image_transform is not None:
+                for i in range(len(images)):
+                    images[i] = self.image_transform(images[i])  
+            if self.text_transform is not None:
+                for i in range(len(captions)):
+                    captions[i] = self.text_transform(captions[i])
+
+            images = torch.stack(images, dim=0)
+            captions = pad_sequence(captions, batch_first=True)
+            text_atts = (captions != 0).type(torch.long)
+            image_ids =  torch.Tensor(image_ids).type(torch.long)
+            transformation_time =  time.perf_counter() - start_transformation_time
+
+            if self.use_cache:
+                bytes_tensor = self.convert_torch_tensor_to_bytes((images, captions, text_atts, image_ids, 1)) #1 is the number of jobs that have processed this batc
+                if self.cache_minibatch_with_retries(batch_id, bytes_tensor, max_retries=0):
+                    cached_after_fetch = True
+        data_fetch_time = time.perf_counter() - start_time - transformation_time
+        return (images, captions,text_atts,image_ids,batch_id), data_fetch_time, transformation_time, cache_hit, cached_after_fetch
+    
+    
+    def load_batch_data(self, samples) -> Tuple[List[torch.Tensor], List[int]]:
+        images, captions, image_ids = [],[],[]
+        if self.use_local_folder:
+            for  data_path, label in samples:
+                with open(data_path, 'rb') as f:
+                    data = Image.open(f).convert("RGB")
+                images.append(data)
+                captions.append(label)
+            return images, captions
+        else:
+            self._set_s3_client()
+            with ThreadPoolExecutor(max_workers=None) as executor:
+                futures = {executor.submit(self.read_data_from_s3, image, caption, imageid): (image, caption, imageid) for image, caption, imageid in samples}
+                for future in as_completed(futures):
+                    image, caption, imageid = future.result()
+                    images.append(image)
+                    captions.append(caption)
+                    image_ids.append(imageid)
+            return images, captions, image_ids
+                
+    def read_data_from_s3(self,data_path, caption, imageid) -> tuple: 
+        s3_bucket = S3Url(self.dataset_location).bucket
+        obj = self.s3_client.get_object(Bucket=s3_bucket, Key=data_path)
+        data = Image.open(BytesIO(obj['Body'].read())).convert("RGB")
+        return data, caption, imageid
+
+    def convert_bytes_to_torch_tensor(self, data:bytes):
+        if self.use_compression:
+            data = lz4.frame.decompress(data)
+        with BytesIO(data) as buffer:
+            images, captions, text_atts, image_ids, processed_count = torch.load(buffer)
+        return  images, captions, text_atts, image_ids, processed_count
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 if __name__ == "__main__":

@@ -482,10 +482,10 @@ class DisDLCocoIterableDataset(DisDLIterableDataset):
             image_ids =  torch.Tensor(image_ids).type(torch.long)
             transformation_time =  time.perf_counter() - start_transformation_time
          
-            # if self.use_cache:
-            #     bytes_tensor = self.convert_torch_tensor_to_bytes((batch_data, batch_labels))
-            #     if self.cache_minibatch_with_retries(batch_id, bytes_tensor, max_retries=0):
-            #         cached_after_fetch = True
+            if self.use_cache:
+                bytes_tensor = self.convert_torch_tensor_to_bytes((batch_data, batch_labels))
+                if self.cache_minibatch_with_retries(batch_id, bytes_tensor, max_retries=0):
+                    cached_after_fetch = True
         data_fetch_time = time.perf_counter() - start_time - transformation_time
         return (images, captions,text_atts,image_ids,batch_id), data_fetch_time, transformation_time, cache_hit, cached_after_fetch
     

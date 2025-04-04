@@ -70,7 +70,7 @@ def main(config: DictConfig):
     for idx, model in enumerate(models):
         print(f"Starting job on GPU {idx} with model {model} and exp_id {expid}_{idx}")
         
-        if dataloader == 'disdl':
+        if dataloader == 'disdl' or dataloader == 'coordl':
             run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/run.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model} workload.max_training_time_sec={max_train_time_seconds}"
         elif dataloader == 'tensorsocket' and not producer_only:
             run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/run.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model} dataloader.mode=consumer workload.max_training_time_sec={max_train_time_seconds}"

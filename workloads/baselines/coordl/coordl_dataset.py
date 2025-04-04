@@ -243,6 +243,7 @@ class CoorDLImageNetIterableDataset(CoorDLDataset):
             self.sampler = CustomBatchSampler(self.count_image_samples(), self.batch_size, drop_last=False, shuffle=True)
             self.batches:List = []
             self.get_batches()
+            print(self.job_id, self.batches)
             pass
     
     def __getstate__(self):

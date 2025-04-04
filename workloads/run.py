@@ -309,6 +309,7 @@ def train_loop(fabric:Fabric,
             
             fabric.print(
                     f" Job {job_id} | Epoch:{metrics['Epoch Index']}({metrics['Batch Index']}/{min(len(train_dataloader),limit_train_batches)}) |"
+                    f" Batch Id:{metrics['Batch Id']} |"
                     f" iter:{metrics['Iteration Time (s)']:.2f}s |"
                     f" delay:{metrics['Wait for Data Time (s)']:.2f}s |"
                     f" fetch:{metrics['Data Load Time (s)']:.2f}s |"

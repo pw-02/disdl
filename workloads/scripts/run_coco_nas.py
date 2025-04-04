@@ -24,9 +24,9 @@ def get_python_command():
 @hydra.main(version_base=None, config_path="../conf", config_name="config")
 def main(config: DictConfig):
     workload = "coco_nas"
-    dataloader = "disdl" # or "tensorsocket", "disdl"
+    dataloader = "coordl" # or "tensorsocket", "disdl", coordl
     vision_encoder_hiddern_layer_sizes = [2, 8, 16, 32]
-    max_train_time_seconds = 600
+    max_train_time_seconds = 900
 
     # vision_encoder_hiddern_layer_sizes = [4]
     producer_only = False
@@ -70,7 +70,7 @@ def main(config: DictConfig):
     job_pids = []
     for idx, num_hidden_layers in enumerate(vision_encoder_hiddern_layer_sizes):
         print(f"Starting job on GPU {idx} with albef model with {num_hidden_layers} hidden layers and exp_id {expid}_{idx}")
-        if dataloader == 'disdl':
+        if dataloader == 'disdl' or dataloader == 'coordl':
             run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/run.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.vision_encoder_args.num_hidden_layers={num_hidden_layers} workload.max_training_time_sec={max_train_time_seconds}"
         elif dataloader == 'tensorsocket' and not producer_only:
             run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/run.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.vision_encoder_args.num_hidden_layers={num_hidden_layers} dataloader.mode=consumer workload.max_training_time_sec={max_train_time_seconds}"

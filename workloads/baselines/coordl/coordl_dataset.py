@@ -522,7 +522,7 @@ if __name__ == "__main__":
             use_local_folder=False
         )
 
-        sampler = CustomBatchSampler(
+        sampler = CoorDLBatchSampler(
             dataset.count_image_samples(), 
             dataset.batch_size, 
             jobid=dataset.job_id,   

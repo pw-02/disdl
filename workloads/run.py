@@ -29,7 +29,7 @@ from lightning.pytorch.core.saving import save_hparams_to_yaml
 from disdl.disdl_client import DisDLClient
 from disdl.disdl_iterable_dataset import DisDLImageNetIterableDataset, DisDLOpenImagesDataset, DisDLCocoIterableDataset
 from models.albef import albef_model_for_retrieval, albef_image_transform, ALBEFTextTransform
-from baselines.coordl.coordl_dataset import CoorDLImageNetIterableDataset
+from baselines.coordl.coordl_dataset import CoorDLImageNetIterableDataset, CoorDLMSCOCODataset
 from baselines.coordl.coordl_sampler import CoorDLBatchSampler
 
 
@@ -395,6 +395,20 @@ def get_coordl_dataset(config: DictConfig):
             transform=get_tansform(dataset_location),
             cache_address=config.dataloader.cache_address,
             ssl=config.dataloader.ssl_enabled,
+            )
+    elif 'coco' in dataset_location:
+        train_dataset = CoorDLMSCOCODataset(
+            job_id=config.job_id,
+            dataset_location=dataset_location,
+            batch_size=config.workload.batch_size,
+            image_transform=albef_image_transform(),
+            text_transform=ALBEFTextTransform(
+                truncate=True, 
+                pad_to_max_seq_len=True, 
+                max_seq_len=30, 
+                add_end_token=False),
+            cache_address=config.dataloader.cache_address,
+            ssl=config.dataloader.ssl_enabled
             )
     
     train_sampler = CoorDLBatchSampler(

@@ -37,6 +37,9 @@ class CoorDLBatchSampler():
         self.cache_client = None
         pass
     
+    def __len__(self):
+        return self.batches_per_epoch
+    
 
     def get_batches(self):
         batches_per_epoch = self.batches_per_epoch

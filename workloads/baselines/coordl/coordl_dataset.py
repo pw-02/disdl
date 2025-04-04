@@ -262,11 +262,11 @@ class CoorDLImageNetIterableDataset(CoorDLDataset):
         minibatch_bytes = None
 
         # next_batch, is_cached = self._find_next_batch_to_process()
-        batch_indices, batch_id, this_job_fetch = next_batch
-        return batch_id
+        batch_indices, batch_id, is_cached = next_batch
+        # return batch_id
         samples = [self._classed_items[i] for i in batch_indices]
         
-        if self.use_cache and is_cached:
+        if self.use_cache:
             minibatch_bytes = self.get_cached_minibatch_with_retries(batch_id, max_retries=3, retry_interval=0.25)
         
         if minibatch_bytes  is not None and (isinstance(minibatch_bytes , bytes) or isinstance(minibatch_bytes , str)):

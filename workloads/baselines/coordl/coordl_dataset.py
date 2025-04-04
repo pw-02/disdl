@@ -338,7 +338,7 @@ class CoorDLOpenImagesIterableDataset(CoorDLDataset):
             for blob in self.samples[blob_class]]
     
     def __len__(self) -> int:
-        return sum(len(class_items) for class_items in self.samples.values())
+        return len(self.samples)
     
     def count_image_samples(self):
         """Count the number of image samples in the dataset."""

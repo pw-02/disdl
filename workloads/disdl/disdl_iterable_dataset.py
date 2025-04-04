@@ -158,8 +158,8 @@ class DisDLIterableDataset(torch.utils.data.IterableDataset):
         return batch_data, batch_labels
     
 
-    # def report_job_progress(self, progress):
-    #     self.client.reportJobProgress(progress)
+    def report_job_progress(self, progress):
+        self.client.reportJobProgress(progress)
 
 # class DisDLLibrSpeechIterableDataset(DisDLIterableDataset):
 #     def __init__(self, 

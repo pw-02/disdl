@@ -26,7 +26,7 @@ def main(config: DictConfig):
     workload = "coco_nas"
     dataloader = "coordl" # or "tensorsocket", "disdl", coordl
     vision_encoder_hiddern_layer_sizes = [2, 8, 16, 32]
-    max_train_time_seconds = 900
+    max_train_time_seconds = 600
 
     # vision_encoder_hiddern_layer_sizes = [4]
     producer_only = False

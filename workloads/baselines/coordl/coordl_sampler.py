@@ -5,7 +5,7 @@ from typing import Sized, List
 import redis
 
 
-class CustomBatchSampler():
+class CoorDLBatchSampler():
     def __init__(self, num_files:Sized, batch_size, jobid, drop_last=False, shuffle=True,
                 cache_address= None,
                  ssl = True,):

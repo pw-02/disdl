@@ -13,7 +13,6 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from torch.nn.utils.rnn import pad_sequence
 import json
 from typing import  Dict, Sized
-from coordl_sampler import CustomBatchSampler
 import functools
 
 
@@ -326,6 +325,7 @@ if __name__ == "__main__":
     import torchvision.transforms as transforms
     #import torhc dataloader
     from torch.utils.data import DataLoader
+    from coordl_sampler import CoorDLBatchSampler
 
     cache_address = '127.0.0.1:6379'
     test_dataset = 'ImageNet' # 'COCO', 'ImageNet', 'LibriSpeech'

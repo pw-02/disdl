@@ -30,6 +30,7 @@ from disdl.disdl_client import DisDLClient
 from disdl.disdl_iterable_dataset import DisDLImageNetIterableDataset, DisDLOpenImagesDataset, DisDLCocoIterableDataset
 from models.albef import albef_model_for_retrieval, albef_image_transform, ALBEFTextTransform
 from baselines.coordl.coordl_dataset import CoorDLImageNetIterableDataset
+from baselines.coordl.coordl_sampler import CoorDLBatchSampler
 
 
 def run_training_job(config: DictConfig, train_logger: CSVLogger, val_logger: CSVLogger):
@@ -65,12 +66,15 @@ def run_training_job(config: DictConfig, train_logger: CSVLogger, val_logger: CS
         train_dataloader = fabric.setup_dataloaders(train_dataloader, move_to_device=True if config.accelerator != 'cpu' else False)
     
     elif config.dataloader.name == 'coordl':
-        train_dataset = get_coordl_dataset(config)
+        train_dataset, train_sampler = get_coordl_dataset(config)
         train_dataloader = DataLoader(
-            train_dataset, 
+            
+            dataset=train_dataset,
+            sampler=train_sampler,
             batch_size=None,
             num_workers=config.workload.num_pytorch_workers,
             pin_memory=True if config.accelerator != 'cpu' else False)
+        
         train_dataloader = fabric.setup_dataloaders(train_dataloader, move_to_device=True if config.accelerator != 'cpu' else False)
 
     elif config.dataloader.name == 'tensorsocket':
@@ -392,7 +396,17 @@ def get_coordl_dataset(config: DictConfig):
             cache_address=config.dataloader.cache_address,
             ssl=config.dataloader.ssl_enabled,
             )
-    return train_dataset
+    
+    train_sampler = CoorDLBatchSampler(
+            num_files = len(train_dataset), 
+            batch_size = train_dataset.batch_size, 
+            jobid=train_dataset.job_id,   
+            drop_last=False, 
+            shuffle=True,
+            cache_address=config.dataloader.cache_address,
+            ssl=config.dataloader.ssl_enabled)
+
+    return train_dataset, train_sampler
 
 def get_disdl_dataset(config: DictConfig, client: DisDLClient, num_batchs: int):
     dataset_location = config.workload.s3_train_prefix

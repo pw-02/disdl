@@ -44,11 +44,7 @@ line_width = 2
 font_size = 16
 bar_width = 0.285
 
-visual_map_plot = {
-    coordl_label: {'color': '#A3B6CE', 'linestyle': '-', 'linewidth': line_width, 'edgecolor': 'black', 'hatch': '','alpha': 1.0}, #indianred
-    disdl_label: {'color': 'black', 'linestyle': '-', 'linewidth': line_width,'edgecolor': 'black', 'hatch':'', 'alpha': 1.0}, #steelblue
-    tensorsocket_label: {'color': '#FDA300', 'linestyle': '-', 'linewidth': line_width, 'edgecolor': 'black', 'hatch': '','alpha': 1.0}, #indianred
-}
+
 
 # visual_map_plot = {
 #     tensorsocket_label: {'color': '#FEA400', 'linestyle': '-', 'linewidth': line_width, 'edgecolor': 'black', 'hatch': '', 'alpha': 1.0}, #indianred
@@ -63,24 +59,29 @@ workload = {
          "ec2_instance_cost_per_hour": 12.24,
          "summary": r"C:\Users\pw\Desktop\disdl(600)\imagenet_nas\jobsummary.csv"
     },
-    #    "openimages":{
-    #      "samples_per_epoch": 9000000,
-    #      "samples_per_batch": 128,
-    #      "ec2_instance_cost_per_hour": 12.24,
-    #      "summary": r"C:\Users\pw\Desktop\disdl(600)\openimages_nas\jobsummary.csv"
-    # },
-    #    "coco":
-    #  {
-    #      "samples_per_epoch": 118287,
-    #      "samples_per_batch": 128,
-    #      "ec2_instance_cost_per_hour": 12.24,
-    #      "summary": r"C:\Users\pw\Desktop\disdl(600)\coco_nas\jobsummary.csv"
-    # },
-    # "openimages": {"C:\\Users\\pw\Desktop\\disdl(600)\\openimages_nas\\overall_summary_openimages_nas.csv"},
-    # "coco": {"C:\\Users\\pw\Desktop\\disdl(600)\\coco_nas\\overall_summary_coco_nas.csv"}
+       "openimages":{
+         "samples_per_epoch": 9000000,
+         "samples_per_batch": 128,
+         "ec2_instance_cost_per_hour": 12.24,
+         "summary": r"C:\Users\pw\Desktop\disdl(600)\openimages_nas\jobsummary.csv"
+    },
+       "coco":
+     {
+         "samples_per_epoch": 118287,
+         "samples_per_batch": 128,
+         "ec2_instance_cost_per_hour": 12.24,
+         "summary": r"C:\Users\pw\Desktop\disdl(600)\coco_nas\jobsummary.csv"
+    },
+#     "openimages": {"C:\\Users\\pw\Desktop\\disdl(600)\\openimages_nas\\overall_summary_openimages_nas.csv"},
+#     "coco": {"C:\\Users\\pw\Desktop\\disdl(600)\\coco_nas\\overall_summary_coco_nas.csv"}
     }
 
 for workload_name, workload_data in workload.items():
+    visual_map_plot = {
+    coordl_label: {'color': '#A3B6CE', 'linestyle': '-', 'linewidth': line_width, 'edgecolor': 'black', 'hatch': '','alpha': 1.0}, #indianred
+    disdl_label: {'color': 'black', 'linestyle': '-', 'linewidth': line_width,'edgecolor': 'black', 'hatch':'', 'alpha': 1.0}, #steelblue
+    tensorsocket_label: {'color': '#FDA300', 'linestyle': '-', 'linewidth': line_width, 'edgecolor': 'black', 'hatch': '','alpha': 1.0}, #indianred
+}
     fig = plt.figure(figsize=(17, 3.2))
     gs = gridspec.GridSpec(1, 3, width_ratios=[0.95, 0.95, 1.1])  # First two plots are twice as wide
     ax1 = fig.add_subplot(gs[0, 0])  # First plot

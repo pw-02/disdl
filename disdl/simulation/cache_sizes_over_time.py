@@ -8,7 +8,7 @@ redis_cache_cost_hourly = 6.981
 print(f"Total batches in cache: {total_batchs_in_cache}")
 
 cost_per_lambda_warmup = 0.00000830198
-warm_up_frequency_sec = 60 *2 #minute
+warm_up_frequency_sec = 60 *1 #minute
 
 hourly_warmup_cost = cost_per_lambda_warmup * (3600 / warm_up_frequency_sec) *total_batchs_in_cache
 

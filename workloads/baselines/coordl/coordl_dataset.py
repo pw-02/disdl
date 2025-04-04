@@ -138,8 +138,8 @@ class CoorDLDataset(torch.utils.data.Dataset):
         if self.use_compression:
             data = lz4.frame.decompress(data)
         with BytesIO(data) as buffer:
-            batch_data, batch_labels, processed_count = torch.load(buffer)
-        return batch_data, batch_labels, processed_count
+            batch_data, batch_labels = torch.load(buffer)
+        return batch_data, batch_labels
     
 
 class CoorDLImageNetIterableDataset(CoorDLDataset):
@@ -271,10 +271,15 @@ class CoorDLImageNetIterableDataset(CoorDLDataset):
         
         if minibatch_bytes  is not None and (isinstance(minibatch_bytes , bytes) or isinstance(minibatch_bytes , str)):
             start_transformation_time   = time.perf_counter()
-            batch_data, batch_labels, processed_count = self.convert_bytes_to_torch_tensor(minibatch_bytes)
+            batch_data, batch_labels = self.convert_bytes_to_torch_tensor(minibatch_bytes)
+            processed_count = int(self.cache_client.get(f"{batch_id}_count"))
             if processed_count == 4:
                 #remove from cache
                 self.cache_client.delete(batch_id)
+                # self.cache_client.delete(f"{batch_id}_count")
+            else:
+                self.cache_client.set(f"{batch_id}_count", processed_count+1)
+
             transformation_time  =  time.perf_counter() - start_transformation_time
             cache_hit = True
         else:
@@ -289,9 +294,10 @@ class CoorDLImageNetIterableDataset(CoorDLDataset):
             batch_data= torch.stack(batch_data)
             batch_labels = torch.tensor(batch_labels)
             if self.use_cache:
-                bytes_tensor = self.convert_torch_tensor_to_bytes((batch_data, batch_labels, 1)) #1 is the number of jobs that have processed this batc
+                bytes_tensor = self.convert_torch_tensor_to_bytes((batch_data, batch_labels)) #1 is the number of jobs that have processed this batc
                 if self.cache_minibatch_with_retries(batch_id, bytes_tensor, max_retries=0):
                     cached_after_fetch = True
+                    self.cache_client.set(f"{batch_id}_count", 1)
         data_fetch_time = time.perf_counter() - start_time - transformation_time
         return (batch_data,batch_labels,batch_id), data_fetch_time, transformation_time, cache_hit, cached_after_fetch
     

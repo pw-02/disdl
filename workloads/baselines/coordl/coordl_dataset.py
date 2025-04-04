@@ -14,7 +14,7 @@ from torch.nn.utils.rnn import pad_sequence
 import json
 from typing import  Dict, Sized
 import functools
-
+import pandas as pd
 
 class S3Url(object):
     def __init__(self, url):
@@ -294,7 +294,185 @@ class CoorDLMSCOCODataset(CoorDLDataset):
 
 
 
+#-------------------------------------------------------------------------------
 
+class CoorDLOpenImagesIterableDataset(CoorDLDataset):
+    def __init__(self, 
+                     job_id,
+                     dataset_location,
+                     batch_size, 
+                     transform=None,
+                     cache_address=None,
+                     ssl=True,
+                     use_compression=True,
+                     use_local_folder=False
+                     ):
+            super().__init__(job_id, dataset_location, batch_size, cache_address, ssl, use_compression, use_local_folder)
+            self.s3_client = None
+            self.cache_client = None
+            self.s3_bucket = S3Url(self.dataset_location).bucket
+            self.s3_prefix = S3Url(self.dataset_location).key
+            self.samples = self._get_samples_from_s3()
+            self.transform = transform    
+            # print(self.job_id, self.batches)
+            pass
+    
+    def __getstate__(self):
+        state = self.__dict__.copy()
+        del state['cache_client']  # Remove the Redis connection before pickling
+        return state
+    
+    def __setstate__(self, state):
+        self.__dict__.update(state)
+        if self.ssl:
+            self.cache_client = redis.StrictRedis(host=self.cache_host, port=self.cache_port, ssl=True)
+        else:
+            self.cache_client = redis.StrictRedis(host=self.cache_host, port=self.cache_port)
+
+    
+    @functools.cached_property
+    def _classed_items(self) -> List[Tuple[str, int]]:
+        return [(blob, class_index)
+            for class_index, blob_class in enumerate(self.samples)
+            for blob in self.samples[blob_class]]
+    
+    def __len__(self) -> int:
+        return sum(len(class_items) for class_items in self.samples.values())
+    
+    def count_image_samples(self):
+        """Count the number of image samples in the dataset."""
+        return sum(len(class_items) for class_items in self.samples.values())
+    
+    def _get_samples_from_s3(self, use_index_file=True, images_only=True) -> Dict[str, List[str]]:
+        s3_client = boto3.client('s3')
+        index_file_key = f"{self.s3_prefix}_paired_index.json"
+        paired_samples = {}
+
+        if use_index_file:
+            try:
+                index_object = s3_client.get_object(Bucket=self.s3_bucket, Key=index_file_key)
+                file_content = index_object['Body'].read().decode('utf-8')
+                paired_samples = json.loads(file_content)
+                return list(paired_samples.values())
+            except Exception as e:
+                print(f"Error reading index file '{index_file_key}': {e}")
+
+        #fist lets get all of the images ids and paths
+        images ={}
+        image_label_dict = {}
+        paginator = s3_client.get_paginator('list_objects_v2')
+        for page in paginator.paginate(Bucket=self.s3_bucket, Prefix=self.s3_prefix):
+            for blob in page.get('Contents', []):
+                blob_path = blob.get('Key')
+                
+                if blob_path.endswith("/"):
+                    continue  # Skip folders
+                
+                stripped_path = blob_path[len(self.s3_prefix):].lstrip("/")
+                if stripped_path == blob_path:
+                    continue  # No matching prefix, skip
+
+                if images_only and not blob_path.lower().endswith(('.jpg', '.jpeg', '.png')):
+                    print(f"Skipping non-image file: {blob_path}")
+                    if 'annotations' in blob_path:
+                        response = s3_client.get_object(Bucket=self.s3_bucket, Key=blob_path)
+                        csv_content = response["Body"].read().decode("utf-8")  # Decode bytes to string
+                        df = pd.read_csv(StringIO(csv_content))  # Convert string to DataFrame
+                        image_label_dict = df.set_index("ImageID")["Ids"].to_dict()
+
+                    continue  # Skip non-image files
+                if 'index.json' in blob_path:
+                    continue  # Skip index file
+
+                fileid = stripped_path.split("/")[-1].split(".")[0]
+                images[fileid] = blob_path
+
+        for image_id in image_label_dict:
+            if image_id in images:
+                paired_samples[image_id] = (images[image_id], image_label_dict[image_id])
+
+        if not use_index_file and paired_samples:
+            s3_client.put_object(
+                Bucket=self.s3_bucket,
+                Key=index_file_key,
+                Body=json.dumps(paired_samples, indent=4).encode('utf-8'))
+
+        return list(paired_samples.values())
+    
+    
+    def __getitem__(self, next_batch):
+        start_time = time.perf_counter()
+        cached_after_fetch = False
+        minibatch_bytes = None
+
+        # next_batch, is_cached = self._find_next_batch_to_process()
+        batch_indices, batch_id, is_cached = next_batch
+    
+        if self.use_cache:
+            minibatch_bytes = self.get_cached_minibatch_with_retries(batch_id, max_retries=3, retry_interval=0.25)
+        
+        if minibatch_bytes  is not None and (isinstance(minibatch_bytes , bytes) or isinstance(minibatch_bytes , str)):
+            start_transformation_time   = time.perf_counter()
+            batch_data, batch_labels = self.convert_bytes_to_torch_tensor(minibatch_bytes)
+            processed_count = int(self.cache_client.get(f"{batch_id}_count"))
+            if processed_count == 4:
+                #remove from cache
+                self.cache_client.delete(batch_id)
+                # self.cache_client.delete(f"{batch_id}_count")
+            else:
+                self.cache_client.set(f"{batch_id}_count", processed_count+1)
+
+            transformation_time  =  time.perf_counter() - start_transformation_time
+            cache_hit = True
+        else:
+            samples = []
+            for i in batch_indices:
+                samples.append(self.samples[i])
+            batch_data, batch_labels = self.load_batch_data(samples)
+            cache_hit = False
+             # Apply transformations if provided
+            start_transformation_time = time.perf_counter()
+            if self.transform is not None:
+                for i in range(len(batch_data)):
+                    batch_data[i] = self.transform(batch_data[i])        
+            transformation_time =  time.perf_counter() - start_transformation_time
+            batch_data= torch.stack(batch_data)
+            batch_labels = torch.tensor(batch_labels)
+            if self.use_cache:
+                bytes_tensor = self.convert_torch_tensor_to_bytes((batch_data, batch_labels)) #1 is the number of jobs that have processed this batc
+                if self.cache_minibatch_with_retries(batch_id, bytes_tensor, max_retries=0):
+                    cached_after_fetch = True
+                    self.cache_client.set(f"{batch_id}_count", 1)
+        data_fetch_time = time.perf_counter() - start_time - transformation_time
+        return (batch_data,batch_labels,batch_id), data_fetch_time, transformation_time, cache_hit, cached_after_fetch
+    
+    
+    def load_batch_data(self, samples) -> Tuple[List[torch.Tensor], List[int]]:
+        batch_data, batch_labels = [], []
+        if self.use_local_folder:
+            for  data_path, label in samples:
+                with open(data_path, 'rb') as f:
+                    data = Image.open(f).convert("RGB")
+                batch_data.append(data)
+                batch_labels.append(label)
+            return batch_data, batch_labels
+        else:
+            self._set_s3_client()
+            with ThreadPoolExecutor(max_workers=None) as executor:
+                futures = {executor.submit(self.read_data_from_s3, data_path, label): (data_path, label) for data_path, label in samples}
+                for future in as_completed(futures):
+                    data_sample, label = future.result()
+                    batch_data.append(data_sample)
+                    batch_labels.append(label)
+            return batch_data, batch_labels
+        
+    def read_data_from_s3(self,data_path, label) -> tuple: 
+        s3_bucket = S3Url(self.dataset_location).bucket
+        obj = self.s3_client.get_object(Bucket=s3_bucket, Key=data_path)
+        data = Image.open(BytesIO(obj['Body'].read())).convert("RGB")
+        return data, label
+
+#-------------------------------------------------------------------------------
 
 
 

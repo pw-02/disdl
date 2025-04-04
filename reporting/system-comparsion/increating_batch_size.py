@@ -4,8 +4,8 @@ import numpy as np
 # Figure settings
 tensorsocket_label = "TensorSocket"
 disdl_label = "DisDL"
-line_width = 5
-font_size = 28
+line_width = 2.5
+font_size = 14
 
 # Line styles for clarity
 cost_linestyle = "--"
@@ -19,9 +19,9 @@ visual_map_plot = {
 # Workload data
 workload_data = {
     "IncreasingBatchSizes": {
-        "batch_sizes": [16, 32, 64, 128, 256],
-        disdl_label: {"costs": [0.02, 0.03, 0.05, 0.08, 0.12], "throughputs": [500, 900, 1600, 2500, 3500]},
-        tensorsocket_label: {"costs": [0.015, 0.025, 0.04, 0.06, 0.09], "throughputs": [550, 950, 1700, 2700, 3800]}
+        "batch_sizes": [16, 32, 64, 128],
+        disdl_label: {"costs": [0.02, 0.03, 0.05, 0.08], "throughputs": [902, 900, 1600, 2500]},
+        tensorsocket_label: {"costs": [0.015, 0.025, 0.04, 0.06], "throughputs": [900, 902, 936, 987]}
     }
 }
 
@@ -39,7 +39,7 @@ def pareto_frontier(cost, throughput):
     return np.array(pareto_x), np.array(pareto_y)
 
 # Plot settings
-plt.figure(figsize=(12, 7))
+plt.figure(figsize=(6, 4))
 
 # Plotting both systems
 for label, data in workload_data.items():
@@ -52,17 +52,17 @@ for label, data in workload_data.items():
     tensorsocket_costs = data[tensorsocket_label]["costs"]
     tensorsocket_throughputs = data[tensorsocket_label]["throughputs"]
 
-    # Plot cost vs throughput for each system
-    plt.plot(didsl_costs, didsl_throughputs, visual_map_plot[disdl_label]['marker'] + throughput_linestyle, 
-             color=visual_map_plot[disdl_label]['color'],
-            linewidth=visual_map_plot[disdl_label]['linewidth'], 
-               label=disdl_label, markersize=8)
+    # # Plot cost vs throughput for each system
+    # plt.plot(didsl_costs, didsl_throughputs, visual_map_plot[disdl_label]['marker'] + throughput_linestyle, 
+    #          color=visual_map_plot[disdl_label]['color'],
+    #         linewidth=visual_map_plot[disdl_label]['linewidth'], 
+    #            label=disdl_label, markersize=8)
              
     
-    #add batch size annotations
-    for i, batch_size in enumerate(batch_sizes):
-        plt.annotate(batch_size, (didsl_costs[i], didsl_throughputs[i]), fontsize=font_size - 6, 
-                     xytext=(5, 5), textcoords='offset points')
+    # #add batch size annotations
+    # for i, batch_size in enumerate(batch_sizes):
+    #     plt.annotate(batch_size, (didsl_costs[i], didsl_throughputs[i]), fontsize=font_size - 6, 
+    #                  xytext=(5, 5), textcoords='offset points')
         
     plt.plot(tensorsocket_costs, tensorsocket_throughputs, visual_map_plot[tensorsocket_label]['marker'] + throughput_linestyle,
                 color=visual_map_plot[tensorsocket_label]['color'],
@@ -71,7 +71,7 @@ for label, data in workload_data.items():
     
     #add batch size annotations
     for i, batch_size in enumerate(batch_sizes):
-        plt.annotate(batch_size, (tensorsocket_costs[i], tensorsocket_throughputs[i]), fontsize=font_size - 6, 
+        plt.annotate(batch_size, (tensorsocket_costs[i], tensorsocket_throughputs[i]), fontsize=font_size, 
                      xytext=(5, 5), textcoords='offset points')
 
 

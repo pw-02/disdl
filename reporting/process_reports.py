@@ -318,6 +318,8 @@ def calculaute_costs(
 def get_dataset_size(dataset):
     if 'imagenet' in dataset:
         return 1.3e6
+    else:
+        return 1.3e6
  
 def gen_job_level_repot(jobs_metric_list, exp_folder_path):
 
@@ -329,7 +331,7 @@ def gen_job_level_repot(jobs_metric_list, exp_folder_path):
         sample_size_per_epoch = get_dataset_size(job_metrics['path'])
         epoch_time_seconds = (sample_size_per_epoch / samples_per_sec)
         compute_cost = compute_ec2_costs('p3.8xlarge', epoch_time_seconds)
-        compute_cost_efficiency = job_metrics['total_batches'] / compute_cost
+        compute_cost_efficiency = job_metrics['num_batches'] / compute_cost
         report_line = {
             'model_name': model_name,
             'dataloader_name': dataloader_name,
@@ -373,9 +375,12 @@ def compute_serverless_redis_costs(total_durtion_seconds, cache_size_gb, through
 if __name__ == "__main__":
  
     paths = [
-        Path(r"C:\Users\pw\Desktop\disdl(600)\imagenet_nas"),
+        # Path(r"C:\Users\pw\Desktop\disdl(600)\imagenet_nas"),
         # Path(r"C:\Users\pw\Desktop\disdl(600)\coco_nas"),
-        # Path(r"C:\Users\pw\Desktop\disdl(600)\openimages_nas"), 
+        # Path(r"C:\Users\pw\Desktop\disdl(600)\openimages_nas"),
+        Path(r"C:\Users\pw\Desktop\disdl(batchsizes)"),
+
+
         ]
     
     for folder_path in paths:

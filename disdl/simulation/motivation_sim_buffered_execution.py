@@ -56,6 +56,7 @@ def simulate_jobs_with_buffer(job_speeds, buffer_size, bacthes_per_job):
     event_queue = []  # Priority queue for next event times
     largest_distance_to_slowest = 0
     lambda_get_request_count = 0
+    distances_to_slowest = []
     # job_speeds.append(5) # the last job is the prefetch lambda function that warms up cached functions
     # # warm_up_job = len(job_speeds) - 1
     # job_speeds.append(1) # the second to last job is the lambda function that fetches data from the cache
@@ -63,7 +64,6 @@ def simulate_jobs_with_buffer(job_speeds, buffer_size, bacthes_per_job):
     last_invocation_time = {}
     last_job_completion_time = 0
  
-   
     # Initialize event queue with first batch completion times
     for job_id, speed in enumerate(job_speeds):
         heapq.heappush(event_queue, (speed, job_id))  # (time to complete first batch, job_id)
@@ -106,6 +106,7 @@ def simulate_jobs_with_buffer(job_speeds, buffer_size, bacthes_per_job):
         # Ensure buffer constraint is met before progressing
         slowest_progress = min(job_progress)
         distance_to_slowest = job_progress[job_id] - slowest_progress
+        distances_to_slowest.append(distance_to_slowest)
         largest_distance_to_slowest = max(largest_distance_to_slowest, distance_to_slowest)
         if distance_to_slowest >= buffer_size:
             # Job is ahead of the buffer, so it must wait
@@ -122,6 +123,11 @@ def simulate_jobs_with_buffer(job_speeds, buffer_size, bacthes_per_job):
         # Schedule the next batch completion if still within time limit
         next_event_time = time_elapsed + (job_speeds[job_id])
 
+        #print every tiem job process 1000 batchs
+        if job_progress[job_id] % 10000 == 0:
+            #average distance to slowest job
+            average_distance_to_slowest = sum(distances_to_slowest) / len(distances_to_slowest)
+            print(f"Average distance to slowest job: {average_distance_to_slowest:.2f} batches")
         if job_progress[job_id] != bacthes_per_job:
             heapq.heappush(event_queue, (next_event_time, job_id))
         else:
@@ -135,12 +141,13 @@ def simulate_jobs_with_buffer(job_speeds, buffer_size, bacthes_per_job):
 
     total_batches_processed = sum(job_progress)
     throughput = total_batches_processed / last_job_completion_time  # Batches per second
+    averaege_distance_to_slowest = sum(distances_to_slowest) / len(distances_to_slowest)
     # #plot cost efficiency over time
     # plt.plot(cost_efficiency_over_time.values())
     # plt.xlabel('Time (s)')
     # plt.ylabel('Cost Efficiency (batches/s)')
     # plt.show()
-    return time_elapsed, throughput, job_progress, largest_distance_to_slowest
+    return time_elapsed, throughput, job_progress, averaege_distance_to_slowest
 # 
 
 def run_simulation_case(case_name, 
@@ -161,6 +168,7 @@ def run_simulation_case(case_name,
     
     if buffer_size > 1:
         redis_cost = (hourly_cache_cost_per_gb * cache_size_gb) * (simulation_time / 3600)
+        # redis_cost = calc_ec2_compute_cost(simulation_time, 4.743)
     else:
         redis_cost = 0
 
@@ -203,26 +211,29 @@ if __name__ == "__main__":
     num_jobs = [4]
     job_speed = 0.523961767  # Speed of each job in batches per second
     inatcnes_cost_per_hour = 12.24
+    batch_size_mb = 35.5
     for jobs in num_jobs:
-        job_speeds = [0.137222914, 0.14272167, 0.351509787, 0.519805225]  
+        job_speeds = [0.137222914, 0.14272167, 0.351509787, 0.519805225]  #disl avg iteration times
         print(len(job_speeds))
-        batches_per_job = 8564  # Number of batches to process per job
+        batches_per_job = 8564 * 90 # Number of batches to process per job
+        num_epochs = 1
         hourly_ec2_cost = inatcnes_cost_per_hour 
         hourly_cache_cost_per_gb = 0.125  # aws serverless redis
-        files_per_batch = 37  # Size of each batch in MB
+        files_per_batch = 128  
         lambda_cost_per_get_request = 0.000010017  # Cost per AWS Lambda request
         lambda_cost_per_prefetch_request = 0.00012546  # Cost per AWS Lambda request
         # Worst-case scenario: All jobs are constrained by the slowest speed
-        worst_case_buffer = 5000
-        batch_size = 128
+        worst_case_buffer = np.inf #8564 * 2  # Infinite buffer for worst-case scenario
         worst_case_throughput, worst_case_cost_efficiency, wost_case_cost, cache_size_gb, max_buffer_size = run_simulation_case(
-            "Worst-Case Scenario (No Cache)", 
-            job_speeds, 
-            worst_case_buffer, 
-            batches_per_job, 
-            hourly_ec2_cost, 
-            hourly_cache_cost_per_gb, 
-            files_per_batch)
+            case_name='Worst-Case Scenario (Throughput)',
+            job_speeds = job_speeds,
+            buffer_size = worst_case_buffer,
+            batches_per_job = batches_per_job,
+            hourly_ec2_cost = hourly_ec2_cost,
+            hourly_cache_cost_per_gb = hourly_cache_cost_per_gb,
+            batch_size_mb = batch_size_mb,
+            files_per_batch= files_per_batch)
+    
         throughputs.append(worst_case_throughput)
         costs.append(wost_case_cost)
     print(throughputs)

@@ -33,6 +33,7 @@ def fill_range(int_list):
     return list(range(min_val, max_val + 1))
 
 #figure data
+coordl_label = 'CoorDL'
 tensorsocket_label = "TensorSocket"
 disdl_label = "DisDL"
 line_width = 2
@@ -43,6 +44,7 @@ visual_map_plot = {
     tensorsocket_label: {'color': '#FDA300', 'linestyle': '-', 'linewidth': line_width, 'edgecolor': 'black', 'hatch': '..','alpha': 1.0}, #indianred
     # tensorsocket_label: {'color': '#FDA300', 'linestyle': '-', 'linewidth': line_width, 'edgecolor': 'black', 'hatch': '...','alpha': 1.0}, #indianred
     disdl_label: {'color': 'black', 'linestyle': '-', 'linewidth': line_width,'edgecolor': 'black', 'hatch':'', 'alpha': 1.0}, #steelblue
+    coordl_label: {'color': '#FDA300', 'linestyle': '-', 'linewidth': line_width, 'edgecolor': 'black', 'hatch': '...','alpha': 1.0}, #indianred
 }
 
 # visual_map_plot = {
@@ -89,10 +91,12 @@ for workload_name, workload_data in workload.items():
     # Extract throughput values for each system
     disdl_throughputs = list(df["disdl_throughput(samples/s)"])
     tensorsocket_throughputs = list(df["tensorsocket_throughput(samples/s)"])
+    coordl_throughputs = list(df["coordl_throughput(samples/s)"])
     #based on the through, lets compute the time to complete one epoch
     disdl_times_epoch_time_min = [(workload_data["samples_per_epoch"]/x)/60 for x in disdl_throughputs] #convert to minutes
     tsocket_times_epoch_time_min = [(workload_data["samples_per_epoch"]/x)/60 for x in tensorsocket_throughputs] #convert to minutes
-
+    coodl_times_epoch_time_min = [(workload_data["samples_per_epoch"]/x)/60 for x in coordl_throughputs] #convert to minutes
+    
     # Bars for DISDL and TensorSocket
     x = np.arange(len(model_names))  # X-axis positions for models
     ax1.bar(x + bar_width/2, disdl_times_epoch_time_min, bar_width, label=disdl_label,
@@ -211,6 +215,8 @@ for workload_name, workload_data in workload.items():
     ax4.bar(x + bar_width, disdl_io_pct, bar_width, label="I/O", color=visual_map_plot[disdl_label]["color"], edgecolor="black", hatch="///", bottom=disdl_compute_pct, alpha=0.4)
     ax4.bar(x + bar_width, disdl_transform_pct, bar_width, label="Trans", color='white', edgecolor="black", hatch="---",
             bottom=disdl_compute_pct + disdl_io_pct)
+    
+    
     ax4.bar(x, tensorsocket_compute_pct, bar_width, label="GPU", color=visual_map_plot[tensorsocket_label]["color"], edgecolor="black", hatch='', alpha=visual_map_plot[tensorsocket_label]['alpha'])
     ax4.bar(x, tensorsocket_io_pct, bar_width, label="I/O", color=visual_map_plot[tensorsocket_label]["color"], edgecolor="black", hatch="///", bottom=tensorsocket_compute_pct,  alpha=0.6)
     ax4.bar(x, tensorsocket_transform_pct, bar_width, label="Trans", color=visual_map_plot[tensorsocket_label]["color"], edgecolor="black", hatch="---",

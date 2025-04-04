@@ -157,6 +157,8 @@ def run_simulation_case(case_name,
     
     if buffer_size > 1:
         redis_cost = (hourly_cache_cost_per_gb * cache_size_gb) * (simulation_time / 3600)
+
+        redis_cost = calc_ec2_compute_cost(simulation_time, 4.743)
         lambda_get_cost = compute_lambda_requests_cost(lambda_get_request_count, simulation_time)
         lambda_prefetch_cost = compute_prefetch_lambda_requests_cost(lambda_prefetch_count)
         lambda_cache_cost = lambda_get_cost + lambda_prefetch_cost

@@ -15,7 +15,7 @@ import json
 from typing import  Dict, Sized
 import functools
 import pandas as pd
-
+from io import StringIO
 class S3Url(object):
     def __init__(self, url):
         self._parsed = urlparse(url, allow_fragments=False)
@@ -312,6 +312,7 @@ class CoorDLOpenImagesIterableDataset(CoorDLDataset):
             self.cache_client = None
             self.s3_bucket = S3Url(self.dataset_location).bucket
             self.s3_prefix = S3Url(self.dataset_location).key
+            self.s3_data_dir = dataset_location
             self.samples = self._get_samples_from_s3()
             self.transform = transform    
             # print(self.job_id, self.batches)

@@ -26,6 +26,9 @@ workload_data = {
 }
 
 
+
+
+
 # Compute Pareto Frontier
 def pareto_frontier(cost, throughput):
     sorted_indices = np.argsort(cost)  

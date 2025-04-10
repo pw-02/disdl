@@ -1,7 +1,7 @@
 
 import random
 import hashlib
-from typing import Sized, List
+from typing import Sized, List, Dict, Tuple, Any
 import redis
 
 
@@ -32,7 +32,8 @@ class CoorDLBatchSampler():
 
         self.ssl = ssl
         self.sampler = self._create_sampler(num_files)
-        self.batches:List = []
+        self.batches:Dict = {}
+        self.local_batches:Dict = {}
         self.get_batches()
         self.cache_client = None
         pass
@@ -48,9 +49,9 @@ class CoorDLBatchSampler():
             this_job_fetch = False
             if (idx-self.job_id) % 4 == 0:
                 this_job_fetch = True
-                # batch_samples = [self._classed_items[i] for i in batch_indices]
-            self.batches.append((batch_indices, batch_id, this_job_fetch))
-
+                self.local_batches[batch_id] = (batch_indices, batch_id, this_job_fetch)
+            else:
+                self.batches[batch_id] = (batch_indices, batch_id, this_job_fetch)
        
     def _create_sampler(self, partition):
         """Create a new sampler based on the shuffle setting."""
@@ -74,25 +75,26 @@ class CoorDLBatchSampler():
 
 
     def __iter__(self):
-        while len(self.batches) > 0:
+        self._initialize_cache_client()
+
+        while len(self.batches) or len(self.local_batches) > 0:
             next_batch = None
             cache_hit = False
-            for batch in self.batches:
-                batch_indices, batch_id, this_job_fetch = batch
-                self._initialize_cache_client()
-                if self.cache_client.exists(batch_id): #cached by another job use it
-                    next_batch = batch
+           
+            keys = self.cache_client.keys()
+
+            for key in keys:
+                key_str = key.decode('utf-8')
+                if key_str in self.batches:
+                    next_batch = self.batches.pop(key_str)
                     cache_hit = True
                     break
-                
-                if this_job_fetch:
-                    next_batch = batch
-                    break
-            
-            if next_batch is None:
-                next_batch = self.batches[0]
+            if not cache_hit:
+                if len(self.local_batches) > 0:
+                    batch_id, next_batch = self.local_batches.popitem()
+                else:
+                    batch_id, next_batch = self.batches.popitem()
 
-            self.batches.remove(next_batch)
             yield  next_batch
     
     def __next__(self):

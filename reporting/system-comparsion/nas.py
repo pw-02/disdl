@@ -129,7 +129,7 @@ for workload_name, workload_data in workload.items():
     ax1.set_xticks(x)
     ax1.set_xticklabels(model_names, rotation=0, ha="center")
     ax1.set_ylabel("Avg epoch time (min)", fontsize=font_size)
-    # ax1.legend()
+    ax1.legend()
     #set font size for all lables and ticks
     ax1.tick_params(axis='both', which='major', labelsize=font_size)
     ax1.tick_params(axis='both', which='major', labelsize=font_size)
@@ -191,7 +191,7 @@ for workload_name, workload_data in workload.items():
     ax2.set_ylabel("Avg epoch Cost ($)", fontsize=font_size)
     ax2.tick_params(axis='both', which='major', labelsize=font_size)
     ax2.tick_params(axis='both', which='major', labelsize=font_size)
-    # ax2.legend()
+    ax2.legend()
 
 
    

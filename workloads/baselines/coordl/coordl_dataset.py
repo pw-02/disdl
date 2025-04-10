@@ -16,6 +16,7 @@ from typing import  Dict, Sized
 import functools
 import pandas as pd
 from io import StringIO
+import copy
 class S3Url(object):
     def __init__(self, url):
         self._parsed = urlparse(url, allow_fragments=False)
@@ -61,6 +62,9 @@ class CoorDLDataset(torch.utils.data.Dataset):
         self.s3_client = None
         self.cache_client = None
         self.num_samples = None
+        self.cache_batched_data = None
+        self.cached_batches_labels = None
+        self.sim = False
     
     def __len__(self):
         return self.num_samples
@@ -476,15 +480,6 @@ class CoorDLOpenImagesIterableDataset(CoorDLDataset):
 #-------------------------------------------------------------------------------
 
 
-
-
-
-
-
-
-
-    
-
 class CoorDLImageNetIterableDataset(CoorDLDataset):
     def __init__(self, 
                      job_id,
@@ -576,28 +571,6 @@ class CoorDLImageNetIterableDataset(CoorDLDataset):
                 Body=json.dumps(paired_samples, indent=4).encode('utf-8'))
 
         return paired_samples
-    
-    def _find_next_batch_to_process(self):
-        next_batch = None
-        cache_hit = False
-        for batch in self.batches:
-            batch_indices, batch_id, this_job_fetch = batch
-            if self.use_cache:
-                self._initialize_cache_client()
-                if self.cache_client.exists(batch_id): #cached by another job use it
-                    next_batch = batch
-                    cache_hit = True
-                    break
-            
-            if this_job_fetch:
-                next_batch = batch
-                break
-        if next_batch is not None:
-            next_batch = self.batches[0]
-
-        self.batches.remove(next_batch)
-        return next_batch, cache_hit
-
 
     def __getitem__(self, next_batch):
         start_time = time.perf_counter()
@@ -626,7 +599,14 @@ class CoorDLImageNetIterableDataset(CoorDLDataset):
             transformation_time  =  time.perf_counter() - start_transformation_time
             cache_hit = True
         else:
-            batch_data, batch_labels = self.load_batch_data(samples)
+            if self.sim and self.cache_batched_data is not None:
+                batch_data = copy.deepcopy(self.cache_batched_data)
+                batch_labels = copy.deepcopy(self.cached_batches_labels)
+            else:
+                batch_data, batch_labels = self.load_batch_data(samples)
+                if self.sim:
+                    self.cache_batched_data = copy.deepcopy(batch_data)
+                    self.cached_batches_labels = copy.deepcopy(batch_labels)
             cache_hit = False
              # Apply transformations if provided
             start_transformation_time = time.perf_counter()
@@ -656,7 +636,7 @@ class CoorDLImageNetIterableDataset(CoorDLDataset):
             return batch_data, batch_labels
         else:
             self._set_s3_client()
-            with ThreadPoolExecutor(max_workers=None) as executor:
+            with ThreadPoolExecutor() as executor:
                 futures = {executor.submit(self.read_data_from_s3, data_path, label): (data_path, label) for data_path, label in samples}
                 for future in as_completed(futures):
                     data_sample, label = future.result()
@@ -702,7 +682,7 @@ if __name__ == "__main__":
         )
 
         sampler = CoorDLBatchSampler(
-            dataset.count_image_samples(), 
+            len(dataset), 
             dataset.batch_size, 
             jobid=dataset.job_id,   
             drop_last=False, 

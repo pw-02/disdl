@@ -32,7 +32,7 @@ class Cache:
         if self.batch_ref_count.get(batch_key, 0) == 0:
             self.data.pop(batch_key, None)
             self.batch_ref_count.pop(batch_key, None)
-            logger.info(f"Removed batch {batch_key} from cache")
+            logger.debug(f"Removed batch {batch_key} from cache")
 
 class Job:
     def __init__(self, job_id, speed, num_epochs, batches_per_epoch):
@@ -76,7 +76,7 @@ class Simulation:
             # Process batch
             job.current_epoch, job.current_batch = epoch, batch
             self.cache.remove_batch(batch_key)
-            logger.info(f"Time {time:.2f}: Job {job_id} processed batch {batch_key}")
+            logger.debug(f"Time {time:.2f}: Job {job_id} processed batch {batch_key}")
             
             # Determine next epoch and batch
             if job.num_epochs_completed < job.total_epochs_required:

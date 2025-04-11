@@ -22,7 +22,7 @@ def get_python_command():
 @hydra.main(version_base=None, config_path="../conf", config_name="config")
 def main(config: DictConfig):
     workload = "imagenet_nas"
-    dataloader = "coordl"  # tensorsocket, disdl, coordl
+    dataloader = "disdl"  # tensorsocket, disdl, coordl
     producer_only = False
     max_train_time_seconds = 600  # 15min
     models = ["shufflenet_v2_x1_0", "resnet18", "resnet50", "vgg16"]

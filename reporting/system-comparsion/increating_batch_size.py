@@ -7,7 +7,7 @@ disdl_label = "DisDL"
 line_width = 2.5
 font_size = 14
 
-# Line styles for clarity
+# Line styles
 cost_linestyle = "--"
 throughput_linestyle = "-"
 
@@ -25,67 +25,58 @@ workload_data = {
     }
 }
 
-
-# Compute Pareto Frontier
-def pareto_frontier(cost, throughput):
-    sorted_indices = np.argsort(cost)  
-    cost, throughput = cost[sorted_indices], throughput[sorted_indices]  
-    pareto_x, pareto_y = [cost[0]], [throughput[0]]  
-
-    for i in range(1, len(cost)):
-        if throughput[i] > pareto_y[-1]:  
-            pareto_x.append(cost[i])
-            pareto_y.append(throughput[i])
-
-    return np.array(pareto_x), np.array(pareto_y)
-
 # Plot settings
-plt.figure(figsize=(6, 4))
+plt.figure(figsize=(6, 3))
 
-# Plotting both systems
 for label, data in workload_data.items():
+    batch_sizes = data["batch_sizes"]
 
+    # DISDL
     didsl_costs = data[disdl_label]["costs"]
     didsl_throughputs = data[disdl_label]["throughputs"]
-
-    batch_sizes = data[list(data.keys())[0]]
-
-    tensorsocket_costs = data[tensorsocket_label]["costs"]
-    tensorsocket_throughputs = data[tensorsocket_label]["throughputs"]
-
-    # Plot cost vs throughput for each system
     plt.plot(didsl_costs, didsl_throughputs, visual_map_plot[disdl_label]['marker'] + throughput_linestyle, 
              color=visual_map_plot[disdl_label]['color'],
-              linewidth=visual_map_plot[disdl_label]['linewidth'], 
-               label=disdl_label, markersize=8)
-             
-    
-    #add batch size annotations
+             linewidth=visual_map_plot[disdl_label]['linewidth'], 
+             label=disdl_label, markersize=8)
+
     for i, batch_size in enumerate(batch_sizes):
-        plt.annotate(batch_size, (didsl_costs[i], didsl_throughputs[i]), fontsize=font_size, 
-                     xytext=(5, 5), textcoords='offset points')
-        
+        plt.annotate(str(batch_size), 
+                     (didsl_costs[i], didsl_throughputs[i]),
+                     fontsize=font_size - 2,
+                     xytext=(8, -12),  # better positioning
+                     textcoords='offset points',
+                     bbox=dict(boxstyle='round,pad=0.2', fc='white', alpha=0.6),
+                     arrowprops=dict(arrowstyle='-', lw=0.5, color='gray'))
+
+    # TensorSocket
+    tensorsocket_costs = data[tensorsocket_label]["costs"]
+    tensorsocket_throughputs = data[tensorsocket_label]["throughputs"]
     plt.plot(tensorsocket_costs, tensorsocket_throughputs, visual_map_plot[tensorsocket_label]['marker'] + throughput_linestyle,
-                color=visual_map_plot[tensorsocket_label]['color'],
-                linewidth=visual_map_plot[tensorsocket_label]['linewidth'],
-                  label=tensorsocket_label, markersize=8)
-    
-    #add batch size annotations
+             color=visual_map_plot[tensorsocket_label]['color'],
+             linewidth=visual_map_plot[tensorsocket_label]['linewidth'],
+             label=tensorsocket_label, markersize=8)
+
     for i, batch_size in enumerate(batch_sizes):
-        plt.annotate(batch_size, (tensorsocket_costs[i], tensorsocket_throughputs[i]), fontsize=font_size, 
-                     xytext=(5, 5), textcoords='offset points')
+        plt.annotate(str(batch_size), 
+                     (tensorsocket_costs[i], tensorsocket_throughputs[i]),
+                     fontsize=font_size - 2,
+                     xytext=(8, -12),
+                     textcoords='offset points',
+                     bbox=dict(boxstyle='round,pad=0.2', fc='white', alpha=0.6),
+                     arrowprops=dict(arrowstyle='-', lw=0.5, color='gray'))
 
-
-# Labels, legend, and grid
+# Axis Labels
 plt.xlabel("Cost per Batch ($)", fontsize=font_size)
-plt.ylabel("Throuhgput (samples/s)", fontsize=font_size)
+plt.ylabel("Throughput (samples/s)", fontsize=font_size)  # fixed spelling
 plt.legend(loc="lower right", fontsize=font_size)
-# plt.xscale("log")  # Logarithmic scale for cost
-# plt.grid(True, linestyle="--", alpha=0.7)
+plt.grid(True, linestyle="--", alpha=0.4)
 plt.tick_params(axis='both', which='major', labelsize=font_size)
 
+# Set limits for breathing room
+plt.xlim(0.01, 0.08)
+plt.ylim(880, 1100)
 
-# Adjust layout for better spacing
+# Tight layout
 plt.tight_layout()
 
 # Show plot

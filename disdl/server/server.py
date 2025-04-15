@@ -46,8 +46,9 @@ class CacheAwareMiniBatchService(minibatch_service_pb2_grpc.MiniBatchServiceServ
                     dataset = LibSpeechDataset(dataset_location, transforms)
                 elif self.args.workload == 'openimages':
                     dataset = OpenImagesDataset(dataset_location, transforms)
-                
+                print(len(dataset))
                 self.datasets[dataset_location] = CentralBatchManager(dataset=dataset, args=self.args)
+                print(self.datasets[dataset_location])
                 dataset_info = self.datasets[dataset_location].dataset_info()
                 logger.info(f"Dataset '{dataset_location}' added. Total Files: {len(dataset)}, Total Batches:{dataset_info['num_batches']}")
                 job_id = self.datasets[dataset_location].add_job()

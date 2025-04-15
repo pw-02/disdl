@@ -8,6 +8,7 @@ import json
 from matplotlib.patches import Patch
 import matplotlib.patches as mpatches
 import matplotlib.lines as mlines
+import matplotlib.ticker as mtick
 
         # Function to load and process NDJSON file
 def load_usage_data(file_path):
@@ -129,7 +130,8 @@ for workload_name, workload_data in workload.items():
         ax1.set_xticks(x)
         ax1.set_xticklabels(model_names, rotation=0, ha="center")
         ax1.set_ylabel("Avg epoch time (min)", fontsize=font_size)
-        ax1.legend()
+        ax1.legend(ncol=3)
+        ax1.set_ylim(0, 110)
         #set font size for all lables and ticks
         ax1.tick_params(axis='both', which='major', labelsize=font_size)
         ax1.tick_params(axis='both', which='major', labelsize=font_size)
@@ -199,7 +201,10 @@ for workload_name, workload_data in workload.items():
         ax2.set_ylabel("Avg epoch Cost ($)", fontsize=font_size)
         ax2.tick_params(axis='both', which='major', labelsize=font_size)
         ax2.tick_params(axis='both', which='major', labelsize=font_size)
-        ax2.legend()
+        ax2.set_ylim(0, 12.5)
+        ax2.yaxis.set_major_formatter(mtick.FuncFormatter(lambda x, _: f"${x:,.2f}"))
+
+        ax2.legend(ncol=3)
 
 
         
@@ -314,14 +319,14 @@ for workload_name, workload_data in workload.items():
                 edgecolor="black", 
                 hatch=transform_hatch,
                 bottom=disdl_compute_pct, 
-                alpha=0.4)
+                alpha=0.6)
 
 
         ax4.bar(x + bar_width, disdl_io_pct, bar_width, label="I/O", 
-                color='white', 
+                color=visual_map_plot[disdl_label]["color"], 
                 edgecolor="black", 
                 hatch=io_hatch,
-                alpha=io_alpha,
+                alpha=0.3,
                 bottom=disdl_compute_pct + disdl_transform_pct)
         
 
@@ -362,11 +367,25 @@ for workload_name, workload_data in workload.items():
         handles = [Patch(facecolor="white", edgecolor="black", label=label) for label in labels]
         unique_labels = dict(zip(labels, handles))
 
+        legend_labels = ["GPU", "Preprocess", "IO"]
+        
+        legend_hatches = [gpu_hatch, transform_hatch, io_hatch]  # Or whatever hatch styles you're using
+        legend_handles  = [
+                Patch(facecolor="white", edgecolor="black", hatch=hatch, label=label)
+                for label, hatch in zip(legend_labels, legend_hatches)
+                ]
+
+#         # Create white patches with black edges and the correct hatches
+#         legend_handles = [
+#         Patch(facecolor="white", edgecolor="black", hatch=hatch, label=label)
+#         for label, hatch in zip(legend_labels, legend_hatches)
+# ]
+
 
         # Update the legend with proper formatting
         ax4.legend(
                 legend_handles, 
-                list(unique.keys()),   # Legend handles (with empty handles for system names)
+                legend_labels,   # Legend handles (with empty handles for system names)
                 loc="upper center",  # Preferred location
                 ncol=3,  # Number of columns
                 fontsize=11,

@@ -3,7 +3,7 @@ name: coco_nas
 
 s3_bucket: coco-dataset
 s3_train_prefix: s3://coco-dataset/coco_train.json
-s3_val_prefix: s3://coco-dataset/data/coco_val.json
+s3_val_prefix: s3://coco-dataset/data/coco_train.json
 num_pytorch_workers: 4
 
 alpha: 0.4

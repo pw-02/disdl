@@ -36,6 +36,9 @@ class CacheAwareMiniBatchService(minibatch_service_pb2_grpc.MiniBatchServiceServ
             else:
                 #register dataset and add job
                 if self.args.workload == 'coco':
+                    print(dataset_location)
+                    print(transforms)
+                    # print(self.args.workload)
                     dataset = MSCOCODataset(dataset_location, transforms)
                 elif self.args.workload == 'imagenet':
                     dataset = ImageNetDataset(dataset_location, transforms)
@@ -51,7 +54,7 @@ class CacheAwareMiniBatchService(minibatch_service_pb2_grpc.MiniBatchServiceServ
             message = f"Job '{job_id}' registered for dataset '{dataset_location}'. Total Jobs: {len(self.datasets[dataset_location].active_jobs)}"
             logger.info(message)
         except Exception as e:
-            error_message = f"Failed to register job with dataset '{dataset_location}'. Error: {e}"
+            error_message = f"Failed to register job with dataset '{dataset_location}'. Error: {str(e)}"
             logger.error(error_message)
         return minibatch_service_pb2.RegisterJobResponse(
             job_id=job_id, 

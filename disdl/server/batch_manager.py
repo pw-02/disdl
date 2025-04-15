@@ -51,7 +51,7 @@ class CentralBatchManager:
                 simulate_time=args.prefetch_simulation_time,
                 num_workers=prefetch_workers)
             self.prefetch_service.start()
-            self._warm_up_cache()
+            # self._warm_up_cache()
             # time.sleep(20)  # Wait for the cache to warm up
         
         self.eviction_service: Optional[CacheEvictionService] = None
@@ -72,10 +72,10 @@ class CentralBatchManager:
         #wait a few seconds for the cache to be warmed up
         time.sleep(5)
 
-        # #wait for cache to be warmed up
-        # if self.prefetch_service:
-        #     while self.prefetch_service.queue.qsize() > 0:
-        #         time.sleep(1)
+        #wait for cache to be warmed up
+        if self.prefetch_service:
+            while self.prefetch_service.queue.qsize() > 0:
+                time.sleep(1)
 
 
     def add_job(self):
@@ -315,71 +315,6 @@ class CentralBatchManager:
                     self.eviction_service.stop_cache_evictor()
 
 
-if __name__ == "__main__":
-    # Constants    
-    PREFETCH_TIME = 0.1
-
-    CACHE_MISS_DELAY = 0.1
-    CACHE_HIT_DELAY = 0.1
-    DELAY_BETWEEN_JOBS = 1  # Delay in seconds between the start of each job
-    BATCHES_PER_JOB = 20  # Number of batches each job will process
-    JOB_SPEEDS = [0.1]
-
-    # Initialize dataset and batch manager
-    args = DisDLArgs(
-        batch_size=10,
-        num_dataset_partitions=1,
-        lookahead_steps=20,
-        shuffle=False,
-        drop_last=False,
-        workload='speech',
-        serverless_cache_address=None,
-        use_prefetching=False,
-        use_keep_alive=True,
-        prefetch_lambda_name='CreateVisionTrainingBatch',
-        prefetch_cost_cap_per_hour=None,
-        cache_keep_alive_timeout=60,  # 3 minutes
-        prefetch_simulation_time=PREFETCH_TIME,
-        evict_from_cache_simulation_time=None
-    )
-
-    # dataset = MSCOCODataset(dataset_location='s3://coco-dataset/coco_train.json')
-    # batch_manager = CentralBatchManager(dataset=dataset, args=args, prefetch_workers=10)
-
-    dataset = LibSpeechDataset(dataset_location="s3://disdlspeech/test-clean")
-    batch_manager = CentralBatchManager(dataset=dataset, args=args, prefetch_workers=10)
-
-    def run_job(job_id, job_speed):
-        """Function to simulate a job processing batches."""
-        cache_hits = 0
-        cache_misses = 0
-
-        for i in range(BATCHES_PER_JOB):
-            batch = batch_manager.get_next_batch_for_job(job_id=job_id)
-
-            if batch.cache_status == CacheStatus.CACHED:
-                time.sleep(CACHE_HIT_DELAY + job_speed)
-                cache_hits += 1
-            else:
-                time.sleep(CACHE_MISS_DELAY + job_speed)
-                cache_misses += 1
-
-            batch_manager.update_job_progess(
-                job_id, batch.batch_id, CACHE_MISS_DELAY, batch.cache_status == CacheStatus.CACHED, job_speed, True
-            )
-
-            hit_rate = cache_hits / (i + 1)
-            if i % 1 == 0 or batch.cache_status != CacheStatus.CACHED:
-                logger.info(f'Step {i+1}, Job {job_id}, {batch.batch_id}, Hits: {cache_hits}, Misses: {cache_misses}, Rate: {hit_rate:.2f}')
-
-        batch_manager.handle_job_ended(job_id)
-
-
-    if __name__ == "__main__":
-        from dataset import ImageNetDataset
-        run_job(1,1)
-
-    
 # if __name__ == "__main__":
 #     # Constants    
 #     PREFETCH_TIME = 0.1
@@ -397,7 +332,7 @@ if __name__ == "__main__":
 #         lookahead_steps=20,
 #         shuffle=False,
 #         drop_last=False,
-#         workload_kind='vision',
+#         workload='speech',
 #         serverless_cache_address=None,
 #         use_prefetching=False,
 #         use_keep_alive=True,
@@ -405,11 +340,14 @@ if __name__ == "__main__":
 #         prefetch_cost_cap_per_hour=None,
 #         cache_keep_alive_timeout=60,  # 3 minutes
 #         prefetch_simulation_time=PREFETCH_TIME,
-#         evict_from_cache_simulation_time=60
+#         evict_from_cache_simulation_time=None
 #     )
 
-#     dataset = ImageNetDataset(dataset_location='s3://imagenet-dataset/train/')
-#     batch_manager = CentralBatchManager(dataset=dataset, args=args, prefetch_workers=0)
+#     # dataset = MSCOCODataset(dataset_location='s3://coco-dataset/coco_train.json')
+#     # batch_manager = CentralBatchManager(dataset=dataset, args=args, prefetch_workers=10)
+
+#     dataset = LibSpeechDataset(dataset_location="s3://disdlspeech/test-clean")
+#     batch_manager = CentralBatchManager(dataset=dataset, args=args, prefetch_workers=10)
 
 #     def run_job(job_id, job_speed):
 #         """Function to simulate a job processing batches."""
@@ -437,14 +375,77 @@ if __name__ == "__main__":
 #         batch_manager.handle_job_ended(job_id)
 
 
-#     if __name__ == "__main__":
-#         threads = []
+    # if __name__ == "__main__":
+    #     from dataset import ImageNetDataset
+    #     run_job(1,1)
 
-#         for job_id, speed in enumerate(JOB_SPEEDS):
-#             thread = threading.Thread(target=run_job, args=(job_id, speed,))
-#             threads.append(thread)
-#             thread.start()
-#             time.sleep(DELAY_BETWEEN_JOBS)  # Stagger job start times
+    
+if __name__ == "__main__":
+    # Constants    
+    PREFETCH_TIME = 0.1
 
-#         for thread in threads:
-#             thread.join()  # Wait for all jobs to complete
+    CACHE_MISS_DELAY = 0.1
+    CACHE_HIT_DELAY = 0.1
+    DELAY_BETWEEN_JOBS = 1  # Delay in seconds between the start of each job
+    BATCHES_PER_JOB = 20  # Number of batches each job will process
+    JOB_SPEEDS = [0.1]
+
+    # Initialize dataset and batch manager
+    args = DisDLArgs(
+        batch_size=128,
+        num_dataset_partitions=1,
+        lookahead_steps=100,
+        shuffle=False,
+        drop_last=False,
+        workload='coco',
+        serverless_cache_address=None,
+        use_prefetching=True,
+        use_keep_alive=True,
+        prefetch_lambda_name='CreateMultiModalBatch',
+        prefetch_cost_cap_per_hour=None,
+        cache_keep_alive_timeout=60,  # 3 minutes
+        prefetch_simulation_time=PREFETCH_TIME,
+        evict_from_cache_simulation_time=60
+    )
+    dataset_location = 's3://coco-dataset/coco_train.json'
+    dataset = MSCOCODataset(dataset_location)
+    # dataset = ImageNetDataset(dataset_location='s3://imagenet-dataset/train/')
+    batch_manager = CentralBatchManager(dataset=dataset, args=args, prefetch_workers=0)
+
+    def run_job(job_id, job_speed):
+        """Function to simulate a job processing batches."""
+        cache_hits = 0
+        cache_misses = 0
+
+        for i in range(BATCHES_PER_JOB):
+            batch = batch_manager.get_next_batch_for_job(job_id=job_id)
+
+            if batch.cache_status == CacheStatus.CACHED:
+                time.sleep(CACHE_HIT_DELAY + job_speed)
+                cache_hits += 1
+            else:
+                time.sleep(CACHE_MISS_DELAY + job_speed)
+                cache_misses += 1
+
+            batch_manager.update_job_progess(
+                job_id, batch.batch_id, CACHE_MISS_DELAY, batch.cache_status == CacheStatus.CACHED, job_speed, True
+            )
+
+            hit_rate = cache_hits / (i + 1)
+            if i % 1 == 0 or batch.cache_status != CacheStatus.CACHED:
+                logger.info(f'Step {i+1}, Job {job_id}, {batch.batch_id}, Hits: {cache_hits}, Misses: {cache_misses}, Rate: {hit_rate:.2f}')
+
+        batch_manager.handle_job_ended(job_id)
+
+
+    # if __name__ == "__main__":
+    #     threads = []
+
+    #     for job_id, speed in enumerate(JOB_SPEEDS):
+    #         thread = threading.Thread(target=run_job, args=(job_id, speed,))
+    #         threads.append(thread)
+    #         thread.start()
+    #         time.sleep(DELAY_BETWEEN_JOBS)  # Stagger job start times
+
+    #     for thread in threads:
+    #         thread.join()  # Wait for all jobs to complete

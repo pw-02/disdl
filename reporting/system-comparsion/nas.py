@@ -46,7 +46,7 @@ font_size = 16
 bar_width = 0.285
 
 coordl_cahe_cost_per_hour = 1.82
-
+serverless_cache_cost_per_hour = 0.4
         # visual_map_plot = {
         #     tensorsocket_label: {'color': '#FEA400', 'linestyle': '-', 'linewidth': line_width, 'edgecolor': 'black', 'hatch': '', 'alpha': 1.0}, #indianred
         #     disdl_label: {'color': '#005250', 'linestyle': '-', 'linewidth': line_width,'edgecolor': 'black', 'hatch':'', 'alpha': 1.0}, #steelblue
@@ -152,7 +152,8 @@ for workload_name, workload_data in workload.items():
         coordl_cache_costs = list(df["coordl_cache_cost($)"])
 
         #get hourly compute cost for each model for both disdl and tensorsocket
-        disdl_epoch_cost = [hourly_cost * _ for _ in disdl_times_to_complete_one_epoch]
+        disdl_hourly_cost = (workload_data["ec2_instance_cost_per_hour"] + serverless_cache_cost_per_hour)/len(model_names)
+        disdl_epoch_cost = [disdl_hourly_cost * _ for _ in disdl_times_to_complete_one_epoch]
         tensorsocket_epoch_cost = [hourly_cost * _ for _ in tensorsocket_times_to_complete_one_epoch]
         
         coordl_horly_cost = (workload_data["ec2_instance_cost_per_hour"] + coordl_cahe_cost_per_hour)/len(model_names)

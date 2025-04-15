@@ -25,7 +25,7 @@ def get_python_command():
 def main(config: DictConfig):
     workload = "coco_hpo"
     model = "albef"
-    dataloader = "tensorsocket" # or "tensorsocket", "disdl", coordl
+    dataloader = "coordl" # or "tensorsocket", "disdl", coordl
     vision_encoder_hiddern_layer_sizes = [4, 4, 4, 4]
     learning_rates = [0.1, 0.01, 0.001, 0.0001]  # Add your learning rates here
 
@@ -72,7 +72,7 @@ def main(config: DictConfig):
     for idx, num_hidden_layers in enumerate(vision_encoder_hiddern_layer_sizes):
         learning_rate = learning_rates[idx]
         print(f"Starting job on GPU {idx} with albef model with {num_hidden_layers} hidden layers and exp_id {expid}_{idx}")
-        if dataloader == 'disdl':
+        if dataloader == 'disdl' or dataloader == 'coordl':
             run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/run.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.vision_encoder_args.num_hidden_layers={num_hidden_layers} workload.learning_rate={learning_rates[idx]}"
         elif dataloader == 'tensorsocket' and not producer_only:
             run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/run.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.vision_encoder_args.num_hidden_layers={num_hidden_layers} workload.learning_rate={learning_rates[idx]} dataloader.mode=consumer"

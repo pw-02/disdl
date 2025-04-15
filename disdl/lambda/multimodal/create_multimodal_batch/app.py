@@ -305,7 +305,7 @@ def lambda_handler(event, context):
 
         minibatch = create_minibatch(bucket_name, batch_samples, image_transform, text_transform, s3_client)
         # minibatch_size_mb = bytes_to_mb(minibatch)
-        redis_client = None
+        # redis_client = None
         if redis_client is None:
             redis_client = redis.StrictRedis(host=cache_host, port=int(cache_port))
             # redis_client = redis.StrictRedis(host=cache_host, port=int(cache_port), ssl=True )

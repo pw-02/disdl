@@ -27,7 +27,7 @@ def main(config: DictConfig):
     dataloader = "coordl" #tensorsocket, disdl, coordl
     producer_only = False
     models = ["vit_b_32", "vit_small_patch32_224", "levit_128", "mixer_b32_224"]
-    max_train_time_seconds = 600
+    max_train_time_seconds = 900
 
     # Generate experiment ID and log directory
     current_datetime = datetime.now(timezone.utc).strftime("%Y-%m-%d_%H-%M-%S")

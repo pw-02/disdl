@@ -19,10 +19,11 @@ def get_python_command():
             print("Error: Python is not installed.", file=sys.stderr)
             sys.exit(1)
 
+
 @hydra.main(version_base=None, config_path="../conf", config_name="config")
 def main(config: DictConfig):
     workload = "imagenet_nas"
-    dataloader = "disdl"  # tensorsocket, disdl, coordl
+    dataloader = "coordl"  # tensorsocket, disdl, coordl
     producer_only = False
     max_train_time_seconds = 600  # 15min
     models = ["shufflenet_v2_x1_0", "resnet18", "resnet50", "vgg16"]

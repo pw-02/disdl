@@ -37,7 +37,7 @@ def fill_range(int_list):
     return list(range(min_val, max_val + 1))
 
 #figure data
-coordl_label = 'CoorDL'
+coordl_label = 'ReCoorDL'
 tensorsocket_label = "TensorSocket"
 disdl_label = "DisDL"
 line_width = 2
@@ -160,11 +160,17 @@ for workload_name, workload_data in workload.items():
     tensorsocket_epoch_cost = [x + y + z for x, y, z in zip(tensorsocket_epoch_cost, tensortsocket_cache_costs, tensorsocket_epoch_cost)]
     coordl_epoch_cost = [x + y + z for x, y, z in zip(coordl_epoch_cost, coordl_cache_costs, coordl_epoch_cost)]
 
-    #print the aggregated cost for each system
-    print(f"Aggregated cost for {workload_name} workload")
-    print(f"DisDL: {sum(disdl_epoch_cost)}")
-    print(f"TensorSocket: {sum(tensorsocket_epoch_cost)}")
-    print(f"Cost difference:{abs(sum(disdl_epoch_cost) - sum(tensorsocket_epoch_cost))}")
+#     #print the aggregated cost for each system
+#     print(f"Aggregated cost for {workload_name} workload")
+#     print(f"DisDL: {sum(disdl_epoch_cost)}")
+#     print(f"TensorSocket: {sum(tensorsocket_epoch_cost)}")
+#     print(f"Cost difference:{abs(sum(disdl_epoch_cost) - sum(tensorsocket_epoch_cost))}")
+
+    #print aggregated throughput for each system
+    print(f"Aggregated throughput for {workload_name} workload")
+    print(f"DisDL: {sum(disdl_throughputs)}")
+    print(f"TensorSocket: {sum(tensorsocket_throughputs)}")
+    print(f"CoordL: {sum(coordl_throughputs)}")
 
     # Bars for DISDL and TensorSocket
     x = np.arange(len(model_names))  # X-axis positions for models

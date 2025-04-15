@@ -19,8 +19,8 @@ import lz4.frame
 MEAN = (0.48145466, 0.4578275, 0.40821073)
 STD_DEV = (0.26862954, 0.26130258, 0.27577711)
 
-# tokenizer = BertTokenizer.from_pretrained("/var/task/bert-tokenizer")
-tokenizer = BertTokenizer.from_pretrained(r"disdl\lambda\multimodal\create_multimodal_batch\bert-tokenizer")
+tokenizer = BertTokenizer.from_pretrained("/var/task/bert-tokenizer")
+# tokenizer = BertTokenizer.from_pretrained(r"disdl\lambda\multimodal\create_multimodal_batch\bert-tokenizer")
 
 # Create the S3 client with the custom config
 # Create the S3 client with the custom config

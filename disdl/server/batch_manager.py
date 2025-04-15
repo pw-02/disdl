@@ -52,7 +52,7 @@ class CentralBatchManager:
                 num_workers=prefetch_workers)
             self.prefetch_service.start()
             self._warm_up_cache()
-            time.sleep(20)  # Wait for the cache to warm up
+            # time.sleep(20)  # Wait for the cache to warm up
         
         self.eviction_service: Optional[CacheEvictionService] = None
         if args.use_keep_alive:

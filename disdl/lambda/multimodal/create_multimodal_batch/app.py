@@ -19,7 +19,8 @@ import lz4.frame
 MEAN = (0.48145466, 0.4578275, 0.40821073)
 STD_DEV = (0.26862954, 0.26130258, 0.27577711)
 
-tokenizer = BertTokenizer.from_pretrained("/var/task/bert-tokenizer")
+# tokenizer = BertTokenizer.from_pretrained("/var/task/bert-tokenizer")
+tokenizer = BertTokenizer.from_pretrained(r"disdl\lambda\multimodal\create_multimodal_batch\bert-tokenizer")
 
 # Create the S3 client with the custom config
 # Create the S3 client with the custom config
@@ -225,8 +226,8 @@ def get_data_sample(bucket_name: str, data_sample: tuple, image_transform, text_
     Retrieves and transforms a sample from S3.
     """
     # sample, image_id = data_sample
-    image_path, caption, image_id= data_sample
-
+    image_path_caption, image_id= data_sample
+    image_path, caption = image_path_caption[0], image_path_caption[1]
     obj = s3_client.get_object(Bucket=bucket_name, Key=image_path)
     image = Image.open(BytesIO(obj['Body'].read())).convert("RGB")
     # Apply transformations
@@ -318,6 +319,8 @@ def lambda_handler(event, context):
             'message': f"Successfully cached '{batch_id}'"
         }
     except Exception as e:
+
+        print(e)
         return {
             'success': False,
             'message': str(e)

@@ -25,7 +25,7 @@ def get_python_command():
 def main(config: DictConfig):
 
     workload = "openimages_hpo"
-    dataloader = "tensorsocket" #tensorsocket, disdl
+    dataloader = "coordl" #tensorsocket, disdl
     producer_only = False
     model = "vit_b_32" #"vit_b_32", "vit_small_patch32_224", "levit_128", "mixer_b32_224"
     models = [model,model,model,model]
@@ -69,7 +69,7 @@ def main(config: DictConfig):
     for idx, model in enumerate(models):
         learning_rate = learning_rates[idx]
         print(f"Starting job on GPU {idx} with model {model} and exp_id {expid}_{idx}")
-        if dataloader == 'disdl':
+        if dataloader == 'disdl' or dataloader == 'coordl':
             run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/run.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model} workload.learning_rate={learning_rate}"
         elif dataloader == 'tensorsocket' and not producer_only:
             run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/run.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model} workload.learning_rate={learning_rate} dataloader.mode=consumer"

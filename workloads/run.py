@@ -495,7 +495,7 @@ def get_model(config: DictConfig):
         model = timm.create_model('mixer_b32_224', pretrained=False, num_classes=config.workload.num_classes)
     elif model_architecture == 'albef_retrieval':
         model = albef_model_for_retrieval(config.workload, pretrained=False)
-    elif model_architecture == 'albef':
+    
     
     return model
 

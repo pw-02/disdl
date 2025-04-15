@@ -164,6 +164,8 @@ for workload_name, workload_data in workload.items():
         tensorsocket_epoch_cost = [x + y + z for x, y, z in zip(tensorsocket_epoch_cost, tensortsocket_cache_costs, tensorsocket_epoch_cost)]
         coordl_epoch_cost = [x + y + z for x, y, z in zip(coordl_epoch_cost, coordl_cache_costs, coordl_epoch_cost)]
 
+       
+
         #     #print the aggregated cost for each system
         #     print(f"Aggregated cost for {workload_name} workload")
         #     print(f"DisDL: {sum(disdl_epoch_cost)}")
@@ -393,7 +395,24 @@ for workload_name, workload_data in workload.items():
                 handleheight=1,  # Set handle height to 0 to remove unnecessary space
         )
 
-
+        #saeve epoch times and costs to a csv file, as re gpu, io and gpu %
+        df["disdl_epoch_time(min)"] = disdl_times_epoch_time_min
+        df["tensorsocket_epoch_time(min)"] = tsocket_times_epoch_time_min
+        df["coordl_epoch_time(min)"] = coodl_times_epoch_time_min
+        df["disdl_epoch_cost($)"] = disdl_epoch_cost
+        df["tensorsocket_epoch_cost($)"] = tensorsocket_epoch_cost
+        df["coordl_epoch_cost($)"] = coordl_epoch_cost 
+        df["disdl_compute_pct"] = disdl_compute_pct
+        df["disdl_io_pct"] = disdl_io_pct 
+        df["disdl_transform_pct"] = disdl_transform_pct 
+        df["tensorsocket_compute_pct"] = tensorsocket_compute_pct 
+        df["tensorsocket_io_pct"] = tensorsocket_io_pct 
+        df["tensorsocket_transform_pct"] = tensorsocket_transform_pct
+        df["coordl_compute_pct"] = coodl_compute_pct 
+        df["coordl_io_pct"] = coordl_io_pct 
+        df["coordl_transform_pct"] = coordl_transform_pct 
+        #save to csv file
+        df.to_csv(f"{workload_name}_epoch_summary.csv", index=False)
 
 
 

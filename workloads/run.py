@@ -258,8 +258,11 @@ def train_loop(fabric:Fabric,
                     optimizer.step()  # Update weights
                 except Exception as e:
                     print(e)
-                
-                total_train_loss += loss.item() * inputs.size(0)  # Convert loss to CPU for accumulation
+                if loss is not None:
+                    # loss = loss.mean()  # Average loss across all GPUs
+                    # loss = loss.item()  # Convert to CPU for logging
+                    # loss = loss.detach().cpu()  # Detach from GPU for logging
+                    total_train_loss += loss.item() * inputs.size(0)  # Convert loss to CPU for accumulation
                 
                 # Accumulate metrics directly on GPU to avoid synchronization
                 # correct_preds += (outputs.argmax(dim=1) == labels).sum().item()  # No .item(), stays on GPU

@@ -226,8 +226,8 @@ def get_data_sample(bucket_name: str, data_sample: tuple, image_transform, text_
     Retrieves and transforms a sample from S3.
     """
     # sample, image_id = data_sample
-    image_path_caption, image_id= data_sample
-    image_path, caption = image_path_caption[0], image_path_caption[1]
+    image_path, caption, image_id= data_sample
+    # image_path, caption = image_path_caption[0], image_path_caption[1]
     obj = s3_client.get_object(Bucket=bucket_name, Key=image_path)
     image = Image.open(BytesIO(obj['Body'].read())).convert("RGB")
     # Apply transformations

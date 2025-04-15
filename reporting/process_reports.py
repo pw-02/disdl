@@ -94,10 +94,12 @@ def get_optimal_batches_processed_over_time(csv_data):
     return cumulative_iteration_times
 
 
-def compute_ec2_costs(instance_type: str, time_seconds: float):
+def compute_ec2_costs(instance_type: str, time_seconds: float, is_coordl: bool = False) -> float:
     instance_prices = {'p3.8xlarge':  12.24, 'c5n.xlarge': 0.4,}
     hours = time_seconds / 3600
     hourly_rate = instance_prices[instance_type]
+    if is_coordl:
+        hourly_rate = hourly_rate + 1.82  # Assuming double the cost for coordination
     instance_cost = hourly_rate * hours
     return instance_cost
 
@@ -405,7 +407,9 @@ if __name__ == "__main__":
 
             overall_metrics,jobs_metric_list, batches_over_time, lambda_cost_data = get_training_summary(exp_folder, dataloader)
             exp_summary['lamda_requests'] = 0 if lambda_cost_data is None else len(lambda_cost_data['Total Cost'])
-            exp_summary['ec2_cost'] =  compute_ec2_costs('p3.8xlarge', overall_metrics['total_time(s)'])
+            
+            exp_summary['ec2_cost'] =  compute_ec2_costs('p3.8xlarge', overall_metrics['total_time(s)'], True if dataloader =='coordl' else False)
+            
             exp_summary['lambda_cost'] = 0 if lambda_cost_data is None else sum(lambda_cost_data['Total Cost'])
             exp_summary['total_cost'] =  exp_summary['lambda_cost']+ exp_summary['ec2_cost']
             exp_summary['cost_efficiency'] = overall_metrics['total_batches'] / exp_summary['total_cost']

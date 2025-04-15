@@ -26,7 +26,7 @@ def main(config: DictConfig):
     workload = "imagenet_hpo"
     dataloader = "coordl" #tensorsocket, disdl, coordl
     producer_only = False
-    model = "resnet18" #resnet18, regnet_y_400mf,imagenet_mobilenet_v3_large, resnet50, shufflenet_v2_x1_0, vgg16
+    model = "regnet_y_400mf" #resnet18, regnet_y_400mf,imagenet_mobilenet_v3_large, resnet50, shufflenet_v2_x1_0, vgg16
     models = [model,model,model,model]
     learning_rates = [0.1, 0.01, 0.001, 0.0001]  # Add your learning rates here
 

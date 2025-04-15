@@ -395,6 +395,9 @@ for workload_name, workload_data in workload.items():
                 handleheight=1,  # Set handle height to 0 to remove unnecessary space
         )
 
+        #craete a new data farem df to save the epoch time and cost for each system
+        df = pd.DataFrame()
+
         #saeve epoch times and costs to a csv file, as re gpu, io and gpu %
         df["disdl_epoch_time(min)"] = disdl_times_epoch_time_min
         df["tensorsocket_epoch_time(min)"] = tsocket_times_epoch_time_min

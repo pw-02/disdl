@@ -1,7 +1,0 @@
-Policy,Case,Total Simulation Time (s),Max Cache Size Reached,Time of Max Cache,Average Cache Occupancy,Cache Hits,Cache Misses,Hit Ratio,Total Evictions,Job-specific Hits
-FIFO,FIFO_test,5198.572055223882,5000,686.1428970000221,4182.57,21793,18207,54.48%,13207,"{'Job_1_hits': 0, 'Job_2_hits': 10000, 'Job_3_hits': 3035, 'Job_4_hits': 8758}"
-LRU,LRU_test,5198.572055223882,5000,686.1428970000221,4182.57,20362,19638,50.91%,14638,"{'Job_1_hits': 0, 'Job_2_hits': 10000, 'Job_3_hits': 2186, 'Job_4_hits': 8176}"
-LFU,LFU_test,5198.572055223882,5000,686.1428970000221,4182.57,14424,25576,36.06%,20576,"{'Job_1_hits': 0, 'Job_2_hits': 4808, 'Job_3_hits': 4808, 'Job_4_hits': 4808}"
-RR,RR_test,5198.572055223882,5000,686.1428970000221,4182.57,20591,19409,51.48%,14409,"{'Job_1_hits': 0, 'Job_2_hits': 9598, 'Job_3_hits': 4503, 'Job_4_hits': 6490}"
-NoEviction,NoEviction_test,5198.572055223882,5000,686.1428970000221,4182.57,15000,25000,37.50%,0,"{'Job_1_hits': 0, 'Job_2_hits': 5000, 'Job_3_hits': 5000, 'Job_4_hits': 5000}"
-CoorDL,CoorDL_test,5198.572055223882,5000,932.2039551240621,3374.81,25081,14919,62.70%,7336,"{'Job_1_hits': 0, 'Job_2_hits': 7336, 'Job_3_hits': 7745, 'Job_4_hits': 10000}"

@@ -375,10 +375,11 @@ def compute_serverless_redis_costs(total_durtion_seconds, cache_size_gb, through
 if __name__ == "__main__":
  
     paths = [
-        # Path(r"C:\Users\pw\Desktop\disdl(600)\imagenet_nas"),
+        Path(r"C:\Users\pw\Desktop\disdl(600)\imagenet_nas"),
         # Path(r"C:\Users\pw\Desktop\disdl(600)\coco_nas"),
         # Path(r"C:\Users\pw\Desktop\disdl(600)\openimages_nas"),
-        Path(r"C:\Users\pw\Desktop\disdl(batchsizes)")]
+        # Path(r"C:\Users\pw\Desktop\disdl(batchsizes)")
+        ]
     
     for folder_path in paths:
         experiment_folders = [str(folder) for folder in folder_path.rglob("2025*") if folder.is_dir()]

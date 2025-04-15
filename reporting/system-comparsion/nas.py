@@ -44,7 +44,7 @@ line_width = 2
 font_size = 16
 bar_width = 0.285
 
-
+coordl_cahe_cost_per_hour = 1.82
 
 # visual_map_plot = {
 #     tensorsocket_label: {'color': '#FEA400', 'linestyle': '-', 'linewidth': line_width, 'edgecolor': 'black', 'hatch': '', 'alpha': 1.0}, #indianred
@@ -152,7 +152,9 @@ for workload_name, workload_data in workload.items():
     #get hourly compute cost for each model for both disdl and tensorsocket
     disdl_epoch_cost = [hourly_cost * _ for _ in disdl_times_to_complete_one_epoch]
     tensorsocket_epoch_cost = [hourly_cost * _ for _ in tensorsocket_times_to_complete_one_epoch]
-    coordl_epoch_cost = [hourly_cost * _ for _ in coordl_times_to_complete_one_epoch]
+    
+    coordl_horly_cost = (workload_data["ec2_instance_cost_per_hour"] + coordl_cahe_cost_per_hour)/len(model_names)
+    coordl_epoch_cost = [coordl_horly_cost * _ for _ in coordl_times_to_complete_one_epoch]
     # Bars for DISDL and TensorSocket
 
     #compute total cost for each model
@@ -335,9 +337,11 @@ for workload_name, workload_data in workload.items():
 
     # Get existing legend handles and labels
     handles, labels = ax4.get_legend_handles_labels()
+    legend_handles = [Patch(facecolor="white", edgecolor="black", label=label) for label in unique_labels]
 
     # Remove duplicates from the legend (preserving order)
     unique_labels = dict(zip(labels, handles))
+#     legend_handles = [Patch(facecolor="white", edgecolor="black", label=label) for label in unique_labels]
 
 
   # Update the legend with proper formatting

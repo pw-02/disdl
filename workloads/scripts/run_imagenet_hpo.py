@@ -24,7 +24,7 @@ def get_python_command():
 @hydra.main(version_base=None, config_path="../conf", config_name="config")
 def main(config: DictConfig):
     workload = "imagenet_hpo"
-    dataloader = "disdl" #tensorsocket, disdl
+    dataloader = "coordl" #tensorsocket, disdl, coordl
     producer_only = False
     model = "resnet50" #resnet18, regnet_y_400mf,imagenet_mobilenet_v3_large, resnet50, shufflenet_v2_x1_0, vgg16
     models = [model,model,model,model]
@@ -71,7 +71,7 @@ def main(config: DictConfig):
         learning_rate = learning_rates[idx]
         print(f"Starting job on GPU {idx} with model {model}, learining rate {learning_rate}, and exp_id {expid}_{idx}")
         
-        if dataloader == 'disdl':
+        if dataloader != 'tensorsocket':
             run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/run.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model} workload.learning_rate={learning_rates[idx]}"
         elif dataloader == 'tensorsocket' and not producer_only:
             run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/run.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model} workload.learning_rate={learning_rates[idx]} dataloader.mode=consumer"

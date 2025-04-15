@@ -25,7 +25,7 @@ def get_python_command():
 def main(config: DictConfig):
     workload = "coco_hpo"
     model = "albef"
-    dataloader = "tensorsocket" # or "tensorsocket", "disdl"
+    dataloader = "tensorsocket" # or "tensorsocket", "disdl", coordl
     vision_encoder_hiddern_layer_sizes = [4, 4, 4, 4]
     learning_rates = [0.1, 0.01, 0.001, 0.0001]  # Add your learning rates here
 

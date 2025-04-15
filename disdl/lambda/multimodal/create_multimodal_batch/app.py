@@ -258,9 +258,9 @@ def create_minibatch(bucket_name: str, samples: list, image_transform, text_tran
         bytes_minibatch = buffer.getvalue()
         # Encode the serialized tensor with base64
         # compressed_minibatch = lz4.frame.compress(bytes_minibatch)
-        compressed_minibatch = lz4.frame.compress(bytes_minibatch)
+        # compressed_minibatch = lz4.frame.compress(bytes_minibatch)
 
-    return compressed_minibatch
+    return bytes_minibatch
 
 def cache_minibatch_with_retries(redis_client, batch_id, minibatch, max_retries=4, retry_interval=0.1):
     retries = 0

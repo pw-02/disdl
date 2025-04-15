@@ -518,8 +518,8 @@ class DisDLCocoIterableDataset(DisDLIterableDataset):
     
     
     def convert_bytes_to_torch_tensor(self, data:bytes):
-        if self.use_compression:
-            data = lz4.frame.decompress(data)
+        # if self.use_compression:
+        #     data = lz4.frame.decompress(data)
         with BytesIO(data) as buffer:
             images, captions, text_atts, image_ids = torch.load(buffer)
         return  images, captions, text_atts, image_ids

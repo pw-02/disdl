@@ -71,7 +71,7 @@ def main(config: DictConfig):
         learning_rate = learning_rates[idx]
         print(f"Starting job on GPU {idx} with model {model}, learining rate {learning_rate}, and exp_id {expid}_{idx}")
         
-        if dataloader != 'tensorsocket':
+        if dataloader == 'disdl' or dataloader == 'coordl':
             run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/run.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model} workload.learning_rate={learning_rates[idx]}"
         elif dataloader == 'tensorsocket' and not producer_only:
             run_cmd = f"CUDA_VISIBLE_DEVICES={idx} {python_cmd} workloads/run.py workload={workload} exp_id={expid} job_id={idx} dataloader={dataloader} log_dir={log_dir} workload.model_architecture={model} workload.learning_rate={learning_rates[idx]} dataloader.mode=consumer"

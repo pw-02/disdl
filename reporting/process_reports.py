@@ -380,7 +380,8 @@ if __name__ == "__main__":
  
     paths = [
         # Path(r"C:\Users\pw\Desktop\disdl(600)\imagenet_nas"),
-        Path(r"C:\Users\pw\Desktop\disdl(600)\coco_nas"),
+        Path(r"C:\Users\pw\Desktop\deadline)\logs\coco_nas"),
+        # C:\Users\pw\Desktop\deadline)\logs\coco_nas\
         # Path(r"C:\Users\pw\Desktop\disdl(600)\openimages_nas"),
         # Path(r"C:\Users\pw\Desktop\disdl(batchsizes)")
         ]

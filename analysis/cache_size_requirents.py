@@ -102,7 +102,7 @@ def calculate_elasticache_serverless_cost(
     # }
 
 
-def run_disdl_simulation(
+def run_coordl_simulation(
         job_speeds,
         max_cache_size_gb,
         size_per_batch_gb,
@@ -137,6 +137,7 @@ def run_disdl_simulation(
         if batches_per_job is not None and all(job_progress[job_id] >= batches_per_job for job_id in range(num_jobs)):
             break
         
+        
         time_elapsed, job_id = heapq.heappop(event_queue)  # Get next job event
         current_batch = job_progress[job_id]  # Current batch for the job
         cache_hit = cache.handle_request(current_batch, job_id)  # Handle cache request
@@ -148,11 +149,8 @@ def run_disdl_simulation(
             next_event_time = time_elapsed + (job_speeds[job_id]) + cache_miss_penalty
         
         job_progress[job_id] += 1
-        if batches_per_job is not None and job_progress[job_id] < batches_per_job:
+        if job_progress[job_id] < batches_per_job:
             heapq.heappush(event_queue, (next_event_time, job_id))
-        else:
-            heapq.heappush(event_queue, (next_event_time, job_id))
-
     
     total_batches_processed = sum(job_progress)
     throughput = total_batches_processed / time_elapsed  # Batches per second
@@ -164,7 +162,7 @@ def run_disdl_simulation(
     max_cached_bacthes = max(cache.cache_size_over_time)
     max_cache_capacity_used = max_cached_bacthes * size_per_batch_gb
     if use_elasticache_severless_pricing:
-        cache_cost = calculate_elasticache_serverless_cost(average_gb_usage=max_cache_capacity_used)
+        cache_cost = calculate_elasticache_serverless_cost(average_gb_usage=max_cache_size_gb)
     else:
         cache_cost = (hourly_cache_cost / 3600) * time_elapsed
     total_cost = compute_cost + cache_cost  # No additional costs in this simulation
@@ -202,6 +200,21 @@ def run_disdl_simulation(
     return results
    
 
+def trial_of_different_cvs():
+    # List of job speeds (provided)
+    job_speeds_list = [
+        [1.01, 0.99, 1.00, 1.02],  # Very Low Variability
+        [1.05, 0.97, 1.02, 0.98],  # Low Variability
+        [0.9, 1.0, 1.1, 1.0],      # Mild Variability
+        [0.8, 0.9, 1.2, 1.1],      # Moderate Variability
+        [0.6, 0.8, 1.4, 1.2],      # Medium-High Variability
+        [0.5, 0.7, 1.5, 1.2],      # High Variability
+        [0.3, 0.6, 2.0, 1.5],      # Very High Variability
+        [0.2, 0.5, 2.5, 2.0],      # Extreme Variability
+        [0.1, 0.4, 2.8, 2.2],      # Ultra-Extreme Variability
+        [0.05, 0.3, 3.5, 2.5]      # Maximum Variability
+    ]
+
 
 def cache_requitmenest_for_job_speed_disparity():
    # Define simulation parameters
@@ -218,18 +231,13 @@ def cache_requitmenest_for_job_speed_disparity():
         [0.1, 0.4, 2.8, 2.2],      # Ultra-Extreme Variability
         [0.05, 0.3, 3.5, 2.5],      # Maximum Variability
         # [0.05, 0.3, 3.5, 4.5]      # Maximum Variability
+
     ]
-
-    #update te jobs lists sso that all entired are the same, and match the highest value in the list
-    # for i in range(len(job_speeds_list)):
-    #     max_value = max(job_speeds_list[i])
-    #     job_speeds_list[i] = [max_value] * len(job_speeds_list[i])
-
     # Example usage:
     # target_cvs = [0.05, 0.1, 0.2, 0.35, 0.5, 0.7, 1.0, 1.3, 1.7, 2.0]
     # job_speeds_list = [generate_job_speeds(cv, num_jobs=10, seed=i) for i, cv in enumerate(target_cvs)]
 
-    simulation_time = None #3600  # Simulate 1 hour
+    simulation_time =  None #3600 * 5 # Simulate 1 hour
     num_epochs = 10
     batches_per_epoch = 10000
     max_batches_per_job = batches_per_epoch * num_epochs
@@ -238,7 +246,7 @@ def cache_requitmenest_for_job_speed_disparity():
     redis_cache_size_gb = np.inf
     size_per_batch_gb = 20 / 1024
     cache_miss_penalty = 0
-    use_elasticache_severless_pricing = True
+    use_elasticache_severless_pricing = False
     cvs = []
     cache_capcity_requires = []
     cache_costs = []
@@ -254,7 +262,7 @@ def cache_requitmenest_for_job_speed_disparity():
         logger.info(f"Running simulation with CV: {cv:.2f}")
         logger.info(f"Job Speeds: {job_speeds}")
         results = {'job_speeds': job_speeds, 'cv': cv}
-        sim_results = run_disdl_simulation(
+        sim_results = run_coordl_simulation(
             job_speeds = job_speeds,
             max_cache_size_gb=redis_cache_size_gb,
             size_per_batch_gb = size_per_batch_gb,
@@ -262,25 +270,13 @@ def cache_requitmenest_for_job_speed_disparity():
             hourly_cache_cost = hourly_redis_cache_cost,
             simulation_time=simulation_time,
             batches_per_job=max_batches_per_job,
-            use_elasticache_severless_pricing = use_elasticache_severless_pricing
+            # use_elasticache_severless_pricing = use_elasticache_severless_pricing
         )
         results.update(sim_results)
         cvs.append(cv)
         cache_capcity_requires.append(sim_results['max_cache_capacity_used_gb'])
         cache_costs.append(sim_results['cache_cost'])
-
-    # #compuet potential aggregated throughput
-    # aggregated_throughput = 0
-    # for joblist in job_speeds_list:
-    #     for speed in joblist:
-    #         #time to compute jobs per epoch
-    #         time_to_fiinsh = speed * batches_per_epoch
-    #         tp = batches_per_epoch / time_to_fiinsh
-    #         aggregated_throughput.append(tp)
-
-    #     aggregated_throughput += sum(job_speeds_list[i]) / len(job_speeds_list[i])
-
-    # logger.info(f"Aggregated Throughput: {aggrehated_throughput:.2f} batches/sec")
+    
     #plot the results
     fig, ax = plt.subplots(figsize=(6, 4))
     ax.plot(cvs, cache_capcity_requires, marker='o', linestyle='-', color='b')

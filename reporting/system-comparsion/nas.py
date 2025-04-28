@@ -83,7 +83,7 @@ for workload_name, workload_data in workload.items():
         disdl_label: {'color': 'black', 'linestyle': '-', 'linewidth': line_width,'edgecolor': 'black', 'hatch':'', 'alpha': 1.0}, #steelblue
         tensorsocket_label: {'color': '#FDA300', 'linestyle': '-', 'linewidth': line_width, 'edgecolor': 'black', 'hatch': '','alpha': 1.0}, #indianred
         }
-        fig = plt.figure(figsize=(17, 3.2))
+        fig = plt.figure(figsize=(17, 4))
         gs = gridspec.GridSpec(1, 3, width_ratios=[0.95, 0.95, 1.1])  # First two plots are twice as wide
         ax1 = fig.add_subplot(gs[0, 0])  # First plot
         ax2 = fig.add_subplot(gs[0, 1])  # Second plot
@@ -131,7 +131,7 @@ for workload_name, workload_data in workload.items():
         ax1.set_xticklabels(model_names, rotation=0, ha="center")
         ax1.set_ylabel("Avg epoch time (min)", fontsize=font_size)
         ax1.legend(ncol=3)
-        ax1.set_ylim(0, 800)
+        ax1.set_ylim(0, 30)
         #set font size for all lables and ticks
         ax1.tick_params(axis='both', which='major', labelsize=font_size)
         ax1.tick_params(axis='both', which='major', labelsize=font_size)
@@ -204,10 +204,10 @@ for workload_name, workload_data in workload.items():
         ax2.set_ylabel("Avg epoch Cost ($)", fontsize=font_size)
         ax2.tick_params(axis='both', which='major', labelsize=font_size)
         ax2.tick_params(axis='both', which='major', labelsize=font_size)
-        ax2.set_ylim(0, 90)
+        ax2.set_ylim(0, 3)
         ax2.yaxis.set_major_formatter(mtick.FuncFormatter(lambda x, _: f"${x:,.2f}"))
 
-        ax2.legend(ncol=3)
+        ax2.legend(ncol=4)
 
 
         

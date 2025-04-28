@@ -106,7 +106,7 @@ class DLTJOB():
 
     def next_training_step(self, current_time_sec):
         self.elapased_time_sec = current_time_sec        
-        cache_hit = self.cache.get(self.job_id, self.job_id)  # Simulate cache access
+        cache_hit = self.cache.get(self.job_progress+1, self.job_id)  # Simulate cache access
         if cache_hit:
             self.cache_hit_count +=1
         else:
@@ -134,10 +134,10 @@ class DLTJOB():
             'job_id': self.job_id,
             'job_speed': self.speed,
             'cache_capacity_gb': self.cache.cache_capacity_gb,
-            'cache_hit_%': cache_hit_rate,
             'bacthes_processed': self.job_progress,
-            # 'cache_hit_count': self.cache_hit_count,
-            # 'cache_miss_count': self.cache_miss_count,
+            'cache_hit_count': self.cache_hit_count,
+            'cache_miss_count': self.cache_miss_count,
+            'cache_hit_%': cache_hit_rate,
             'elapsed_time': self.elapased_time_sec,
             'throughput': throughput,
             'compute_cost': compute_cost,
@@ -185,13 +185,17 @@ def run_coordl_simulation(
         job:DLTJOB = job  # Get next job event
         cache_hit = job.next_training_step(time_elapsed)  # Simulate the next training step for this job
         #schudle the next event for this job if it has not completed its batches
-        if batches_per_job is not None and job.job_progress < batches_per_job:
-            if cache_hit:
-                next_event_time = time_elapsed + job.speed
-            else:
-                next_event_time = time_elapsed + job.speed + cache_miss_penalty
+        if cache_hit:
+            next_event_time = time_elapsed + job.speed
+        else:
+            next_event_time = time_elapsed + job.speed + cache_miss_penalty
+        
+        if batches_per_job is None or job.job_progress < batches_per_job:
             heapq.heappush(event_queue, (next_event_time, job))
-        cache_size_over_time.append(shared_cache.get_cache_size())  # Store cache size over time
+
+        cache_size = shared_cache.get_cache_size()
+
+        cache_size_over_time.append(cache_size)  # Store cache size over time
     
     # Calculate results
     total_batches_processed = sum(job.job_progress for job in jobs)
@@ -211,10 +215,11 @@ def run_coordl_simulation(
         cache_cost = (hourly_cache_cost / 3600) * time_elapsed
     total_cost = compute_cost + cache_cost  # No additional costs in this simulation
 
+    job_speeds = {job.job_id: job.speed for job in jobs}
     overall_results = {
         'run_id': run_id,
         'workload_name': workload_name,
-        'job_speeds': {job.job_id: job.speed for job in jobs},
+        'job_speeds': job_speeds,
         'dataloader': 'CoorDL',
         'cache_capacity': cache_capacity_gb,
         'cache_eviction_policy': shared_cache.eviction_policy,
@@ -249,6 +254,7 @@ def run_coordl_simulation(
     #save results to a file
 
     print(f"CoorDL:")
+    print(f"  Jobs: {job_speeds}"),
     print(f"  Time: {time_elapsed:.2f} seconds")
     print(f"  Cache Size: {cache_capacity_gb} GB")
     print(f"  Cache Used: {max_cache_capacity_used:.4f} GB")
@@ -267,13 +273,13 @@ if __name__ == "__main__":
     #print name variable name 'imagenet_128_batch_size'
     workload_name = 'imagenet_128'
     workload =  workloads[workload_name]
-    simulation_time_sec =  None #3600 * 5 # Simulate 1 hour
-    max_batches_per_job = 8500 #np.inf
+    simulation_time_sec = None #3600 # None  #3600 * 1 # Simulate 1 hour
+    max_batches_per_job = 8500 # 8500 #np.inf
     hourly_ec2_cost = 12.24 
     hourly_cache_cost = 3.25
     cache_capacity_gb = 100 #np.inf
     size_per_batch_gb = 20 / 1024
-    cache_miss_penalty = 0.5
+    cache_miss_penalty = 0
     use_elasticache_severless_pricing = False
 
     run_coordl_simulation(

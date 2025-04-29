@@ -32,12 +32,12 @@ class TensorSocketCache:
             if self.data[key] >= self.num_jobs:
                 logger.debug(f"Evicting batch {key} from cache")
                 self.data.pop(key, None)
-            return True
+            return True, True
         else:
             if not self.cache_is_full():
                 self.data[key] = 1
-                # return True    
-                return False
+                return True, False
+            return False, False
         
     def cache_is_full(self):
         # Check if the cache is full based on the size of the batches and the maximum cache size
@@ -61,9 +61,9 @@ class DLTJOB():
     
     def next_training_step(self, current_time_sec):
         self.elapased_time_sec = current_time_sec        
-        batch_retrieved = self.cache.get(self.job_progress+1, self.job_id)  # Simulate cache access
+        batch_retrieved, cache_hit = self.cache.get(self.job_progress+1, self.job_id)  # Simulate cache access
         if batch_retrieved:
-            if self.current_batch_is_miss:
+            if self.current_batch_is_miss or not cache_hit:
                 self.cache_miss_count +=1
             else:
                 self.cache_hit_count +=1
@@ -89,6 +89,7 @@ class DLTJOB():
         total_cost = compute_cost + cache_cost
         return {
             'sim_id': sim_id,
+            'dataloader': 'tensorsocket',
             'job_id': self.job_id,
             'job_speed': self.speed,
             'cache_capacity_gb': self.cache.cache_capacity_gb,
@@ -97,30 +98,11 @@ class DLTJOB():
             'cache_miss_count': self.cache_miss_count,
             'cache_hit_%': cache_hit_rate,
             'elapsed_time': self.elapased_time_sec,
-            'throughput': throughput,
+            'throughput(batches/s)': throughput,
             'compute_cost': compute_cost,
             'cache_cost': cache_cost,
             'total_cost': total_cost,
         }
-
-        # return {
-        #     'sim_id': sim_id,
-        #     'job_id': self.job_id,
-        #     'job_speed': self.speed,
-            
-        #     'cache_miss_penalty': 0,
-        #     'cache_capacity_gb': self.cache.cache_capacity_gb,
-        #     'bacthes_processed': self.job_progress,
-        #     'cache_hit_count': self.cache_hit_count,
-        #     'cache_miss_count': self.cache_miss_count,
-        #     'cache_hit_%': cache_hit_rate,
-        #     'elapsed_time': self.elapased_time_sec,
-        #     'throughput': throughput,
-        #     'compute_cost': compute_cost,
-        #     'cache_cost': cache_cost,
-        #     'total_cost': total_cost,
-        # }
-
 
 def run_tensorsocket_simualtion(
         sim_id,
@@ -176,7 +158,24 @@ def run_tensorsocket_simualtion(
         cache_size_over_time.append(cache_size)  # Store cache size over time
     
     job_performances = [job.get_performance(sim_id, hourly_ec2_cost/len(jobs)) for job in jobs]
-    return job_performances, cache_size_over_time
+
+    ts_overall_results = gen_report_data(
+        dataloader_name = 'tensorsocket',
+        job_performances = job_performances,
+        cache_size_over_time=cache_size_over_time,
+        eviction_policy = "tensorsocket",
+        size_per_batch_gb = size_per_batch_gb,
+        cache_capacity_gb = cache_capacity_gb,
+        cache_miss_penalty = 0,
+        hourly_ec2_cost = hourly_ec2_cost,
+        hourly_cache_cost = hourly_cache_cost,
+        sim_id = sim_id,
+        workload_name = workload_name,
+        use_elasticache_severless_pricing = False
+    )
+
+
+    return job_performances, ts_overall_results
 
 if __name__ == "__main__":
     #print name variable name 'imagenet_128_batch_size'
@@ -186,7 +185,6 @@ if __name__ == "__main__":
     max_batches_per_job = 8500 # 8500 #np.inf
     hourly_ec2_cost = 12.24 
     size_per_batch_gb = 20 / 1024
-    cache_miss_penalty = 0
     use_elasticache_severless_pricing = False
     cache_buffer_size = 10
     cache_capacity_gb = cache_buffer_size * size_per_batch_gb
@@ -197,7 +195,7 @@ if __name__ == "__main__":
 #     simulation_time =  3600 * 1 # Simulate 1 hour
 #     hourly_ec2_cost = 12.24  # Example: $3 per hour for an EC2 instance
     sim_id= str(int(time.time()))
-    job_performances, cache_size_over_time  = run_tensorsocket_simualtion(
+    job_performances, ts_overall_results  = run_tensorsocket_simualtion(
         sim_id = sim_id,
         workload_name = workload_name,
         workload_jobs = workload.items(),
@@ -209,20 +207,6 @@ if __name__ == "__main__":
         simulation_time_sec=simulation_time_sec,
         batches_per_job=max_batches_per_job)
     
-    ts_overall_results = gen_report_data(
-        dataloader_name = 'tensorsocket',
-        job_performances = job_performances,
-        cache_size_over_time=cache_size_over_time,
-        eviction_policy = "tensorsocket",
-        size_per_batch_gb = size_per_batch_gb,
-        cache_capacity_gb = cache_capacity_gb,
-        cache_miss_penalty = cache_miss_penalty,
-        hourly_ec2_cost = hourly_ec2_cost,
-        hourly_cache_cost = hourly_cache_cost,
-        sim_id = sim_id,
-        workload_name = workload_name,
-        use_elasticache_severless_pricing = use_elasticache_severless_pricing
-    )
     #save overall results to a file
     report_folder = os.path.join(os.getcwd(), "simulation", "reports", workload_name)
     os.makedirs(report_folder, exist_ok=True)

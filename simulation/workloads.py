@@ -26,7 +26,7 @@ def gen_report_data(dataloader_name,
     aggregated_cache_misses = sum(job['cache_miss_count'] for job in job_performances)
     aggregated_cache_hit_percent = (aggregated_cache_hits / (aggregated_cache_hits + aggregated_cache_misses)) * 100 if (aggregated_cache_hits + aggregated_cache_misses) > 0 else 0
     aggregated_compute_cost = sum(job['compute_cost'] for job in job_performances)
-    aggregated_throuhgput = sum(job['throughput'] for job in job_performances)
+    aggregated_throuhgput = sum(job['throughput(batches/s)'] for job in job_performances)
     aggregated_time_sec = sum(job['elapsed_time'] for job in job_performances)
     elapsed_time_sec = max(job['elapsed_time'] for job in job_performances) if job_performances else 0
 
@@ -46,9 +46,9 @@ def gen_report_data(dataloader_name,
 
     overall_results = {
         'sim_id': sim_id,
+        'dataloader': dataloader_name,
         'workload_name': workload_name,
         'job_speeds': job_speeds,
-        'dataloader': dataloader_name,
         'cache_capacity': cache_capacity_gb,
         'cache_eviction_policy': eviction_policy,
         'size_per_batch': size_per_batch_gb,
@@ -64,7 +64,7 @@ def gen_report_data(dataloader_name,
         'total_batches_processed': aggregated_batches_processed,
         'time_elapsed': elapsed_time_sec,
         'total_job_time': aggregated_time_sec,
-        'throughput': aggregated_throuhgput,
+        'throughput(batches/s)': aggregated_throuhgput,
         'compute_cost': aggregated_compute_cost,
         'cache_cost': cache_cost,
         'total_cost': total_cost,

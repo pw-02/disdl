@@ -105,6 +105,7 @@ class DLTJOB():
         total_cost = self.compute_cost + cache_cost
         return {
             'sim_id': sim_id,
+            'dataloader': 'coordl',
             'job_id': self.job_id,
             'job_speed': self.speed,
             'cache_capacity_gb': self.cache.cache_capacity_gb,
@@ -113,7 +114,7 @@ class DLTJOB():
             'cache_miss_count': self.cache_miss_count,
             'cache_hit_%': cache_hit_rate,
             'elapsed_time': self.elapased_time_sec,
-            'throughput': throughput,
+            'throughput(batches/s)': throughput,
             'compute_cost': self.compute_cost,
             'cache_cost': cache_cost,
             'total_cost': total_cost,
@@ -171,10 +172,24 @@ def run_coordl_simulation(
     
     job_performances = [job.get_performance(sim_id, hourly_ec2_cost/len(jobs), hourly_cache_cost/len(jobs)) for job in jobs]
 
+    coordl_overall_results = gen_report_data(
+            dataloader_name = 'coordl',
+            job_performances = job_performances,
+            cache_size_over_time = cache_size_over_time,
+            eviction_policy = "coordl",
+            size_per_batch_gb = size_per_batch_gb,
+            cache_capacity_gb = cache_capacity_gb,
+            cache_miss_penalty = cache_miss_penalty,
+            hourly_ec2_cost = hourly_ec2_cost,
+            hourly_cache_cost = hourly_cache_cost,
+            sim_id = str(int(time.time())),
+            workload_name = workload_name,
+            use_elasticache_severless_pricing = use_elasticache_severless_pricing
+        )
 
 
 
-    return job_performances, cache_size_over_time
+    return job_performances, coordl_overall_results
    
 if __name__ == "__main__":
 
@@ -190,7 +205,7 @@ if __name__ == "__main__":
     cache_miss_penalty = 0
     use_elasticache_severless_pricing = False
 
-    job_performances, cache_size_over_time = run_coordl_simulation(
+    job_performances, coordl_overall_results = run_coordl_simulation(
         sim_id = str(int(time.time())),
         workload_name = workload_name,
         workload_jobs = workload.items(),
@@ -202,22 +217,7 @@ if __name__ == "__main__":
         batches_per_job=max_batches_per_job,
         use_elasticache_severless_pricing = use_elasticache_severless_pricing
     )
-    coordl_overall_results = gen_report_data(
-        dataloader_name = 'coordl',
-        job_performances = job_performances,
-        cache_size_over_time = cache_size_over_time,
-        eviction_policy = "coordl",
-        size_per_batch_gb = size_per_batch_gb,
-        cache_capacity_gb = cache_capacity_gb,
-        cache_miss_penalty = cache_miss_penalty,
-        hourly_ec2_cost = hourly_ec2_cost,
-        hourly_cache_cost = hourly_cache_cost,
-        sim_id = str(int(time.time())),
-        workload_name = workload_name,
-        use_elasticache_severless_pricing = use_elasticache_severless_pricing
-    )
-
-
+    
     #save overall results to a file
     report_folder = os.path.join(os.getcwd(), "simulation", "reports", workload_name)
     os.makedirs(report_folder, exist_ok=True)

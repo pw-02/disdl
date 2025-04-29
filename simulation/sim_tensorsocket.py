@@ -4,7 +4,7 @@ import logging
 from typing import List, Tuple, Dict, Set, Any
 import sys
 sys.path.append(".")
-from simulation.workloads import workloads, save_dict_list_to_csv
+from simulation.workloads import workloads, save_dict_list_to_csv, gen_report_data
 import os
 import csv
 import time
@@ -159,64 +159,8 @@ def run_tensorsocket_simualtion(
         cache_size = shared_cache.get_cache_size()
         cache_size_over_time.append(cache_size)  # Store cache size over time
     
-    
-    # Calculate results
-    total_batches_processed = sum(job.job_progress for job in jobs)
-    throughput = total_batches_processed / time_elapsed  # Batches per second
-    compute_cost = (hourly_ec2_cost / 3600) * time_elapsed
-    cache_hit_count = sum(job.cache_hit_count for job in jobs)
-    cache_miss_count = sum(job.cache_miss_count for job in jobs)
-    cache_hit_percent = (cache_hit_count / (cache_hit_count + cache_miss_count)) * 100 if (cache_hit_count + cache_miss_count) > 0 else 0
-    # max_cached_bacthes = max(shared_cache.cache_size_over_time)
-    # max_cache_capacity_used = max_cached_bacthes * size_per_batch_gb
-    max_cache_capacity_used = max(cache_size_over_time) if cache_size_over_time else 0
-    average_cache_capacity_used = np.mean(cache_size_over_time) if cache_size_over_time else 0
-    cache_cost = (hourly_cache_cost / 3600) * time_elapsed
-    total_cost = compute_cost + cache_cost  # No additional costs in this simulation
-    
     job_performances = [job.get_performance(sim_id, hourly_ec2_cost) for job in jobs]
-
-    job_speeds = {job.job_id: job.speed for job in jobs}
-    overall_results = {
-        'sim_id': sim_id,
-        'workload_name': workload_name,
-        'job_speeds': job_speeds,
-        'dataloader': 'TensorSocket',
-        'cache_capacity': cache_capacity_gb,
-        'cache_eviction_policy': '',
-        'size_per_batch': size_per_batch_gb,
-        'num_jobs': len(jobs),
-        'cache_miss_penalty': 0,
-        'hourly_ec2_cost': hourly_ec2_cost,
-        'hourly_cache_cost': 0,
-        'max_cache_capacity_used': max_cache_capacity_used,
-        'average_cache_capacity_used': average_cache_capacity_used,
-        'cache_hit_count': cache_hit_count,
-        'cache_miss_count': cache_miss_count,
-        'cache_hit_percent': cache_hit_percent,
-        'total_batches_processed': total_batches_processed,
-        'time_elapsed': time_elapsed,
-        'throughput': throughput,
-        'compute_cost': compute_cost,
-        'cache_cost': cache_cost,
-        'total_cost': total_cost,
-    }
-
-    print(f"TensorSocket:")
-    print(f"  Jobs: {job_speeds}"),
-    print(f"  Time: {time_elapsed:.2f} seconds")
-    print(f"  Cache Buffer: {cache_buffer_size} batches")
-    print(f"  Cache Used: {max_cache_capacity_used:.4f} GB")
-    print(f"  Cache Hit %: {cache_hit_percent:.2f}%")
-    print(f"  Total Batches Processed: {total_batches_processed}")
-    print(f"  Elapsed Time: {time_elapsed:.2f}s, {time_elapsed/60:.2f} min")
-    print(f"  Overall Throughput: {throughput:.2f} batches/sec")
-    print(f"  Cache Cost: ${cache_cost:.2f}")
-    print(f"  Compute Cost: ${compute_cost:.2f}")
-    print(f"  Total Cost : ${total_cost:.2f}")
-    print("-" * 40)
-
-    return overall_results, job_performances
+    return job_performances, cache_size_over_time
 
 if __name__ == "__main__":
     #print name variable name 'imagenet_128_batch_size'
@@ -237,7 +181,7 @@ if __name__ == "__main__":
 #     simulation_time =  3600 * 1 # Simulate 1 hour
 #     hourly_ec2_cost = 12.24  # Example: $3 per hour for an EC2 instance
     sim_id= str(int(time.time()))
-    ts_overall_results,  ts_job_performances = run_tensorsocket_simualtion(
+    job_performances, cache_size_over_time  = run_tensorsocket_simualtion(
         sim_id = sim_id,
         workload_name = workload_name,
         workload_jobs = workload.items(),
@@ -249,6 +193,20 @@ if __name__ == "__main__":
         simulation_time_sec=simulation_time_sec,
         batches_per_job=max_batches_per_job)
     
+    ts_overall_results = gen_report_data(
+        dataloader_name = 'tensorsocket',
+        job_performances = job_performances,
+        cache_size_over_time=cache_size_over_time,
+        eviction_policy = "tensorsocket",
+        size_per_batch_gb = size_per_batch_gb,
+        cache_capacity_gb = cache_capacity_gb,
+        cache_miss_penalty = cache_miss_penalty,
+        hourly_ec2_cost = hourly_ec2_cost,
+        hourly_cache_cost = hourly_cache_cost,
+        sim_id = sim_id,
+        workload_name = workload_name,
+        use_elasticache_severless_pricing = use_elasticache_severless_pricing
+    )
     #save overall results to a file
     report_folder = os.path.join(os.getcwd(), "simulation", "reports", workload_name)
     os.makedirs(report_folder, exist_ok=True)
@@ -257,7 +215,7 @@ if __name__ == "__main__":
     save_dict_list_to_csv([ts_overall_results], overall_report_file)
 
     job_performance_file = os.path.join(report_folder, "job_results.csv")
-    save_dict_list_to_csv(ts_job_performances, job_performance_file)
+    save_dict_list_to_csv(job_performances, job_performance_file)
 
 
     

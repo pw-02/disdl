@@ -4,26 +4,13 @@ import logging
 from typing import List, Tuple, Dict, Set, Any
 import sys
 sys.path.append(".")
-from simulation.workloads import workloads, calculate_elasticache_serverless_cost
+from simulation.workloads import workloads, calculate_elasticache_serverless_cost, save_dict_list_to_csv, gen_report_data
 import os
 import csv
 import time
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-
-def save_dict_list_to_csv(dict_list, output_file):
-    if not dict_list:
-        print("No data to save.")
-        return
-    headers = dict_list[0].keys()
-    file_exists = os.path.isfile(output_file)
-    with open(output_file, 'a', newline='') as csvfile:
-        writer = csv.DictWriter(csvfile, fieldnames=headers, delimiter=',')
-        if not file_exists:
-            writer.writeheader()
-        for data in dict_list:
-            writer.writerow(data)
 
 class CoorDLCache:
     def __init__(self, 
@@ -89,7 +76,8 @@ class DLTJOB():
         self.cache_hit_count = 0  # Tracks cache hits for this job
         self.cache_miss_count = 0  # Tracks cache misses for this job
         self.elapased_time_sec = 0  # Tracks the current time for this job
-
+        self.throughput = 0  # Tracks the throughput for this job
+        self.compute_cost = 0  # Tracks the compute cost for this job
     def next_training_step(self, current_time_sec):
         self.elapased_time_sec = current_time_sec        
         cache_hit = self.cache.get(self.job_progress+1, self.job_id)  # Simulate cache access
@@ -112,9 +100,9 @@ class DLTJOB():
         cache_hit_rate = self.cache_hit_count / (self.cache_hit_count + self.cache_miss_count) if (self.cache_hit_count + self.cache_miss_count) > 0 else 0
         throughput = self.job_progress / self.elapased_time_sec if self.elapased_time_sec > 0 else 0
         # Calculate costs
-        compute_cost = (ec2_cost / 3600) * self.elapased_time_sec
+        self.compute_cost = (ec2_cost / 3600) * self.elapased_time_sec
         cache_cost = (cache_cost / 3600) * self.elapased_time_sec
-        total_cost = compute_cost + cache_cost
+        total_cost = self.compute_cost + cache_cost
         return {
             'sim_id': sim_id,
             'job_id': self.job_id,
@@ -126,7 +114,7 @@ class DLTJOB():
             'cache_hit_%': cache_hit_rate,
             'elapsed_time': self.elapased_time_sec,
             'throughput': throughput,
-            'compute_cost': compute_cost,
+            'compute_cost': self.compute_cost,
             'cache_cost': cache_cost,
             'total_cost': total_cost,
         }
@@ -181,67 +169,12 @@ def run_coordl_simulation(
 
         cache_size_over_time.append(cache_size)  # Store cache size over time
     
-    # Calculate results
-    total_batches_processed = sum(job.job_progress for job in jobs)
-    throughput = total_batches_processed / time_elapsed  # Batches per second
-    compute_cost = (hourly_ec2_cost / 3600) * time_elapsed
-    cache_hit_count = sum(job.cache_hit_count for job in jobs)
-    cache_miss_count = sum(job.cache_miss_count for job in jobs)
-    cache_hit_percent = (cache_hit_count / (cache_hit_count + cache_miss_count)) * 100 if (cache_hit_count + cache_miss_count) > 0 else 0
-    # max_cached_bacthes = max(shared_cache.cache_size_over_time)
-    # max_cache_capacity_used = max_cached_bacthes * size_per_batch_gb
-    max_cache_capacity_used = max(cache_size_over_time) if cache_size_over_time else 0
-    average_cache_capacity_used = np.mean(cache_size_over_time) if cache_size_over_time else 0
+    job_performances = [job.get_performance(sim_id, hourly_ec2_cost/len(jobs), hourly_cache_cost) for job in jobs]
 
-    if use_elasticache_severless_pricing:
-        cache_cost = calculate_elasticache_serverless_cost(average_gb_usage=average_cache_capacity_used)
-    else:
-        cache_cost = (hourly_cache_cost / 3600) * time_elapsed
-    total_cost = compute_cost + cache_cost  # No additional costs in this simulation
-    
-    job_performances = [job.get_performance(sim_id, hourly_ec2_cost, hourly_cache_cost) for job in jobs]
 
-    job_speeds = {job.job_id: job.speed for job in jobs}
-    overall_results = {
-        'sim_id': sim_id,
-        'workload_name': workload_name,
-        'job_speeds': job_speeds,
-        'dataloader': 'CoorDL',
-        'cache_capacity': cache_capacity_gb,
-        'cache_eviction_policy': shared_cache.eviction_policy,
-        'size_per_batch': size_per_batch_gb,
-        'num_jobs': len(jobs),
-        'cache_miss_penalty': cache_miss_penalty,
-        'hourly_ec2_cost': hourly_ec2_cost,
-        'hourly_cache_cost': hourly_cache_cost,
-        'max_cache_capacity_used': max_cache_capacity_used,
-        'average_cache_capacity_used': average_cache_capacity_used,
-        'cache_hit_count': cache_hit_count,
-        'cache_miss_count': cache_miss_count,
-        'cache_hit_percent': cache_hit_percent,
-        'total_batches_processed': total_batches_processed,
-        'time_elapsed': time_elapsed,
-        'throughput': throughput,
-        'compute_cost': compute_cost,
-        'cache_cost': cache_cost,
-        'total_cost': total_cost,
-    }
 
-    print(f"CoorDL:")
-    print(f"  Jobs: {job_speeds}"),
-    print(f"  Time: {time_elapsed:.2f} seconds")
-    print(f"  Cache Size: {cache_capacity_gb} GB")
-    print(f"  Cache Used: {max_cache_capacity_used:.4f} GB")
-    print(f"  Cache Hit %: {cache_hit_percent:.2f}%")
-    print(f"  Total Batches Processed: {total_batches_processed}")
-    print(f"  Elapsed Time: {time_elapsed:.2f}s, {time_elapsed/60:.2f} min")
-    print(f"  Overall Throughput: {throughput:.2f} batches/sec")
-    print(f"  Cache Cost: ${cache_cost:.2f}")
-    print(f"  Compute Cost: ${compute_cost:.2f}")
-    print(f"  Total Cost : ${total_cost:.2f}")
-    print("-" * 40)
 
-    return overall_results, job_performances
+    return job_performances, cache_size_over_time
    
 if __name__ == "__main__":
 
@@ -257,7 +190,8 @@ if __name__ == "__main__":
     cache_miss_penalty = 0
     use_elasticache_severless_pricing = False
 
-    coordl_overall_results,  coordl_job_performances = run_coordl_simulation(
+    job_performances, cache_size_over_time = run_coordl_simulation(
+        sim_id = str(int(time.time())),
         workload_name = workload_name,
         workload_jobs = workload.items(),
         cache_capacity_gb=cache_capacity_gb,
@@ -268,6 +202,21 @@ if __name__ == "__main__":
         batches_per_job=max_batches_per_job,
         use_elasticache_severless_pricing = use_elasticache_severless_pricing
     )
+    coordl_overall_results = gen_report_data(
+        dataloader_name = 'coordl',
+        job_performances = job_performances,
+        cache_size_over_time = cache_size_over_time,
+        eviction_policy = "coordl",
+        size_per_batch_gb = size_per_batch_gb,
+        cache_capacity_gb = cache_capacity_gb,
+        cache_miss_penalty = cache_miss_penalty,
+        hourly_ec2_cost = hourly_ec2_cost,
+        hourly_cache_cost = hourly_cache_cost,
+        sim_id = str(int(time.time())),
+        workload_name = workload_name,
+        use_elasticache_severless_pricing = use_elasticache_severless_pricing
+    )
+
 
     #save overall results to a file
     report_folder = os.path.join(os.getcwd(), "simulation", "reports", workload_name)
@@ -277,6 +226,6 @@ if __name__ == "__main__":
     save_dict_list_to_csv([coordl_overall_results], overall_report_file)
 
     job_performance_file = os.path.join(report_folder, "job_results.csv")
-    save_dict_list_to_csv(coordl_job_performances, job_performance_file)
+    save_dict_list_to_csv(job_performances, job_performance_file)
 
 

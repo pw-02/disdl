@@ -78,9 +78,8 @@ def run_tensorsocket_simualtion(
 
 
 if __name__ == "__main__":
-
    # Define simulation parameters
-    job_speeds = [0.137222914, 0.14272167, 0.351509787, 0.519805225]  # Speeds in batches per second
+    job_speeds = [0.104419951, 0.33947309,  0.514980298, 0.062516984]  # Speeds in batches per second
     simulation_time =  3600 * 1 # Simulate 1 hour
     hourly_ec2_cost = 12.24  # Example: $3 per hour for an EC2 instance
     
@@ -88,8 +87,8 @@ if __name__ == "__main__":
         job_speeds = job_speeds,
         buffer_size= 10,  # Example buffer size in batches
         hourly_ec2_cost=hourly_ec2_cost,
-        simulation_time=3600,
-        max_batches_per_job=None)
+        simulation_time=None,
+        max_batches_per_job=8500)
     
     
     

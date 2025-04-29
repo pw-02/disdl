@@ -31,7 +31,7 @@ if __name__ == "__main__":
     max_batches_per_job = 8500 # 8500 #np.inf
     hourly_ec2_cost = 12.24 
     hourly_cache_cost = 3.25
-    cache_capacity_gb =  np.inf
+    cache_capacity_gb =  200
     size_per_batch_gb = 20 / 1024
     cache_miss_penalty = 0
     use_elasticache_severless_pricing = False
@@ -61,7 +61,7 @@ if __name__ == "__main__":
         eviction_policy = "coordl",
         size_per_batch_gb = size_per_batch_gb,
         cache_capacity_gb = cache_capacity_gb,
-        cache_miss_penalty = cache_miss_penalty,
+        cache_miss_penalty = 0,
         hourly_ec2_cost = hourly_ec2_cost,
         hourly_cache_cost = hourly_cache_cost,
         sim_id = sim_id,
@@ -72,7 +72,7 @@ if __name__ == "__main__":
     save_dict_list_to_csv([coordl_overall_results], overall_report_file)
     save_dict_list_to_csv(coordl_job_performances, job_performance_file)
 
-    ts_job_performances, cache_size_over_time = run_coordl_simulation(
+    ts_job_performances, cache_size_over_time = run_tensorsocket_simualtion(
         sim_id = sim_id,
         workload_name = workload_name,
         workload_jobs = workload.items(),
@@ -91,9 +91,9 @@ if __name__ == "__main__":
         eviction_policy = "tensorsocket",
         size_per_batch_gb = size_per_batch_gb,
         cache_capacity_gb = cache_buffer_size * size_per_batch_gb,
-        cache_miss_penalty = cache_miss_penalty,
+        cache_miss_penalty = 0,
         hourly_ec2_cost = hourly_ec2_cost,
-        hourly_cache_cost = hourly_cache_cost,
+        hourly_cache_cost = 0,
         sim_id = sim_id,
         workload_name = workload_name,
         use_elasticache_severless_pricing = use_elasticache_severless_pricing

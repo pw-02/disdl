@@ -22,7 +22,6 @@ def gen_report_data(dataloader_name,
      # Calculate results
      #total batches processed by all jobs, sperate dict per job
     aggregated_batches_processed = sum(job['bacthes_processed'] for job in job_performances)
-    aggregated_compute_cost = sum(job['compute_cost'] for job in job_performances)
     aggregated_cache_hits = sum(job['cache_hit_count'] for job in job_performances)
     aggregated_cache_misses = sum(job['cache_miss_count'] for job in job_performances)
     aggregated_cache_hit_percent = (aggregated_cache_hits / (aggregated_cache_hits + aggregated_cache_misses)) * 100 if (aggregated_cache_hits + aggregated_cache_misses) > 0 else 0
@@ -38,6 +37,9 @@ def gen_report_data(dataloader_name,
         cache_cost = calculate_elasticache_serverless_cost(average_gb_usage=average_cache_capacity_used)
     else:
         cache_cost = (hourly_cache_cost / 3600) * elapsed_time_sec
+
+    # if dataloader_name == 'tensorsocket':
+    #     cache_cost = 0
 
     total_cost = aggregated_compute_cost + cache_cost  # No additional costs in this simulation
     job_speeds = {job['job_id']: job['job_speed'] for job in job_performances}

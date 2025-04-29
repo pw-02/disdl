@@ -36,8 +36,8 @@ class TensorSocketCache:
         else:
             if not self.cache_is_full():
                 self.data[key] = 1
-                return True    
-            return False
+                # return True    
+                return False
         
     def cache_is_full(self):
         # Check if the cache is full based on the size of the batches and the maximum cache size
@@ -63,10 +63,10 @@ class DLTJOB():
         self.elapased_time_sec = current_time_sec        
         batch_retrieved = self.cache.get(self.job_progress+1, self.job_id)  # Simulate cache access
         if batch_retrieved:
-            if not self.current_batch_is_miss:
-                self.cache_hit_count +=1
-            else:
+            if self.current_batch_is_miss:
                 self.cache_miss_count +=1
+            else:
+                self.cache_hit_count +=1
             self.job_progress += 1
             self.current_batch_is_miss = False
         else:
@@ -91,8 +91,6 @@ class DLTJOB():
             'sim_id': sim_id,
             'job_id': self.job_id,
             'job_speed': self.speed,
-            
-            'cache_miss_penalty': 0,
             'cache_capacity_gb': self.cache.cache_capacity_gb,
             'bacthes_processed': self.job_progress,
             'cache_hit_count': self.cache_hit_count,
@@ -104,6 +102,24 @@ class DLTJOB():
             'cache_cost': cache_cost,
             'total_cost': total_cost,
         }
+
+        # return {
+        #     'sim_id': sim_id,
+        #     'job_id': self.job_id,
+        #     'job_speed': self.speed,
+            
+        #     'cache_miss_penalty': 0,
+        #     'cache_capacity_gb': self.cache.cache_capacity_gb,
+        #     'bacthes_processed': self.job_progress,
+        #     'cache_hit_count': self.cache_hit_count,
+        #     'cache_miss_count': self.cache_miss_count,
+        #     'cache_hit_%': cache_hit_rate,
+        #     'elapsed_time': self.elapased_time_sec,
+        #     'throughput': throughput,
+        #     'compute_cost': compute_cost,
+        #     'cache_cost': cache_cost,
+        #     'total_cost': total_cost,
+        # }
 
 
 def run_tensorsocket_simualtion(
@@ -159,7 +175,7 @@ def run_tensorsocket_simualtion(
         cache_size = shared_cache.get_cache_size()
         cache_size_over_time.append(cache_size)  # Store cache size over time
     
-    job_performances = [job.get_performance(sim_id, hourly_ec2_cost) for job in jobs]
+    job_performances = [job.get_performance(sim_id, hourly_ec2_cost/len(jobs)) for job in jobs]
     return job_performances, cache_size_over_time
 
 if __name__ == "__main__":

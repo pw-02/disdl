@@ -169,7 +169,7 @@ def run_coordl_simulation(
 
         cache_size_over_time.append(cache_size)  # Store cache size over time
     
-    job_performances = [job.get_performance(sim_id, hourly_ec2_cost/len(jobs), hourly_cache_cost) for job in jobs]
+    job_performances = [job.get_performance(sim_id, hourly_ec2_cost/len(jobs), hourly_cache_cost/len(jobs)) for job in jobs]
 
 
 

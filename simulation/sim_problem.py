@@ -114,42 +114,71 @@ class SharedCache:
             self.cache[batch_id] = True
             self._timestamps[batch_id] = time.time()
 
-class GlobalSampler:
-    
-    def __init__(self, total_batches: int, job_ids: List[str], cache:SharedCache):
+
+
+class CoorDLSampler:
+    def __init__(self, total_batches: int, job_ids: List[str], cache: Any, assignment_strategy: str = "coordinated"):
         self.total_batches = total_batches
         self.job_ids = job_ids
-        self.job_to_batches = self._assign_batches()
-        self.batch_seen_by = collections.defaultdict(set)  # batch_id -> set of job_ids
+        self.assignment_strategy = assignment_strategy
         self.cache = cache
 
+        self.job_to_batches = self._assign_batches()
+        self.batch_seen_by = collections.defaultdict(set)
+
+        self.global_sequence = self._build_global_schedule()  # List of (batch_id, owner)
+        self.job_pointers = {jid: 0 for jid in job_ids}
+
     def _assign_batches(self) -> Dict[str, List[int]]:
+        """
+        Round-robin batch assignment.
+        """
         job_batches = {jid: [] for jid in self.job_ids}
-        batch_ids = list(range(1, self.total_batches + 1))
-        for _ in range(1):  # single epoch for now
-            # random.shuffle(batch_ids)
-            for jid in self.job_ids:
-                job_batches[jid].extend(batch_ids)
+        for i, batch_id in enumerate(range(1, self.total_batches + 1)):
+            jid = self.job_ids[i % len(self.job_ids)]
+            job_batches[jid].append(batch_id)
         return job_batches
-    
+
+    def _build_global_schedule(self) -> List[tuple]:
+        """
+        Interleaved sequence of all batches with their owner.
+        """
+        max_len = max(len(b) for b in self.job_to_batches.values())
+        schedule = []
+        for i in range(max_len):
+            for jid in self.job_ids:
+                if i < len(self.job_to_batches[jid]):
+                    schedule.append((self.job_to_batches[jid][i], jid))
+        return schedule
+
+    def get_batch_for_job(self, job_id: str, job_progress: int) -> tuple:
+        """
+        Returns the next batch in the global schedule for this job.
+        Skips over batches not in the job's assignment, but still includes them for coordination.
+        Returns a tuple: (batch_id, self_load_flag)
+        """
+        ptr = self.job_pointers[job_id]
+        while ptr < len(self.global_sequence):
+            batch_id, owner = self.global_sequence[ptr]
+            self.job_pointers[job_id] += 1
+            self_load = (owner == job_id)
+            return batch_id, self_load
+
+        raise IndexError(f"Job {job_id} has no more batches to process.")
+
     def mark_seen(self, job_id: str, batch_id: int) -> bool:
-        """Mark that a job has seen a batch. Return True if all jobs have seen it."""
-        
-        if batch_id in self.batch_seen_by:
-            self.batch_seen_by[batch_id].add(job_id)
-        else:
-            self.batch_seen_by[batch_id] = {job_id}
-            #check if all jobs have seen this batch
-            if len(self.batch_seen_by[batch_id]) >= self.cache.num_jobs:
-                logger.debug(f"Batch {batch_id} has been seen by all jobs, evicting it from cache")
-                self.cache._remove(batch_id)
-    
-    def get_batch_for_job(self, job_id: str, job_progress: int) -> int:
-        return self.job_to_batches[job_id][job_progress-1]
-    
+        """
+        Track when each job sees a batch. Evict when all have seen it.
+        """
+        self.batch_seen_by[batch_id].add(job_id)
+        if len(self.batch_seen_by[batch_id]) >= self.cache.num_jobs:
+            self.cache._remove(batch_id)
+            return True
+        return False
+
 class DLTJOB:
     def __init__(self, job_id, speed, cache: SharedCache,
-                 sampler:GlobalSampler):
+                 sampler:CoorDLSampler):
         self.job_id = job_id
         self.cache = cache
         self.speed = speed
@@ -159,15 +188,18 @@ class DLTJOB:
         self.elapased_time_sec = 0
         self.throughput = 0
         self.compute_cost = 0
-        self.sampler:GlobalSampler = sampler
+        self.sampler:CoorDLSampler = sampler
         self.current_batch_id = None
         self.job_progress = 0
 
     def next_training_step(self, current_time_sec):
         self.elapased_time_sec = current_time_sec
         self.job_progress += 1
-        batch_id = self.sampler.get_batch_for_job(self.job_id, self.job_progress)
-        cache_hit = self.cache.get_batch(batch_id)
+        batch_id, self_load = self.sampler.get_batch_for_job(self.job_id, self.job_progress)
+
+        if self_load:
+            cache_hit = self.cache.get_batch(batch_id)
+
         if cache_hit:
             logger.debug(f"Cache hit: Job {self.job_id} accessed {batch_id}")
             self.cache_hit_count += 1
@@ -206,14 +238,15 @@ def run_simulation(
         hourly_cache_cost,
         hourly_ec2_cost,
         simulation_time_sec,
-        batches_per_job):
+        batches_per_job,
+        batch_assignment_strategy):
     
     shared_cache = SharedCache(
         cache_capacity = cache_capacity,
         num_jobs = len(workload_jobs),
         eviction_policy=eviction_policy)
     
-    sampler = GlobalSampler(total_batches=batches_per_job, job_ids=[job[0] for job in workload_jobs], cache=shared_cache)
+    sampler = CoorDLSampler(total_batches=batches_per_job, job_ids=[job[0] for job in workload_jobs], cache=shared_cache, assignment_strategy=batch_assignment_strategy)
 
     jobs:List[DLTJOB] = [DLTJOB(model_name, speed, shared_cache, sampler=sampler) for model_name, speed in workload_jobs]
 
@@ -331,13 +364,13 @@ if __name__ == "__main__":
     workload_name = 'imagenet_128_nas'
     jobs =  workloads[workload_name].items()
     simulation_time_sec = None #3600 # None  #3600 * 1 # Simulate 1 hour
-    batches_per_job = 8500 * 1 # 8500 #np.inf
+    batches_per_job = 100 * 1 # 8500 #np.inf
     cache_capacity = 1 * batches_per_job #number of batches as a % of the total number of batches
     eviction_policy = "noevict" # "lru", "fifo", "mru", "random", "noevict"
     hourly_ec2_cost = 12.24 
     hourly_cache_cost = 3.25
     cache_miss_penalty = 0.2
-
+    batch_assignment_strategy = "coordinated" # "sequential", "shuffle", "coordinated"
     run_simulation(
         workload_name = workload_name,
         workload_jobs = jobs,
@@ -347,5 +380,6 @@ if __name__ == "__main__":
         hourly_cache_cost = hourly_cache_cost,
         hourly_ec2_cost = hourly_ec2_cost,
         simulation_time_sec=simulation_time_sec,
-        batches_per_job=batches_per_job
+        batches_per_job=batches_per_job,
+        batch_assignment_strategy=batch_assignment_strategy,
     )

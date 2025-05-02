@@ -111,10 +111,10 @@ def save_dict_list_to_csv(dict_list, output_file):
 
 workloads = {
     'imagenet_128_nas': {
+        'SHUFFLENETV2': 0.062516984,
         'RESNET18': 0.104419951,
         'RESNET50': 0.33947309,
-        'VGG16': 0.514980298,
-        'SHUFFLENETV2': 0.062516984
+        'VGG16': 0.514980298
     },
     'imagenet_128_hpo': {
         'RESNET18_1': 0.104419951,

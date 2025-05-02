@@ -109,6 +109,24 @@ class SharedCache:
 
     def current_usage_gb(self, size_per_batch_gb: float) -> float:
         return len(self.cache) * size_per_batch_gb
+    
+    def prefetch(self, batch_id: Any) -> None:
+        """
+        Load batch_id into cache ahead of time.  Behaves like a miss,
+        but doesn’t count as a job hit or advance any job’s progress.
+        """
+        # if already in cache, nothing to do
+        if batch_id in self.cache:
+            return
+
+        # if full, evict one
+        if self.cache_is_full() and self.policy != "noevict":
+            self._evict_one()
+
+        # insert with empty consumer set
+        if not self.cache_is_full():
+            self.cache[batch_id] = 0
+            self._timestamps[batch_id] = time.time()
 
 class DLTJOB():
     def __init__(self, job_id, speed, cache:SharedCache):
@@ -176,7 +194,9 @@ def run_simulation(
         simulation_time_sec=3600,
         batches_per_job=np.inf,
         eviction_policy="uniform",
-        use_elasticache_severless_pricing=False):
+        use_elasticache_severless_pricing=False,
+        prefetch_distance=1, 
+        prefetch_latency=0.01):
     
     shared_cache = SharedCache(
         cache_capacity_gb = cache_capacity_gb,
@@ -189,7 +209,7 @@ def run_simulation(
 
     event_queue = []  # Priority queue for next event times
     for job in jobs:
-        heapq.heappush(event_queue, (job.speed, job))
+        heapq.heappush(event_queue, (job.speed, "step", job))
     
     time_elapsed = 0  # Global simulation time
 
@@ -199,22 +219,29 @@ def run_simulation(
         #check all jobs have completed their batches
         if batches_per_job is not None and all(job.job_progress >= batches_per_job for job in jobs):
             break
+        time_elapsed, event_type, payload = heapq.heappop(event_queue)
+        if event_type == "step":
+            job:DLTJOB = payload
+            cache_hit = job.next_training_step(time_elapsed)  # Simulate the next training step for this job
+            delay = job.speed + (0 if cache_hit else cache_miss_penalty)
+            if batches_per_job is None or job.job_progress < batches_per_job: #job has not completed its batches
+                heapq.heappush(event_queue, (time_elapsed + delay, "step", job))
+            
+            if prefetch_distance >0:
+                # schedule a prefetch for the K-th future batch
+                next_batch_id = job.job_progress + prefetch_distance
+                heapq.heappush(event_queue, (
+                    time_elapsed + prefetch_latency,
+                    "prefetch",
+                    next_batch_id
+                ))
+        elif event_type == "prefetch":
+            batch_id = payload
+            shared_cache.prefetch(batch_id)
 
-        time_elapsed, job = heapq.heappop(event_queue)
-        job:DLTJOB = job  # Get next job event
-        cache_hit = job.next_training_step(time_elapsed)  # Simulate the next training step for this job
-        #schudle the next event for this job if it has not completed its batches
-        if cache_hit:
-            next_event_time = time_elapsed + job.speed
-        else:
-            next_event_time = time_elapsed + job.speed + cache_miss_penalty
-        
-        if batches_per_job is None or job.job_progress < batches_per_job: #job has not completed its batches
-            heapq.heappush(event_queue, (next_event_time, job))
+            # Schedule the next event for this job if it has not completed its batches
 
-        cache_size = shared_cache.current_usage_gb(size_per_batch_gb)
-
-        cache_size_over_time.append(cache_size)  # Store cache size over time
+        cache_size_over_time.append(shared_cache.current_usage_gb(size_per_batch_gb))  # Store cache size over time
     
     job_performances = [job.get_performance(sim_id, hourly_ec2_cost/len(jobs), hourly_cache_cost/len(jobs)) for job in jobs]
 
@@ -237,18 +264,19 @@ def run_simulation(
 if __name__ == "__main__":
 
     #print name variable name 'imagenet_128_batch_size'
-    workload_name = 'imagenet_128'
+    workload_name = 'imagenet_128_nas'
     workload =  workloads[workload_name]
     simulation_time_sec = None #3600 # None  #3600 * 1 # Simulate 1 hour
-    max_batches_per_job = 8500 # 8500 #np.inf
+    max_batches_per_job = 8500 * 20 # 8500 #np.inf
     hourly_ec2_cost = 12.24 
     hourly_cache_cost = 3.25
-    cache_capacity_gb = np.inf# 100 #np.inf
+    cache_capacity_gb = 50 #np.inf# 100 #np.inf
     size_per_batch_gb = 20 / 1024
-    cache_miss_penalty = 0
+    cache_miss_penalty = 0.2
     use_elasticache_severless_pricing = False
-    eviction_policy = "noevict" # "lru", "fifo", "mru", "random", "noevict"
-
+    eviction_policy = "random" # "lru", "fifo", "mru", "random", "noevict"
+    prefetch_distance = 0  # Number of batches to prefetch ahead
+    prefetch_latency = 0.01  # Latency for prefetching (in seconds)
     job_performances, coordl_overall_results = run_simulation(
         sim_id = str(int(time.time())),
         workload_name = workload_name,
@@ -260,7 +288,9 @@ if __name__ == "__main__":
         simulation_time_sec=simulation_time_sec,
         batches_per_job=max_batches_per_job,
         eviction_policy=eviction_policy,
-        use_elasticache_severless_pricing = use_elasticache_severless_pricing
+        use_elasticache_severless_pricing = use_elasticache_severless_pricing,
+        prefetch_distance=prefetch_distance,
+        prefetch_latency=prefetch_latency
     )
     
     #save overall results to a file

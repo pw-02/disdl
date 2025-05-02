@@ -4,7 +4,7 @@ import logging
 from typing import List, Tuple, Dict, Set, Any
 import sys
 sys.path.append(".")
-from simulation.sim_utils import workloads, save_dict_list_to_csv, gen_report_data
+from simulation.sim_workloads import workloads, save_dict_list_to_csv, gen_report_data
 import os
 import csv
 import time

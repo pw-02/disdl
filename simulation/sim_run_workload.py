@@ -4,7 +4,7 @@ import logging
 from typing import List, Tuple, Dict, Set, Any
 import sys
 sys.path.append(".")
-from simulation.workloads import workloads, save_dict_list_to_csv 
+from simulation.sim_utils import workloads, save_dict_list_to_csv 
 from simulation.sim_coordl import run_coordl_simulation
 from simulation.sim_tensorsocket import run_tensorsocket_simualtion
 import os

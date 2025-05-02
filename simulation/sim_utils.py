@@ -74,6 +74,7 @@ def gen_report_data(dataloader_name,
     print(f"  Time: {elapsed_time_sec:.2f} seconds")
     print(f"  Cache Size: {cache_capacity_gb} GB")
     print(f"  Cache Used: {max_cache_capacity_used:.4f} GB")
+    print(f"  Cache Eviction Policy: {eviction_policy}")
     print(f"  Cache Hit %: {aggregated_cache_hit_percent:.2f}%")
     print(f"  Total Batches Processed: {aggregated_batches_processed}")
     print(f"  Elapsed Time: {elapsed_time_sec:.2f}s, {elapsed_time_sec/60:.2f} min")

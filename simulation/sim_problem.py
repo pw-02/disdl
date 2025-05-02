@@ -4,177 +4,162 @@ import logging
 from typing import List, Tuple, Dict, Set, Any
 import sys
 sys.path.append(".")
-from simulation.sim_utils import workloads, calculate_elasticache_serverless_cost, save_dict_list_to_csv, gen_report_data
+from simulation.sim_utils import workloads, save_dict_list_to_csv, gen_report_data
 import os
 import csv
 import time
 import collections
-from typing import Dict, Any, Set
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+import random
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    filename='app.log',         # Log file name
+    filemode='w'                # Overwrite the file each run; use 'a' to append
+)
+
 logger = logging.getLogger(__name__)
 
-
-import collections
-import random
-import time
-from typing import Any
 
 class SharedCache:
     """
     Tracks which jobs have seen each batch and evicts according to a pluggable policy.
-    Supported policies: "lru", "fifo", "mru", "random", "noevict"
+    Supported policies: "lru", "fifo", "mru", "random", "noevict", "cus"
     """
     def __init__(
         self,
-        cache_capacity_gb: float,
-        size_per_batch_gb: float,
+        cache_capacity: int, #number of batches
         num_jobs: int,
         eviction_policy: str = "noevict",
     ):
-        # batch_id -> set of job_ids that have consumed it
-        # OrderedDict so we can do LRU/FIFO/MRU easily
-        self.cache = collections.OrderedDict()
-        # track insertion time for FIFO (and TTL if you add it later)
+        self.cache = collections.OrderedDict()  # batch_id -> set of seen jobs
         self._timestamps = {}
-        self.size_per_batch_gb = size_per_batch_gb
-        self.cache_capacity_gb = cache_capacity_gb
-        # self.max_batches = int(cache_capacity_gb / size_per_batch_gb)
+        self._seen_by = collections.defaultdict(set)  # batch_id -> job_ids
+        self.cache_capacity = cache_capacity
         self.num_jobs = num_jobs
 
-        allowed = {"lru", "fifo", "mru", "random", "noevict"}
+        allowed = {"lru", "fifo", "mru", "random", "noevict", "cus"}
         if eviction_policy not in allowed:
             raise ValueError(f"Unknown policy {eviction_policy!r}")
         self.policy = eviction_policy
 
-    def access(self, batch_id: Any, job_id: int) -> bool:
-        """
-        Job `job_id` requests `batch_id`.  
-        Returns True on hit (and first time this job sees it), False on miss.
-        """
-        if batch_id in self.cache:
-            self.cache[batch_id] += 1
+        # job iteration time estimates for CUS
+        self.job_weights = {}  # set externally
 
-            # LRU and MRU need to reorder on access
+    def get_batch(self, batch_id: Any, job_id) -> bool:
+        if batch_id in self.cache:
+            logger.debug(f"Cache hit: Job {job_id} accessed {batch_id}")
+            self._seen_by[batch_id].add(job_id)
             if self.policy in ("lru", "mru"):
                 self.cache.move_to_end(batch_id)
-
-            # Check if the batch has been accessed by all jobs, and evict if yes
-            if self.cache[batch_id] >= self.num_jobs:
-                logger.debug(f"Evicting batch {batch_id} from cache")
-                self.cache.pop(batch_id, None)
+            if len(self._seen_by[batch_id]) >= self.num_jobs:
+                logger.debug(f"Evicting batch {batch_id} from cache as all jobs have seen it")
+                self._remove(batch_id)
             return True
         else:
-            if self.cache_is_full():
-                # Cache is full, evict according to policy
-                if self.policy != "noevict":
-                    self._evict_one()
-                else:
-                    return False
-                    
-            # insert new batch
-            if not self.cache_is_full():
-                self.cache[batch_id] = 1
-                self._timestamps[batch_id] = time.time()
+            logger.debug(f"Cache miss: Job {job_id} could not access {batch_id}")
             return False
-    
+        
+    def put_batch(self, batch_id: Any, job_id) -> None:
+
+        if batch_id in self.cache:
+            return
+
+        if self.cache_is_full() and self.policy != "noevict":
+            logger.debug(f"Cache is full: {len(self.cache)} >= {self.cache_capacity}")
+            self._evict_one()
+
+        if not self.cache_is_full():
+            self.cache[batch_id] = True
+            self._seen_by[batch_id].add(job_id)
+            self._timestamps[batch_id] = time.time()
+            logger.debug(f"Added batch {batch_id} to cache")
+
     def cache_is_full(self):
-        # Check if the cache is full based on the size of the batches and the maximum cache size
-        return (len(self.cache) + 1) * self.size_per_batch_gb >= self.cache_capacity_gb
-    
+        #check if cache is full based on max acpacity and current cache size
+
+        if (len(self.cache) + 1) > self.cache_capacity:
+            logger.debug(f"Cache is full: {len(self.cache)} >= {self.cache_capacity}")
+            return True
+        else:
+            return False
+        
     def _remove(self, batch_id: Any):
-        """Helper to delete from both cache and timestamp dict."""
         self.cache.pop(batch_id, None)
         self._timestamps.pop(batch_id, None)
+        self._seen_by.pop(batch_id, None)
+        logger.debug(f"Removed batch {batch_id} from cache")
 
     def _evict_one(self):
-        """Evict exactly one batch according to self.policy."""
         if self.policy == "lru":
             return self.cache.popitem(last=False)
-
         if self.policy == "fifo":
-            # FIFO = oldest insertion
             oldest = min(self._timestamps, key=self._timestamps.get)
             return self._remove(oldest)
-
         if self.policy == "mru":
-            # MRU = most recently used
             return self.cache.popitem(last=True)
-
         if self.policy == "random":
             victim = random.choice(list(self.cache.keys()))
             return self._remove(victim)
-
-        # noevict should never reach here, but just in case
-        return
+        if self.policy == "cus":
+            def cus_score(batch_id):
+                unseen = [j for j in self.job_weights if j not in self._seen_by[batch_id]]
+                return sum(self.job_weights[j] for j in unseen)
+            victim = min(self.cache.keys(), key=cus_score)
+            logger.debug(f"[CUS] Evicting {victim} with utility {cus_score(victim):.2f}")
+            return self._remove(victim)
 
     def current_usage_gb(self, size_per_batch_gb: float) -> float:
         return len(self.cache) * size_per_batch_gb
     
+    def current_length(self) -> int:
+        return len(self.cache)
+
     def prefetch(self, batch_id: Any) -> None:
-        """
-        Load batch_id into cache ahead of time.  Behaves like a miss,
-        but doesn’t count as a job hit or advance any job’s progress.
-        """
-        # if already in cache, nothing to do
         if batch_id in self.cache:
             return
-
-        # if full, evict one
         if self.cache_is_full() and self.policy != "noevict":
             self._evict_one()
-
-        # insert with empty consumer set
         if not self.cache_is_full():
-            self.cache[batch_id] = 0
+            self.cache[batch_id] = True
             self._timestamps[batch_id] = time.time()
 
-class DLTJOB():
-    def __init__(self, job_id, speed, cache:SharedCache):
+class DLTJOB:
+    def __init__(self, job_id, speed, cache: SharedCache):
         self.job_id = job_id
-        self.cache = cache  # Reference to the shared cache
-        self.speed = speed  # Speed in GPU time per batch (seconds)
-        self.job_progress = 0  # Tracks how many batches the job has completed
-        self.cache_hit_count = 0  # Tracks cache hits for this job
-        self.cache_miss_count = 0  # Tracks cache misses for this job
-        self.elapased_time_sec = 0  # Tracks the current time for this job
-        self.throughput = 0  # Tracks the throughput for this job
-        self.compute_cost = 0  # Tracks the compute cost for this job
-    
+        self.cache = cache
+        self.speed = speed
+        self.job_progress = 0
+        self.cache_hit_count = 0
+        self.cache_miss_count = 0
+        self.elapased_time_sec = 0
+        self.throughput = 0
+        self.compute_cost = 0
+
     def next_training_step(self, current_time_sec):
-        self.elapased_time_sec = current_time_sec        
-        cache_hit = self.cache.access(self.job_progress+1, self.job_id)  # Simulate cache access
+        self.elapased_time_sec = current_time_sec
+        # Simulate cache lookup
+        self.job_progress += 1
+        cache_hit = self.cache.get_batch(self.job_progress, self.job_id)
         if cache_hit:
-            self.cache_hit_count +=1
+            self.cache_hit_count += 1
         else:
             self.cache_miss_count += 1
-        self.job_progress += 1
         return cache_hit
 
-    
-    def get_job_progress(self, ):
-        return self.job_progress
-
-    def __lt__(self, other):
-        return self.speed < other.speed  # Compare based on speed
-    
-    def get_performance(self, sim_id, ec2_cost=12.24, cache_cost=3.25):
-        # Calculate performance metrics for this job
-        cache_hit_rate = self.cache_hit_count / (self.cache_hit_count + self.cache_miss_count) if (self.cache_hit_count + self.cache_miss_count) > 0 else 0
+    def get_performance(self, horurly_ec2_cost=12.24, hourly_cache_cost=3.25):
+        hit_rate = self.cache_hit_count / (self.cache_hit_count + self.cache_miss_count) if (self.cache_hit_count + self.cache_miss_count) > 0 else 0
         throughput = self.job_progress / self.elapased_time_sec if self.elapased_time_sec > 0 else 0
-        # Calculate costs
-        self.compute_cost = (ec2_cost / 3600) * self.elapased_time_sec
-        cache_cost = (cache_cost / 3600) * self.elapased_time_sec
-        total_cost = self.compute_cost + cache_cost
+        self.compute_cost = (horurly_ec2_cost / 3600) * self.elapased_time_sec
+        cache_cost = (hourly_cache_cost / 3600) * self.elapased_time_sec
+        total_cost = self.compute_cost + hourly_cache_cost
         return {
-            'sim_id': sim_id,
-            'dataloader': 'coordl',
             'job_id': self.job_id,
             'job_speed': self.speed,
-            'cache_capacity_gb': self.cache.cache_capacity_gb,
             'bacthes_processed': self.job_progress,
             'cache_hit_count': self.cache_hit_count,
             'cache_miss_count': self.cache_miss_count,
-            'cache_hit_%': cache_hit_rate,
+            'cache_hit_%': hit_rate,
             'elapsed_time': self.elapased_time_sec,
             'throughput(batches/s)': throughput,
             'compute_cost': self.compute_cost,
@@ -183,36 +168,33 @@ class DLTJOB():
         }
 
 def run_simulation(
-        sim_id,
         workload_name,
         workload_jobs,
-        cache_capacity_gb,
-        size_per_batch_gb,
+        cache_capacity,
+        eviction_policy,
         cache_miss_penalty,
         hourly_cache_cost,
-        hourly_ec2_cost=12.24,
-        simulation_time_sec=3600,
-        batches_per_job=np.inf,
-        eviction_policy="uniform",
-        use_elasticache_severless_pricing=False,
-        prefetch_distance=1, 
-        prefetch_latency=0.01):
+        hourly_ec2_cost,
+        simulation_time_sec,
+        batches_per_job):
     
     shared_cache = SharedCache(
-        cache_capacity_gb = cache_capacity_gb,
-        size_per_batch_gb=size_per_batch_gb,
+        cache_capacity = cache_capacity,
         num_jobs = len(workload_jobs),
         eviction_policy=eviction_policy)
     
     jobs:List[DLTJOB] = [DLTJOB(model_name, speed, shared_cache) for model_name, speed in workload_jobs]
-    cache_size_over_time = []  # Store cache size over time for plotting
 
+    cache_size_over_time = []  # Store cache size over time for plotting
+    #create dict of jobid:speed
+    job_speeds = {job.job_id: job.speed for job in jobs}    
+    job_weights = {j: 1.0 / job_speeds[j] for j in job_speeds}
+    shared_cache.job_weights = job_weights
     event_queue = []  # Priority queue for next event times
     for job in jobs:
         heapq.heappush(event_queue, (job.speed, "step", job))
     
     time_elapsed = 0  # Global simulation time
-
     while True:
         if simulation_time_sec is not None and time_elapsed >= simulation_time_sec:
             break
@@ -220,87 +202,120 @@ def run_simulation(
         if batches_per_job is not None and all(job.job_progress >= batches_per_job for job in jobs):
             break
         time_elapsed, event_type, payload = heapq.heappop(event_queue)
-        if event_type == "step":
+        
+        if event_type == "cacheinsert":
+            job:DLTJOB = payload
+            shared_cache.put_batch(job.job_progress, job.job_id)  # Simulate cache insert for this job
+
+        elif event_type == "step":
             job:DLTJOB = payload
             cache_hit = job.next_training_step(time_elapsed)  # Simulate the next training step for this job
-            delay = job.speed + (0 if cache_hit else cache_miss_penalty)
+
+            if cache_hit:
+                job_delay = job.speed
+            else: # cache miss
+                job_delay = job.speed + cache_miss_penalty
+                heapq.heappush(event_queue, (time_elapsed + cache_miss_penalty, "cacheinsert", job))
+
             if batches_per_job is None or job.job_progress < batches_per_job: #job has not completed its batches
-                heapq.heappush(event_queue, (time_elapsed + delay, "step", job))
-            
-            if prefetch_distance >0:
-                # schedule a prefetch for the K-th future batch
-                next_batch_id = job.job_progress + prefetch_distance
-                heapq.heappush(event_queue, (
-                    time_elapsed + prefetch_latency,
-                    "prefetch",
-                    next_batch_id
-                ))
+                heapq.heappush(event_queue, (time_elapsed + job_delay, "step", job))
+
         elif event_type == "prefetch":
             batch_id = payload
             shared_cache.prefetch(batch_id)
 
-            # Schedule the next event for this job if it has not completed its batches
-
-        cache_size_over_time.append(shared_cache.current_usage_gb(size_per_batch_gb))  # Store cache size over time
+        cache_size_over_time.append(shared_cache.current_length())  # Store cache size over time
     
-    job_performances = [job.get_performance(sim_id, hourly_ec2_cost/len(jobs), hourly_cache_cost/len(jobs)) for job in jobs]
+    job_performances = [job.get_performance(hourly_ec2_cost/len(jobs), hourly_cache_cost/len(jobs)) for job in jobs]
 
-    coordl_overall_results = gen_report_data(
-            dataloader_name = 'baseline',
-            job_performances = job_performances,
-            cache_size_over_time = cache_size_over_time,
-            eviction_policy = eviction_policy,
-            size_per_batch_gb = size_per_batch_gb,
-            cache_capacity_gb = cache_capacity_gb,
-            cache_miss_penalty = cache_miss_penalty,
-            hourly_ec2_cost = hourly_ec2_cost,
-            hourly_cache_cost = hourly_cache_cost,
-            sim_id = str(int(time.time())),
-            workload_name = workload_name,
-            use_elasticache_severless_pricing = use_elasticache_severless_pricing
-        )
-    return job_performances, coordl_overall_results
-   
+    aggregated_batches_processed = sum(job['bacthes_processed'] for job in job_performances)
+    aggregated_cache_hits = sum(job['cache_hit_count'] for job in job_performances)
+    aggregated_cache_misses = sum(job['cache_miss_count'] for job in job_performances)
+    aggregated_cache_hit_percent = (aggregated_cache_hits / (aggregated_cache_hits + aggregated_cache_misses)) * 100 if (aggregated_cache_hits + aggregated_cache_misses) > 0 else 0
+    aggregated_compute_cost = sum(job['compute_cost'] for job in job_performances)
+    aggregated_throuhgput = sum(job['throughput(batches/s)'] for job in job_performances)
+    aggregated_time_sec = sum(job['elapsed_time'] for job in job_performances)
+    elapsed_time_sec = max(job['elapsed_time'] for job in job_performances) if job_performances else 0
+
+    max_cache_capacity_used = max(cache_size_over_time) if cache_size_over_time else 0
+    average_cache_capacity_used = np.mean(cache_size_over_time) if cache_size_over_time else 0
+
+    # if use_elasticache_severless_pricing:
+    #     cache_cost = calculate_elasticache_serverless_cost(average_gb_usage=average_cache_capacity_used)
+    # else:
+    cache_cost = (hourly_cache_cost / 3600) * elapsed_time_sec
+
+    # if dataloader_name == 'tensorsocket':
+    #     cache_cost = 0
+
+    total_cost = aggregated_compute_cost + cache_cost  # No additional costs in this simulation
+    job_speeds = {job['job_id']: job['job_speed'] for job in job_performances}
+
+    overall_results = {
+        'workload_name': workload_name,
+        'job_speeds': job_speeds,
+        'batches_per_job': batches_per_job,
+        'cache_capacity': cache_capacity,
+        'cache_eviction_policy': eviction_policy,
+        'num_jobs': len(job_performances),
+        'cache_miss_penalty': cache_miss_penalty,
+        'hourly_ec2_cost': hourly_ec2_cost,
+        'hourly_cache_cost': hourly_cache_cost,
+        'max_cache_capacity': max_cache_capacity_used,
+        'average_cache_capacity_used': average_cache_capacity_used,
+        'cache_hit_count': aggregated_cache_hits,
+        'cache_miss_count': aggregated_cache_misses,
+        'cache_hit_percent': aggregated_cache_hit_percent,
+        'total_batches_processed': aggregated_batches_processed,
+        'time_elapsed': elapsed_time_sec,
+        'total_job_time': aggregated_time_sec,
+        'throughput(batches/s)': aggregated_throuhgput,
+        'compute_cost': aggregated_compute_cost,
+        'cache_cost': cache_cost,
+        'total_cost': total_cost,
+    }
+    print(f"{eviction_policy}:")
+    print(f"  Jobs: {job_speeds}"),
+    print(f"  Batches per Job: {batches_per_job}")
+    print(f"  Cache Eviction Policy: {eviction_policy}")
+    print(f"  Cache Miss Penalty: {cache_miss_penalty:.2f}s")
+    print(f"  Cache Size: {cache_capacity} batches")
+
+    print(f"  Total Time: {elapsed_time_sec:.2f}s")
+    print(f"  Total Throughput: {aggregated_throuhgput:.2f} batches/sec")
+    print(f"  Cache Size: {cache_capacity} batche")
+    print(f"  Cache Used: {max_cache_capacity_used:} batche")
+    print(f"  Cache Miss Penalty: {cache_miss_penalty:.2f}s")
+    # print(f"  Cache Eviction Policy: {eviction_policy}")
+    print(f"  Cache Hit %: {aggregated_cache_hit_percent:.2f}%")
+    # print(f"  Total Batches Processed: {aggregated_batches_processed}")
+    # print(f"  Elapsed Time: {elapsed_time_sec:.2f}s, {elapsed_time_sec/60:.2f} min")
+    # print(f"  Overall Throughput: {aggregated_throuhgput:.2f} batches/sec")
+    print(f"  Cache Cost: ${cache_cost:.2f}")
+    print(f"  Compute Cost: ${aggregated_compute_cost:.2f}")
+    print(f"  Total Cost : ${total_cost:.2f}")
+    print("-" * 40)
+    return overall_results
+
 if __name__ == "__main__":
-
-    #print name variable name 'imagenet_128_batch_size'
     workload_name = 'imagenet_128_nas'
-    workload =  workloads[workload_name]
+    jobs =  workloads[workload_name].items()
     simulation_time_sec = None #3600 # None  #3600 * 1 # Simulate 1 hour
-    max_batches_per_job = 8500 * 20 # 8500 #np.inf
+    batches_per_job = 100 * 1 # 8500 #np.inf
+    cache_capacity = 1 * batches_per_job #number of batches as a % of the total number of batches
+    eviction_policy = "noevict" # "lru", "fifo", "mru", "random", "noevict"
     hourly_ec2_cost = 12.24 
     hourly_cache_cost = 3.25
-    cache_capacity_gb = 50 #np.inf# 100 #np.inf
-    size_per_batch_gb = 20 / 1024
     cache_miss_penalty = 0.2
-    use_elasticache_severless_pricing = False
-    eviction_policy = "random" # "lru", "fifo", "mru", "random", "noevict"
-    prefetch_distance = 0  # Number of batches to prefetch ahead
-    prefetch_latency = 0.01  # Latency for prefetching (in seconds)
-    job_performances, coordl_overall_results = run_simulation(
-        sim_id = str(int(time.time())),
+
+    run_simulation(
         workload_name = workload_name,
-        workload_jobs = workload.items(),
-        cache_capacity_gb=cache_capacity_gb,
-        size_per_batch_gb = size_per_batch_gb,
-        cache_miss_penalty = cache_miss_penalty,
+        workload_jobs = jobs,
+        cache_capacity = cache_capacity,
+        eviction_policy = eviction_policy,
+        cache_miss_penalty=cache_miss_penalty,
         hourly_cache_cost = hourly_cache_cost,
+        hourly_ec2_cost = hourly_ec2_cost,
         simulation_time_sec=simulation_time_sec,
-        batches_per_job=max_batches_per_job,
-        eviction_policy=eviction_policy,
-        use_elasticache_severless_pricing = use_elasticache_severless_pricing,
-        prefetch_distance=prefetch_distance,
-        prefetch_latency=prefetch_latency
+        batches_per_job=batches_per_job
     )
-    
-    #save overall results to a file
-    report_folder = os.path.join(os.getcwd(), "simulation", "reports", workload_name)
-    os.makedirs(report_folder, exist_ok=True)
-    
-    overall_report_file = os.path.join(report_folder, "overall_results.csv")
-    save_dict_list_to_csv([coordl_overall_results], overall_report_file)
-
-    job_performance_file = os.path.join(report_folder, "job_results.csv")
-    save_dict_list_to_csv(job_performances, job_performance_file)
-
-

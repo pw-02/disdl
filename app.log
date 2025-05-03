@@ -1,500 +1,600 @@
-2025-05-02 17:28:25,074 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 1
-2025-05-02 17:28:25,074 - DEBUG - Cache miss: Job RESNET18 could not access 1
-2025-05-02 17:28:25,074 - DEBUG - Added batch 1 to cache
-2025-05-02 17:28:25,075 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 2
-2025-05-02 17:28:25,075 - DEBUG - Cache hit: Job RESNET50 accessed 1
-2025-05-02 17:28:25,075 - DEBUG - Cache miss: Job RESNET18 could not access 2
-2025-05-02 17:28:25,075 - DEBUG - Cache hit: Job VGG16 accessed 1
-2025-05-02 17:28:25,075 - DEBUG - Added batch 2 to cache
-2025-05-02 17:28:25,075 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 3
-2025-05-02 17:28:25,075 - DEBUG - Cache hit: Job RESNET50 accessed 2
-2025-05-02 17:28:25,075 - DEBUG - Cache miss: Job RESNET18 could not access 3
-2025-05-02 17:28:25,075 - DEBUG - Added batch 3 to cache
-2025-05-02 17:28:25,075 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 4
-2025-05-02 17:28:25,075 - DEBUG - Cache miss: Job RESNET18 could not access 4
-2025-05-02 17:28:25,075 - DEBUG - Cache hit: Job RESNET50 accessed 3
-2025-05-02 17:28:25,075 - DEBUG - Cache hit: Job VGG16 accessed 2
-2025-05-02 17:28:25,075 - DEBUG - Added batch 4 to cache
-2025-05-02 17:28:25,075 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 5
-2025-05-02 17:28:25,075 - DEBUG - Added batch 5 to cache
-2025-05-02 17:28:25,076 - DEBUG - Cache hit: Job RESNET18 accessed 5
-2025-05-02 17:28:25,076 - DEBUG - Cache hit: Job RESNET50 accessed 4
-2025-05-02 17:28:25,076 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 6
-2025-05-02 17:28:25,076 - DEBUG - Cache miss: Job RESNET18 could not access 6
-2025-05-02 17:28:25,076 - DEBUG - Cache hit: Job VGG16 accessed 3
-2025-05-02 17:28:25,076 - DEBUG - Added batch 6 to cache
-2025-05-02 17:28:25,076 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 7
-2025-05-02 17:28:25,076 - DEBUG - Cache hit: Job RESNET50 accessed 5
-2025-05-02 17:28:25,076 - DEBUG - Cache miss: Job RESNET18 could not access 7
-2025-05-02 17:28:25,076 - DEBUG - Added batch 7 to cache
-2025-05-02 17:28:25,076 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 8
-2025-05-02 17:28:25,076 - DEBUG - Cache miss: Job RESNET18 could not access 8
-2025-05-02 17:28:25,076 - DEBUG - Cache hit: Job RESNET50 accessed 6
-2025-05-02 17:28:25,076 - DEBUG - Cache hit: Job VGG16 accessed 4
-2025-05-02 17:28:25,076 - DEBUG - Added batch 8 to cache
-2025-05-02 17:28:25,076 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 9
-2025-05-02 17:28:25,076 - DEBUG - Cache miss: Job RESNET18 could not access 9
-2025-05-02 17:28:25,077 - DEBUG - Added batch 9 to cache
-2025-05-02 17:28:25,077 - DEBUG - Cache hit: Job RESNET50 accessed 7
-2025-05-02 17:28:25,077 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 10
-2025-05-02 17:28:25,077 - DEBUG - Cache hit: Job VGG16 accessed 5
-2025-05-02 17:28:25,077 - DEBUG - Added batch 10 to cache
-2025-05-02 17:28:25,077 - DEBUG - Cache hit: Job RESNET18 accessed 10
-2025-05-02 17:28:25,077 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 11
-2025-05-02 17:28:25,077 - DEBUG - Cache hit: Job RESNET50 accessed 8
-2025-05-02 17:28:25,077 - DEBUG - Cache miss: Job RESNET18 could not access 11
-2025-05-02 17:28:25,077 - DEBUG - Added batch 11 to cache
-2025-05-02 17:28:25,077 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 12
-2025-05-02 17:28:25,077 - DEBUG - Cache miss: Job RESNET18 could not access 12
-2025-05-02 17:28:25,077 - DEBUG - Cache hit: Job RESNET50 accessed 9
-2025-05-02 17:28:25,077 - DEBUG - Cache hit: Job VGG16 accessed 6
-2025-05-02 17:28:25,077 - DEBUG - Added batch 12 to cache
-2025-05-02 17:28:25,077 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 13
-2025-05-02 17:28:25,077 - DEBUG - Cache miss: Job RESNET18 could not access 13
-2025-05-02 17:28:25,078 - DEBUG - Cache hit: Job RESNET50 accessed 10
-2025-05-02 17:28:25,078 - DEBUG - Added batch 13 to cache
-2025-05-02 17:28:25,078 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 14
-2025-05-02 17:28:25,078 - DEBUG - Cache hit: Job VGG16 accessed 7
-2025-05-02 17:28:25,078 - DEBUG - Cache miss: Job RESNET18 could not access 14
-2025-05-02 17:28:25,078 - DEBUG - Added batch 14 to cache
-2025-05-02 17:28:25,078 - DEBUG - Cache hit: Job RESNET50 accessed 11
-2025-05-02 17:28:25,078 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 15
-2025-05-02 17:28:25,078 - DEBUG - Added batch 15 to cache
-2025-05-02 17:28:25,078 - DEBUG - Cache hit: Job RESNET18 accessed 15
-2025-05-02 17:28:25,078 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 16
-2025-05-02 17:28:25,078 - DEBUG - Cache miss: Job RESNET18 could not access 16
-2025-05-02 17:28:25,078 - DEBUG - Cache hit: Job RESNET50 accessed 12
-2025-05-02 17:28:25,078 - DEBUG - Cache hit: Job VGG16 accessed 8
-2025-05-02 17:28:25,078 - DEBUG - Added batch 16 to cache
-2025-05-02 17:28:25,078 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 17
-2025-05-02 17:28:25,079 - DEBUG - Cache miss: Job RESNET18 could not access 17
-2025-05-02 17:28:25,079 - DEBUG - Cache hit: Job RESNET50 accessed 13
-2025-05-02 17:28:25,079 - DEBUG - Added batch 17 to cache
-2025-05-02 17:28:25,079 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 18
-2025-05-02 17:28:25,079 - DEBUG - Cache hit: Job VGG16 accessed 9
-2025-05-02 17:28:25,079 - DEBUG - Cache miss: Job RESNET18 could not access 18
-2025-05-02 17:28:25,079 - DEBUG - Added batch 18 to cache
-2025-05-02 17:28:25,079 - DEBUG - Cache hit: Job RESNET50 accessed 14
-2025-05-02 17:28:25,079 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 19
-2025-05-02 17:28:25,079 - DEBUG - Cache miss: Job RESNET18 could not access 19
-2025-05-02 17:28:25,079 - DEBUG - Added batch 19 to cache
-2025-05-02 17:28:25,079 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 20
-2025-05-02 17:28:25,079 - DEBUG - Cache hit: Job RESNET50 accessed 15
-2025-05-02 17:28:25,079 - DEBUG - Cache hit: Job VGG16 accessed 10
-2025-05-02 17:28:25,079 - DEBUG - Added batch 20 to cache
-2025-05-02 17:28:25,079 - DEBUG - Cache hit: Job RESNET18 accessed 20
-2025-05-02 17:28:25,079 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 21
-2025-05-02 17:28:25,080 - DEBUG - Cache miss: Job RESNET18 could not access 21
-2025-05-02 17:28:25,080 - DEBUG - Cache hit: Job RESNET50 accessed 16
-2025-05-02 17:28:25,080 - DEBUG - Added batch 21 to cache
-2025-05-02 17:28:25,080 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 22
-2025-05-02 17:28:25,080 - DEBUG - Cache hit: Job VGG16 accessed 11
-2025-05-02 17:28:25,080 - DEBUG - Cache miss: Job RESNET18 could not access 22
-2025-05-02 17:28:25,080 - DEBUG - Cache hit: Job RESNET50 accessed 17
-2025-05-02 17:28:25,080 - DEBUG - Added batch 22 to cache
-2025-05-02 17:28:25,080 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 23
-2025-05-02 17:28:25,080 - DEBUG - Cache miss: Job RESNET18 could not access 23
-2025-05-02 17:28:25,080 - DEBUG - Added batch 23 to cache
-2025-05-02 17:28:25,080 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 24
-2025-05-02 17:28:25,080 - DEBUG - Cache hit: Job RESNET50 accessed 18
-2025-05-02 17:28:25,080 - DEBUG - Cache hit: Job VGG16 accessed 12
-2025-05-02 17:28:25,080 - DEBUG - Added batch 24 to cache
-2025-05-02 17:28:25,080 - DEBUG - Cache hit: Job RESNET18 accessed 24
-2025-05-02 17:28:25,081 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 25
-2025-05-02 17:28:25,081 - DEBUG - Cache miss: Job RESNET18 could not access 25
-2025-05-02 17:28:25,081 - DEBUG - Cache hit: Job RESNET50 accessed 19
-2025-05-02 17:28:25,081 - DEBUG - Added batch 25 to cache
-2025-05-02 17:28:25,081 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 26
-2025-05-02 17:28:25,081 - DEBUG - Cache hit: Job VGG16 accessed 13
-2025-05-02 17:28:25,081 - DEBUG - Cache miss: Job RESNET18 could not access 26
-2025-05-02 17:28:25,081 - DEBUG - Cache hit: Job RESNET50 accessed 20
-2025-05-02 17:28:25,081 - DEBUG - Added batch 26 to cache
-2025-05-02 17:28:25,081 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 27
-2025-05-02 17:28:25,081 - DEBUG - Cache miss: Job RESNET18 could not access 27
-2025-05-02 17:28:25,081 - DEBUG - Added batch 27 to cache
-2025-05-02 17:28:25,081 - DEBUG - Cache hit: Job RESNET50 accessed 21
-2025-05-02 17:28:25,081 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 28
-2025-05-02 17:28:25,081 - DEBUG - Cache hit: Job VGG16 accessed 14
-2025-05-02 17:28:25,081 - DEBUG - Cache miss: Job RESNET18 could not access 28
-2025-05-02 17:28:25,081 - DEBUG - Added batch 28 to cache
-2025-05-02 17:28:25,082 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 29
-2025-05-02 17:28:25,082 - DEBUG - Cache hit: Job RESNET50 accessed 22
-2025-05-02 17:28:25,082 - DEBUG - Added batch 29 to cache
-2025-05-02 17:28:25,082 - DEBUG - Cache hit: Job RESNET18 accessed 29
-2025-05-02 17:28:25,082 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 30
-2025-05-02 17:28:25,082 - DEBUG - Cache hit: Job VGG16 accessed 15
-2025-05-02 17:28:25,082 - DEBUG - Cache miss: Job RESNET18 could not access 30
-2025-05-02 17:28:25,082 - DEBUG - Cache hit: Job RESNET50 accessed 23
-2025-05-02 17:28:25,082 - DEBUG - Added batch 30 to cache
-2025-05-02 17:28:25,082 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 31
-2025-05-02 17:28:25,082 - DEBUG - Cache miss: Job RESNET18 could not access 31
-2025-05-02 17:28:25,082 - DEBUG - Added batch 31 to cache
-2025-05-02 17:28:25,082 - DEBUG - Cache hit: Job RESNET50 accessed 24
-2025-05-02 17:28:25,082 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 32
-2025-05-02 17:28:25,082 - DEBUG - Cache hit: Job VGG16 accessed 16
-2025-05-02 17:28:25,082 - DEBUG - Cache miss: Job RESNET18 could not access 32
-2025-05-02 17:28:25,082 - DEBUG - Added batch 32 to cache
-2025-05-02 17:28:25,083 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 33
-2025-05-02 17:28:25,083 - DEBUG - Cache hit: Job RESNET50 accessed 25
-2025-05-02 17:28:25,083 - DEBUG - Cache miss: Job RESNET18 could not access 33
-2025-05-02 17:28:25,083 - DEBUG - Added batch 33 to cache
-2025-05-02 17:28:25,083 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 34
-2025-05-02 17:28:25,083 - DEBUG - Cache hit: Job VGG16 accessed 17
-2025-05-02 17:28:25,083 - DEBUG - Cache hit: Job RESNET50 accessed 26
-2025-05-02 17:28:25,083 - DEBUG - Added batch 34 to cache
-2025-05-02 17:28:25,083 - DEBUG - Cache hit: Job RESNET18 accessed 34
-2025-05-02 17:28:25,083 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 35
-2025-05-02 17:28:25,083 - DEBUG - Cache miss: Job RESNET18 could not access 35
-2025-05-02 17:28:25,083 - DEBUG - Cache hit: Job RESNET50 accessed 27
-2025-05-02 17:28:25,083 - DEBUG - Added batch 35 to cache
-2025-05-02 17:28:25,083 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 36
-2025-05-02 17:28:25,083 - DEBUG - Cache hit: Job VGG16 accessed 18
-2025-05-02 17:28:25,083 - DEBUG - Cache miss: Job RESNET18 could not access 36
-2025-05-02 17:28:25,083 - DEBUG - Added batch 36 to cache
-2025-05-02 17:28:25,084 - DEBUG - Cache hit: Job RESNET50 accessed 28
-2025-05-02 17:28:25,084 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 37
-2025-05-02 17:28:25,084 - DEBUG - Cache miss: Job RESNET18 could not access 37
-2025-05-02 17:28:25,084 - DEBUG - Added batch 37 to cache
-2025-05-02 17:28:25,084 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 38
-2025-05-02 17:28:25,084 - DEBUG - Cache hit: Job VGG16 accessed 19
-2025-05-02 17:28:25,084 - DEBUG - Cache hit: Job RESNET50 accessed 29
-2025-05-02 17:28:25,084 - DEBUG - Cache miss: Job RESNET18 could not access 38
-2025-05-02 17:28:25,084 - DEBUG - Added batch 38 to cache
-2025-05-02 17:28:25,084 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 39
-2025-05-02 17:28:25,084 - DEBUG - Cache hit: Job RESNET50 accessed 30
-2025-05-02 17:28:25,084 - DEBUG - Added batch 39 to cache
-2025-05-02 17:28:25,084 - DEBUG - Cache hit: Job RESNET18 accessed 39
-2025-05-02 17:28:25,084 - DEBUG - Cache hit: Job VGG16 accessed 20
-2025-05-02 17:28:25,084 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 40
-2025-05-02 17:28:25,084 - DEBUG - Cache miss: Job RESNET18 could not access 40
-2025-05-02 17:28:25,085 - DEBUG - Added batch 40 to cache
-2025-05-02 17:28:25,085 - DEBUG - Cache hit: Job RESNET50 accessed 31
-2025-05-02 17:28:25,085 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 41
-2025-05-02 17:28:25,085 - DEBUG - Cache miss: Job RESNET18 could not access 41
-2025-05-02 17:28:25,085 - DEBUG - Added batch 41 to cache
-2025-05-02 17:28:25,085 - DEBUG - Cache hit: Job VGG16 accessed 21
-2025-05-02 17:28:25,085 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 42
-2025-05-02 17:28:25,085 - DEBUG - Cache hit: Job RESNET50 accessed 32
-2025-05-02 17:28:25,085 - DEBUG - Cache miss: Job RESNET18 could not access 42
-2025-05-02 17:28:25,085 - DEBUG - Added batch 42 to cache
-2025-05-02 17:28:25,085 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 43
-2025-05-02 17:28:25,085 - DEBUG - Cache hit: Job RESNET50 accessed 33
-2025-05-02 17:28:25,085 - DEBUG - Added batch 43 to cache
-2025-05-02 17:28:25,085 - DEBUG - Cache hit: Job RESNET18 accessed 43
-2025-05-02 17:28:25,085 - DEBUG - Cache hit: Job VGG16 accessed 22
-2025-05-02 17:28:25,086 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 44
-2025-05-02 17:28:25,086 - DEBUG - Cache miss: Job RESNET18 could not access 44
-2025-05-02 17:28:25,086 - DEBUG - Cache hit: Job RESNET50 accessed 34
-2025-05-02 17:28:25,086 - DEBUG - Added batch 44 to cache
-2025-05-02 17:28:25,086 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 45
-2025-05-02 17:28:25,086 - DEBUG - Cache miss: Job RESNET18 could not access 45
-2025-05-02 17:28:25,086 - DEBUG - Added batch 45 to cache
-2025-05-02 17:28:25,086 - DEBUG - Cache hit: Job VGG16 accessed 23
-2025-05-02 17:28:25,086 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 46
-2025-05-02 17:28:25,086 - DEBUG - Cache hit: Job RESNET50 accessed 35
-2025-05-02 17:28:25,086 - DEBUG - Cache miss: Job RESNET18 could not access 46
-2025-05-02 17:28:25,086 - DEBUG - Added batch 46 to cache
-2025-05-02 17:28:25,086 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 47
-2025-05-02 17:28:25,086 - DEBUG - Cache hit: Job RESNET50 accessed 36
-2025-05-02 17:28:25,086 - DEBUG - Cache miss: Job RESNET18 could not access 47
-2025-05-02 17:28:25,086 - DEBUG - Added batch 47 to cache
-2025-05-02 17:28:25,087 - DEBUG - Cache hit: Job VGG16 accessed 24
-2025-05-02 17:28:25,087 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 48
-2025-05-02 17:28:25,087 - DEBUG - Cache hit: Job RESNET50 accessed 37
-2025-05-02 17:28:25,087 - DEBUG - Added batch 48 to cache
-2025-05-02 17:28:25,087 - DEBUG - Cache hit: Job RESNET18 accessed 48
-2025-05-02 17:28:25,087 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 49
-2025-05-02 17:28:25,087 - DEBUG - Cache miss: Job RESNET18 could not access 49
-2025-05-02 17:28:25,087 - DEBUG - Added batch 49 to cache
-2025-05-02 17:28:25,087 - DEBUG - Cache hit: Job VGG16 accessed 25
-2025-05-02 17:28:25,087 - DEBUG - Cache hit: Job RESNET50 accessed 38
-2025-05-02 17:28:25,087 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 50
-2025-05-02 17:28:25,087 - DEBUG - Cache miss: Job RESNET18 could not access 50
-2025-05-02 17:28:25,087 - DEBUG - Added batch 50 to cache
-2025-05-02 17:28:25,087 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 51
-2025-05-02 17:28:25,087 - DEBUG - Cache hit: Job RESNET50 accessed 39
-2025-05-02 17:28:25,087 - DEBUG - Cache miss: Job RESNET18 could not access 51
-2025-05-02 17:28:25,087 - DEBUG - Added batch 51 to cache
-2025-05-02 17:28:25,088 - DEBUG - Cache hit: Job VGG16 accessed 26
-2025-05-02 17:28:25,088 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 52
-2025-05-02 17:28:25,088 - DEBUG - Cache hit: Job RESNET50 accessed 40
-2025-05-02 17:28:25,088 - DEBUG - Cache miss: Job RESNET18 could not access 52
-2025-05-02 17:28:25,088 - DEBUG - Added batch 52 to cache
-2025-05-02 17:28:25,088 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 53
-2025-05-02 17:28:25,088 - DEBUG - Cache hit: Job VGG16 accessed 27
-2025-05-02 17:28:25,088 - DEBUG - Added batch 53 to cache
-2025-05-02 17:28:25,088 - DEBUG - Cache hit: Job RESNET50 accessed 41
-2025-05-02 17:28:25,088 - DEBUG - Cache hit: Job RESNET18 accessed 53
-2025-05-02 17:28:25,088 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 54
-2025-05-02 17:28:25,088 - DEBUG - Cache miss: Job RESNET18 could not access 54
-2025-05-02 17:28:25,088 - DEBUG - Added batch 54 to cache
-2025-05-02 17:28:25,089 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 55
-2025-05-02 17:28:25,089 - DEBUG - Cache hit: Job RESNET50 accessed 42
-2025-05-02 17:28:25,089 - DEBUG - Cache miss: Job RESNET18 could not access 55
-2025-05-02 17:28:25,089 - DEBUG - Cache hit: Job VGG16 accessed 28
-2025-05-02 17:28:25,089 - DEBUG - Added batch 55 to cache
-2025-05-02 17:28:25,089 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 56
-2025-05-02 17:28:25,089 - DEBUG - Cache hit: Job RESNET50 accessed 43
-2025-05-02 17:28:25,089 - DEBUG - Cache miss: Job RESNET18 could not access 56
-2025-05-02 17:28:25,089 - DEBUG - Added batch 56 to cache
-2025-05-02 17:28:25,089 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 57
-2025-05-02 17:28:25,089 - DEBUG - Cache hit: Job VGG16 accessed 29
-2025-05-02 17:28:25,089 - DEBUG - Cache hit: Job RESNET50 accessed 44
-2025-05-02 17:28:25,089 - DEBUG - Cache miss: Job RESNET18 could not access 57
-2025-05-02 17:28:25,089 - DEBUG - Added batch 57 to cache
-2025-05-02 17:28:25,089 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 58
-2025-05-02 17:28:25,089 - DEBUG - Added batch 58 to cache
-2025-05-02 17:28:25,089 - DEBUG - Cache hit: Job RESNET18 accessed 58
-2025-05-02 17:28:25,089 - DEBUG - Cache hit: Job RESNET50 accessed 45
-2025-05-02 17:28:25,090 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 59
-2025-05-02 17:28:25,090 - DEBUG - Cache miss: Job RESNET18 could not access 59
-2025-05-02 17:28:25,090 - DEBUG - Cache hit: Job VGG16 accessed 30
-2025-05-02 17:28:25,090 - DEBUG - Added batch 59 to cache
-2025-05-02 17:28:25,090 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 60
-2025-05-02 17:28:25,090 - DEBUG - Cache hit: Job RESNET50 accessed 46
-2025-05-02 17:28:25,090 - DEBUG - Cache miss: Job RESNET18 could not access 60
-2025-05-02 17:28:25,090 - DEBUG - Added batch 60 to cache
-2025-05-02 17:28:25,090 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 61
-2025-05-02 17:28:25,090 - DEBUG - Cache hit: Job RESNET50 accessed 47
-2025-05-02 17:28:25,090 - DEBUG - Cache hit: Job VGG16 accessed 31
-2025-05-02 17:28:25,090 - DEBUG - Cache miss: Job RESNET18 could not access 61
-2025-05-02 17:28:25,090 - DEBUG - Added batch 61 to cache
-2025-05-02 17:28:25,090 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 62
-2025-05-02 17:28:25,090 - DEBUG - Cache miss: Job RESNET18 could not access 62
-2025-05-02 17:28:25,090 - DEBUG - Added batch 62 to cache
-2025-05-02 17:28:25,090 - DEBUG - Cache hit: Job RESNET50 accessed 48
-2025-05-02 17:28:25,090 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 63
-2025-05-02 17:28:25,090 - DEBUG - Cache hit: Job VGG16 accessed 32
-2025-05-02 17:28:25,091 - DEBUG - Added batch 63 to cache
-2025-05-02 17:28:25,091 - DEBUG - Cache hit: Job RESNET18 accessed 63
-2025-05-02 17:28:25,091 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 64
-2025-05-02 17:28:25,091 - DEBUG - Cache hit: Job RESNET50 accessed 49
-2025-05-02 17:28:25,091 - DEBUG - Cache miss: Job RESNET18 could not access 64
-2025-05-02 17:28:25,091 - DEBUG - Added batch 64 to cache
-2025-05-02 17:28:25,091 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 65
-2025-05-02 17:28:25,091 - DEBUG - Cache hit: Job RESNET50 accessed 50
-2025-05-02 17:28:25,091 - DEBUG - Cache miss: Job RESNET18 could not access 65
-2025-05-02 17:28:25,091 - DEBUG - Cache hit: Job VGG16 accessed 33
-2025-05-02 17:28:25,091 - DEBUG - Added batch 65 to cache
-2025-05-02 17:28:25,091 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 66
-2025-05-02 17:28:25,091 - DEBUG - Cache miss: Job RESNET18 could not access 66
-2025-05-02 17:28:25,091 - DEBUG - Cache hit: Job RESNET50 accessed 51
-2025-05-02 17:28:25,091 - DEBUG - Added batch 66 to cache
-2025-05-02 17:28:25,091 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 67
-2025-05-02 17:28:25,091 - DEBUG - Cache hit: Job VGG16 accessed 34
-2025-05-02 17:28:25,091 - DEBUG - Added batch 67 to cache
-2025-05-02 17:28:25,091 - DEBUG - Cache hit: Job RESNET18 accessed 67
-2025-05-02 17:28:25,092 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 68
-2025-05-02 17:28:25,092 - DEBUG - Cache hit: Job RESNET50 accessed 52
-2025-05-02 17:28:25,092 - DEBUG - Cache miss: Job RESNET18 could not access 68
-2025-05-02 17:28:25,092 - DEBUG - Added batch 68 to cache
-2025-05-02 17:28:25,092 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 69
-2025-05-02 17:28:25,092 - DEBUG - Cache hit: Job RESNET50 accessed 53
-2025-05-02 17:28:25,092 - DEBUG - Cache miss: Job RESNET18 could not access 69
-2025-05-02 17:28:25,092 - DEBUG - Cache hit: Job VGG16 accessed 35
-2025-05-02 17:28:25,092 - DEBUG - Added batch 69 to cache
-2025-05-02 17:28:25,092 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 70
-2025-05-02 17:28:25,092 - DEBUG - Cache miss: Job RESNET18 could not access 70
-2025-05-02 17:28:25,092 - DEBUG - Cache hit: Job RESNET50 accessed 54
-2025-05-02 17:28:25,092 - DEBUG - Added batch 70 to cache
-2025-05-02 17:28:25,092 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 71
-2025-05-02 17:28:25,092 - DEBUG - Cache hit: Job VGG16 accessed 36
-2025-05-02 17:28:25,092 - DEBUG - Cache miss: Job RESNET18 could not access 71
-2025-05-02 17:28:25,092 - DEBUG - Added batch 71 to cache
-2025-05-02 17:28:25,092 - DEBUG - Cache hit: Job RESNET50 accessed 55
-2025-05-02 17:28:25,092 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 72
-2025-05-02 17:28:25,093 - DEBUG - Added batch 72 to cache
-2025-05-02 17:28:25,093 - DEBUG - Cache hit: Job RESNET18 accessed 72
-2025-05-02 17:28:25,093 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 73
-2025-05-02 17:28:25,093 - DEBUG - Cache hit: Job RESNET50 accessed 56
-2025-05-02 17:28:25,093 - DEBUG - Cache miss: Job RESNET18 could not access 73
-2025-05-02 17:28:25,093 - DEBUG - Cache hit: Job VGG16 accessed 37
-2025-05-02 17:28:25,093 - DEBUG - Added batch 73 to cache
-2025-05-02 17:28:25,093 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 74
-2025-05-02 17:28:25,093 - DEBUG - Cache miss: Job RESNET18 could not access 74
-2025-05-02 17:28:25,093 - DEBUG - Cache hit: Job RESNET50 accessed 57
-2025-05-02 17:28:25,093 - DEBUG - Added batch 74 to cache
-2025-05-02 17:28:25,093 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 75
-2025-05-02 17:28:25,093 - DEBUG - Cache hit: Job VGG16 accessed 38
-2025-05-02 17:28:25,093 - DEBUG - Cache miss: Job RESNET18 could not access 75
-2025-05-02 17:28:25,093 - DEBUG - Added batch 75 to cache
-2025-05-02 17:28:25,093 - DEBUG - Cache hit: Job RESNET50 accessed 58
-2025-05-02 17:28:25,093 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 76
-2025-05-02 17:28:25,093 - DEBUG - Cache miss: Job RESNET18 could not access 76
-2025-05-02 17:28:25,093 - DEBUG - Added batch 76 to cache
-2025-05-02 17:28:25,094 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 77
-2025-05-02 17:28:25,094 - DEBUG - Cache hit: Job RESNET50 accessed 59
-2025-05-02 17:28:25,094 - DEBUG - Cache hit: Job VGG16 accessed 39
-2025-05-02 17:28:25,094 - DEBUG - Added batch 77 to cache
-2025-05-02 17:28:25,094 - DEBUG - Cache hit: Job RESNET18 accessed 77
-2025-05-02 17:28:25,094 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 78
-2025-05-02 17:28:25,094 - DEBUG - Cache miss: Job RESNET18 could not access 78
-2025-05-02 17:28:25,094 - DEBUG - Cache hit: Job RESNET50 accessed 60
-2025-05-02 17:28:25,094 - DEBUG - Added batch 78 to cache
-2025-05-02 17:28:25,094 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 79
-2025-05-02 17:28:25,094 - DEBUG - Cache hit: Job VGG16 accessed 40
-2025-05-02 17:28:25,094 - DEBUG - Cache miss: Job RESNET18 could not access 79
-2025-05-02 17:28:25,094 - DEBUG - Cache hit: Job RESNET50 accessed 61
-2025-05-02 17:28:25,094 - DEBUG - Added batch 79 to cache
-2025-05-02 17:28:25,094 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 80
-2025-05-02 17:28:25,094 - DEBUG - Cache miss: Job RESNET18 could not access 80
-2025-05-02 17:28:25,094 - DEBUG - Added batch 80 to cache
-2025-05-02 17:28:25,094 - DEBUG - Cache hit: Job RESNET50 accessed 62
-2025-05-02 17:28:25,094 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 81
-2025-05-02 17:28:25,095 - DEBUG - Cache hit: Job VGG16 accessed 41
-2025-05-02 17:28:25,095 - DEBUG - Cache miss: Job RESNET18 could not access 81
-2025-05-02 17:28:25,095 - DEBUG - Added batch 81 to cache
-2025-05-02 17:28:25,095 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 82
-2025-05-02 17:28:25,095 - DEBUG - Cache hit: Job RESNET50 accessed 63
-2025-05-02 17:28:25,095 - DEBUG - Added batch 82 to cache
-2025-05-02 17:28:25,095 - DEBUG - Cache hit: Job RESNET18 accessed 82
-2025-05-02 17:28:25,095 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 83
-2025-05-02 17:28:25,095 - DEBUG - Cache hit: Job VGG16 accessed 42
-2025-05-02 17:28:25,095 - DEBUG - Cache miss: Job RESNET18 could not access 83
-2025-05-02 17:28:25,095 - DEBUG - Cache hit: Job RESNET50 accessed 64
-2025-05-02 17:28:25,095 - DEBUG - Added batch 83 to cache
-2025-05-02 17:28:25,095 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 84
-2025-05-02 17:28:25,095 - DEBUG - Cache miss: Job RESNET18 could not access 84
-2025-05-02 17:28:25,095 - DEBUG - Added batch 84 to cache
-2025-05-02 17:28:25,095 - DEBUG - Cache hit: Job RESNET50 accessed 65
-2025-05-02 17:28:25,095 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 85
-2025-05-02 17:28:25,095 - DEBUG - Cache hit: Job VGG16 accessed 43
-2025-05-02 17:28:25,095 - DEBUG - Cache miss: Job RESNET18 could not access 85
-2025-05-02 17:28:25,096 - DEBUG - Added batch 85 to cache
-2025-05-02 17:28:25,096 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 86
-2025-05-02 17:28:25,096 - DEBUG - Cache hit: Job RESNET50 accessed 66
-2025-05-02 17:28:25,096 - DEBUG - Added batch 86 to cache
-2025-05-02 17:28:25,096 - DEBUG - Cache hit: Job RESNET18 accessed 86
-2025-05-02 17:28:25,096 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 87
-2025-05-02 17:28:25,096 - DEBUG - Cache hit: Job VGG16 accessed 44
-2025-05-02 17:28:25,096 - DEBUG - Cache miss: Job RESNET18 could not access 87
-2025-05-02 17:28:25,096 - DEBUG - Cache hit: Job RESNET50 accessed 67
-2025-05-02 17:28:25,096 - DEBUG - Added batch 87 to cache
-2025-05-02 17:28:25,096 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 88
-2025-05-02 17:28:25,096 - DEBUG - Cache miss: Job RESNET18 could not access 88
-2025-05-02 17:28:25,096 - DEBUG - Cache hit: Job RESNET50 accessed 68
-2025-05-02 17:28:25,096 - DEBUG - Added batch 88 to cache
-2025-05-02 17:28:25,096 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 89
-2025-05-02 17:28:25,096 - DEBUG - Cache hit: Job VGG16 accessed 45
-2025-05-02 17:28:25,096 - DEBUG - Cache miss: Job RESNET18 could not access 89
-2025-05-02 17:28:25,096 - DEBUG - Added batch 89 to cache
-2025-05-02 17:28:25,097 - DEBUG - Cache hit: Job RESNET50 accessed 69
-2025-05-02 17:28:25,097 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 90
-2025-05-02 17:28:25,097 - DEBUG - Cache miss: Job RESNET18 could not access 90
-2025-05-02 17:28:25,097 - DEBUG - Added batch 90 to cache
-2025-05-02 17:28:25,097 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 91
-2025-05-02 17:28:25,097 - DEBUG - Cache hit: Job VGG16 accessed 46
-2025-05-02 17:28:25,097 - DEBUG - Cache hit: Job RESNET50 accessed 70
-2025-05-02 17:28:25,097 - DEBUG - Added batch 91 to cache
-2025-05-02 17:28:25,097 - DEBUG - Cache hit: Job RESNET18 accessed 91
-2025-05-02 17:28:25,097 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 92
-2025-05-02 17:28:25,097 - DEBUG - Cache miss: Job RESNET18 could not access 92
-2025-05-02 17:28:25,097 - DEBUG - Cache hit: Job RESNET50 accessed 71
-2025-05-02 17:28:25,097 - DEBUG - Added batch 92 to cache
-2025-05-02 17:28:25,097 - DEBUG - Cache hit: Job VGG16 accessed 47
-2025-05-02 17:28:25,097 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 93
-2025-05-02 17:28:25,097 - DEBUG - Cache miss: Job RESNET18 could not access 93
-2025-05-02 17:28:25,097 - DEBUG - Added batch 93 to cache
-2025-05-02 17:28:25,098 - DEBUG - Cache hit: Job RESNET50 accessed 72
-2025-05-02 17:28:25,098 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 94
-2025-05-02 17:28:25,098 - DEBUG - Cache miss: Job RESNET18 could not access 94
-2025-05-02 17:28:25,098 - DEBUG - Added batch 94 to cache
-2025-05-02 17:28:25,098 - DEBUG - Cache hit: Job VGG16 accessed 48
-2025-05-02 17:28:25,098 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 95
-2025-05-02 17:28:25,098 - DEBUG - Cache hit: Job RESNET50 accessed 73
-2025-05-02 17:28:25,098 - DEBUG - Cache miss: Job RESNET18 could not access 95
-2025-05-02 17:28:25,098 - DEBUG - Added batch 95 to cache
-2025-05-02 17:28:25,098 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 96
-2025-05-02 17:28:25,098 - DEBUG - Cache hit: Job RESNET50 accessed 74
-2025-05-02 17:28:25,098 - DEBUG - Added batch 96 to cache
-2025-05-02 17:28:25,098 - DEBUG - Cache hit: Job RESNET18 accessed 96
-2025-05-02 17:28:25,098 - DEBUG - Cache hit: Job VGG16 accessed 49
-2025-05-02 17:28:25,098 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 97
-2025-05-02 17:28:25,098 - DEBUG - Cache miss: Job RESNET18 could not access 97
-2025-05-02 17:28:25,098 - DEBUG - Cache hit: Job RESNET50 accessed 75
-2025-05-02 17:28:25,098 - DEBUG - Added batch 97 to cache
-2025-05-02 17:28:25,098 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 98
-2025-05-02 17:28:25,099 - DEBUG - Cache miss: Job RESNET18 could not access 98
-2025-05-02 17:28:25,099 - DEBUG - Added batch 98 to cache
-2025-05-02 17:28:25,099 - DEBUG - Cache hit: Job VGG16 accessed 50
-2025-05-02 17:28:25,099 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 99
-2025-05-02 17:28:25,099 - DEBUG - Cache hit: Job RESNET50 accessed 76
-2025-05-02 17:28:25,099 - DEBUG - Cache miss: Job RESNET18 could not access 99
-2025-05-02 17:28:25,099 - DEBUG - Added batch 99 to cache
-2025-05-02 17:28:25,099 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 100
-2025-05-02 17:28:25,099 - DEBUG - Cache hit: Job RESNET50 accessed 77
-2025-05-02 17:28:25,099 - DEBUG - Cache miss: Job RESNET18 could not access 100
-2025-05-02 17:28:25,099 - DEBUG - Added batch 100 to cache
-2025-05-02 17:28:25,099 - DEBUG - Cache hit: Job VGG16 accessed 51
-2025-05-02 17:28:25,099 - DEBUG - Cache hit: Job RESNET50 accessed 78
-2025-05-02 17:28:25,099 - DEBUG - Cache hit: Job VGG16 accessed 52
-2025-05-02 17:28:25,099 - DEBUG - Cache hit: Job RESNET50 accessed 79
-2025-05-02 17:28:25,099 - DEBUG - Cache hit: Job RESNET50 accessed 80
-2025-05-02 17:28:25,099 - DEBUG - Cache hit: Job VGG16 accessed 53
-2025-05-02 17:28:25,100 - DEBUG - Cache hit: Job RESNET50 accessed 81
-2025-05-02 17:28:25,100 - DEBUG - Cache hit: Job VGG16 accessed 54
-2025-05-02 17:28:25,100 - DEBUG - Cache hit: Job RESNET50 accessed 82
-2025-05-02 17:28:25,100 - DEBUG - Cache hit: Job RESNET50 accessed 83
-2025-05-02 17:28:25,100 - DEBUG - Cache hit: Job VGG16 accessed 55
-2025-05-02 17:28:25,100 - DEBUG - Cache hit: Job RESNET50 accessed 84
-2025-05-02 17:28:25,100 - DEBUG - Cache hit: Job VGG16 accessed 56
-2025-05-02 17:28:25,100 - DEBUG - Cache hit: Job RESNET50 accessed 85
-2025-05-02 17:28:25,100 - DEBUG - Cache hit: Job RESNET50 accessed 86
-2025-05-02 17:28:25,100 - DEBUG - Cache hit: Job VGG16 accessed 57
-2025-05-02 17:28:25,100 - DEBUG - Cache hit: Job RESNET50 accessed 87
-2025-05-02 17:28:25,100 - DEBUG - Cache hit: Job VGG16 accessed 58
-2025-05-02 17:28:25,100 - DEBUG - Cache hit: Job RESNET50 accessed 88
-2025-05-02 17:28:25,100 - DEBUG - Cache hit: Job RESNET50 accessed 89
-2025-05-02 17:28:25,100 - DEBUG - Cache hit: Job VGG16 accessed 59
-2025-05-02 17:28:25,100 - DEBUG - Cache hit: Job RESNET50 accessed 90
-2025-05-02 17:28:25,100 - DEBUG - Cache hit: Job RESNET50 accessed 91
-2025-05-02 17:28:25,100 - DEBUG - Cache hit: Job VGG16 accessed 60
-2025-05-02 17:28:25,101 - DEBUG - Cache hit: Job RESNET50 accessed 92
-2025-05-02 17:28:25,101 - DEBUG - Cache hit: Job VGG16 accessed 61
-2025-05-02 17:28:25,101 - DEBUG - Cache hit: Job RESNET50 accessed 93
-2025-05-02 17:28:25,101 - DEBUG - Cache hit: Job RESNET50 accessed 94
-2025-05-02 17:28:25,101 - DEBUG - Cache hit: Job VGG16 accessed 62
-2025-05-02 17:28:25,101 - DEBUG - Cache hit: Job RESNET50 accessed 95
-2025-05-02 17:28:25,101 - DEBUG - Cache hit: Job VGG16 accessed 63
-2025-05-02 17:28:25,101 - DEBUG - Cache hit: Job RESNET50 accessed 96
-2025-05-02 17:28:25,101 - DEBUG - Cache hit: Job RESNET50 accessed 97
-2025-05-02 17:28:25,101 - DEBUG - Cache hit: Job VGG16 accessed 64
-2025-05-02 17:28:25,101 - DEBUG - Cache hit: Job RESNET50 accessed 98
-2025-05-02 17:28:25,101 - DEBUG - Cache hit: Job VGG16 accessed 65
-2025-05-02 17:28:25,101 - DEBUG - Cache hit: Job RESNET50 accessed 99
-2025-05-02 17:28:25,101 - DEBUG - Cache hit: Job RESNET50 accessed 100
-2025-05-02 17:28:25,101 - DEBUG - Cache hit: Job VGG16 accessed 66
-2025-05-02 17:28:25,102 - DEBUG - Cache hit: Job VGG16 accessed 67
-2025-05-02 17:28:25,102 - DEBUG - Cache hit: Job VGG16 accessed 68
-2025-05-02 17:28:25,102 - DEBUG - Cache hit: Job VGG16 accessed 69
-2025-05-02 17:28:25,102 - DEBUG - Cache hit: Job VGG16 accessed 70
-2025-05-02 17:28:25,102 - DEBUG - Cache hit: Job VGG16 accessed 71
-2025-05-02 17:28:25,102 - DEBUG - Cache hit: Job VGG16 accessed 72
-2025-05-02 17:28:25,102 - DEBUG - Cache hit: Job VGG16 accessed 73
-2025-05-02 17:28:25,102 - DEBUG - Cache hit: Job VGG16 accessed 74
-2025-05-02 17:28:25,102 - DEBUG - Cache hit: Job VGG16 accessed 75
-2025-05-02 17:28:25,102 - DEBUG - Cache hit: Job VGG16 accessed 76
-2025-05-02 17:28:25,102 - DEBUG - Cache hit: Job VGG16 accessed 77
-2025-05-02 17:28:25,102 - DEBUG - Cache hit: Job VGG16 accessed 78
-2025-05-02 17:28:25,102 - DEBUG - Cache hit: Job VGG16 accessed 79
-2025-05-02 17:28:25,102 - DEBUG - Cache hit: Job VGG16 accessed 80
-2025-05-02 17:28:25,102 - DEBUG - Cache hit: Job VGG16 accessed 81
-2025-05-02 17:28:25,102 - DEBUG - Cache hit: Job VGG16 accessed 82
-2025-05-02 17:28:25,102 - DEBUG - Cache hit: Job VGG16 accessed 83
-2025-05-02 17:28:25,103 - DEBUG - Cache hit: Job VGG16 accessed 84
-2025-05-02 17:28:25,103 - DEBUG - Cache hit: Job VGG16 accessed 85
-2025-05-02 17:28:25,103 - DEBUG - Cache hit: Job VGG16 accessed 86
-2025-05-02 17:28:25,103 - DEBUG - Cache hit: Job VGG16 accessed 87
-2025-05-02 17:28:25,103 - DEBUG - Cache hit: Job VGG16 accessed 88
-2025-05-02 17:28:25,103 - DEBUG - Cache hit: Job VGG16 accessed 89
-2025-05-02 17:28:25,103 - DEBUG - Cache hit: Job VGG16 accessed 90
-2025-05-02 17:28:25,103 - DEBUG - Cache hit: Job VGG16 accessed 91
-2025-05-02 17:28:25,103 - DEBUG - Cache hit: Job VGG16 accessed 92
-2025-05-02 17:28:25,103 - DEBUG - Cache hit: Job VGG16 accessed 93
-2025-05-02 17:28:25,103 - DEBUG - Cache hit: Job VGG16 accessed 94
-2025-05-02 17:28:25,103 - DEBUG - Cache hit: Job VGG16 accessed 95
-2025-05-02 17:28:25,103 - DEBUG - Cache hit: Job VGG16 accessed 96
-2025-05-02 17:28:25,103 - DEBUG - Cache hit: Job VGG16 accessed 97
-2025-05-02 17:28:25,103 - DEBUG - Cache hit: Job VGG16 accessed 98
-2025-05-02 17:28:25,103 - DEBUG - Cache hit: Job VGG16 accessed 99
-2025-05-02 17:28:25,103 - DEBUG - Cache hit: Job VGG16 accessed 100
+2025-05-02 19:31:02,332 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 1
+2025-05-02 19:31:02,332 - DEBUG - Cache miss: Job RESNET18 could not access 1
+2025-05-02 19:31:02,333 - DEBUG - Added batch 1 to cache
+2025-05-02 19:31:02,333 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 2
+2025-05-02 19:31:02,333 - DEBUG - Cache hit: Job RESNET50 accessed 1
+2025-05-02 19:31:02,333 - DEBUG - Cache miss: Job RESNET18 could not access 2
+2025-05-02 19:31:02,333 - DEBUG - Cache hit: Job VGG16 accessed 1
+2025-05-02 19:31:02,333 - DEBUG - Removed batch 1 from cache
+2025-05-02 19:31:02,333 - DEBUG - Added batch 2 to cache
+2025-05-02 19:31:02,333 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 3
+2025-05-02 19:31:02,334 - DEBUG - Cache hit: Job RESNET50 accessed 2
+2025-05-02 19:31:02,334 - DEBUG - Cache miss: Job RESNET18 could not access 3
+2025-05-02 19:31:02,334 - DEBUG - Added batch 3 to cache
+2025-05-02 19:31:02,334 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 4
+2025-05-02 19:31:02,334 - DEBUG - Cache miss: Job RESNET18 could not access 4
+2025-05-02 19:31:02,334 - DEBUG - Cache hit: Job RESNET50 accessed 3
+2025-05-02 19:31:02,334 - DEBUG - Cache hit: Job VGG16 accessed 2
+2025-05-02 19:31:02,334 - DEBUG - Removed batch 2 from cache
+2025-05-02 19:31:02,334 - DEBUG - Added batch 4 to cache
+2025-05-02 19:31:02,334 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 5
+2025-05-02 19:31:02,335 - DEBUG - Added batch 5 to cache
+2025-05-02 19:31:02,335 - DEBUG - Cache hit: Job RESNET18 accessed 5
+2025-05-02 19:31:02,335 - DEBUG - Cache hit: Job RESNET50 accessed 4
+2025-05-02 19:31:02,335 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 6
+2025-05-02 19:31:02,335 - DEBUG - Cache miss: Job RESNET18 could not access 6
+2025-05-02 19:31:02,335 - DEBUG - Cache hit: Job VGG16 accessed 5
+2025-05-02 19:31:02,335 - DEBUG - Added batch 6 to cache
+2025-05-02 19:31:02,335 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 7
+2025-05-02 19:31:02,335 - DEBUG - Cache hit: Job RESNET50 accessed 6
+2025-05-02 19:31:02,335 - DEBUG - Cache miss: Job RESNET18 could not access 7
+2025-05-02 19:31:02,335 - DEBUG - Added batch 7 to cache
+2025-05-02 19:31:02,335 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 8
+2025-05-02 19:31:02,335 - DEBUG - Cache miss: Job RESNET18 could not access 8
+2025-05-02 19:31:02,335 - DEBUG - Cache hit: Job RESNET50 accessed 7
+2025-05-02 19:31:02,335 - DEBUG - Cache hit: Job VGG16 accessed 3
+2025-05-02 19:31:02,335 - DEBUG - Removed batch 3 from cache
+2025-05-02 19:31:02,335 - DEBUG - Added batch 8 to cache
+2025-05-02 19:31:02,336 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 9
+2025-05-02 19:31:02,336 - DEBUG - Cache miss: Job RESNET18 could not access 9
+2025-05-02 19:31:02,336 - DEBUG - Added batch 9 to cache
+2025-05-02 19:31:02,336 - DEBUG - Cache hit: Job RESNET50 accessed 8
+2025-05-02 19:31:02,336 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 10
+2025-05-02 19:31:02,336 - DEBUG - Cache hit: Job VGG16 accessed 9
+2025-05-02 19:31:02,336 - DEBUG - Added batch 10 to cache
+2025-05-02 19:31:02,336 - DEBUG - Cache hit: Job RESNET18 accessed 10
+2025-05-02 19:31:02,336 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 11
+2025-05-02 19:31:02,337 - DEBUG - Cache hit: Job RESNET50 accessed 10
+2025-05-02 19:31:02,337 - DEBUG - Cache miss: Job RESNET18 could not access 11
+2025-05-02 19:31:02,337 - DEBUG - Added batch 11 to cache
+2025-05-02 19:31:02,337 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 12
+2025-05-02 19:31:02,337 - DEBUG - Cache miss: Job RESNET18 could not access 12
+2025-05-02 19:31:02,337 - DEBUG - Cache hit: Job RESNET50 accessed 11
+2025-05-02 19:31:02,337 - DEBUG - Cache hit: Job VGG16 accessed 4
+2025-05-02 19:31:02,337 - DEBUG - Removed batch 4 from cache
+2025-05-02 19:31:02,337 - DEBUG - Added batch 12 to cache
+2025-05-02 19:31:02,338 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 13
+2025-05-02 19:31:02,338 - DEBUG - Cache miss: Job RESNET18 could not access 13
+2025-05-02 19:31:02,338 - DEBUG - Cache hit: Job RESNET50 accessed 12
+2025-05-02 19:31:02,338 - DEBUG - Added batch 13 to cache
+2025-05-02 19:31:02,338 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 14
+2025-05-02 19:31:02,338 - DEBUG - Cache hit: Job VGG16 accessed 13
+2025-05-02 19:31:02,338 - DEBUG - Cache miss: Job RESNET18 could not access 14
+2025-05-02 19:31:02,339 - DEBUG - Added batch 14 to cache
+2025-05-02 19:31:02,339 - DEBUG - Cache hit: Job RESNET50 accessed 14
+2025-05-02 19:31:02,339 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 15
+2025-05-02 19:31:02,339 - DEBUG - Added batch 15 to cache
+2025-05-02 19:31:02,339 - DEBUG - Cache hit: Job RESNET18 accessed 15
+2025-05-02 19:31:02,339 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 16
+2025-05-02 19:31:02,339 - DEBUG - Cache miss: Job RESNET18 could not access 16
+2025-05-02 19:31:02,339 - DEBUG - Cache hit: Job RESNET50 accessed 15
+2025-05-02 19:31:02,339 - DEBUG - Cache hit: Job VGG16 accessed 6
+2025-05-02 19:31:02,339 - DEBUG - Removed batch 6 from cache
+2025-05-02 19:31:02,339 - DEBUG - Added batch 16 to cache
+2025-05-02 19:31:02,339 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 17
+2025-05-02 19:31:02,339 - DEBUG - Cache miss: Job RESNET18 could not access 17
+2025-05-02 19:31:02,339 - DEBUG - Cache hit: Job RESNET50 accessed 16
+2025-05-02 19:31:02,339 - DEBUG - Added batch 17 to cache
+2025-05-02 19:31:02,339 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 18
+2025-05-02 19:31:02,340 - DEBUG - Cache hit: Job VGG16 accessed 17
+2025-05-02 19:31:02,340 - DEBUG - Cache miss: Job RESNET18 could not access 18
+2025-05-02 19:31:02,340 - DEBUG - Added batch 18 to cache
+2025-05-02 19:31:02,340 - DEBUG - Cache hit: Job RESNET50 accessed 18
+2025-05-02 19:31:02,340 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 19
+2025-05-02 19:31:02,340 - DEBUG - Cache miss: Job RESNET18 could not access 19
+2025-05-02 19:31:02,341 - DEBUG - Added batch 19 to cache
+2025-05-02 19:31:02,341 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 20
+2025-05-02 19:31:02,341 - DEBUG - Cache hit: Job RESNET50 accessed 19
+2025-05-02 19:31:02,341 - DEBUG - Cache hit: Job VGG16 accessed 7
+2025-05-02 19:31:02,341 - DEBUG - Removed batch 7 from cache
+2025-05-02 19:31:02,341 - DEBUG - Added batch 20 to cache
+2025-05-02 19:31:02,341 - DEBUG - Cache hit: Job RESNET18 accessed 20
+2025-05-02 19:31:02,342 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 21
+2025-05-02 19:31:02,342 - DEBUG - Cache miss: Job RESNET18 could not access 21
+2025-05-02 19:31:02,342 - DEBUG - Cache hit: Job RESNET50 accessed 20
+2025-05-02 19:31:02,342 - DEBUG - Added batch 21 to cache
+2025-05-02 19:31:02,342 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 22
+2025-05-02 19:31:02,343 - DEBUG - Cache hit: Job VGG16 accessed 21
+2025-05-02 19:31:02,343 - DEBUG - Cache miss: Job RESNET18 could not access 22
+2025-05-02 19:31:02,343 - DEBUG - Cache hit: Job RESNET50 accessed 5
+2025-05-02 19:31:02,343 - DEBUG - Removed batch 5 from cache
+2025-05-02 19:31:02,344 - DEBUG - Added batch 22 to cache
+2025-05-02 19:31:02,345 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 23
+2025-05-02 19:31:02,345 - DEBUG - Cache miss: Job RESNET18 could not access 23
+2025-05-02 19:31:02,345 - DEBUG - Added batch 23 to cache
+2025-05-02 19:31:02,346 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 24
+2025-05-02 19:31:02,346 - DEBUG - Cache hit: Job RESNET50 accessed 22
+2025-05-02 19:31:02,346 - DEBUG - Cache hit: Job VGG16 accessed 23
+2025-05-02 19:31:02,346 - DEBUG - Added batch 24 to cache
+2025-05-02 19:31:02,346 - DEBUG - Cache hit: Job RESNET18 accessed 24
+2025-05-02 19:31:02,346 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 25
+2025-05-02 19:31:02,346 - DEBUG - Cache miss: Job RESNET18 could not access 25
+2025-05-02 19:31:02,347 - DEBUG - Cache hit: Job RESNET50 accessed 24
+2025-05-02 19:31:02,347 - DEBUG - Added batch 25 to cache
+2025-05-02 19:31:02,347 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 26
+2025-05-02 19:31:02,347 - DEBUG - Cache hit: Job VGG16 accessed 25
+2025-05-02 19:31:02,347 - DEBUG - Cache miss: Job RESNET18 could not access 26
+2025-05-02 19:31:02,347 - DEBUG - Cache hit: Job RESNET50 accessed 9
+2025-05-02 19:31:02,347 - DEBUG - Removed batch 9 from cache
+2025-05-02 19:31:02,347 - DEBUG - Added batch 26 to cache
+2025-05-02 19:31:02,347 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 27
+2025-05-02 19:31:02,347 - DEBUG - Cache miss: Job RESNET18 could not access 27
+2025-05-02 19:31:02,347 - DEBUG - Added batch 27 to cache
+2025-05-02 19:31:02,347 - DEBUG - Cache hit: Job RESNET50 accessed 26
+2025-05-02 19:31:02,347 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 28
+2025-05-02 19:31:02,347 - DEBUG - Cache hit: Job VGG16 accessed 27
+2025-05-02 19:31:02,348 - DEBUG - Cache miss: Job RESNET18 could not access 28
+2025-05-02 19:31:02,348 - DEBUG - Added batch 28 to cache
+2025-05-02 19:31:02,348 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 29
+2025-05-02 19:31:02,348 - DEBUG - Cache hit: Job RESNET50 accessed 28
+2025-05-02 19:31:02,348 - DEBUG - Added batch 29 to cache
+2025-05-02 19:31:02,348 - DEBUG - Cache hit: Job RESNET18 accessed 29
+2025-05-02 19:31:02,348 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 30
+2025-05-02 19:31:02,349 - DEBUG - Cache hit: Job VGG16 accessed 29
+2025-05-02 19:31:02,349 - DEBUG - Cache miss: Job RESNET18 could not access 30
+2025-05-02 19:31:02,349 - DEBUG - Cache hit: Job RESNET50 accessed 13
+2025-05-02 19:31:02,349 - DEBUG - Removed batch 13 from cache
+2025-05-02 19:31:02,349 - DEBUG - Added batch 30 to cache
+2025-05-02 19:31:02,349 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 31
+2025-05-02 19:31:02,349 - DEBUG - Cache miss: Job RESNET18 could not access 31
+2025-05-02 19:31:02,349 - DEBUG - Added batch 31 to cache
+2025-05-02 19:31:02,350 - DEBUG - Cache hit: Job RESNET50 accessed 30
+2025-05-02 19:31:02,350 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 32
+2025-05-02 19:31:02,350 - DEBUG - Cache hit: Job VGG16 accessed 31
+2025-05-02 19:31:02,350 - DEBUG - Cache miss: Job RESNET18 could not access 32
+2025-05-02 19:31:02,350 - DEBUG - Added batch 32 to cache
+2025-05-02 19:31:02,350 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 33
+2025-05-02 19:31:02,350 - DEBUG - Cache hit: Job RESNET50 accessed 32
+2025-05-02 19:31:02,350 - DEBUG - Cache miss: Job RESNET18 could not access 33
+2025-05-02 19:31:02,350 - DEBUG - Added batch 33 to cache
+2025-05-02 19:31:02,350 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 34
+2025-05-02 19:31:02,350 - DEBUG - Cache hit: Job VGG16 accessed 33
+2025-05-02 19:31:02,350 - DEBUG - Cache hit: Job RESNET50 accessed 17
+2025-05-02 19:31:02,350 - DEBUG - Removed batch 17 from cache
+2025-05-02 19:31:02,351 - DEBUG - Added batch 34 to cache
+2025-05-02 19:31:02,351 - DEBUG - Cache hit: Job RESNET18 accessed 34
+2025-05-02 19:31:02,351 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 35
+2025-05-02 19:31:02,351 - DEBUG - Cache miss: Job RESNET18 could not access 35
+2025-05-02 19:31:02,351 - DEBUG - Cache hit: Job RESNET50 accessed 34
+2025-05-02 19:31:02,351 - DEBUG - Added batch 35 to cache
+2025-05-02 19:31:02,351 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 36
+2025-05-02 19:31:02,352 - DEBUG - Cache hit: Job VGG16 accessed 35
+2025-05-02 19:31:02,352 - DEBUG - Cache miss: Job RESNET18 could not access 36
+2025-05-02 19:31:02,352 - DEBUG - Added batch 36 to cache
+2025-05-02 19:31:02,352 - DEBUG - Cache hit: Job RESNET50 accessed 36
+2025-05-02 19:31:02,352 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 37
+2025-05-02 19:31:02,352 - DEBUG - Cache miss: Job RESNET18 could not access 37
+2025-05-02 19:31:02,352 - DEBUG - Added batch 37 to cache
+2025-05-02 19:31:02,352 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 38
+2025-05-02 19:31:02,353 - DEBUG - Cache hit: Job VGG16 accessed 37
+2025-05-02 19:31:02,353 - DEBUG - Cache hit: Job RESNET50 accessed 21
+2025-05-02 19:31:02,353 - DEBUG - Removed batch 21 from cache
+2025-05-02 19:31:02,353 - DEBUG - Cache miss: Job RESNET18 could not access 38
+2025-05-02 19:31:02,353 - DEBUG - Added batch 38 to cache
+2025-05-02 19:31:02,353 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 39
+2025-05-02 19:31:02,354 - DEBUG - Cache hit: Job RESNET50 accessed 38
+2025-05-02 19:31:02,354 - DEBUG - Added batch 39 to cache
+2025-05-02 19:31:02,354 - DEBUG - Cache hit: Job RESNET18 accessed 39
+2025-05-02 19:31:02,354 - DEBUG - Cache hit: Job VGG16 accessed 39
+2025-05-02 19:31:02,354 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 40
+2025-05-02 19:31:02,354 - DEBUG - Cache miss: Job RESNET18 could not access 40
+2025-05-02 19:31:02,354 - DEBUG - Added batch 40 to cache
+2025-05-02 19:31:02,354 - DEBUG - Cache hit: Job RESNET50 accessed 40
+2025-05-02 19:31:02,354 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 41
+2025-05-02 19:31:02,354 - DEBUG - Cache miss: Job RESNET18 could not access 41
+2025-05-02 19:31:02,355 - DEBUG - Added batch 41 to cache
+2025-05-02 19:31:02,355 - DEBUG - Cache hit: Job VGG16 accessed 41
+2025-05-02 19:31:02,355 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 42
+2025-05-02 19:31:02,355 - DEBUG - Cache hit: Job RESNET50 accessed 23
+2025-05-02 19:31:02,355 - DEBUG - Removed batch 23 from cache
+2025-05-02 19:31:02,355 - DEBUG - Cache miss: Job RESNET18 could not access 42
+2025-05-02 19:31:02,355 - DEBUG - Added batch 42 to cache
+2025-05-02 19:31:02,355 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 43
+2025-05-02 19:31:02,355 - DEBUG - Cache hit: Job RESNET50 accessed 42
+2025-05-02 19:31:02,355 - DEBUG - Added batch 43 to cache
+2025-05-02 19:31:02,355 - DEBUG - Cache hit: Job RESNET18 accessed 43
+2025-05-02 19:31:02,357 - DEBUG - Cache hit: Job VGG16 accessed 43
+2025-05-02 19:31:02,357 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 44
+2025-05-02 19:31:02,358 - DEBUG - Cache miss: Job RESNET18 could not access 44
+2025-05-02 19:31:02,358 - DEBUG - Cache hit: Job RESNET50 accessed 25
+2025-05-02 19:31:02,358 - DEBUG - Removed batch 25 from cache
+2025-05-02 19:31:02,358 - DEBUG - Added batch 44 to cache
+2025-05-02 19:31:02,358 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 45
+2025-05-02 19:31:02,358 - DEBUG - Cache miss: Job RESNET18 could not access 45
+2025-05-02 19:31:02,358 - DEBUG - Added batch 45 to cache
+2025-05-02 19:31:02,359 - DEBUG - Cache hit: Job VGG16 accessed 44
+2025-05-02 19:31:02,359 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 46
+2025-05-02 19:31:02,359 - DEBUG - Cache hit: Job RESNET50 accessed 45
+2025-05-02 19:31:02,359 - DEBUG - Cache miss: Job RESNET18 could not access 46
+2025-05-02 19:31:02,359 - DEBUG - Added batch 46 to cache
+2025-05-02 19:31:02,359 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 47
+2025-05-02 19:31:02,359 - DEBUG - Cache hit: Job RESNET50 accessed 46
+2025-05-02 19:31:02,359 - DEBUG - Cache miss: Job RESNET18 could not access 47
+2025-05-02 19:31:02,360 - DEBUG - Added batch 47 to cache
+2025-05-02 19:31:02,360 - DEBUG - Cache hit: Job VGG16 accessed 47
+2025-05-02 19:31:02,360 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 48
+2025-05-02 19:31:02,360 - DEBUG - Cache hit: Job RESNET50 accessed 27
+2025-05-02 19:31:02,360 - DEBUG - Removed batch 27 from cache
+2025-05-02 19:31:02,360 - DEBUG - Added batch 48 to cache
+2025-05-02 19:31:02,360 - DEBUG - Cache hit: Job RESNET18 accessed 48
+2025-05-02 19:31:02,360 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 49
+2025-05-02 19:31:02,361 - DEBUG - Cache miss: Job RESNET18 could not access 49
+2025-05-02 19:31:02,361 - DEBUG - Added batch 49 to cache
+2025-05-02 19:31:02,361 - DEBUG - Cache hit: Job VGG16 accessed 48
+2025-05-02 19:31:02,361 - DEBUG - Cache hit: Job RESNET50 accessed 49
+2025-05-02 19:31:02,361 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 50
+2025-05-02 19:31:02,361 - DEBUG - Cache miss: Job RESNET18 could not access 50
+2025-05-02 19:31:02,361 - DEBUG - Added batch 50 to cache
+2025-05-02 19:31:02,362 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 51
+2025-05-02 19:31:02,362 - DEBUG - Cache hit: Job RESNET50 accessed 50
+2025-05-02 19:31:02,362 - DEBUG - Cache miss: Job RESNET18 could not access 51
+2025-05-02 19:31:02,362 - DEBUG - Added batch 51 to cache
+2025-05-02 19:31:02,362 - DEBUG - Cache hit: Job VGG16 accessed 51
+2025-05-02 19:31:02,362 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 52
+2025-05-02 19:31:02,363 - DEBUG - Cache hit: Job RESNET50 accessed 29
+2025-05-02 19:31:02,363 - DEBUG - Removed batch 29 from cache
+2025-05-02 19:31:02,363 - DEBUG - Cache miss: Job RESNET18 could not access 52
+2025-05-02 19:31:02,363 - DEBUG - Added batch 52 to cache
+2025-05-02 19:31:02,363 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 53
+2025-05-02 19:31:02,363 - DEBUG - Cache hit: Job VGG16 accessed 52
+2025-05-02 19:31:02,363 - DEBUG - Added batch 53 to cache
+2025-05-02 19:31:02,364 - DEBUG - Cache hit: Job RESNET50 accessed 53
+2025-05-02 19:31:02,364 - DEBUG - Cache hit: Job RESNET18 accessed 53
+2025-05-02 19:31:02,364 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 54
+2025-05-02 19:31:02,364 - DEBUG - Cache miss: Job RESNET18 could not access 54
+2025-05-02 19:31:02,364 - DEBUG - Added batch 54 to cache
+2025-05-02 19:31:02,364 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 55
+2025-05-02 19:31:02,364 - DEBUG - Cache hit: Job RESNET50 accessed 54
+2025-05-02 19:31:02,365 - DEBUG - Cache miss: Job RESNET18 could not access 55
+2025-05-02 19:31:02,365 - DEBUG - Cache hit: Job VGG16 accessed 8
+2025-05-02 19:31:02,365 - DEBUG - Removed batch 8 from cache
+2025-05-02 19:31:02,365 - DEBUG - Added batch 55 to cache
+2025-05-02 19:31:02,365 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 56
+2025-05-02 19:31:02,365 - DEBUG - Cache hit: Job RESNET50 accessed 55
+2025-05-02 19:31:02,366 - DEBUG - Cache miss: Job RESNET18 could not access 56
+2025-05-02 19:31:02,366 - DEBUG - Added batch 56 to cache
+2025-05-02 19:31:02,366 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 57
+2025-05-02 19:31:02,366 - DEBUG - Cache hit: Job VGG16 accessed 56
+2025-05-02 19:31:02,366 - DEBUG - Cache hit: Job RESNET50 accessed 31
+2025-05-02 19:31:02,366 - DEBUG - Removed batch 31 from cache
+2025-05-02 19:31:02,366 - DEBUG - Cache miss: Job RESNET18 could not access 57
+2025-05-02 19:31:02,366 - DEBUG - Added batch 57 to cache
+2025-05-02 19:31:02,367 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 58
+2025-05-02 19:31:02,367 - DEBUG - Added batch 58 to cache
+2025-05-02 19:31:02,367 - DEBUG - Cache hit: Job RESNET18 accessed 58
+2025-05-02 19:31:02,367 - DEBUG - Cache hit: Job RESNET50 accessed 57
+2025-05-02 19:31:02,367 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 59
+2025-05-02 19:31:02,367 - DEBUG - Cache miss: Job RESNET18 could not access 59
+2025-05-02 19:31:02,367 - DEBUG - Cache hit: Job VGG16 accessed 58
+2025-05-02 19:31:02,368 - DEBUG - Added batch 59 to cache
+2025-05-02 19:31:02,368 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 60
+2025-05-02 19:31:02,368 - DEBUG - Cache hit: Job RESNET50 accessed 59
+2025-05-02 19:31:02,368 - DEBUG - Cache miss: Job RESNET18 could not access 60
+2025-05-02 19:31:02,368 - DEBUG - Added batch 60 to cache
+2025-05-02 19:31:02,368 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 61
+2025-05-02 19:31:02,368 - DEBUG - Cache hit: Job RESNET50 accessed 60
+2025-05-02 19:31:02,369 - DEBUG - Cache hit: Job VGG16 accessed 10
+2025-05-02 19:31:02,369 - DEBUG - Removed batch 10 from cache
+2025-05-02 19:31:02,369 - DEBUG - Cache miss: Job RESNET18 could not access 61
+2025-05-02 19:31:02,369 - DEBUG - Added batch 61 to cache
+2025-05-02 19:31:02,369 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 62
+2025-05-02 19:31:02,369 - DEBUG - Cache miss: Job RESNET18 could not access 62
+2025-05-02 19:31:02,369 - DEBUG - Added batch 62 to cache
+2025-05-02 19:31:02,369 - DEBUG - Cache hit: Job RESNET50 accessed 61
+2025-05-02 19:31:02,370 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 63
+2025-05-02 19:31:02,370 - DEBUG - Cache hit: Job VGG16 accessed 62
+2025-05-02 19:31:02,370 - DEBUG - Added batch 63 to cache
+2025-05-02 19:31:02,370 - DEBUG - Cache hit: Job RESNET18 accessed 63
+2025-05-02 19:31:02,370 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 64
+2025-05-02 19:31:02,370 - DEBUG - Cache hit: Job RESNET50 accessed 63
+2025-05-02 19:31:02,371 - DEBUG - Cache miss: Job RESNET18 could not access 64
+2025-05-02 19:31:02,371 - DEBUG - Added batch 64 to cache
+2025-05-02 19:31:02,371 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 65
+2025-05-02 19:31:02,371 - DEBUG - Cache hit: Job RESNET50 accessed 64
+2025-05-02 19:31:02,371 - DEBUG - Cache miss: Job RESNET18 could not access 65
+2025-05-02 19:31:02,371 - DEBUG - Cache hit: Job VGG16 accessed 11
+2025-05-02 19:31:02,371 - DEBUG - Removed batch 11 from cache
+2025-05-02 19:31:02,372 - DEBUG - Added batch 65 to cache
+2025-05-02 19:31:02,372 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 66
+2025-05-02 19:31:02,372 - DEBUG - Cache miss: Job RESNET18 could not access 66
+2025-05-02 19:31:02,372 - DEBUG - Cache hit: Job RESNET50 accessed 65
+2025-05-02 19:31:02,372 - DEBUG - Added batch 66 to cache
+2025-05-02 19:31:02,372 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 67
+2025-05-02 19:31:02,373 - DEBUG - Cache hit: Job VGG16 accessed 66
+2025-05-02 19:31:02,373 - DEBUG - Added batch 67 to cache
+2025-05-02 19:31:02,373 - DEBUG - Cache hit: Job RESNET18 accessed 67
+2025-05-02 19:31:02,373 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 68
+2025-05-02 19:31:02,374 - DEBUG - Cache hit: Job RESNET50 accessed 67
+2025-05-02 19:31:02,374 - DEBUG - Cache miss: Job RESNET18 could not access 68
+2025-05-02 19:31:02,375 - DEBUG - Added batch 68 to cache
+2025-05-02 19:31:02,375 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 69
+2025-05-02 19:31:02,375 - DEBUG - Cache hit: Job RESNET50 accessed 68
+2025-05-02 19:31:02,375 - DEBUG - Cache miss: Job RESNET18 could not access 69
+2025-05-02 19:31:02,375 - DEBUG - Cache hit: Job VGG16 accessed 12
+2025-05-02 19:31:02,375 - DEBUG - Removed batch 12 from cache
+2025-05-02 19:31:02,375 - DEBUG - Added batch 69 to cache
+2025-05-02 19:31:02,376 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 70
+2025-05-02 19:31:02,376 - DEBUG - Cache miss: Job RESNET18 could not access 70
+2025-05-02 19:31:02,376 - DEBUG - Cache hit: Job RESNET50 accessed 69
+2025-05-02 19:31:02,376 - DEBUG - Added batch 70 to cache
+2025-05-02 19:31:02,376 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 71
+2025-05-02 19:31:02,377 - DEBUG - Cache hit: Job VGG16 accessed 70
+2025-05-02 19:31:02,377 - DEBUG - Cache miss: Job RESNET18 could not access 71
+2025-05-02 19:31:02,377 - DEBUG - Added batch 71 to cache
+2025-05-02 19:31:02,377 - DEBUG - Cache hit: Job RESNET50 accessed 71
+2025-05-02 19:31:02,377 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 72
+2025-05-02 19:31:02,377 - DEBUG - Added batch 72 to cache
+2025-05-02 19:31:02,377 - DEBUG - Cache hit: Job RESNET18 accessed 72
+2025-05-02 19:31:02,378 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 73
+2025-05-02 19:31:02,378 - DEBUG - Cache hit: Job RESNET50 accessed 72
+2025-05-02 19:31:02,378 - DEBUG - Cache miss: Job RESNET18 could not access 73
+2025-05-02 19:31:02,378 - DEBUG - Cache hit: Job VGG16 accessed 14
+2025-05-02 19:31:02,378 - DEBUG - Removed batch 14 from cache
+2025-05-02 19:31:02,378 - DEBUG - Added batch 73 to cache
+2025-05-02 19:31:02,379 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 74
+2025-05-02 19:31:02,379 - DEBUG - Cache miss: Job RESNET18 could not access 74
+2025-05-02 19:31:02,379 - DEBUG - Cache hit: Job RESNET50 accessed 73
+2025-05-02 19:31:02,379 - DEBUG - Added batch 74 to cache
+2025-05-02 19:31:02,379 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 75
+2025-05-02 19:31:02,380 - DEBUG - Cache hit: Job VGG16 accessed 74
+2025-05-02 19:31:02,380 - DEBUG - Cache miss: Job RESNET18 could not access 75
+2025-05-02 19:31:02,380 - DEBUG - Added batch 75 to cache
+2025-05-02 19:31:02,380 - DEBUG - Cache hit: Job RESNET50 accessed 75
+2025-05-02 19:31:02,380 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 76
+2025-05-02 19:31:02,380 - DEBUG - Cache miss: Job RESNET18 could not access 76
+2025-05-02 19:31:02,381 - DEBUG - Added batch 76 to cache
+2025-05-02 19:31:02,381 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 77
+2025-05-02 19:31:02,381 - DEBUG - Cache hit: Job RESNET50 accessed 76
+2025-05-02 19:31:02,381 - DEBUG - Cache hit: Job VGG16 accessed 15
+2025-05-02 19:31:02,381 - DEBUG - Removed batch 15 from cache
+2025-05-02 19:31:02,381 - DEBUG - Added batch 77 to cache
+2025-05-02 19:31:02,382 - DEBUG - Cache hit: Job RESNET18 accessed 77
+2025-05-02 19:31:02,382 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 78
+2025-05-02 19:31:02,382 - DEBUG - Cache miss: Job RESNET18 could not access 78
+2025-05-02 19:31:02,382 - DEBUG - Cache hit: Job RESNET50 accessed 77
+2025-05-02 19:31:02,382 - DEBUG - Added batch 78 to cache
+2025-05-02 19:31:02,382 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 79
+2025-05-02 19:31:02,383 - DEBUG - Cache hit: Job VGG16 accessed 78
+2025-05-02 19:31:02,383 - DEBUG - Cache miss: Job RESNET18 could not access 79
+2025-05-02 19:31:02,386 - DEBUG - Cache hit: Job RESNET50 accessed 33
+2025-05-02 19:31:02,386 - DEBUG - Removed batch 33 from cache
+2025-05-02 19:31:02,386 - DEBUG - Added batch 79 to cache
+2025-05-02 19:31:02,386 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 80
+2025-05-02 19:31:02,386 - DEBUG - Cache miss: Job RESNET18 could not access 80
+2025-05-02 19:31:02,386 - DEBUG - Added batch 80 to cache
+2025-05-02 19:31:02,387 - DEBUG - Cache hit: Job RESNET50 accessed 79
+2025-05-02 19:31:02,387 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 81
+2025-05-02 19:31:02,390 - DEBUG - Cache hit: Job VGG16 accessed 80
+2025-05-02 19:31:02,390 - DEBUG - Cache miss: Job RESNET18 could not access 81
+2025-05-02 19:31:02,390 - DEBUG - Added batch 81 to cache
+2025-05-02 19:31:02,390 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 82
+2025-05-02 19:31:02,390 - DEBUG - Cache hit: Job RESNET50 accessed 81
+2025-05-02 19:31:02,391 - DEBUG - Added batch 82 to cache
+2025-05-02 19:31:02,391 - DEBUG - Cache hit: Job RESNET18 accessed 82
+2025-05-02 19:31:02,391 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 83
+2025-05-02 19:31:02,391 - DEBUG - Cache hit: Job VGG16 accessed 82
+2025-05-02 19:31:02,391 - DEBUG - Cache miss: Job RESNET18 could not access 83
+2025-05-02 19:31:02,391 - DEBUG - Cache hit: Job RESNET50 accessed 35
+2025-05-02 19:31:02,391 - DEBUG - Removed batch 35 from cache
+2025-05-02 19:31:02,391 - DEBUG - Added batch 83 to cache
+2025-05-02 19:31:02,391 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 84
+2025-05-02 19:31:02,391 - DEBUG - Cache miss: Job RESNET18 could not access 84
+2025-05-02 19:31:02,392 - DEBUG - Added batch 84 to cache
+2025-05-02 19:31:02,392 - DEBUG - Cache hit: Job RESNET50 accessed 83
+2025-05-02 19:31:02,392 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 85
+2025-05-02 19:31:02,392 - DEBUG - Cache hit: Job VGG16 accessed 84
+2025-05-02 19:31:02,393 - DEBUG - Cache miss: Job RESNET18 could not access 85
+2025-05-02 19:31:02,393 - DEBUG - Added batch 85 to cache
+2025-05-02 19:31:02,393 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 86
+2025-05-02 19:31:02,393 - DEBUG - Cache hit: Job RESNET50 accessed 85
+2025-05-02 19:31:02,393 - DEBUG - Added batch 86 to cache
+2025-05-02 19:31:02,393 - DEBUG - Cache hit: Job RESNET18 accessed 86
+2025-05-02 19:31:02,394 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 87
+2025-05-02 19:31:02,394 - DEBUG - Cache hit: Job VGG16 accessed 86
+2025-05-02 19:31:02,394 - DEBUG - Cache miss: Job RESNET18 could not access 87
+2025-05-02 19:31:02,394 - DEBUG - Cache hit: Job RESNET50 accessed 37
+2025-05-02 19:31:02,394 - DEBUG - Removed batch 37 from cache
+2025-05-02 19:31:02,394 - DEBUG - Added batch 87 to cache
+2025-05-02 19:31:02,394 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 88
+2025-05-02 19:31:02,396 - DEBUG - Cache miss: Job RESNET18 could not access 88
+2025-05-02 19:31:02,396 - DEBUG - Cache hit: Job RESNET50 accessed 87
+2025-05-02 19:31:02,396 - DEBUG - Added batch 88 to cache
+2025-05-02 19:31:02,396 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 89
+2025-05-02 19:31:02,396 - DEBUG - Cache hit: Job VGG16 accessed 88
+2025-05-02 19:31:02,397 - DEBUG - Cache miss: Job RESNET18 could not access 89
+2025-05-02 19:31:02,397 - DEBUG - Added batch 89 to cache
+2025-05-02 19:31:02,397 - DEBUG - Cache hit: Job RESNET50 accessed 89
+2025-05-02 19:31:02,397 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 90
+2025-05-02 19:31:02,397 - DEBUG - Cache miss: Job RESNET18 could not access 90
+2025-05-02 19:31:02,397 - DEBUG - Added batch 90 to cache
+2025-05-02 19:31:02,397 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 91
+2025-05-02 19:31:02,398 - DEBUG - Cache hit: Job VGG16 accessed 90
+2025-05-02 19:31:02,398 - DEBUG - Cache hit: Job RESNET50 accessed 39
+2025-05-02 19:31:02,398 - DEBUG - Removed batch 39 from cache
+2025-05-02 19:31:02,398 - DEBUG - Added batch 91 to cache
+2025-05-02 19:31:02,399 - DEBUG - Cache hit: Job RESNET18 accessed 91
+2025-05-02 19:31:02,399 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 92
+2025-05-02 19:31:02,399 - DEBUG - Cache miss: Job RESNET18 could not access 92
+2025-05-02 19:31:02,399 - DEBUG - Cache hit: Job RESNET50 accessed 91
+2025-05-02 19:31:02,399 - DEBUG - Added batch 92 to cache
+2025-05-02 19:31:02,400 - DEBUG - Cache hit: Job VGG16 accessed 92
+2025-05-02 19:31:02,400 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 93
+2025-05-02 19:31:02,400 - DEBUG - Cache miss: Job RESNET18 could not access 93
+2025-05-02 19:31:02,400 - DEBUG - Added batch 93 to cache
+2025-05-02 19:31:02,400 - DEBUG - Cache hit: Job RESNET50 accessed 93
+2025-05-02 19:31:02,400 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 94
+2025-05-02 19:31:02,401 - DEBUG - Cache miss: Job RESNET18 could not access 94
+2025-05-02 19:31:02,401 - DEBUG - Added batch 94 to cache
+2025-05-02 19:31:02,401 - DEBUG - Cache hit: Job VGG16 accessed 94
+2025-05-02 19:31:02,401 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 95
+2025-05-02 19:31:02,401 - DEBUG - Cache hit: Job RESNET50 accessed 41
+2025-05-02 19:31:02,402 - DEBUG - Removed batch 41 from cache
+2025-05-02 19:31:02,402 - DEBUG - Cache miss: Job RESNET18 could not access 95
+2025-05-02 19:31:02,402 - DEBUG - Added batch 95 to cache
+2025-05-02 19:31:02,402 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 96
+2025-05-02 19:31:02,402 - DEBUG - Cache hit: Job RESNET50 accessed 95
+2025-05-02 19:31:02,402 - DEBUG - Added batch 96 to cache
+2025-05-02 19:31:02,402 - DEBUG - Cache hit: Job RESNET18 accessed 96
+2025-05-02 19:31:02,403 - DEBUG - Cache hit: Job VGG16 accessed 96
+2025-05-02 19:31:02,403 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 97
+2025-05-02 19:31:02,403 - DEBUG - Cache miss: Job RESNET18 could not access 97
+2025-05-02 19:31:02,403 - DEBUG - Cache hit: Job RESNET50 accessed 43
+2025-05-02 19:31:02,403 - DEBUG - Removed batch 43 from cache
+2025-05-02 19:31:02,404 - DEBUG - Added batch 97 to cache
+2025-05-02 19:31:02,404 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 98
+2025-05-02 19:31:02,404 - DEBUG - Cache miss: Job RESNET18 could not access 98
+2025-05-02 19:31:02,404 - DEBUG - Added batch 98 to cache
+2025-05-02 19:31:02,404 - DEBUG - Cache hit: Job VGG16 accessed 97
+2025-05-02 19:31:02,404 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 99
+2025-05-02 19:31:02,405 - DEBUG - Cache hit: Job RESNET50 accessed 98
+2025-05-02 19:31:02,405 - DEBUG - Cache miss: Job RESNET18 could not access 99
+2025-05-02 19:31:02,405 - DEBUG - Added batch 99 to cache
+2025-05-02 19:31:02,405 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 100
+2025-05-02 19:31:02,406 - DEBUG - Cache hit: Job RESNET50 accessed 99
+2025-05-02 19:31:02,406 - DEBUG - Cache miss: Job RESNET18 could not access 100
+2025-05-02 19:31:02,406 - DEBUG - Added batch 100 to cache
+2025-05-02 19:31:02,406 - DEBUG - Cache hit: Job VGG16 accessed 100
+2025-05-02 19:31:02,407 - DEBUG - Cache hit: Job RESNET50 accessed 44
+2025-05-02 19:31:02,407 - DEBUG - Removed batch 44 from cache
+2025-05-02 19:31:02,407 - DEBUG - Cache hit: Job VGG16 accessed 16
+2025-05-02 19:31:02,408 - DEBUG - Removed batch 16 from cache
+2025-05-02 19:31:02,408 - DEBUG - Cache hit: Job RESNET50 accessed 47
+2025-05-02 19:31:02,408 - DEBUG - Removed batch 47 from cache
+2025-05-02 19:31:02,408 - DEBUG - Cache hit: Job RESNET50 accessed 48
+2025-05-02 19:31:02,408 - DEBUG - Removed batch 48 from cache
+2025-05-02 19:31:02,409 - DEBUG - Cache hit: Job VGG16 accessed 18
+2025-05-02 19:31:02,409 - DEBUG - Removed batch 18 from cache
+2025-05-02 19:31:02,409 - DEBUG - Cache hit: Job RESNET50 accessed 51
+2025-05-02 19:31:02,409 - DEBUG - Removed batch 51 from cache
+2025-05-02 19:31:02,410 - DEBUG - Cache hit: Job VGG16 accessed 19
+2025-05-02 19:31:02,410 - DEBUG - Removed batch 19 from cache
+2025-05-02 19:31:02,410 - DEBUG - Cache hit: Job RESNET50 accessed 52
+2025-05-02 19:31:02,410 - DEBUG - Removed batch 52 from cache
+2025-05-02 19:31:02,410 - DEBUG - Cache hit: Job RESNET50 accessed 56
+2025-05-02 19:31:02,410 - DEBUG - Removed batch 56 from cache
+2025-05-02 19:31:02,411 - DEBUG - Cache hit: Job VGG16 accessed 20
+2025-05-02 19:31:02,411 - DEBUG - Removed batch 20 from cache
+2025-05-02 19:31:02,411 - DEBUG - Cache hit: Job RESNET50 accessed 58
+2025-05-02 19:31:02,411 - DEBUG - Removed batch 58 from cache
+2025-05-02 19:31:02,412 - DEBUG - Cache hit: Job VGG16 accessed 22
+2025-05-02 19:31:02,412 - DEBUG - Removed batch 22 from cache
+2025-05-02 19:31:02,412 - DEBUG - Cache hit: Job RESNET50 accessed 62
+2025-05-02 19:31:02,412 - DEBUG - Removed batch 62 from cache
+2025-05-02 19:31:02,412 - DEBUG - Cache hit: Job RESNET50 accessed 66
+2025-05-02 19:31:02,413 - DEBUG - Removed batch 66 from cache
+2025-05-02 19:31:02,413 - DEBUG - Cache hit: Job VGG16 accessed 24
+2025-05-02 19:31:02,413 - DEBUG - Removed batch 24 from cache
+2025-05-02 19:31:02,413 - DEBUG - Cache hit: Job RESNET50 accessed 70
+2025-05-02 19:31:02,413 - DEBUG - Removed batch 70 from cache
+2025-05-02 19:31:02,414 - DEBUG - Cache hit: Job VGG16 accessed 26
+2025-05-02 19:31:02,414 - DEBUG - Removed batch 26 from cache
+2025-05-02 19:31:02,414 - DEBUG - Cache hit: Job RESNET50 accessed 74
+2025-05-02 19:31:02,414 - DEBUG - Removed batch 74 from cache
+2025-05-02 19:31:02,414 - DEBUG - Cache hit: Job RESNET50 accessed 78
+2025-05-02 19:31:02,414 - DEBUG - Removed batch 78 from cache
+2025-05-02 19:31:02,415 - DEBUG - Cache hit: Job VGG16 accessed 28
+2025-05-02 19:31:02,415 - DEBUG - Removed batch 28 from cache
+2025-05-02 19:31:02,415 - DEBUG - Cache hit: Job RESNET50 accessed 80
+2025-05-02 19:31:02,415 - DEBUG - Removed batch 80 from cache
+2025-05-02 19:31:02,415 - DEBUG - Cache hit: Job RESNET50 accessed 82
+2025-05-02 19:31:02,415 - DEBUG - Removed batch 82 from cache
+2025-05-02 19:31:02,416 - DEBUG - Cache hit: Job VGG16 accessed 30
+2025-05-02 19:31:02,416 - DEBUG - Removed batch 30 from cache
+2025-05-02 19:31:02,416 - DEBUG - Cache hit: Job RESNET50 accessed 84
+2025-05-02 19:31:02,416 - DEBUG - Removed batch 84 from cache
+2025-05-02 19:31:02,416 - DEBUG - Cache hit: Job VGG16 accessed 32
+2025-05-02 19:31:02,417 - DEBUG - Removed batch 32 from cache
+2025-05-02 19:31:02,417 - DEBUG - Cache hit: Job RESNET50 accessed 86
+2025-05-02 19:31:02,417 - DEBUG - Removed batch 86 from cache
+2025-05-02 19:31:02,417 - DEBUG - Cache hit: Job RESNET50 accessed 88
+2025-05-02 19:31:02,417 - DEBUG - Removed batch 88 from cache
+2025-05-02 19:31:02,417 - DEBUG - Cache hit: Job VGG16 accessed 34
+2025-05-02 19:31:02,417 - DEBUG - Removed batch 34 from cache
+2025-05-02 19:31:02,418 - DEBUG - Cache hit: Job RESNET50 accessed 90
+2025-05-02 19:31:02,418 - DEBUG - Removed batch 90 from cache
+2025-05-02 19:31:02,418 - DEBUG - Cache hit: Job VGG16 accessed 36
+2025-05-02 19:31:02,419 - DEBUG - Removed batch 36 from cache
+2025-05-02 19:31:02,419 - DEBUG - Cache hit: Job RESNET50 accessed 92
+2025-05-02 19:31:02,419 - DEBUG - Removed batch 92 from cache
+2025-05-02 19:31:02,419 - DEBUG - Cache hit: Job RESNET50 accessed 94
+2025-05-02 19:31:02,419 - DEBUG - Removed batch 94 from cache
+2025-05-02 19:31:02,419 - DEBUG - Cache hit: Job VGG16 accessed 38
+2025-05-02 19:31:02,420 - DEBUG - Removed batch 38 from cache
+2025-05-02 19:31:02,420 - DEBUG - Cache hit: Job RESNET50 accessed 96
+2025-05-02 19:31:02,420 - DEBUG - Removed batch 96 from cache
+2025-05-02 19:31:02,420 - DEBUG - Cache hit: Job VGG16 accessed 40
+2025-05-02 19:31:02,420 - DEBUG - Removed batch 40 from cache
+2025-05-02 19:31:02,420 - DEBUG - Cache hit: Job RESNET50 accessed 97
+2025-05-02 19:31:02,420 - DEBUG - Removed batch 97 from cache
+2025-05-02 19:31:02,421 - DEBUG - Cache hit: Job RESNET50 accessed 100
+2025-05-02 19:31:02,421 - DEBUG - Removed batch 100 from cache
+2025-05-02 19:31:02,421 - DEBUG - Cache hit: Job VGG16 accessed 42
+2025-05-02 19:31:02,421 - DEBUG - Removed batch 42 from cache
+2025-05-02 19:31:02,421 - DEBUG - Cache hit: Job VGG16 accessed 45
+2025-05-02 19:31:02,422 - DEBUG - Removed batch 45 from cache
+2025-05-02 19:31:02,422 - DEBUG - Cache hit: Job VGG16 accessed 46
+2025-05-02 19:31:02,422 - DEBUG - Removed batch 46 from cache
+2025-05-02 19:31:02,422 - DEBUG - Cache hit: Job VGG16 accessed 49
+2025-05-02 19:31:02,423 - DEBUG - Removed batch 49 from cache
+2025-05-02 19:31:02,423 - DEBUG - Cache hit: Job VGG16 accessed 50
+2025-05-02 19:31:02,423 - DEBUG - Removed batch 50 from cache
+2025-05-02 19:31:02,423 - DEBUG - Cache hit: Job VGG16 accessed 53
+2025-05-02 19:31:02,423 - DEBUG - Removed batch 53 from cache
+2025-05-02 19:31:02,424 - DEBUG - Cache hit: Job VGG16 accessed 54
+2025-05-02 19:31:02,424 - DEBUG - Removed batch 54 from cache
+2025-05-02 19:31:02,424 - DEBUG - Cache hit: Job VGG16 accessed 55
+2025-05-02 19:31:02,424 - DEBUG - Removed batch 55 from cache
+2025-05-02 19:31:02,425 - DEBUG - Cache hit: Job VGG16 accessed 57
+2025-05-02 19:31:02,425 - DEBUG - Removed batch 57 from cache
+2025-05-02 19:31:02,425 - DEBUG - Cache hit: Job VGG16 accessed 59
+2025-05-02 19:31:02,425 - DEBUG - Removed batch 59 from cache
+2025-05-02 19:31:02,425 - DEBUG - Cache hit: Job VGG16 accessed 60
+2025-05-02 19:31:02,425 - DEBUG - Removed batch 60 from cache
+2025-05-02 19:31:02,426 - DEBUG - Cache hit: Job VGG16 accessed 61
+2025-05-02 19:31:02,426 - DEBUG - Removed batch 61 from cache
+2025-05-02 19:31:02,426 - DEBUG - Cache hit: Job VGG16 accessed 63
+2025-05-02 19:31:02,426 - DEBUG - Removed batch 63 from cache
+2025-05-02 19:31:02,426 - DEBUG - Cache hit: Job VGG16 accessed 64
+2025-05-02 19:31:02,426 - DEBUG - Removed batch 64 from cache
+2025-05-02 19:31:02,427 - DEBUG - Cache hit: Job VGG16 accessed 65
+2025-05-02 19:31:02,427 - DEBUG - Removed batch 65 from cache
+2025-05-02 19:31:02,427 - DEBUG - Cache hit: Job VGG16 accessed 67
+2025-05-02 19:31:02,427 - DEBUG - Removed batch 67 from cache
+2025-05-02 19:31:02,427 - DEBUG - Cache hit: Job VGG16 accessed 68
+2025-05-02 19:31:02,427 - DEBUG - Removed batch 68 from cache
+2025-05-02 19:31:02,428 - DEBUG - Cache hit: Job VGG16 accessed 69
+2025-05-02 19:31:02,428 - DEBUG - Removed batch 69 from cache
+2025-05-02 19:31:02,428 - DEBUG - Cache hit: Job VGG16 accessed 71
+2025-05-02 19:31:02,428 - DEBUG - Removed batch 71 from cache
+2025-05-02 19:31:02,428 - DEBUG - Cache hit: Job VGG16 accessed 72
+2025-05-02 19:31:02,428 - DEBUG - Removed batch 72 from cache
+2025-05-02 19:31:02,428 - DEBUG - Cache hit: Job VGG16 accessed 73
+2025-05-02 19:31:02,429 - DEBUG - Removed batch 73 from cache
+2025-05-02 19:31:02,429 - DEBUG - Cache hit: Job VGG16 accessed 75
+2025-05-02 19:31:02,429 - DEBUG - Removed batch 75 from cache
+2025-05-02 19:31:02,429 - DEBUG - Cache hit: Job VGG16 accessed 76
+2025-05-02 19:31:02,429 - DEBUG - Removed batch 76 from cache
+2025-05-02 19:31:02,429 - DEBUG - Cache hit: Job VGG16 accessed 77
+2025-05-02 19:31:02,430 - DEBUG - Removed batch 77 from cache
+2025-05-02 19:31:02,430 - DEBUG - Cache hit: Job VGG16 accessed 79
+2025-05-02 19:31:02,430 - DEBUG - Removed batch 79 from cache
+2025-05-02 19:31:02,430 - DEBUG - Cache hit: Job VGG16 accessed 81
+2025-05-02 19:31:02,430 - DEBUG - Removed batch 81 from cache
+2025-05-02 19:31:02,430 - DEBUG - Cache hit: Job VGG16 accessed 83
+2025-05-02 19:31:02,430 - DEBUG - Removed batch 83 from cache
+2025-05-02 19:31:02,430 - DEBUG - Cache hit: Job VGG16 accessed 85
+2025-05-02 19:31:02,430 - DEBUG - Removed batch 85 from cache
+2025-05-02 19:31:02,431 - DEBUG - Cache hit: Job VGG16 accessed 87
+2025-05-02 19:31:02,431 - DEBUG - Removed batch 87 from cache
+2025-05-02 19:31:02,431 - DEBUG - Cache hit: Job VGG16 accessed 89
+2025-05-02 19:31:02,431 - DEBUG - Removed batch 89 from cache
+2025-05-02 19:31:02,431 - DEBUG - Cache hit: Job VGG16 accessed 91
+2025-05-02 19:31:02,431 - DEBUG - Removed batch 91 from cache
+2025-05-02 19:31:02,431 - DEBUG - Cache hit: Job VGG16 accessed 93
+2025-05-02 19:31:02,431 - DEBUG - Removed batch 93 from cache
+2025-05-02 19:31:02,431 - DEBUG - Cache hit: Job VGG16 accessed 95
+2025-05-02 19:31:02,431 - DEBUG - Removed batch 95 from cache
+2025-05-02 19:31:02,432 - DEBUG - Cache hit: Job VGG16 accessed 98
+2025-05-02 19:31:02,432 - DEBUG - Removed batch 98 from cache
+2025-05-02 19:31:02,432 - DEBUG - Cache hit: Job VGG16 accessed 99
+2025-05-02 19:31:02,432 - DEBUG - Removed batch 99 from cache

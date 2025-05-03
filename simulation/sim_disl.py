@@ -84,56 +84,44 @@ class SharedCache:
         return len(self.cache)
 
 class GlobalSampler:
-    
-    def __init__(self, total_batches: int, job_ids: List[str], cache:SharedCache, assignment_strategy = "sequential"):
+    def __init__(self, total_batches: int, job_ids: List[str], cache: SharedCache, job_speeds: Dict[str, float]):
         self.total_batches = total_batches
         self.job_ids = job_ids
-        self.assignment_strategy = assignment_strategy
-        self.job_to_batches = self._assign_batches()
-        self.batch_seen_by = collections.defaultdict(set)  # batch_id -> set of job_ids
+        self.job_to_cursor = {jid: 0 for jid in job_ids}
         self.cache = cache
-  
-    def _assign_batches(self) -> Dict[str, List[int]]:
-        job_batches = {jid: [] for jid in self.job_ids}
-        base_sequence = list(range(1, self.total_batches + 1))
+        self.batch_seen_by = collections.defaultdict(set)
+        self.batch_in_progress = set()
+        self.base_sequence = list(range(1, total_batches + 1))
+        self.job_weights = {j: 1.0 / job_speeds[j] for j in job_ids}
 
-        if self.assignment_strategy == "sequential":
-            # All jobs process the same sequence in the same order
-            for jid in self.job_ids:
-                job_batches[jid] = base_sequence[:]
+    def assign_next_batch(self, job_id: str) -> int:
+        # Step 1: Prefer a cached batch the job hasn't seen
+        candidates = [b for b in self.cache.cache if job_id not in self.batch_seen_by[b]]
+        if candidates:
+            best = max(candidates, key=self._cus)
+            self.batch_in_progress.add(best)
+            return best
 
-        elif self.assignment_strategy == "shuffle":
-            # Each job gets a fully independent shuffled view (no coordination)
-            for jid in self.job_ids:
-                shuffled = base_sequence[:]
-                random.shuffle(shuffled)
-                job_batches[jid] = shuffled
-        elif self.assignment_strategy == "rotate":
-            # Shared shuffled base, each job gets a deterministic rotation
-            shuffled = base_sequence[:]
-            # random.shuffle(shuffled)
-            for i, jid in enumerate(self.job_ids):
-                rotated = shuffled[i:] + shuffled[:i]
-                job_batches[jid] = rotated
-        else:
-            raise ValueError(f"Unknown batch assignment strategy: {self.assignment_strategy}")
+        # Step 2: Pick the next batch not seen by the job and not in use
+        for batch_id in self.base_sequence:
+            if (job_id not in self.batch_seen_by[batch_id]) and (batch_id not in self.batch_in_progress):
+                self.batch_in_progress.add(batch_id)
+                return batch_id
 
-        return job_batches
- 
-    def mark_seen(self, job_id: str, batch_id: int) -> bool:
-        """Mark that a job has seen a batch. Return True if all jobs have seen it."""
-        
-        if batch_id in self.batch_seen_by:
-            self.batch_seen_by[batch_id].add(job_id)
-        else:
-            self.batch_seen_by[batch_id] = {job_id}
-            #check if all jobs have seen this batch
-            if len(self.batch_seen_by[batch_id]) >= self.cache.num_jobs:
-                logger.debug(f"Batch {batch_id} has been seen by all jobs, evicting it from cache")
-                self.cache._remove(batch_id)
+        return None  # No batches left
+
+    def _cus(self, batch_id: int) -> float:
+        unseen = [j for j in self.job_ids if j not in self.batch_seen_by[batch_id]]
+        return sum(self.job_weights[j] for j in unseen)
+
+    def mark_seen(self, job_id: str, batch_id: int):
+        self.batch_seen_by[batch_id].add(job_id)
+        self.batch_in_progress.discard(batch_id)
+        if len(self.batch_seen_by[batch_id]) >= self.cache.num_jobs:
+            self.cache._remove(batch_id)
     
-    def get_batch_for_job(self, job_id: str, job_progress: int) -> int:
-        return self.job_to_batches[job_id][job_progress-1]
+    # def get_batch_for_job(self, job_id: str, job_progress: int) -> int:
+    #     return self.job_to_batches[job_id][job_progress-1]
     
 class DLTJOB:
     def __init__(self, job_id, speed, cache: SharedCache,
@@ -154,7 +142,7 @@ class DLTJOB:
     def next_training_step(self, current_time_sec):
         self.elapased_time_sec = current_time_sec
         self.job_progress += 1
-        batch_id = self.sampler.get_batch_for_job(self.job_id, self.job_progress)
+        batch_id = self.sampler.assign_next_batch(self.job_id)
         cache_hit = self.cache.get_batch(batch_id)
         if cache_hit:
             logger.debug(f"Cache hit: Job {self.job_id} accessed {batch_id}")
@@ -202,7 +190,11 @@ def run_simulation(
         num_jobs = len(workload_jobs),
         eviction_policy=eviction_policy)
     
-    sampler = GlobalSampler(total_batches=batches_per_job, job_ids=[job[0] for job in workload_jobs], cache=shared_cache, assignment_strategy=batch_assignment_strategy)
+    sampler = GlobalSampler(
+        total_batches=batches_per_job, 
+        job_ids=[job[0] for job in workload_jobs], 
+        cache=shared_cache,
+        job_speeds={job[0]: job[1] for job in workload_jobs})
 
     jobs:List[DLTJOB] = [DLTJOB(model_name, speed, shared_cache, sampler=sampler) for model_name, speed in workload_jobs]
 
@@ -316,7 +308,7 @@ if __name__ == "__main__":
     jobs =  workloads[workload_name].items()
     simulation_time_sec = None #3600 # None  #3600 * 1 # Simulate 1 hour
     batches_per_job = 100 * 1 # 8500 #np.inf
-    cache_capacity = 0.01 * batches_per_job #number of batches as a % of the total number of batches
+    cache_capacity = 1 * batches_per_job #number of batches as a % of the total number of batches
     eviction_policy = "noevict" # "lru", "fifo", "mru", "random", "noevict"
     hourly_ec2_cost = 12.24 
     hourly_cache_cost = 3.25

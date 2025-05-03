@@ -285,7 +285,7 @@ def run_simulation(
     }
 
     throuhgputs_for_jobs = {job['job_id']: job['throughput(batches/s)'] for job in job_performances}
-    print(f"{eviction_policy}:")
+    print(f"CoorDL")
     print(f"  Jobs: {job_speeds}"),
     print(f"  Batches per Job: {batches_per_job}")
     print(f"  Cache Miss Penalty: {cache_miss_penalty:.2f}s")

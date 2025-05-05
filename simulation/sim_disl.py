@@ -20,6 +20,7 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
+
 class SharedCache:
     """
     Tracks which jobs have seen each batch and evicts according to a pluggable policy.
@@ -83,24 +84,26 @@ class SharedCache:
         return len(self.cache)
 
 class GlobalSampler:
-    def __init__(self, total_batches: int, job_ids: List[str], cache: SharedCache, job_speeds: Dict[str, float]):
-        self.total_batches = total_batches
-        self.job_ids = job_ids
+    def __init__(self, total_batches: int, cache: SharedCache):
         self.cache = cache
+        self.total_batches = total_batches
         self.batch_seen_by = collections.defaultdict(set)
         self.batch_in_progress = set()
         self.base_sequence = list(range(1, total_batches + 1))
-        self.job_weights = {j: 1.0 / job_speeds[j] for j in job_ids}
-        self.reuse_count = collections.defaultdict(int)
-        self.assigned_cus_log = []
+        self.job_ids = []
+        self.job_thetas = {}
+    
+    def set_job_weights(self, job_thetas: Dict[str, float]):
+        self.job_thetas = job_thetas
+        self.job_ids = list(job_thetas.keys())
 
-    def assign_next_batch(self, job_id: str) -> int:
+    def get_batch_for_job(self, job_id: str) -> int:
         # Step 1: Prefer a cached batch the job hasn't seen
-        candidates = [b for b in self.cache.cache if job_id not in self.batch_seen_by[b]]
+
+        #find all batches that the job has not seen and are in the cache
+        candidates = [b for b in self.base_sequence if job_id not in self.batch_seen_by[b] and b in self.cache.cache]
         if candidates:
-            best = max(candidates, key=self._cus)
-            cus_score = self._cus(best)
-            self.assigned_cus_log.append((job_id, cus_score))
+            best = min(candidates, key=self.normalized_reuse_score)
             self.batch_in_progress.add(best)
             return best
 
@@ -109,72 +112,50 @@ class GlobalSampler:
             if (job_id not in self.batch_seen_by[batch_id]) and (batch_id not in self.batch_in_progress):
                 self.batch_in_progress.add(batch_id)
                 return batch_id
-
         return None  # No batches left
 
-    def _cus(self, batch_id: int) -> float:
+    def reuse_score(self, batch_id: int) -> float:
         unseen = [j for j in self.job_ids if j not in self.batch_seen_by[batch_id]]
-        return sum(self.job_weights[j] for j in unseen)
+        score = sum(self.job_thetas[j] for j in unseen)
+        return score
+    
+    def normalized_reuse_score(self, batch_id: int) -> float:
+        score = self.reuse_score(batch_id)
+        max_score = sum(self.job_thetas[j] for j in self.job_ids)
+        return score / max_score if max_score > 0 else 0.0
 
-    def mark_seen(self, job_id: str, batch_id: int):
+    def mark_seen(self, job_id: str, batch_id: int) -> bool:
         self.batch_seen_by[batch_id].add(job_id)
-        self.batch_in_progress.discard(batch_id)
-        self.reuse_count[batch_id] += 1
         if len(self.batch_seen_by[batch_id]) >= self.cache.num_jobs:
             self.cache._remove(batch_id)
-    
-    def summarize_reuse(self):
-        reuse_vals = list(self.reuse_count.values())
-        if not reuse_vals:
-            return {}
-        return {
-            "avg_reuse": float(np.mean(reuse_vals)),
-            "max_reuse": int(np.max(reuse_vals)),
-            "total_batches_tracked": len(reuse_vals)
-        }
-    
-    def summarize_cus_assignments(self):
-        if not self.assigned_cus_log:
-            return {}
-        scores = [score for _, score in self.assigned_cus_log]
-        return {
-            "avg_cus_score": float(np.mean(scores)),
-            "max_cus_score": float(np.max(scores)),
-            "min_cus_score": float(np.min(scores)),
-            "assignments_logged": len(scores)
-        }
-
-    
-    # def get_batch_for_job(self, job_id: str, job_progress: int) -> int:
-    #     return self.job_to_batches[job_id][job_progress-1]
+            return True
+        return False
     
 class DLTJOB:
-    def __init__(self, job_id, speed, cache: SharedCache,
-                 sampler:GlobalSampler):
+    def __init__(self, job_id, speed, cache: SharedCache, sampler:GlobalSampler):
         self.job_id = job_id
         self.cache = cache
         self.speed = speed
         self.cache_hit_count = 0
         self.cache_miss_count = 0
         self.elapased_time_sec = 0
-        # self.throughput = 0
-        # self.compute_cost = 0
+        self.job_weight = 1.0 / speed
         self.sampler:GlobalSampler = sampler
         self.job_progress = 0
 
-    def next_training_step(self, current_time_sec):
-        self.elapased_time_sec = current_time_sec
-        self.job_progress += 1
-        batch_id = self.sampler.assign_next_batch(self.job_id)
-        cache_hit = self.cache.get_batch(batch_id)
-        if cache_hit:
-            logger.debug(f"Cache hit: Job {self.job_id} accessed {batch_id}")
-            self.cache_hit_count += 1
-        else:
-            logger.debug(f"Cache miss: Job {self.job_id} could not access {batch_id}")
-            self.cache_miss_count += 1
-        self.sampler.mark_seen(self.job_id, batch_id)  # Mark this batch as seen by this job
-        return cache_hit, batch_id
+    # def next_training_step(self, current_time_sec):
+    #     self.elapased_time_sec = current_time_sec
+    #     self.job_progress += 1
+    #     batch_id = self.sampler.assign_next_batch(self.job_id)
+    #     cache_hit = self.cache.get_batch(batch_id)
+    #     if cache_hit:
+    #         logger.debug(f"Cache hit: Job {self.job_id} accessed {batch_id}")
+    #         self.cache_hit_count += 1
+    #     else:
+    #         logger.debug(f"Cache miss: Job {self.job_id} could not access {batch_id}")
+    #         self.cache_miss_count += 1
+    #     self.sampler.mark_seen(self.job_id, batch_id)  # Mark this batch as seen by this job
+    #     return cache_hit, batch_id
 
     def get_performance(self, horurly_ec2_cost=12.24, hourly_cache_cost=3.25):
         hit_rate = self.cache_hit_count / (self.cache_hit_count + self.cache_miss_count) if (self.cache_hit_count + self.cache_miss_count) > 0 else 0
@@ -218,17 +199,14 @@ def run_simulation(
     
     sampler = GlobalSampler(
         total_batches=batches_per_job, 
-        job_ids=[job[0] for job in workload_jobs], 
-        cache=shared_cache,
-        job_speeds={job[0]: job[1] for job in workload_jobs})
-
+        cache=shared_cache)
     jobs:List[DLTJOB] = [DLTJOB(model_name, speed, shared_cache, sampler=sampler) for model_name, speed in workload_jobs]
+    sampler.job_ids = [job.job_id for job in jobs]
+
+    sampler.set_job_weights({job.job_id: job.job_weight for job in jobs})
 
     cache_size_over_time = []  # Store cache size over time for plotting
     #create dict of jobid:speed
-    job_speeds = {job.job_id: job.speed for job in jobs}    
-    job_weights = {j: 1.0 / job_speeds[j] for j in job_speeds}
-    shared_cache.job_weights = job_weights
     event_queue = []  # Priority queue for next event times
     for job in jobs:
         heapq.heappush(event_queue, (job.speed, "step", job))
@@ -240,28 +218,33 @@ def run_simulation(
         #check all jobs have completed their batches
         if batches_per_job is not None and all(job.job_progress >= batches_per_job for job in jobs):
             break
+        
         time_elapsed, event_type, payload = heapq.heappop(event_queue)
         
         if event_type == "cacheinsert":
             batch_id = payload
             shared_cache.put_batch(batch_id)  # Simulate cache insert for this job
-
+        
         elif event_type == "step":
             job:DLTJOB = payload
-            cache_hit, batch_id = job.next_training_step(time_elapsed)  # Simulate the next training step for this job
-
-            if cache_hit:
-                job_delay = job.speed
-            else: # cache miss
-                job_delay = job.speed + cache_miss_penalty
+            batch_id = sampler.get_batch_for_job(job.job_id)
+            job.elapased_time_sec = time_elapsed
+            cache_hit = shared_cache.get_batch(batch_id)
+            if not cache_hit:
+                job.cache_miss_count += 1
+                logger.debug(f"[self-load miss] Job {job.job_id} will insert {batch_id}")
                 heapq.heappush(event_queue, (time_elapsed + cache_miss_penalty, "cacheinsert", batch_id))
-   
-            if batches_per_job is None or job.job_progress < batches_per_job: #job has not completed its batches
-                heapq.heappush(event_queue, (time_elapsed + job_delay, "step", job))
-       
-        elif event_type == "prefetch":
-            batch_id = payload
-            shared_cache.prefetch(batch_id)
+                delay = job.speed + cache_miss_penalty
+            else:
+                job.cache_hit_count += 1
+                delay = job.speed
+            job.job_progress += 1
+
+            if job.job_progress > 1:
+                sampler.mark_seen(job.job_id, job.job_progress -1)
+
+            if batches_per_job is None or job.job_progress < batches_per_job:
+                heapq.heappush(event_queue, (time_elapsed + delay, "step", job))
 
         cache_size_over_time.append(shared_cache.current_length())  # Store cache size over time
     
@@ -281,8 +264,8 @@ def run_simulation(
     cache_cost = (hourly_cache_cost / 3600) * elapsed_time_sec
     total_cost = aggregated_compute_cost + cache_cost  # No additional costs in this simulation
     job_speeds = {job['job_id']: job['job_speed'] for job in job_performances}
-    reuse_summary = sampler.summarize_reuse()
-    cus_summary = sampler.summarize_cus_assignments()
+    # reuse_summary = sampler.summarize_reuse()
+    # cus_summary = sampler.summarize_cus_assignments()
     overall_results = {
         'workload_name': workload_name,
         'job_speeds': job_speeds,
@@ -327,8 +310,8 @@ def run_simulation(
     print(f"  Cache Cost: ${cache_cost:.2f}")
     print(f"  Compute Cost: ${aggregated_compute_cost:.2f}")
     print(f"  Total Cost : ${total_cost:.2f}")
-    print(f"  cus_summary: {cus_summary}")
-    print(f"  reuse_summary: {reuse_summary}")
+    # print(f"  cus_summary: {cus_summary}")
+    # print(f"  reuse_summary: {reuse_summary}")
     print("-" * 40)
     return overall_results
 
@@ -337,7 +320,7 @@ if __name__ == "__main__":
     jobs =  workloads[workload_name].items()
     simulation_time_sec = None #3600 # None  #3600 * 1 # Simulate 1 hour
     batches_per_job = 100 * 1 # 8500 #np.inf
-    cache_capacity = 1 * batches_per_job #number of batches as a % of the total number of batches
+    cache_capacity = 0.5 * batches_per_job #number of batches as a % of the total number of batches
     eviction_policy = "noevict" # "lru", "fifo", "mru", "random", "noevict"
     hourly_ec2_cost = 12.24 
     hourly_cache_cost = 3.25

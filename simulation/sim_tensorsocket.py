@@ -182,7 +182,7 @@ if __name__ == "__main__":
     jobs =  workloads[workload_name].items()
     simulation_time_sec = None #3600 # None  #3600 * 1 # Simulate 1 hour
     batches_per_job = 100 * 1 # 8500 #np.inf
-    cache_capacity = 1000 #1 * batches_per_job #number of batches as a % of the total number of batches
+    cache_capacity = 1.0 * batches_per_job #1 * batches_per_job #number of batches as a % of the total number of batches
     hourly_ec2_cost = 12.24 
     hourly_cache_cost = 3.25
     producer_step_time = 0.2 #time to load data and create batches in seconds
@@ -196,6 +196,3 @@ if __name__ == "__main__":
         simulation_time_sec=simulation_time_sec,
         batches_per_job=batches_per_job,
     )
-
-
-

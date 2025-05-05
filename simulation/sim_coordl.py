@@ -307,11 +307,11 @@ if __name__ == "__main__":
     jobs =  workloads[workload_name].items()
     simulation_time_sec = None #3600 # None  #3600 * 1 # Simulate 1 hour
     batches_per_job = 100 * 1 # 8500 #np.inf
-    cache_capacity = 1 * batches_per_job #number of batches as a % of the total number of batches
+    cache_capacity = 0.5 * batches_per_job #number of batches as a % of the total number of batches
     eviction_policy = "noevict" # "lru", "fifo", "mru", "random", "noevict"
     hourly_ec2_cost = 12.24 
     hourly_cache_cost = 3.25
-    cache_miss_penalty = 0.02
+    cache_miss_penalty = 0.2
     run_simulation(
         workload_name = workload_name,
         workload_jobs = jobs,

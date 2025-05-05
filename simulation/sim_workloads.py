@@ -37,7 +37,8 @@ workloads = {
         'SHUFFLENETV2': 0.062516984,
         'RESNET18': 0.104419951,
         'RESNET50': 0.33947309,
-        'VGG16': 0.514980298
+        'VGG16': 0.514980298,
+        # 'prefetcher': 0.000001
     },
     'imagenet_128_hpo': {
         'RESNET18_1': 0.104419951,

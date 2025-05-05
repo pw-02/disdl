@@ -1,501 +1,553 @@
-2025-05-05 13:21:32,324 - INFO - Starting simulation for imagenet_128_nas with 4 jobs
-2025-05-05 13:21:32,325 - INFO - Producer generated batch 1
-2025-05-05 13:21:32,325 - INFO - Job SHUFFLENETV2 processed batch 1 from local cache
-2025-05-05 13:21:32,325 - INFO - Job RESNET18 processed batch 1 from local cache
-2025-05-05 13:21:32,325 - INFO - Job RESNET50 processed batch 1 from local cache
-2025-05-05 13:21:32,325 - INFO - Job VGG16 processed batch 1 from local cache
-2025-05-05 13:21:32,325 - INFO - Producer generated batch 2
-2025-05-05 13:21:32,325 - INFO - Job RESNET18 processed batch 2 from local cache
-2025-05-05 13:21:32,325 - INFO - Job SHUFFLENETV2 processed batch 2 from local cache
-2025-05-05 13:21:32,325 - INFO - Job RESNET50 processed batch 2 from local cache
-2025-05-05 13:21:32,325 - INFO - Job VGG16 processed batch 2 from local cache
-2025-05-05 13:21:32,326 - INFO - Producer generated batch 3
-2025-05-05 13:21:32,326 - INFO - Job SHUFFLENETV2 processed batch 3 from local cache
-2025-05-05 13:21:32,326 - INFO - Job RESNET18 processed batch 3 from local cache
-2025-05-05 13:21:32,326 - INFO - Job RESNET50 processed batch 3 from local cache
-2025-05-05 13:21:32,326 - INFO - Job VGG16 processed batch 3 from local cache
-2025-05-05 13:21:32,326 - INFO - Producer generated batch 4
-2025-05-05 13:21:32,326 - INFO - Job RESNET50 processed batch 4 from local cache
-2025-05-05 13:21:32,326 - INFO - Job RESNET18 processed batch 4 from local cache
-2025-05-05 13:21:32,326 - INFO - Job SHUFFLENETV2 processed batch 4 from local cache
-2025-05-05 13:21:32,326 - INFO - Job VGG16 processed batch 4 from local cache
-2025-05-05 13:21:32,326 - INFO - Producer generated batch 5
-2025-05-05 13:21:32,326 - INFO - Job SHUFFLENETV2 processed batch 5 from local cache
-2025-05-05 13:21:32,326 - INFO - Job RESNET18 processed batch 5 from local cache
-2025-05-05 13:21:32,327 - INFO - Job RESNET50 processed batch 5 from local cache
-2025-05-05 13:21:32,327 - INFO - Job VGG16 processed batch 5 from local cache
-2025-05-05 13:21:32,327 - INFO - Producer generated batch 6
-2025-05-05 13:21:32,327 - INFO - Job RESNET18 processed batch 6 from local cache
-2025-05-05 13:21:32,327 - INFO - Job RESNET50 processed batch 6 from local cache
-2025-05-05 13:21:32,327 - INFO - Job SHUFFLENETV2 processed batch 6 from local cache
-2025-05-05 13:21:32,327 - INFO - Job VGG16 processed batch 6 from local cache
-2025-05-05 13:21:32,327 - INFO - Producer generated batch 7
-2025-05-05 13:21:32,327 - INFO - Job RESNET18 processed batch 7 from local cache
-2025-05-05 13:21:32,327 - INFO - Job SHUFFLENETV2 processed batch 7 from local cache
-2025-05-05 13:21:32,327 - INFO - Job RESNET50 processed batch 7 from local cache
-2025-05-05 13:21:32,328 - INFO - Job VGG16 processed batch 7 from local cache
-2025-05-05 13:21:32,328 - INFO - Producer generated batch 8
-2025-05-05 13:21:32,328 - INFO - Job SHUFFLENETV2 processed batch 8 from local cache
-2025-05-05 13:21:32,328 - INFO - Job RESNET50 processed batch 8 from local cache
-2025-05-05 13:21:32,328 - INFO - Job RESNET18 processed batch 8 from local cache
-2025-05-05 13:21:32,328 - INFO - Job VGG16 processed batch 8 from local cache
-2025-05-05 13:21:32,328 - INFO - Producer generated batch 9
-2025-05-05 13:21:32,328 - INFO - Job RESNET50 processed batch 9 from local cache
-2025-05-05 13:21:32,328 - INFO - Job SHUFFLENETV2 processed batch 9 from local cache
-2025-05-05 13:21:32,328 - INFO - Job RESNET18 processed batch 9 from local cache
-2025-05-05 13:21:32,328 - INFO - Job VGG16 processed batch 9 from local cache
-2025-05-05 13:21:32,329 - INFO - Producer generated batch 10
-2025-05-05 13:21:32,329 - INFO - Job RESNET50 processed batch 10 from local cache
-2025-05-05 13:21:32,329 - INFO - Job SHUFFLENETV2 processed batch 10 from local cache
-2025-05-05 13:21:32,329 - INFO - Job RESNET18 processed batch 10 from local cache
-2025-05-05 13:21:32,329 - INFO - Job VGG16 processed batch 10 from local cache
-2025-05-05 13:21:32,329 - INFO - Producer generated batch 11
-2025-05-05 13:21:32,329 - INFO - Job SHUFFLENETV2 processed batch 11 from local cache
-2025-05-05 13:21:32,329 - INFO - Job RESNET50 processed batch 11 from local cache
-2025-05-05 13:21:32,329 - INFO - Job RESNET18 processed batch 11 from local cache
-2025-05-05 13:21:32,329 - INFO - Job VGG16 processed batch 11 from local cache
-2025-05-05 13:21:32,329 - INFO - Producer generated batch 12
-2025-05-05 13:21:32,329 - INFO - Job SHUFFLENETV2 processed batch 12 from local cache
-2025-05-05 13:21:32,329 - INFO - Job RESNET18 processed batch 12 from local cache
-2025-05-05 13:21:32,330 - INFO - Job RESNET50 processed batch 12 from local cache
-2025-05-05 13:21:32,330 - INFO - Job VGG16 processed batch 12 from local cache
-2025-05-05 13:21:32,330 - INFO - Producer generated batch 13
-2025-05-05 13:21:32,330 - INFO - Job SHUFFLENETV2 processed batch 13 from local cache
-2025-05-05 13:21:32,330 - INFO - Job RESNET50 processed batch 13 from local cache
-2025-05-05 13:21:32,330 - INFO - Job RESNET18 processed batch 13 from local cache
-2025-05-05 13:21:32,330 - INFO - Job VGG16 processed batch 13 from local cache
-2025-05-05 13:21:32,330 - INFO - Producer generated batch 14
-2025-05-05 13:21:32,330 - INFO - Job RESNET50 processed batch 14 from local cache
-2025-05-05 13:21:32,330 - INFO - Job RESNET18 processed batch 14 from local cache
-2025-05-05 13:21:32,330 - INFO - Job SHUFFLENETV2 processed batch 14 from local cache
-2025-05-05 13:21:32,331 - INFO - Job VGG16 processed batch 14 from local cache
-2025-05-05 13:21:32,331 - INFO - Producer generated batch 15
-2025-05-05 13:21:32,331 - INFO - Job RESNET18 processed batch 15 from local cache
-2025-05-05 13:21:32,331 - INFO - Job RESNET50 processed batch 15 from local cache
-2025-05-05 13:21:32,331 - INFO - Job SHUFFLENETV2 processed batch 15 from local cache
-2025-05-05 13:21:32,331 - INFO - Job VGG16 processed batch 15 from local cache
-2025-05-05 13:21:32,331 - INFO - Producer generated batch 16
-2025-05-05 13:21:32,331 - INFO - Job RESNET18 processed batch 16 from local cache
-2025-05-05 13:21:32,331 - INFO - Job SHUFFLENETV2 processed batch 16 from local cache
-2025-05-05 13:21:32,331 - INFO - Job RESNET50 processed batch 16 from local cache
-2025-05-05 13:21:32,331 - INFO - Job VGG16 processed batch 16 from local cache
-2025-05-05 13:21:32,332 - INFO - Producer generated batch 17
-2025-05-05 13:21:32,332 - INFO - Job SHUFFLENETV2 processed batch 17 from local cache
-2025-05-05 13:21:32,332 - INFO - Job RESNET50 processed batch 17 from local cache
-2025-05-05 13:21:32,332 - INFO - Job RESNET18 processed batch 17 from local cache
-2025-05-05 13:21:32,332 - INFO - Job VGG16 processed batch 17 from local cache
-2025-05-05 13:21:32,332 - INFO - Producer generated batch 18
-2025-05-05 13:21:32,332 - INFO - Job RESNET50 processed batch 18 from local cache
-2025-05-05 13:21:32,332 - INFO - Job SHUFFLENETV2 processed batch 18 from local cache
-2025-05-05 13:21:32,332 - INFO - Job RESNET18 processed batch 18 from local cache
-2025-05-05 13:21:32,332 - INFO - Job VGG16 processed batch 18 from local cache
-2025-05-05 13:21:32,332 - INFO - Producer generated batch 19
-2025-05-05 13:21:32,332 - INFO - Job RESNET50 processed batch 19 from local cache
-2025-05-05 13:21:32,332 - INFO - Job RESNET18 processed batch 19 from local cache
-2025-05-05 13:21:32,333 - INFO - Job SHUFFLENETV2 processed batch 19 from local cache
-2025-05-05 13:21:32,333 - INFO - Job VGG16 processed batch 19 from local cache
-2025-05-05 13:21:32,333 - INFO - Producer generated batch 20
-2025-05-05 13:21:32,333 - INFO - Job SHUFFLENETV2 processed batch 20 from local cache
-2025-05-05 13:21:32,333 - INFO - Job RESNET18 processed batch 20 from local cache
-2025-05-05 13:21:32,333 - INFO - Job RESNET50 processed batch 20 from local cache
-2025-05-05 13:21:32,333 - INFO - Job VGG16 processed batch 20 from local cache
-2025-05-05 13:21:32,333 - INFO - Producer generated batch 21
-2025-05-05 13:21:32,333 - INFO - Job SHUFFLENETV2 processed batch 21 from local cache
-2025-05-05 13:21:32,333 - INFO - Job RESNET50 processed batch 21 from local cache
-2025-05-05 13:21:32,333 - INFO - Job RESNET18 processed batch 21 from local cache
-2025-05-05 13:21:32,334 - INFO - Job VGG16 processed batch 21 from local cache
-2025-05-05 13:21:32,334 - INFO - Producer generated batch 22
-2025-05-05 13:21:32,334 - INFO - Job RESNET50 processed batch 22 from local cache
-2025-05-05 13:21:32,334 - INFO - Job SHUFFLENETV2 processed batch 22 from local cache
-2025-05-05 13:21:32,334 - INFO - Job RESNET18 processed batch 22 from local cache
-2025-05-05 13:21:32,334 - INFO - Job VGG16 processed batch 22 from local cache
-2025-05-05 13:21:32,334 - INFO - Producer generated batch 23
-2025-05-05 13:21:32,334 - INFO - Job RESNET18 processed batch 23 from local cache
-2025-05-05 13:21:32,334 - INFO - Job RESNET50 processed batch 23 from local cache
-2025-05-05 13:21:32,334 - INFO - Job SHUFFLENETV2 processed batch 23 from local cache
-2025-05-05 13:21:32,334 - INFO - Job VGG16 processed batch 23 from local cache
-2025-05-05 13:21:32,335 - INFO - Producer generated batch 24
-2025-05-05 13:21:32,335 - INFO - Job SHUFFLENETV2 processed batch 24 from local cache
-2025-05-05 13:21:32,335 - INFO - Job RESNET18 processed batch 24 from local cache
-2025-05-05 13:21:32,335 - INFO - Job RESNET50 processed batch 24 from local cache
-2025-05-05 13:21:32,335 - INFO - Job VGG16 processed batch 24 from local cache
-2025-05-05 13:21:32,335 - INFO - Producer generated batch 25
-2025-05-05 13:21:32,335 - INFO - Job RESNET18 processed batch 25 from local cache
-2025-05-05 13:21:32,335 - INFO - Job SHUFFLENETV2 processed batch 25 from local cache
-2025-05-05 13:21:32,335 - INFO - Job RESNET50 processed batch 25 from local cache
-2025-05-05 13:21:32,335 - INFO - Job VGG16 processed batch 25 from local cache
-2025-05-05 13:21:32,335 - INFO - Producer generated batch 26
-2025-05-05 13:21:32,335 - INFO - Job RESNET18 processed batch 26 from local cache
-2025-05-05 13:21:32,335 - INFO - Job SHUFFLENETV2 processed batch 26 from local cache
-2025-05-05 13:21:32,336 - INFO - Job RESNET50 processed batch 26 from local cache
-2025-05-05 13:21:32,336 - INFO - Job VGG16 processed batch 26 from local cache
-2025-05-05 13:21:32,336 - INFO - Producer generated batch 27
-2025-05-05 13:21:32,336 - INFO - Job RESNET18 processed batch 27 from local cache
-2025-05-05 13:21:32,336 - INFO - Job RESNET50 processed batch 27 from local cache
-2025-05-05 13:21:32,336 - INFO - Job SHUFFLENETV2 processed batch 27 from local cache
-2025-05-05 13:21:32,336 - INFO - Job VGG16 processed batch 27 from local cache
-2025-05-05 13:21:32,336 - INFO - Producer generated batch 28
-2025-05-05 13:21:32,336 - INFO - Job RESNET50 processed batch 28 from local cache
-2025-05-05 13:21:32,336 - INFO - Job RESNET18 processed batch 28 from local cache
-2025-05-05 13:21:32,336 - INFO - Job SHUFFLENETV2 processed batch 28 from local cache
-2025-05-05 13:21:32,337 - INFO - Job VGG16 processed batch 28 from local cache
-2025-05-05 13:21:32,337 - INFO - Producer generated batch 29
-2025-05-05 13:21:32,337 - INFO - Job SHUFFLENETV2 processed batch 29 from local cache
-2025-05-05 13:21:32,337 - INFO - Job RESNET18 processed batch 29 from local cache
-2025-05-05 13:21:32,337 - INFO - Job RESNET50 processed batch 29 from local cache
-2025-05-05 13:21:32,337 - INFO - Job VGG16 processed batch 29 from local cache
-2025-05-05 13:21:32,337 - INFO - Producer generated batch 30
-2025-05-05 13:21:32,337 - INFO - Job SHUFFLENETV2 processed batch 30 from local cache
-2025-05-05 13:21:32,337 - INFO - Job RESNET50 processed batch 30 from local cache
-2025-05-05 13:21:32,337 - INFO - Job RESNET18 processed batch 30 from local cache
-2025-05-05 13:21:32,338 - INFO - Job VGG16 processed batch 30 from local cache
-2025-05-05 13:21:32,338 - INFO - Producer generated batch 31
-2025-05-05 13:21:32,338 - INFO - Job RESNET50 processed batch 31 from local cache
-2025-05-05 13:21:32,338 - INFO - Job RESNET18 processed batch 31 from local cache
-2025-05-05 13:21:32,338 - INFO - Job SHUFFLENETV2 processed batch 31 from local cache
-2025-05-05 13:21:32,338 - INFO - Job VGG16 processed batch 31 from local cache
-2025-05-05 13:21:32,338 - INFO - Producer generated batch 32
-2025-05-05 13:21:32,338 - INFO - Job RESNET18 processed batch 32 from local cache
-2025-05-05 13:21:32,338 - INFO - Job RESNET50 processed batch 32 from local cache
-2025-05-05 13:21:32,338 - INFO - Job SHUFFLENETV2 processed batch 32 from local cache
-2025-05-05 13:21:32,338 - INFO - Job VGG16 processed batch 32 from local cache
-2025-05-05 13:21:32,338 - INFO - Producer generated batch 33
-2025-05-05 13:21:32,338 - INFO - Job RESNET50 processed batch 33 from local cache
-2025-05-05 13:21:32,339 - INFO - Job RESNET18 processed batch 33 from local cache
-2025-05-05 13:21:32,339 - INFO - Job SHUFFLENETV2 processed batch 33 from local cache
-2025-05-05 13:21:32,339 - INFO - Job VGG16 processed batch 33 from local cache
-2025-05-05 13:21:32,339 - INFO - Producer generated batch 34
-2025-05-05 13:21:32,339 - INFO - Job SHUFFLENETV2 processed batch 34 from local cache
-2025-05-05 13:21:32,339 - INFO - Job RESNET50 processed batch 34 from local cache
-2025-05-05 13:21:32,339 - INFO - Job RESNET18 processed batch 34 from local cache
-2025-05-05 13:21:32,339 - INFO - Job VGG16 processed batch 34 from local cache
-2025-05-05 13:21:32,339 - INFO - Producer generated batch 35
-2025-05-05 13:21:32,339 - INFO - Job RESNET18 processed batch 35 from local cache
-2025-05-05 13:21:32,339 - INFO - Job RESNET50 processed batch 35 from local cache
-2025-05-05 13:21:32,339 - INFO - Job SHUFFLENETV2 processed batch 35 from local cache
-2025-05-05 13:21:32,340 - INFO - Job VGG16 processed batch 35 from local cache
-2025-05-05 13:21:32,340 - INFO - Producer generated batch 36
-2025-05-05 13:21:32,340 - INFO - Job RESNET18 processed batch 36 from local cache
-2025-05-05 13:21:32,340 - INFO - Job RESNET50 processed batch 36 from local cache
-2025-05-05 13:21:32,340 - INFO - Job SHUFFLENETV2 processed batch 36 from local cache
-2025-05-05 13:21:32,340 - INFO - Job VGG16 processed batch 36 from local cache
-2025-05-05 13:21:32,340 - INFO - Producer generated batch 37
-2025-05-05 13:21:32,340 - INFO - Job RESNET50 processed batch 37 from local cache
-2025-05-05 13:21:32,340 - INFO - Job RESNET18 processed batch 37 from local cache
-2025-05-05 13:21:32,340 - INFO - Job SHUFFLENETV2 processed batch 37 from local cache
-2025-05-05 13:21:32,340 - INFO - Job VGG16 processed batch 37 from local cache
-2025-05-05 13:21:32,341 - INFO - Producer generated batch 38
-2025-05-05 13:21:32,341 - INFO - Job RESNET18 processed batch 38 from local cache
-2025-05-05 13:21:32,341 - INFO - Job SHUFFLENETV2 processed batch 38 from local cache
-2025-05-05 13:21:32,341 - INFO - Job RESNET50 processed batch 38 from local cache
-2025-05-05 13:21:32,341 - INFO - Job VGG16 processed batch 38 from local cache
-2025-05-05 13:21:32,341 - INFO - Producer generated batch 39
-2025-05-05 13:21:32,341 - INFO - Job SHUFFLENETV2 processed batch 39 from local cache
-2025-05-05 13:21:32,341 - INFO - Job RESNET50 processed batch 39 from local cache
-2025-05-05 13:21:32,341 - INFO - Job RESNET18 processed batch 39 from local cache
-2025-05-05 13:21:32,341 - INFO - Job VGG16 processed batch 39 from local cache
-2025-05-05 13:21:32,341 - INFO - Producer generated batch 40
-2025-05-05 13:21:32,341 - INFO - Job RESNET18 processed batch 40 from local cache
-2025-05-05 13:21:32,342 - INFO - Job RESNET50 processed batch 40 from local cache
-2025-05-05 13:21:32,342 - INFO - Job SHUFFLENETV2 processed batch 40 from local cache
-2025-05-05 13:21:32,342 - INFO - Job VGG16 processed batch 40 from local cache
-2025-05-05 13:21:32,342 - INFO - Producer generated batch 41
-2025-05-05 13:21:32,342 - INFO - Job RESNET50 processed batch 41 from local cache
-2025-05-05 13:21:32,342 - INFO - Job SHUFFLENETV2 processed batch 41 from local cache
-2025-05-05 13:21:32,342 - INFO - Job RESNET18 processed batch 41 from local cache
-2025-05-05 13:21:32,342 - INFO - Job VGG16 processed batch 41 from local cache
-2025-05-05 13:21:32,342 - INFO - Producer generated batch 42
-2025-05-05 13:21:32,342 - INFO - Job RESNET50 processed batch 42 from local cache
-2025-05-05 13:21:32,342 - INFO - Job RESNET18 processed batch 42 from local cache
-2025-05-05 13:21:32,342 - INFO - Job SHUFFLENETV2 processed batch 42 from local cache
-2025-05-05 13:21:32,343 - INFO - Job VGG16 processed batch 42 from local cache
-2025-05-05 13:21:32,343 - INFO - Producer generated batch 43
-2025-05-05 13:21:32,343 - INFO - Job SHUFFLENETV2 processed batch 43 from local cache
-2025-05-05 13:21:32,343 - INFO - Job RESNET18 processed batch 43 from local cache
-2025-05-05 13:21:32,343 - INFO - Job RESNET50 processed batch 43 from local cache
-2025-05-05 13:21:32,343 - INFO - Job VGG16 processed batch 43 from local cache
-2025-05-05 13:21:32,343 - INFO - Producer generated batch 44
-2025-05-05 13:21:32,343 - INFO - Job RESNET18 processed batch 44 from local cache
-2025-05-05 13:21:32,343 - INFO - Job RESNET50 processed batch 44 from local cache
-2025-05-05 13:21:32,343 - INFO - Job SHUFFLENETV2 processed batch 44 from local cache
-2025-05-05 13:21:32,344 - INFO - Job VGG16 processed batch 44 from local cache
-2025-05-05 13:21:32,344 - INFO - Producer generated batch 45
-2025-05-05 13:21:32,344 - INFO - Job SHUFFLENETV2 processed batch 45 from local cache
-2025-05-05 13:21:32,344 - INFO - Job RESNET50 processed batch 45 from local cache
-2025-05-05 13:21:32,344 - INFO - Job RESNET18 processed batch 45 from local cache
-2025-05-05 13:21:32,344 - INFO - Job VGG16 processed batch 45 from local cache
-2025-05-05 13:21:32,344 - INFO - Producer generated batch 46
-2025-05-05 13:21:32,344 - INFO - Job RESNET18 processed batch 46 from local cache
-2025-05-05 13:21:32,344 - INFO - Job RESNET50 processed batch 46 from local cache
-2025-05-05 13:21:32,344 - INFO - Job SHUFFLENETV2 processed batch 46 from local cache
-2025-05-05 13:21:32,344 - INFO - Job VGG16 processed batch 46 from local cache
-2025-05-05 13:21:32,344 - INFO - Producer generated batch 47
-2025-05-05 13:21:32,344 - INFO - Job RESNET18 processed batch 47 from local cache
-2025-05-05 13:21:32,345 - INFO - Job SHUFFLENETV2 processed batch 47 from local cache
-2025-05-05 13:21:32,345 - INFO - Job RESNET50 processed batch 47 from local cache
-2025-05-05 13:21:32,345 - INFO - Job VGG16 processed batch 47 from local cache
-2025-05-05 13:21:32,345 - INFO - Producer generated batch 48
-2025-05-05 13:21:32,345 - INFO - Job RESNET50 processed batch 48 from local cache
-2025-05-05 13:21:32,345 - INFO - Job SHUFFLENETV2 processed batch 48 from local cache
-2025-05-05 13:21:32,345 - INFO - Job RESNET18 processed batch 48 from local cache
-2025-05-05 13:21:32,345 - INFO - Job VGG16 processed batch 48 from local cache
-2025-05-05 13:21:32,345 - INFO - Producer generated batch 49
-2025-05-05 13:21:32,345 - INFO - Job SHUFFLENETV2 processed batch 49 from local cache
-2025-05-05 13:21:32,345 - INFO - Job RESNET18 processed batch 49 from local cache
-2025-05-05 13:21:32,345 - INFO - Job RESNET50 processed batch 49 from local cache
-2025-05-05 13:21:32,346 - INFO - Job VGG16 processed batch 49 from local cache
-2025-05-05 13:21:32,346 - INFO - Producer generated batch 50
-2025-05-05 13:21:32,346 - INFO - Job RESNET50 processed batch 50 from local cache
-2025-05-05 13:21:32,346 - INFO - Job RESNET18 processed batch 50 from local cache
-2025-05-05 13:21:32,346 - INFO - Job SHUFFLENETV2 processed batch 50 from local cache
-2025-05-05 13:21:32,346 - INFO - Job VGG16 processed batch 50 from local cache
-2025-05-05 13:21:32,346 - INFO - Producer generated batch 51
-2025-05-05 13:21:32,346 - INFO - Job SHUFFLENETV2 processed batch 51 from local cache
-2025-05-05 13:21:32,346 - INFO - Job RESNET50 processed batch 51 from local cache
-2025-05-05 13:21:32,346 - INFO - Job RESNET18 processed batch 51 from local cache
-2025-05-05 13:21:32,347 - INFO - Job VGG16 processed batch 51 from local cache
-2025-05-05 13:21:32,347 - INFO - Producer generated batch 52
-2025-05-05 13:21:32,347 - INFO - Job RESNET18 processed batch 52 from local cache
-2025-05-05 13:21:32,347 - INFO - Job SHUFFLENETV2 processed batch 52 from local cache
-2025-05-05 13:21:32,347 - INFO - Job RESNET50 processed batch 52 from local cache
-2025-05-05 13:21:32,347 - INFO - Job VGG16 processed batch 52 from local cache
-2025-05-05 13:21:32,347 - INFO - Producer generated batch 53
-2025-05-05 13:21:32,347 - INFO - Job SHUFFLENETV2 processed batch 53 from local cache
-2025-05-05 13:21:32,347 - INFO - Job RESNET18 processed batch 53 from local cache
-2025-05-05 13:21:32,347 - INFO - Job RESNET50 processed batch 53 from local cache
-2025-05-05 13:21:32,347 - INFO - Job VGG16 processed batch 53 from local cache
-2025-05-05 13:21:32,347 - INFO - Producer generated batch 54
-2025-05-05 13:21:32,347 - INFO - Job RESNET50 processed batch 54 from local cache
-2025-05-05 13:21:32,347 - INFO - Job RESNET18 processed batch 54 from local cache
-2025-05-05 13:21:32,348 - INFO - Job SHUFFLENETV2 processed batch 54 from local cache
-2025-05-05 13:21:32,348 - INFO - Job VGG16 processed batch 54 from local cache
-2025-05-05 13:21:32,348 - INFO - Producer generated batch 55
-2025-05-05 13:21:32,348 - INFO - Job RESNET50 processed batch 55 from local cache
-2025-05-05 13:21:32,348 - INFO - Job SHUFFLENETV2 processed batch 55 from local cache
-2025-05-05 13:21:32,348 - INFO - Job RESNET18 processed batch 55 from local cache
-2025-05-05 13:21:32,348 - INFO - Job VGG16 processed batch 55 from local cache
-2025-05-05 13:21:32,348 - INFO - Producer generated batch 56
-2025-05-05 13:21:32,348 - INFO - Job SHUFFLENETV2 processed batch 56 from local cache
-2025-05-05 13:21:32,348 - INFO - Job RESNET50 processed batch 56 from local cache
-2025-05-05 13:21:32,348 - INFO - Job RESNET18 processed batch 56 from local cache
-2025-05-05 13:21:32,349 - INFO - Job VGG16 processed batch 56 from local cache
-2025-05-05 13:21:32,349 - INFO - Producer generated batch 57
-2025-05-05 13:21:32,349 - INFO - Job RESNET18 processed batch 57 from local cache
-2025-05-05 13:21:32,349 - INFO - Job SHUFFLENETV2 processed batch 57 from local cache
-2025-05-05 13:21:32,349 - INFO - Job RESNET50 processed batch 57 from local cache
-2025-05-05 13:21:32,349 - INFO - Job VGG16 processed batch 57 from local cache
-2025-05-05 13:21:32,349 - INFO - Producer generated batch 58
-2025-05-05 13:21:32,349 - INFO - Job SHUFFLENETV2 processed batch 58 from local cache
-2025-05-05 13:21:32,349 - INFO - Job RESNET18 processed batch 58 from local cache
-2025-05-05 13:21:32,349 - INFO - Job RESNET50 processed batch 58 from local cache
-2025-05-05 13:21:32,349 - INFO - Job VGG16 processed batch 58 from local cache
-2025-05-05 13:21:32,350 - INFO - Producer generated batch 59
-2025-05-05 13:21:32,350 - INFO - Job RESNET50 processed batch 59 from local cache
-2025-05-05 13:21:32,350 - INFO - Job RESNET18 processed batch 59 from local cache
-2025-05-05 13:21:32,350 - INFO - Job SHUFFLENETV2 processed batch 59 from local cache
-2025-05-05 13:21:32,350 - INFO - Job VGG16 processed batch 59 from local cache
-2025-05-05 13:21:32,350 - INFO - Producer generated batch 60
-2025-05-05 13:21:32,350 - INFO - Job SHUFFLENETV2 processed batch 60 from local cache
-2025-05-05 13:21:32,350 - INFO - Job RESNET18 processed batch 60 from local cache
-2025-05-05 13:21:32,350 - INFO - Job RESNET50 processed batch 60 from local cache
-2025-05-05 13:21:32,350 - INFO - Job VGG16 processed batch 60 from local cache
-2025-05-05 13:21:32,350 - INFO - Producer generated batch 61
-2025-05-05 13:21:32,350 - INFO - Job RESNET50 processed batch 61 from local cache
-2025-05-05 13:21:32,350 - INFO - Job SHUFFLENETV2 processed batch 61 from local cache
-2025-05-05 13:21:32,351 - INFO - Job RESNET18 processed batch 61 from local cache
-2025-05-05 13:21:32,351 - INFO - Job VGG16 processed batch 61 from local cache
-2025-05-05 13:21:32,351 - INFO - Producer generated batch 62
-2025-05-05 13:21:32,351 - INFO - Job RESNET18 processed batch 62 from local cache
-2025-05-05 13:21:32,351 - INFO - Job SHUFFLENETV2 processed batch 62 from local cache
-2025-05-05 13:21:32,351 - INFO - Job RESNET50 processed batch 62 from local cache
-2025-05-05 13:21:32,351 - INFO - Job VGG16 processed batch 62 from local cache
-2025-05-05 13:21:32,351 - INFO - Producer generated batch 63
-2025-05-05 13:21:32,351 - INFO - Job RESNET18 processed batch 63 from local cache
-2025-05-05 13:21:32,351 - INFO - Job RESNET50 processed batch 63 from local cache
-2025-05-05 13:21:32,351 - INFO - Job SHUFFLENETV2 processed batch 63 from local cache
-2025-05-05 13:21:32,352 - INFO - Job VGG16 processed batch 63 from local cache
-2025-05-05 13:21:32,352 - INFO - Producer generated batch 64
-2025-05-05 13:21:32,352 - INFO - Job RESNET18 processed batch 64 from local cache
-2025-05-05 13:21:32,352 - INFO - Job SHUFFLENETV2 processed batch 64 from local cache
-2025-05-05 13:21:32,352 - INFO - Job RESNET50 processed batch 64 from local cache
-2025-05-05 13:21:32,352 - INFO - Job VGG16 processed batch 64 from local cache
-2025-05-05 13:21:32,352 - INFO - Producer generated batch 65
-2025-05-05 13:21:32,352 - INFO - Job SHUFFLENETV2 processed batch 65 from local cache
-2025-05-05 13:21:32,352 - INFO - Job RESNET50 processed batch 65 from local cache
-2025-05-05 13:21:32,352 - INFO - Job RESNET18 processed batch 65 from local cache
-2025-05-05 13:21:32,353 - INFO - Job VGG16 processed batch 65 from local cache
-2025-05-05 13:21:32,353 - INFO - Producer generated batch 66
-2025-05-05 13:21:32,353 - INFO - Job RESNET50 processed batch 66 from local cache
-2025-05-05 13:21:32,353 - INFO - Job SHUFFLENETV2 processed batch 66 from local cache
-2025-05-05 13:21:32,353 - INFO - Job RESNET18 processed batch 66 from local cache
-2025-05-05 13:21:32,353 - INFO - Job VGG16 processed batch 66 from local cache
-2025-05-05 13:21:32,353 - INFO - Producer generated batch 67
-2025-05-05 13:21:32,353 - INFO - Job RESNET50 processed batch 67 from local cache
-2025-05-05 13:21:32,353 - INFO - Job SHUFFLENETV2 processed batch 67 from local cache
-2025-05-05 13:21:32,353 - INFO - Job RESNET18 processed batch 67 from local cache
-2025-05-05 13:21:32,354 - INFO - Job VGG16 processed batch 67 from local cache
-2025-05-05 13:21:32,354 - INFO - Producer generated batch 68
-2025-05-05 13:21:32,354 - INFO - Job SHUFFLENETV2 processed batch 68 from local cache
-2025-05-05 13:21:32,354 - INFO - Job RESNET50 processed batch 68 from local cache
-2025-05-05 13:21:32,354 - INFO - Job RESNET18 processed batch 68 from local cache
-2025-05-05 13:21:32,354 - INFO - Job VGG16 processed batch 68 from local cache
-2025-05-05 13:21:32,354 - INFO - Producer generated batch 69
-2025-05-05 13:21:32,354 - INFO - Job RESNET18 processed batch 69 from local cache
-2025-05-05 13:21:32,354 - INFO - Job SHUFFLENETV2 processed batch 69 from local cache
-2025-05-05 13:21:32,354 - INFO - Job RESNET50 processed batch 69 from local cache
-2025-05-05 13:21:32,354 - INFO - Job VGG16 processed batch 69 from local cache
-2025-05-05 13:21:32,354 - INFO - Producer generated batch 70
-2025-05-05 13:21:32,355 - INFO - Job RESNET50 processed batch 70 from local cache
-2025-05-05 13:21:32,355 - INFO - Job SHUFFLENETV2 processed batch 70 from local cache
-2025-05-05 13:21:32,355 - INFO - Job RESNET18 processed batch 70 from local cache
-2025-05-05 13:21:32,355 - INFO - Job VGG16 processed batch 70 from local cache
-2025-05-05 13:21:32,355 - INFO - Producer generated batch 71
-2025-05-05 13:21:32,355 - INFO - Job RESNET50 processed batch 71 from local cache
-2025-05-05 13:21:32,355 - INFO - Job RESNET18 processed batch 71 from local cache
-2025-05-05 13:21:32,355 - INFO - Job SHUFFLENETV2 processed batch 71 from local cache
-2025-05-05 13:21:32,355 - INFO - Job VGG16 processed batch 71 from local cache
-2025-05-05 13:21:32,355 - INFO - Producer generated batch 72
-2025-05-05 13:21:32,355 - INFO - Job SHUFFLENETV2 processed batch 72 from local cache
-2025-05-05 13:21:32,355 - INFO - Job RESNET18 processed batch 72 from local cache
-2025-05-05 13:21:32,355 - INFO - Job RESNET50 processed batch 72 from local cache
-2025-05-05 13:21:32,355 - INFO - Job VGG16 processed batch 72 from local cache
-2025-05-05 13:21:32,355 - INFO - Producer generated batch 73
-2025-05-05 13:21:32,355 - INFO - Job RESNET18 processed batch 73 from local cache
-2025-05-05 13:21:32,355 - INFO - Job SHUFFLENETV2 processed batch 73 from local cache
-2025-05-05 13:21:32,355 - INFO - Job RESNET50 processed batch 73 from local cache
-2025-05-05 13:21:32,356 - INFO - Job VGG16 processed batch 73 from local cache
-2025-05-05 13:21:32,356 - INFO - Producer generated batch 74
-2025-05-05 13:21:32,356 - INFO - Job RESNET50 processed batch 74 from local cache
-2025-05-05 13:21:32,356 - INFO - Job SHUFFLENETV2 processed batch 74 from local cache
-2025-05-05 13:21:32,356 - INFO - Job RESNET18 processed batch 74 from local cache
-2025-05-05 13:21:32,356 - INFO - Job VGG16 processed batch 74 from local cache
-2025-05-05 13:21:32,356 - INFO - Producer generated batch 75
-2025-05-05 13:21:32,356 - INFO - Job RESNET50 processed batch 75 from local cache
-2025-05-05 13:21:32,356 - INFO - Job SHUFFLENETV2 processed batch 75 from local cache
-2025-05-05 13:21:32,356 - INFO - Job RESNET18 processed batch 75 from local cache
-2025-05-05 13:21:32,357 - INFO - Job VGG16 processed batch 75 from local cache
-2025-05-05 13:21:32,357 - INFO - Producer generated batch 76
-2025-05-05 13:21:32,357 - INFO - Job SHUFFLENETV2 processed batch 76 from local cache
-2025-05-05 13:21:32,357 - INFO - Job RESNET50 processed batch 76 from local cache
-2025-05-05 13:21:32,357 - INFO - Job RESNET18 processed batch 76 from local cache
-2025-05-05 13:21:32,357 - INFO - Job VGG16 processed batch 76 from local cache
-2025-05-05 13:21:32,357 - INFO - Producer generated batch 77
-2025-05-05 13:21:32,357 - INFO - Job SHUFFLENETV2 processed batch 77 from local cache
-2025-05-05 13:21:32,357 - INFO - Job RESNET50 processed batch 77 from local cache
-2025-05-05 13:21:32,357 - INFO - Job RESNET18 processed batch 77 from local cache
-2025-05-05 13:21:32,357 - INFO - Job VGG16 processed batch 77 from local cache
-2025-05-05 13:21:32,357 - INFO - Producer generated batch 78
-2025-05-05 13:21:32,358 - INFO - Job RESNET18 processed batch 78 from local cache
-2025-05-05 13:21:32,358 - INFO - Job SHUFFLENETV2 processed batch 78 from local cache
-2025-05-05 13:21:32,358 - INFO - Job RESNET50 processed batch 78 from local cache
-2025-05-05 13:21:32,358 - INFO - Job VGG16 processed batch 78 from local cache
-2025-05-05 13:21:32,358 - INFO - Producer generated batch 79
-2025-05-05 13:21:32,358 - INFO - Job RESNET50 processed batch 79 from local cache
-2025-05-05 13:21:32,358 - INFO - Job SHUFFLENETV2 processed batch 79 from local cache
-2025-05-05 13:21:32,358 - INFO - Job RESNET18 processed batch 79 from local cache
-2025-05-05 13:21:32,358 - INFO - Job VGG16 processed batch 79 from local cache
-2025-05-05 13:21:32,358 - INFO - Producer generated batch 80
-2025-05-05 13:21:32,358 - INFO - Job SHUFFLENETV2 processed batch 80 from local cache
-2025-05-05 13:21:32,358 - INFO - Job RESNET18 processed batch 80 from local cache
-2025-05-05 13:21:32,358 - INFO - Job RESNET50 processed batch 80 from local cache
-2025-05-05 13:21:32,359 - INFO - Job VGG16 processed batch 80 from local cache
-2025-05-05 13:21:32,359 - INFO - Producer generated batch 81
-2025-05-05 13:21:32,359 - INFO - Job RESNET18 processed batch 81 from local cache
-2025-05-05 13:21:32,359 - INFO - Job SHUFFLENETV2 processed batch 81 from local cache
-2025-05-05 13:21:32,359 - INFO - Job RESNET50 processed batch 81 from local cache
-2025-05-05 13:21:32,359 - INFO - Job VGG16 processed batch 81 from local cache
-2025-05-05 13:21:32,359 - INFO - Producer generated batch 82
-2025-05-05 13:21:32,359 - INFO - Job RESNET18 processed batch 82 from local cache
-2025-05-05 13:21:32,359 - INFO - Job SHUFFLENETV2 processed batch 82 from local cache
-2025-05-05 13:21:32,359 - INFO - Job RESNET50 processed batch 82 from local cache
-2025-05-05 13:21:32,360 - INFO - Job VGG16 processed batch 82 from local cache
-2025-05-05 13:21:32,360 - INFO - Producer generated batch 83
-2025-05-05 13:21:32,360 - INFO - Job RESNET18 processed batch 83 from local cache
-2025-05-05 13:21:32,360 - INFO - Job RESNET50 processed batch 83 from local cache
-2025-05-05 13:21:32,360 - INFO - Job SHUFFLENETV2 processed batch 83 from local cache
-2025-05-05 13:21:32,360 - INFO - Job VGG16 processed batch 83 from local cache
-2025-05-05 13:21:32,360 - INFO - Producer generated batch 84
-2025-05-05 13:21:32,360 - INFO - Job SHUFFLENETV2 processed batch 84 from local cache
-2025-05-05 13:21:32,360 - INFO - Job RESNET18 processed batch 84 from local cache
-2025-05-05 13:21:32,360 - INFO - Job RESNET50 processed batch 84 from local cache
-2025-05-05 13:21:32,360 - INFO - Job VGG16 processed batch 84 from local cache
-2025-05-05 13:21:32,360 - INFO - Producer generated batch 85
-2025-05-05 13:21:32,361 - INFO - Job SHUFFLENETV2 processed batch 85 from local cache
-2025-05-05 13:21:32,361 - INFO - Job RESNET50 processed batch 85 from local cache
-2025-05-05 13:21:32,361 - INFO - Job RESNET18 processed batch 85 from local cache
-2025-05-05 13:21:32,361 - INFO - Job VGG16 processed batch 85 from local cache
-2025-05-05 13:21:32,361 - INFO - Producer generated batch 86
-2025-05-05 13:21:32,361 - INFO - Job SHUFFLENETV2 processed batch 86 from local cache
-2025-05-05 13:21:32,361 - INFO - Job RESNET18 processed batch 86 from local cache
-2025-05-05 13:21:32,361 - INFO - Job RESNET50 processed batch 86 from local cache
-2025-05-05 13:21:32,361 - INFO - Job VGG16 processed batch 86 from local cache
-2025-05-05 13:21:32,361 - INFO - Producer generated batch 87
-2025-05-05 13:21:32,361 - INFO - Job RESNET50 processed batch 87 from local cache
-2025-05-05 13:21:32,361 - INFO - Job SHUFFLENETV2 processed batch 87 from local cache
-2025-05-05 13:21:32,361 - INFO - Job RESNET18 processed batch 87 from local cache
-2025-05-05 13:21:32,362 - INFO - Job VGG16 processed batch 87 from local cache
-2025-05-05 13:21:32,362 - INFO - Producer generated batch 88
-2025-05-05 13:21:32,362 - INFO - Job RESNET50 processed batch 88 from local cache
-2025-05-05 13:21:32,362 - INFO - Job RESNET18 processed batch 88 from local cache
-2025-05-05 13:21:32,362 - INFO - Job SHUFFLENETV2 processed batch 88 from local cache
-2025-05-05 13:21:32,362 - INFO - Job VGG16 processed batch 88 from local cache
-2025-05-05 13:21:32,362 - INFO - Producer generated batch 89
-2025-05-05 13:21:32,362 - INFO - Job SHUFFLENETV2 processed batch 89 from local cache
-2025-05-05 13:21:32,362 - INFO - Job RESNET18 processed batch 89 from local cache
-2025-05-05 13:21:32,362 - INFO - Job RESNET50 processed batch 89 from local cache
-2025-05-05 13:21:32,363 - INFO - Job VGG16 processed batch 89 from local cache
-2025-05-05 13:21:32,363 - INFO - Producer generated batch 90
-2025-05-05 13:21:32,363 - INFO - Job RESNET50 processed batch 90 from local cache
-2025-05-05 13:21:32,363 - INFO - Job RESNET18 processed batch 90 from local cache
-2025-05-05 13:21:32,363 - INFO - Job SHUFFLENETV2 processed batch 90 from local cache
-2025-05-05 13:21:32,363 - INFO - Job VGG16 processed batch 90 from local cache
-2025-05-05 13:21:32,363 - INFO - Producer generated batch 91
-2025-05-05 13:21:32,363 - INFO - Job SHUFFLENETV2 processed batch 91 from local cache
-2025-05-05 13:21:32,363 - INFO - Job RESNET50 processed batch 91 from local cache
-2025-05-05 13:21:32,363 - INFO - Job RESNET18 processed batch 91 from local cache
-2025-05-05 13:21:32,363 - INFO - Job VGG16 processed batch 91 from local cache
-2025-05-05 13:21:32,363 - INFO - Producer generated batch 92
-2025-05-05 13:21:32,364 - INFO - Job RESNET18 processed batch 92 from local cache
-2025-05-05 13:21:32,364 - INFO - Job RESNET50 processed batch 92 from local cache
-2025-05-05 13:21:32,364 - INFO - Job SHUFFLENETV2 processed batch 92 from local cache
-2025-05-05 13:21:32,364 - INFO - Job VGG16 processed batch 92 from local cache
-2025-05-05 13:21:32,364 - INFO - Producer generated batch 93
-2025-05-05 13:21:32,364 - INFO - Job RESNET18 processed batch 93 from local cache
-2025-05-05 13:21:32,364 - INFO - Job SHUFFLENETV2 processed batch 93 from local cache
-2025-05-05 13:21:32,364 - INFO - Job RESNET50 processed batch 93 from local cache
-2025-05-05 13:21:32,364 - INFO - Job VGG16 processed batch 93 from local cache
-2025-05-05 13:21:32,364 - INFO - Producer generated batch 94
-2025-05-05 13:21:32,364 - INFO - Job RESNET50 processed batch 94 from local cache
-2025-05-05 13:21:32,364 - INFO - Job RESNET18 processed batch 94 from local cache
-2025-05-05 13:21:32,364 - INFO - Job SHUFFLENETV2 processed batch 94 from local cache
-2025-05-05 13:21:32,365 - INFO - Job VGG16 processed batch 94 from local cache
-2025-05-05 13:21:32,365 - INFO - Producer generated batch 95
-2025-05-05 13:21:32,365 - INFO - Job RESNET18 processed batch 95 from local cache
-2025-05-05 13:21:32,365 - INFO - Job SHUFFLENETV2 processed batch 95 from local cache
-2025-05-05 13:21:32,365 - INFO - Job RESNET50 processed batch 95 from local cache
-2025-05-05 13:21:32,365 - INFO - Job VGG16 processed batch 95 from local cache
-2025-05-05 13:21:32,365 - INFO - Producer generated batch 96
-2025-05-05 13:21:32,365 - INFO - Job RESNET50 processed batch 96 from local cache
-2025-05-05 13:21:32,365 - INFO - Job SHUFFLENETV2 processed batch 96 from local cache
-2025-05-05 13:21:32,365 - INFO - Job RESNET18 processed batch 96 from local cache
-2025-05-05 13:21:32,366 - INFO - Job VGG16 processed batch 96 from local cache
-2025-05-05 13:21:32,366 - INFO - Producer generated batch 97
-2025-05-05 13:21:32,366 - INFO - Job SHUFFLENETV2 processed batch 97 from local cache
-2025-05-05 13:21:32,366 - INFO - Job RESNET18 processed batch 97 from local cache
-2025-05-05 13:21:32,366 - INFO - Job RESNET50 processed batch 97 from local cache
-2025-05-05 13:21:32,366 - INFO - Job VGG16 processed batch 97 from local cache
-2025-05-05 13:21:32,366 - INFO - Producer generated batch 98
-2025-05-05 13:21:32,366 - INFO - Job SHUFFLENETV2 processed batch 98 from local cache
-2025-05-05 13:21:32,366 - INFO - Job RESNET18 processed batch 98 from local cache
-2025-05-05 13:21:32,366 - INFO - Job RESNET50 processed batch 98 from local cache
-2025-05-05 13:21:32,366 - INFO - Job VGG16 processed batch 98 from local cache
-2025-05-05 13:21:32,367 - INFO - Producer generated batch 99
-2025-05-05 13:21:32,367 - INFO - Job RESNET50 processed batch 99 from local cache
-2025-05-05 13:21:32,367 - INFO - Job RESNET18 processed batch 99 from local cache
-2025-05-05 13:21:32,367 - INFO - Job SHUFFLENETV2 processed batch 99 from local cache
-2025-05-05 13:21:32,367 - INFO - Job VGG16 processed batch 99 from local cache
-2025-05-05 13:21:32,367 - INFO - Producer generated batch 100
-2025-05-05 13:21:32,367 - INFO - Job RESNET18 processed batch 100 from local cache
-2025-05-05 13:21:32,367 - INFO - Job RESNET50 processed batch 100 from local cache
-2025-05-05 13:21:32,367 - INFO - Job SHUFFLENETV2 processed batch 100 from local cache
-2025-05-05 13:21:32,367 - INFO - Job VGG16 processed batch 100 from local cache
+2025-05-05 15:19:18,559 - INFO - Job SHUFFLENETV2 processing batch 1 at time 0.06s. Cache hit: False
+2025-05-05 15:19:18,560 - INFO - Job RESNET18 processing batch 1 at time 0.10s. Cache hit: True
+2025-05-05 15:19:18,560 - INFO - Job SHUFFLENETV2 processing batch 2 at time 0.15s. Cache hit: False
+2025-05-05 15:19:18,560 - INFO - Job RESNET18 processing batch 2 at time 0.21s. Cache hit: True
+2025-05-05 15:19:18,560 - INFO - Job SHUFFLENETV2 processing batch 3 at time 0.23s. Cache hit: False
+2025-05-05 15:19:18,561 - INFO - Job SHUFFLENETV2 processing batch 4 at time 0.31s. Cache hit: False
+2025-05-05 15:19:18,561 - INFO - Job RESNET18 processing batch 3 at time 0.31s. Cache hit: True
+2025-05-05 15:19:18,561 - INFO - Job RESNET50 processing batch 1 at time 0.34s. Cache hit: True
+2025-05-05 15:19:18,561 - INFO - Job SHUFFLENETV2 processing batch 5 at time 0.39s. Cache hit: False
+2025-05-05 15:19:18,561 - INFO - Job RESNET18 processing batch 4 at time 0.42s. Cache hit: True
+2025-05-05 15:19:18,561 - INFO - Job SHUFFLENETV2 processing batch 6 at time 0.48s. Cache hit: False
+2025-05-05 15:19:18,562 - INFO - Job VGG16 processing batch 1 at time 0.51s. Cache hit: True
+2025-05-05 15:19:18,562 - INFO - Job RESNET18 processing batch 5 at time 0.52s. Cache hit: True
+2025-05-05 15:19:18,562 - INFO - Job SHUFFLENETV2 processing batch 7 at time 0.56s. Cache hit: False
+2025-05-05 15:19:18,562 - INFO - Job RESNET18 processing batch 6 at time 0.63s. Cache hit: True
+2025-05-05 15:19:18,562 - INFO - Job SHUFFLENETV2 processing batch 8 at time 0.64s. Cache hit: False
+2025-05-05 15:19:18,562 - INFO - Job RESNET50 processing batch 2 at time 0.68s. Cache hit: True
+2025-05-05 15:19:18,563 - INFO - Job SHUFFLENETV2 processing batch 9 at time 0.72s. Cache hit: False
+2025-05-05 15:19:18,563 - INFO - Job RESNET18 processing batch 7 at time 0.73s. Cache hit: True
+2025-05-05 15:19:18,563 - INFO - Job SHUFFLENETV2 processing batch 10 at time 0.81s. Cache hit: False
+2025-05-05 15:19:18,563 - INFO - Job RESNET18 processing batch 8 at time 0.84s. Cache hit: True
+2025-05-05 15:19:18,563 - INFO - Job SHUFFLENETV2 processing batch 11 at time 0.89s. Cache hit: False
+2025-05-05 15:19:18,563 - INFO - Job RESNET18 processing batch 9 at time 0.94s. Cache hit: True
+2025-05-05 15:19:18,563 - INFO - Job SHUFFLENETV2 processing batch 12 at time 0.97s. Cache hit: False
+2025-05-05 15:19:18,564 - INFO - Job RESNET50 processing batch 3 at time 1.02s. Cache hit: True
+2025-05-05 15:19:18,564 - INFO - Job VGG16 processing batch 2 at time 1.03s. Cache hit: True
+2025-05-05 15:19:18,564 - INFO - Job RESNET18 processing batch 10 at time 1.04s. Cache hit: True
+2025-05-05 15:19:18,564 - INFO - Job SHUFFLENETV2 processing batch 13 at time 1.05s. Cache hit: False
+2025-05-05 15:19:18,564 - INFO - Job SHUFFLENETV2 processing batch 14 at time 1.14s. Cache hit: False
+2025-05-05 15:19:18,565 - INFO - Job RESNET18 processing batch 11 at time 1.15s. Cache hit: True
+2025-05-05 15:19:18,565 - INFO - Job SHUFFLENETV2 processing batch 15 at time 1.22s. Cache hit: False
+2025-05-05 15:19:18,565 - INFO - Job RESNET18 processing batch 12 at time 1.25s. Cache hit: True
+2025-05-05 15:19:18,565 - INFO - Job SHUFFLENETV2 processing batch 16 at time 1.30s. Cache hit: False
+2025-05-05 15:19:18,565 - INFO - Job RESNET18 processing batch 13 at time 1.36s. Cache hit: True
+2025-05-05 15:19:18,565 - INFO - Job RESNET50 processing batch 4 at time 1.36s. Cache hit: True
+2025-05-05 15:19:18,566 - INFO - Job SHUFFLENETV2 processing batch 17 at time 1.38s. Cache hit: False
+2025-05-05 15:19:18,566 - INFO - Job RESNET18 processing batch 14 at time 1.46s. Cache hit: True
+2025-05-05 15:19:18,566 - INFO - Job SHUFFLENETV2 processing batch 18 at time 1.47s. Cache hit: False
+2025-05-05 15:19:18,566 - INFO - Job VGG16 processing batch 3 at time 1.54s. Cache hit: True
+2025-05-05 15:19:18,566 - INFO - Job SHUFFLENETV2 processing batch 19 at time 1.55s. Cache hit: False
+2025-05-05 15:19:18,566 - INFO - Job RESNET18 processing batch 15 at time 1.57s. Cache hit: True
+2025-05-05 15:19:18,567 - INFO - Job SHUFFLENETV2 processing batch 20 at time 1.63s. Cache hit: False
+2025-05-05 15:19:18,567 - INFO - Job RESNET18 processing batch 16 at time 1.67s. Cache hit: True
+2025-05-05 15:19:18,567 - INFO - Job RESNET50 processing batch 5 at time 1.70s. Cache hit: True
+2025-05-05 15:19:18,567 - INFO - Job SHUFFLENETV2 processing batch 21 at time 1.71s. Cache hit: False
+2025-05-05 15:19:18,568 - INFO - Job RESNET18 processing batch 17 at time 1.78s. Cache hit: True
+2025-05-05 15:19:18,568 - INFO - Job SHUFFLENETV2 processing batch 22 at time 1.80s. Cache hit: False
+2025-05-05 15:19:18,568 - INFO - Job SHUFFLENETV2 processing batch 23 at time 1.88s. Cache hit: False
+2025-05-05 15:19:18,568 - INFO - Job RESNET18 processing batch 18 at time 1.88s. Cache hit: True
+2025-05-05 15:19:18,568 - INFO - Evicted batch 3 from cache. Reuse score: 1.9418218597558852
+2025-05-05 15:19:18,568 - INFO - Job SHUFFLENETV2 processing batch 24 at time 1.96s. Cache hit: False
+2025-05-05 15:19:18,569 - INFO - Evicted batch 4 from cache. Reuse score: 1.9418218597558852
+2025-05-05 15:19:18,569 - INFO - Job RESNET18 processing batch 19 at time 1.98s. Cache hit: True
+2025-05-05 15:19:18,569 - INFO - Job RESNET50 processing batch 6 at time 2.04s. Cache hit: True
+2025-05-05 15:19:18,569 - INFO - Job SHUFFLENETV2 processing batch 25 at time 2.04s. Cache hit: False
+2025-05-05 15:19:18,570 - INFO - Job VGG16 processing batch 5 at time 2.06s. Cache hit: True
+2025-05-05 15:19:18,570 - INFO - Evicted batch 5 from cache. Reuse score: 1.9418218597558852
+2025-05-05 15:19:18,570 - INFO - Job RESNET18 processing batch 20 at time 2.09s. Cache hit: True
+2025-05-05 15:19:18,570 - INFO - Job SHUFFLENETV2 processing batch 26 at time 2.13s. Cache hit: False
+2025-05-05 15:19:18,570 - INFO - Evicted batch 6 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,571 - INFO - Job RESNET18 processing batch 21 at time 2.19s. Cache hit: True
+2025-05-05 15:19:18,571 - INFO - Job SHUFFLENETV2 processing batch 27 at time 2.21s. Cache hit: False
+2025-05-05 15:19:18,571 - INFO - Evicted batch 7 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,571 - INFO - Job SHUFFLENETV2 processing batch 28 at time 2.29s. Cache hit: False
+2025-05-05 15:19:18,571 - INFO - Job RESNET18 processing batch 22 at time 2.30s. Cache hit: True
+2025-05-05 15:19:18,572 - INFO - Evicted batch 8 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,572 - INFO - Job SHUFFLENETV2 processing batch 29 at time 2.37s. Cache hit: False
+2025-05-05 15:19:18,572 - INFO - Job RESNET50 processing batch 9 at time 2.38s. Cache hit: True
+2025-05-05 15:19:18,572 - INFO - Evicted batch 9 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,573 - INFO - Job RESNET18 processing batch 23 at time 2.40s. Cache hit: True
+2025-05-05 15:19:18,573 - INFO - Job SHUFFLENETV2 processing batch 30 at time 2.46s. Cache hit: False
+2025-05-05 15:19:18,573 - INFO - Evicted batch 10 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,573 - INFO - Job RESNET18 processing batch 24 at time 2.51s. Cache hit: True
+2025-05-05 15:19:18,573 - INFO - Job SHUFFLENETV2 processing batch 31 at time 2.54s. Cache hit: False
+2025-05-05 15:19:18,573 - INFO - Evicted batch 11 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,574 - INFO - Job VGG16 processing batch 12 at time 2.57s. Cache hit: True
+2025-05-05 15:19:18,574 - INFO - Job RESNET18 processing batch 25 at time 2.61s. Cache hit: True
+2025-05-05 15:19:18,574 - INFO - Job SHUFFLENETV2 processing batch 32 at time 2.62s. Cache hit: False
+2025-05-05 15:19:18,574 - INFO - Evicted batch 12 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,574 - INFO - Job SHUFFLENETV2 processing batch 33 at time 2.70s. Cache hit: False
+2025-05-05 15:19:18,575 - INFO - Job RESNET18 processing batch 26 at time 2.71s. Cache hit: True
+2025-05-05 15:19:18,575 - INFO - Job RESNET50 processing batch 13 at time 2.72s. Cache hit: True
+2025-05-05 15:19:18,575 - INFO - Evicted batch 13 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,575 - INFO - Job SHUFFLENETV2 processing batch 34 at time 2.79s. Cache hit: False
+2025-05-05 15:19:18,576 - INFO - Evicted batch 14 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,576 - INFO - Job RESNET18 processing batch 27 at time 2.82s. Cache hit: True
+2025-05-05 15:19:18,576 - INFO - Job SHUFFLENETV2 processing batch 35 at time 2.87s. Cache hit: False
+2025-05-05 15:19:18,576 - INFO - Evicted batch 15 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,576 - INFO - Job RESNET18 processing batch 28 at time 2.92s. Cache hit: True
+2025-05-05 15:19:18,576 - INFO - Job SHUFFLENETV2 processing batch 36 at time 2.95s. Cache hit: False
+2025-05-05 15:19:18,577 - INFO - Evicted batch 16 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,577 - INFO - Job RESNET18 processing batch 29 at time 3.03s. Cache hit: True
+2025-05-05 15:19:18,577 - INFO - Job SHUFFLENETV2 processing batch 37 at time 3.03s. Cache hit: False
+2025-05-05 15:19:18,577 - INFO - Evicted batch 17 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,578 - INFO - Job RESNET50 processing batch 18 at time 3.06s. Cache hit: True
+2025-05-05 15:19:18,578 - INFO - Job VGG16 processing batch 18 at time 3.09s. Cache hit: True
+2025-05-05 15:19:18,578 - INFO - Job SHUFFLENETV2 processing batch 38 at time 3.12s. Cache hit: False
+2025-05-05 15:19:18,578 - INFO - Job RESNET18 processing batch 30 at time 3.13s. Cache hit: True
+2025-05-05 15:19:18,579 - INFO - Evicted batch 18 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,579 - INFO - Job SHUFFLENETV2 processing batch 39 at time 3.20s. Cache hit: False
+2025-05-05 15:19:18,579 - INFO - Evicted batch 19 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,579 - INFO - Job RESNET18 processing batch 31 at time 3.24s. Cache hit: True
+2025-05-05 15:19:18,579 - INFO - Job SHUFFLENETV2 processing batch 40 at time 3.28s. Cache hit: False
+2025-05-05 15:19:18,579 - INFO - Evicted batch 20 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,580 - INFO - Job RESNET18 processing batch 32 at time 3.34s. Cache hit: True
+2025-05-05 15:19:18,580 - INFO - Job SHUFFLENETV2 processing batch 41 at time 3.36s. Cache hit: False
+2025-05-05 15:19:18,580 - INFO - Evicted batch 21 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,580 - INFO - Job RESNET50 processing batch 22 at time 3.39s. Cache hit: True
+2025-05-05 15:19:18,581 - INFO - Job SHUFFLENETV2 processing batch 42 at time 3.45s. Cache hit: False
+2025-05-05 15:19:18,581 - INFO - Job RESNET18 processing batch 33 at time 3.45s. Cache hit: True
+2025-05-05 15:19:18,581 - INFO - Evicted batch 22 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,581 - INFO - Job SHUFFLENETV2 processing batch 43 at time 3.53s. Cache hit: False
+2025-05-05 15:19:18,581 - INFO - Evicted batch 23 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,582 - INFO - Job RESNET18 processing batch 34 at time 3.55s. Cache hit: True
+2025-05-05 15:19:18,582 - INFO - Job VGG16 processing batch 24 at time 3.60s. Cache hit: True
+2025-05-05 15:19:18,582 - INFO - Job SHUFFLENETV2 processing batch 44 at time 3.61s. Cache hit: False
+2025-05-05 15:19:18,582 - INFO - Evicted batch 24 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,583 - INFO - Job RESNET18 processing batch 35 at time 3.65s. Cache hit: True
+2025-05-05 15:19:18,583 - INFO - Job SHUFFLENETV2 processing batch 45 at time 3.69s. Cache hit: False
+2025-05-05 15:19:18,583 - INFO - Evicted batch 25 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,583 - INFO - Job RESNET50 processing batch 26 at time 3.73s. Cache hit: True
+2025-05-05 15:19:18,584 - INFO - Job RESNET18 processing batch 36 at time 3.76s. Cache hit: True
+2025-05-05 15:19:18,584 - INFO - Job SHUFFLENETV2 processing batch 46 at time 3.78s. Cache hit: False
+2025-05-05 15:19:18,584 - INFO - Evicted batch 26 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,584 - INFO - Job SHUFFLENETV2 processing batch 47 at time 3.86s. Cache hit: False
+2025-05-05 15:19:18,584 - INFO - Job RESNET18 processing batch 37 at time 3.86s. Cache hit: True
+2025-05-05 15:19:18,585 - INFO - Evicted batch 27 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,585 - INFO - Job SHUFFLENETV2 processing batch 48 at time 3.94s. Cache hit: False
+2025-05-05 15:19:18,585 - INFO - Evicted batch 28 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,585 - INFO - Job RESNET18 processing batch 38 at time 3.97s. Cache hit: True
+2025-05-05 15:19:18,585 - INFO - Job SHUFFLENETV2 processing batch 49 at time 4.02s. Cache hit: False
+2025-05-05 15:19:18,586 - INFO - Evicted batch 29 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,586 - INFO - Job RESNET18 processing batch 39 at time 4.07s. Cache hit: True
+2025-05-05 15:19:18,586 - INFO - Job RESNET50 processing batch 30 at time 4.07s. Cache hit: True
+2025-05-05 15:19:18,586 - INFO - Job SHUFFLENETV2 processing batch 50 at time 4.11s. Cache hit: False
+2025-05-05 15:19:18,587 - INFO - Job VGG16 processing batch 30 at time 4.12s. Cache hit: True
+2025-05-05 15:19:18,587 - INFO - Evicted batch 30 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,587 - INFO - Job RESNET18 processing batch 40 at time 4.18s. Cache hit: True
+2025-05-05 15:19:18,587 - INFO - Job SHUFFLENETV2 processing batch 51 at time 4.19s. Cache hit: False
+2025-05-05 15:19:18,587 - INFO - Evicted batch 31 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,587 - INFO - Job SHUFFLENETV2 processing batch 52 at time 4.27s. Cache hit: False
+2025-05-05 15:19:18,588 - INFO - Job RESNET18 processing batch 41 at time 4.28s. Cache hit: True
+2025-05-05 15:19:18,588 - INFO - Evicted batch 32 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,588 - INFO - Job SHUFFLENETV2 processing batch 53 at time 4.35s. Cache hit: False
+2025-05-05 15:19:18,588 - INFO - Evicted batch 33 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,588 - INFO - Job RESNET18 processing batch 42 at time 4.39s. Cache hit: True
+2025-05-05 15:19:18,588 - INFO - Job RESNET50 processing batch 34 at time 4.41s. Cache hit: True
+2025-05-05 15:19:18,588 - INFO - Job SHUFFLENETV2 processing batch 54 at time 4.44s. Cache hit: False
+2025-05-05 15:19:18,589 - INFO - Evicted batch 34 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,589 - INFO - Job RESNET18 processing batch 43 at time 4.49s. Cache hit: True
+2025-05-05 15:19:18,589 - INFO - Job SHUFFLENETV2 processing batch 55 at time 4.52s. Cache hit: False
+2025-05-05 15:19:18,589 - INFO - Evicted batch 35 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,590 - INFO - Job RESNET18 processing batch 44 at time 4.59s. Cache hit: True
+2025-05-05 15:19:18,590 - INFO - Job SHUFFLENETV2 processing batch 56 at time 4.60s. Cache hit: False
+2025-05-05 15:19:18,590 - INFO - Evicted batch 36 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,590 - INFO - Job VGG16 processing batch 37 at time 4.63s. Cache hit: True
+2025-05-05 15:19:18,590 - INFO - Job SHUFFLENETV2 processing batch 57 at time 4.68s. Cache hit: False
+2025-05-05 15:19:18,591 - INFO - Job RESNET18 processing batch 45 at time 4.70s. Cache hit: True
+2025-05-05 15:19:18,591 - INFO - Evicted batch 37 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,591 - INFO - Job RESNET50 processing batch 38 at time 4.75s. Cache hit: True
+2025-05-05 15:19:18,591 - INFO - Job SHUFFLENETV2 processing batch 58 at time 4.77s. Cache hit: False
+2025-05-05 15:19:18,592 - INFO - Evicted batch 38 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,592 - INFO - Job RESNET18 processing batch 46 at time 4.80s. Cache hit: True
+2025-05-05 15:19:18,592 - INFO - Job SHUFFLENETV2 processing batch 59 at time 4.85s. Cache hit: False
+2025-05-05 15:19:18,592 - INFO - Evicted batch 39 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,592 - INFO - Job RESNET18 processing batch 47 at time 4.91s. Cache hit: True
+2025-05-05 15:19:18,593 - INFO - Job SHUFFLENETV2 processing batch 60 at time 4.93s. Cache hit: False
+2025-05-05 15:19:18,593 - INFO - Evicted batch 40 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,593 - INFO - Job RESNET18 processing batch 48 at time 5.01s. Cache hit: True
+2025-05-05 15:19:18,593 - INFO - Job SHUFFLENETV2 processing batch 61 at time 5.01s. Cache hit: False
+2025-05-05 15:19:18,593 - INFO - Evicted batch 41 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,594 - INFO - Job RESNET50 processing batch 42 at time 5.09s. Cache hit: True
+2025-05-05 15:19:18,594 - INFO - Job SHUFFLENETV2 processing batch 62 at time 5.10s. Cache hit: False
+2025-05-05 15:19:18,594 - INFO - Evicted batch 42 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,594 - INFO - Job RESNET18 processing batch 49 at time 5.12s. Cache hit: True
+2025-05-05 15:19:18,595 - INFO - Job VGG16 processing batch 43 at time 5.15s. Cache hit: True
+2025-05-05 15:19:18,595 - INFO - Job SHUFFLENETV2 processing batch 63 at time 5.18s. Cache hit: False
+2025-05-05 15:19:18,595 - INFO - Evicted batch 43 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,595 - INFO - Job RESNET18 processing batch 50 at time 5.22s. Cache hit: True
+2025-05-05 15:19:18,595 - INFO - Job SHUFFLENETV2 processing batch 64 at time 5.26s. Cache hit: False
+2025-05-05 15:19:18,596 - INFO - Evicted batch 44 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,596 - INFO - Job RESNET18 processing batch 51 at time 5.33s. Cache hit: True
+2025-05-05 15:19:18,596 - INFO - Job SHUFFLENETV2 processing batch 65 at time 5.34s. Cache hit: False
+2025-05-05 15:19:18,596 - INFO - Evicted batch 45 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,597 - INFO - Job SHUFFLENETV2 processing batch 66 at time 5.43s. Cache hit: False
+2025-05-05 15:19:18,597 - INFO - Job RESNET18 processing batch 52 at time 5.43s. Cache hit: True
+2025-05-05 15:19:18,597 - INFO - Job RESNET50 processing batch 46 at time 5.43s. Cache hit: True
+2025-05-05 15:19:18,598 - INFO - Evicted batch 46 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,598 - INFO - Job SHUFFLENETV2 processing batch 67 at time 5.51s. Cache hit: False
+2025-05-05 15:19:18,598 - INFO - Evicted batch 47 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,598 - INFO - Job RESNET18 processing batch 53 at time 5.53s. Cache hit: True
+2025-05-05 15:19:18,598 - INFO - Job SHUFFLENETV2 processing batch 68 at time 5.59s. Cache hit: False
+2025-05-05 15:19:18,599 - INFO - Evicted batch 48 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,599 - INFO - Job RESNET18 processing batch 54 at time 5.64s. Cache hit: True
+2025-05-05 15:19:18,599 - INFO - Job VGG16 processing batch 49 at time 5.66s. Cache hit: True
+2025-05-05 15:19:18,599 - INFO - Job SHUFFLENETV2 processing batch 69 at time 5.67s. Cache hit: False
+2025-05-05 15:19:18,600 - INFO - Evicted batch 49 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,600 - INFO - Job RESNET18 processing batch 55 at time 5.74s. Cache hit: True
+2025-05-05 15:19:18,600 - INFO - Job SHUFFLENETV2 processing batch 70 at time 5.76s. Cache hit: False
+2025-05-05 15:19:18,600 - INFO - Job RESNET50 processing batch 50 at time 5.77s. Cache hit: True
+2025-05-05 15:19:18,601 - INFO - Evicted batch 50 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,601 - INFO - Job SHUFFLENETV2 processing batch 71 at time 5.84s. Cache hit: False
+2025-05-05 15:19:18,601 - INFO - Job RESNET18 processing batch 56 at time 5.85s. Cache hit: True
+2025-05-05 15:19:18,601 - INFO - Evicted batch 51 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,601 - INFO - Job SHUFFLENETV2 processing batch 72 at time 5.92s. Cache hit: False
+2025-05-05 15:19:18,602 - INFO - Evicted batch 52 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,602 - INFO - Job RESNET18 processing batch 57 at time 5.95s. Cache hit: True
+2025-05-05 15:19:18,602 - INFO - Job SHUFFLENETV2 processing batch 73 at time 6.00s. Cache hit: False
+2025-05-05 15:19:18,602 - INFO - Evicted batch 53 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,603 - INFO - Job RESNET18 processing batch 58 at time 6.06s. Cache hit: True
+2025-05-05 15:19:18,603 - INFO - Job SHUFFLENETV2 processing batch 74 at time 6.09s. Cache hit: False
+2025-05-05 15:19:18,603 - INFO - Evicted batch 54 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,603 - INFO - Job RESNET50 processing batch 55 at time 6.11s. Cache hit: True
+2025-05-05 15:19:18,604 - INFO - Job RESNET18 processing batch 59 at time 6.16s. Cache hit: True
+2025-05-05 15:19:18,604 - INFO - Job SHUFFLENETV2 processing batch 75 at time 6.17s. Cache hit: False
+2025-05-05 15:19:18,604 - INFO - Job VGG16 processing batch 55 at time 6.18s. Cache hit: True
+2025-05-05 15:19:18,604 - INFO - Evicted batch 55 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,604 - INFO - Job SHUFFLENETV2 processing batch 76 at time 6.25s. Cache hit: False
+2025-05-05 15:19:18,605 - INFO - Job RESNET18 processing batch 60 at time 6.27s. Cache hit: True
+2025-05-05 15:19:18,605 - INFO - Evicted batch 56 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,605 - INFO - Job SHUFFLENETV2 processing batch 77 at time 6.33s. Cache hit: False
+2025-05-05 15:19:18,605 - INFO - Evicted batch 57 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,606 - INFO - Job RESNET18 processing batch 61 at time 6.37s. Cache hit: True
+2025-05-05 15:19:18,606 - INFO - Job SHUFFLENETV2 processing batch 78 at time 6.42s. Cache hit: False
+2025-05-05 15:19:18,606 - INFO - Evicted batch 58 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,606 - INFO - Job RESNET50 processing batch 59 at time 6.45s. Cache hit: True
+2025-05-05 15:19:18,607 - INFO - Job RESNET18 processing batch 62 at time 6.47s. Cache hit: True
+2025-05-05 15:19:18,607 - INFO - Job SHUFFLENETV2 processing batch 79 at time 6.50s. Cache hit: False
+2025-05-05 15:19:18,607 - INFO - Evicted batch 59 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,607 - INFO - Job RESNET18 processing batch 63 at time 6.58s. Cache hit: True
+2025-05-05 15:19:18,607 - INFO - Job SHUFFLENETV2 processing batch 80 at time 6.58s. Cache hit: False
+2025-05-05 15:19:18,608 - INFO - Evicted batch 60 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,608 - INFO - Job SHUFFLENETV2 processing batch 81 at time 6.66s. Cache hit: False
+2025-05-05 15:19:18,608 - INFO - Job RESNET18 processing batch 64 at time 6.68s. Cache hit: True
+2025-05-05 15:19:18,608 - INFO - Evicted batch 61 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,609 - INFO - Job VGG16 processing batch 62 at time 6.69s. Cache hit: True
+2025-05-05 15:19:18,609 - INFO - Job SHUFFLENETV2 processing batch 82 at time 6.75s. Cache hit: False
+2025-05-05 15:19:18,609 - INFO - Evicted batch 62 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,609 - INFO - Job RESNET18 processing batch 65 at time 6.79s. Cache hit: True
+2025-05-05 15:19:18,610 - INFO - Job RESNET50 processing batch 63 at time 6.79s. Cache hit: True
+2025-05-05 15:19:18,610 - INFO - Job SHUFFLENETV2 processing batch 83 at time 6.83s. Cache hit: False
+2025-05-05 15:19:18,610 - INFO - Evicted batch 63 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,611 - INFO - Job RESNET18 processing batch 66 at time 6.89s. Cache hit: True
+2025-05-05 15:19:18,611 - INFO - Job SHUFFLENETV2 processing batch 84 at time 6.91s. Cache hit: False
+2025-05-05 15:19:18,611 - INFO - Evicted batch 64 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,611 - INFO - Job SHUFFLENETV2 processing batch 85 at time 6.99s. Cache hit: False
+2025-05-05 15:19:18,611 - INFO - Job RESNET18 processing batch 67 at time 7.00s. Cache hit: True
+2025-05-05 15:19:18,612 - INFO - Evicted batch 65 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,612 - INFO - Job SHUFFLENETV2 processing batch 86 at time 7.08s. Cache hit: False
+2025-05-05 15:19:18,612 - INFO - Evicted batch 66 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,612 - INFO - Job RESNET18 processing batch 68 at time 7.10s. Cache hit: True
+2025-05-05 15:19:18,613 - INFO - Job RESNET50 processing batch 67 at time 7.13s. Cache hit: True
+2025-05-05 15:19:18,613 - INFO - Job SHUFFLENETV2 processing batch 87 at time 7.16s. Cache hit: False
+2025-05-05 15:19:18,613 - INFO - Evicted batch 67 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,613 - INFO - Job RESNET18 processing batch 69 at time 7.20s. Cache hit: True
+2025-05-05 15:19:18,614 - INFO - Job VGG16 processing batch 68 at time 7.21s. Cache hit: True
+2025-05-05 15:19:18,614 - INFO - Job SHUFFLENETV2 processing batch 88 at time 7.24s. Cache hit: False
+2025-05-05 15:19:18,614 - INFO - Evicted batch 68 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,614 - INFO - Job RESNET18 processing batch 70 at time 7.31s. Cache hit: True
+2025-05-05 15:19:18,615 - INFO - Job SHUFFLENETV2 processing batch 89 at time 7.32s. Cache hit: False
+2025-05-05 15:19:18,615 - INFO - Evicted batch 69 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,615 - INFO - Job SHUFFLENETV2 processing batch 90 at time 7.41s. Cache hit: False
+2025-05-05 15:19:18,615 - INFO - Job RESNET18 processing batch 71 at time 7.41s. Cache hit: True
+2025-05-05 15:19:18,615 - INFO - Evicted batch 70 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,616 - INFO - Job RESNET50 processing batch 71 at time 7.47s. Cache hit: True
+2025-05-05 15:19:18,616 - INFO - Job SHUFFLENETV2 processing batch 91 at time 7.49s. Cache hit: False
+2025-05-05 15:19:18,616 - INFO - Evicted batch 71 from cache. Reuse score: 14.4642773866464
+2025-05-05 15:19:18,617 - INFO - Job RESNET18 processing batch 72 at time 7.52s. Cache hit: True
+2025-05-05 15:19:18,617 - INFO - Job SHUFFLENETV2 processing batch 92 at time 7.57s. Cache hit: False
+2025-05-05 15:19:18,617 - INFO - Evicted batch 72 from cache. Reuse score: 14.4642773866464
+2025-05-05 15:19:18,617 - INFO - Job RESNET18 processing batch 73 at time 7.62s. Cache hit: True
+2025-05-05 15:19:18,617 - INFO - Job SHUFFLENETV2 processing batch 93 at time 7.65s. Cache hit: False
+2025-05-05 15:19:18,618 - INFO - Evicted batch 73 from cache. Reuse score: 14.4642773866464
+2025-05-05 15:19:18,618 - INFO - Job VGG16 processing batch 74 at time 7.72s. Cache hit: True
+2025-05-05 15:19:18,618 - INFO - Job RESNET18 processing batch 74 at time 7.73s. Cache hit: True
+2025-05-05 15:19:18,618 - INFO - Job SHUFFLENETV2 processing batch 94 at time 7.74s. Cache hit: False
+2025-05-05 15:19:18,619 - INFO - Evicted batch 74 from cache. Reuse score: 14.4642773866464
+2025-05-05 15:19:18,619 - INFO - Job RESNET50 processing batch 75 at time 7.81s. Cache hit: True
+2025-05-05 15:19:18,619 - INFO - Job SHUFFLENETV2 processing batch 95 at time 7.82s. Cache hit: False
+2025-05-05 15:19:18,619 - INFO - Job RESNET18 processing batch 75 at time 7.83s. Cache hit: True
+2025-05-05 15:19:18,620 - INFO - Evicted batch 75 from cache. Reuse score: 14.4642773866464
+2025-05-05 15:19:18,620 - INFO - Job SHUFFLENETV2 processing batch 96 at time 7.90s. Cache hit: False
+2025-05-05 15:19:18,620 - INFO - Evicted batch 76 from cache. Reuse score: 14.4642773866464
+2025-05-05 15:19:18,620 - INFO - Job RESNET18 processing batch 77 at time 7.94s. Cache hit: True
+2025-05-05 15:19:18,621 - INFO - Job SHUFFLENETV2 processing batch 97 at time 7.98s. Cache hit: False
+2025-05-05 15:19:18,621 - INFO - Evicted batch 77 from cache. Reuse score: 14.4642773866464
+2025-05-05 15:19:18,621 - INFO - Job RESNET18 processing batch 78 at time 8.04s. Cache hit: True
+2025-05-05 15:19:18,621 - INFO - Job SHUFFLENETV2 processing batch 98 at time 8.07s. Cache hit: False
+2025-05-05 15:19:18,622 - INFO - Evicted batch 78 from cache. Reuse score: 14.4642773866464
+2025-05-05 15:19:18,622 - INFO - Job RESNET18 processing batch 79 at time 8.14s. Cache hit: True
+2025-05-05 15:19:18,622 - INFO - Job RESNET50 processing batch 79 at time 8.15s. Cache hit: True
+2025-05-05 15:19:18,622 - INFO - Job SHUFFLENETV2 processing batch 99 at time 8.15s. Cache hit: False
+2025-05-05 15:19:18,623 - INFO - Evicted batch 79 from cache. Reuse score: 14.4642773866464
+2025-05-05 15:19:18,623 - INFO - Job SHUFFLENETV2 processing batch 100 at time 8.23s. Cache hit: False
+2025-05-05 15:19:18,623 - INFO - Job VGG16 processing batch 80 at time 8.24s. Cache hit: True
+2025-05-05 15:19:18,623 - INFO - Job RESNET18 processing batch 80 at time 8.25s. Cache hit: True
+2025-05-05 15:19:18,624 - INFO - Evicted batch 80 from cache. Reuse score: 14.4642773866464
+2025-05-05 15:19:18,624 - INFO - Job RESNET18 processing batch 81 at time 8.35s. Cache hit: True
+2025-05-05 15:19:18,624 - INFO - Job RESNET18 processing batch 82 at time 8.46s. Cache hit: True
+2025-05-05 15:19:18,625 - INFO - Job RESNET50 processing batch 81 at time 8.49s. Cache hit: True
+2025-05-05 15:19:18,625 - INFO - Job RESNET18 processing batch 83 at time 8.56s. Cache hit: True
+2025-05-05 15:19:18,625 - INFO - Job RESNET18 processing batch 84 at time 8.67s. Cache hit: True
+2025-05-05 15:19:18,626 - INFO - Job VGG16 processing batch 81 at time 8.75s. Cache hit: True
+2025-05-05 15:19:18,626 - INFO - Job RESNET18 processing batch 85 at time 8.77s. Cache hit: True
+2025-05-05 15:19:18,626 - INFO - Job RESNET50 processing batch 82 at time 8.83s. Cache hit: True
+2025-05-05 15:19:18,626 - INFO - Job RESNET18 processing batch 86 at time 8.88s. Cache hit: True
+2025-05-05 15:19:18,627 - INFO - Job RESNET18 processing batch 87 at time 8.98s. Cache hit: True
+2025-05-05 15:19:18,627 - INFO - Job RESNET18 processing batch 88 at time 9.08s. Cache hit: True
+2025-05-05 15:19:18,627 - INFO - Job RESNET50 processing batch 83 at time 9.17s. Cache hit: True
+2025-05-05 15:19:18,627 - INFO - Job RESNET18 processing batch 89 at time 9.19s. Cache hit: True
+2025-05-05 15:19:18,628 - INFO - Job VGG16 processing batch 82 at time 9.27s. Cache hit: True
+2025-05-05 15:19:18,628 - INFO - Job RESNET18 processing batch 90 at time 9.29s. Cache hit: True
+2025-05-05 15:19:18,628 - INFO - Job RESNET18 processing batch 91 at time 9.40s. Cache hit: True
+2025-05-05 15:19:18,628 - INFO - Job RESNET18 processing batch 92 at time 9.50s. Cache hit: True
+2025-05-05 15:19:18,629 - INFO - Job RESNET50 processing batch 84 at time 9.51s. Cache hit: True
+2025-05-05 15:19:18,629 - INFO - Job RESNET18 processing batch 93 at time 9.61s. Cache hit: True
+2025-05-05 15:19:18,629 - INFO - Job RESNET18 processing batch 94 at time 9.71s. Cache hit: True
+2025-05-05 15:19:18,629 - INFO - Job VGG16 processing batch 83 at time 9.78s. Cache hit: True
+2025-05-05 15:19:18,629 - INFO - Job RESNET18 processing batch 95 at time 9.82s. Cache hit: True
+2025-05-05 15:19:18,630 - INFO - Job RESNET50 processing batch 85 at time 9.84s. Cache hit: True
+2025-05-05 15:19:18,630 - INFO - Job RESNET18 processing batch 96 at time 9.92s. Cache hit: True
+2025-05-05 15:19:18,630 - INFO - Job RESNET18 processing batch 97 at time 10.02s. Cache hit: True
+2025-05-05 15:19:18,630 - INFO - Job RESNET18 processing batch 98 at time 10.13s. Cache hit: True
+2025-05-05 15:19:18,630 - INFO - Job RESNET50 processing batch 86 at time 10.18s. Cache hit: True
+2025-05-05 15:19:18,631 - INFO - Job RESNET18 processing batch 99 at time 10.23s. Cache hit: True
+2025-05-05 15:19:18,631 - INFO - Job VGG16 processing batch 84 at time 10.30s. Cache hit: True
+2025-05-05 15:19:18,631 - INFO - Job RESNET18 processing batch 100 at time 10.34s. Cache hit: True
+2025-05-05 15:19:18,631 - INFO - Job RESNET18 processing batch 76 at time 10.44s. Cache hit: False
+2025-05-05 15:19:18,631 - INFO - Evicted batch 81 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,632 - INFO - Job RESNET50 processing batch 76 at time 10.52s. Cache hit: True
+2025-05-05 15:19:18,632 - INFO - Job VGG16 processing batch 76 at time 10.81s. Cache hit: True
+2025-05-05 15:19:18,632 - INFO - Job RESNET50 processing batch 87 at time 10.86s. Cache hit: True
+2025-05-05 15:19:18,632 - INFO - Job RESNET50 processing batch 88 at time 11.20s. Cache hit: True
+2025-05-05 15:19:18,633 - INFO - Job VGG16 processing batch 85 at time 11.33s. Cache hit: True
+2025-05-05 15:19:18,633 - INFO - Job RESNET50 processing batch 89 at time 11.54s. Cache hit: True
+2025-05-05 15:19:18,633 - INFO - Job VGG16 processing batch 86 at time 11.84s. Cache hit: True
+2025-05-05 15:19:18,633 - INFO - Job RESNET50 processing batch 90 at time 11.88s. Cache hit: True
+2025-05-05 15:19:18,634 - INFO - Job RESNET50 processing batch 91 at time 12.22s. Cache hit: True
+2025-05-05 15:19:18,634 - INFO - Job VGG16 processing batch 87 at time 12.36s. Cache hit: True
+2025-05-05 15:19:18,634 - INFO - Job RESNET50 processing batch 92 at time 12.56s. Cache hit: True
+2025-05-05 15:19:18,634 - INFO - Job VGG16 processing batch 88 at time 12.87s. Cache hit: True
+2025-05-05 15:19:18,634 - INFO - Job RESNET50 processing batch 93 at time 12.90s. Cache hit: True
+2025-05-05 15:19:18,635 - INFO - Job RESNET50 processing batch 94 at time 13.24s. Cache hit: True
+2025-05-05 15:19:18,635 - INFO - Job VGG16 processing batch 89 at time 13.39s. Cache hit: True
+2025-05-05 15:19:18,635 - INFO - Job RESNET50 processing batch 95 at time 13.58s. Cache hit: True
+2025-05-05 15:19:18,635 - INFO - Job VGG16 processing batch 90 at time 13.90s. Cache hit: True
+2025-05-05 15:19:18,635 - INFO - Job RESNET50 processing batch 96 at time 13.92s. Cache hit: True
+2025-05-05 15:19:18,636 - INFO - Job RESNET50 processing batch 97 at time 14.26s. Cache hit: True
+2025-05-05 15:19:18,636 - INFO - Job VGG16 processing batch 91 at time 14.42s. Cache hit: True
+2025-05-05 15:19:18,636 - INFO - Job RESNET50 processing batch 98 at time 14.60s. Cache hit: True
+2025-05-05 15:19:18,636 - INFO - Job VGG16 processing batch 92 at time 14.93s. Cache hit: True
+2025-05-05 15:19:18,636 - INFO - Job RESNET50 processing batch 99 at time 14.94s. Cache hit: True
+2025-05-05 15:19:18,636 - INFO - Job RESNET50 processing batch 100 at time 15.28s. Cache hit: True
+2025-05-05 15:19:18,637 - INFO - Job VGG16 processing batch 93 at time 15.45s. Cache hit: True
+2025-05-05 15:19:18,637 - INFO - Job RESNET50 processing batch 7 at time 15.62s. Cache hit: False
+2025-05-05 15:19:18,637 - INFO - Evicted batch 82 from cache. Reuse score: 4.887563450053956
+2025-05-05 15:19:18,637 - INFO - Job VGG16 processing batch 94 at time 15.96s. Cache hit: True
+2025-05-05 15:19:18,637 - INFO - Job RESNET50 processing batch 8 at time 15.98s. Cache hit: False
+2025-05-05 15:19:18,638 - INFO - Evicted batch 7 from cache. Reuse score: 0
+2025-05-05 15:19:18,638 - INFO - Job RESNET50 processing batch 10 at time 16.33s. Cache hit: False
+2025-05-05 15:19:18,638 - INFO - Evicted batch 8 from cache. Reuse score: 0
+2025-05-05 15:19:18,638 - INFO - Job VGG16 processing batch 95 at time 16.48s. Cache hit: True
+2025-05-05 15:19:18,638 - INFO - Job RESNET50 processing batch 11 at time 16.69s. Cache hit: False
+2025-05-05 15:19:18,638 - INFO - Evicted batch 10 from cache. Reuse score: 0
+2025-05-05 15:19:18,639 - INFO - Job VGG16 processing batch 96 at time 16.99s. Cache hit: True
+2025-05-05 15:19:18,639 - INFO - Job RESNET50 processing batch 12 at time 17.05s. Cache hit: False
+2025-05-05 15:19:18,639 - INFO - Evicted batch 11 from cache. Reuse score: 0
+2025-05-05 15:19:18,639 - INFO - Job RESNET50 processing batch 14 at time 17.41s. Cache hit: False
+2025-05-05 15:19:18,639 - INFO - Evicted batch 12 from cache. Reuse score: 0
+2025-05-05 15:19:18,640 - INFO - Job VGG16 processing batch 97 at time 17.51s. Cache hit: True
+2025-05-05 15:19:18,640 - INFO - Job RESNET50 processing batch 15 at time 17.77s. Cache hit: False
+2025-05-05 15:19:18,640 - INFO - Evicted batch 14 from cache. Reuse score: 0
+2025-05-05 15:19:18,640 - INFO - Job VGG16 processing batch 98 at time 18.02s. Cache hit: True
+2025-05-05 15:19:18,640 - INFO - Job RESNET50 processing batch 16 at time 18.13s. Cache hit: False
+2025-05-05 15:19:18,640 - INFO - Evicted batch 15 from cache. Reuse score: 0
+2025-05-05 15:19:18,641 - INFO - Job RESNET50 processing batch 17 at time 18.49s. Cache hit: False
+2025-05-05 15:19:18,641 - INFO - Evicted batch 16 from cache. Reuse score: 0
+2025-05-05 15:19:18,641 - INFO - Job VGG16 processing batch 99 at time 18.54s. Cache hit: True
+2025-05-05 15:19:18,641 - INFO - Job RESNET50 processing batch 19 at time 18.85s. Cache hit: False
+2025-05-05 15:19:18,641 - INFO - Evicted batch 17 from cache. Reuse score: 0
+2025-05-05 15:19:18,641 - INFO - Job VGG16 processing batch 100 at time 19.05s. Cache hit: True
+2025-05-05 15:19:18,642 - INFO - Job RESNET50 processing batch 20 at time 19.21s. Cache hit: False
+2025-05-05 15:19:18,642 - INFO - Evicted batch 19 from cache. Reuse score: 0
+2025-05-05 15:19:18,642 - INFO - Job VGG16 processing batch 4 at time 19.57s. Cache hit: False
+2025-05-05 15:19:18,642 - INFO - Job RESNET50 processing batch 21 at time 19.57s. Cache hit: False
+2025-05-05 15:19:18,642 - INFO - Evicted batch 20 from cache. Reuse score: 0
+2025-05-05 15:19:18,642 - INFO - Evicted batch 4 from cache. Reuse score: 0
+2025-05-05 15:19:18,643 - INFO - Job RESNET50 processing batch 23 at time 19.93s. Cache hit: False
+2025-05-05 15:19:18,643 - INFO - Evicted batch 21 from cache. Reuse score: 0
+2025-05-05 15:19:18,643 - INFO - Job VGG16 processing batch 6 at time 20.10s. Cache hit: False
+2025-05-05 15:19:18,643 - INFO - Evicted batch 23 from cache. Reuse score: 0
+2025-05-05 15:19:18,643 - INFO - Job RESNET50 processing batch 24 at time 20.29s. Cache hit: False
+2025-05-05 15:19:18,644 - INFO - Evicted batch 6 from cache. Reuse score: 0
+2025-05-05 15:19:18,644 - INFO - Job VGG16 processing batch 9 at time 20.64s. Cache hit: False
+2025-05-05 15:19:18,644 - INFO - Job RESNET50 processing batch 25 at time 20.65s. Cache hit: False
+2025-05-05 15:19:18,644 - INFO - Evicted batch 24 from cache. Reuse score: 0
+2025-05-05 15:19:18,644 - INFO - Evicted batch 9 from cache. Reuse score: 0
+2025-05-05 15:19:18,644 - INFO - Job RESNET50 processing batch 27 at time 21.01s. Cache hit: False
+2025-05-05 15:19:18,645 - INFO - Evicted batch 25 from cache. Reuse score: 0
+2025-05-05 15:19:18,646 - INFO - Job VGG16 processing batch 13 at time 21.17s. Cache hit: False
+2025-05-05 15:19:18,646 - INFO - Evicted batch 27 from cache. Reuse score: 0
+2025-05-05 15:19:18,646 - INFO - Job RESNET50 processing batch 28 at time 21.37s. Cache hit: False
+2025-05-05 15:19:18,646 - INFO - Evicted batch 13 from cache. Reuse score: 0
+2025-05-05 15:19:18,647 - INFO - Job VGG16 processing batch 22 at time 21.71s. Cache hit: False
+2025-05-05 15:19:18,647 - INFO - Job RESNET50 processing batch 29 at time 21.73s. Cache hit: False
+2025-05-05 15:19:18,647 - INFO - Evicted batch 28 from cache. Reuse score: 0
+2025-05-05 15:19:18,648 - INFO - Evicted batch 22 from cache. Reuse score: 0
+2025-05-05 15:19:18,648 - INFO - Job RESNET50 processing batch 31 at time 22.09s. Cache hit: False
+2025-05-05 15:19:18,648 - INFO - Evicted batch 29 from cache. Reuse score: 0
+2025-05-05 15:19:18,648 - INFO - Job VGG16 processing batch 26 at time 22.24s. Cache hit: False
+2025-05-05 15:19:18,649 - INFO - Evicted batch 31 from cache. Reuse score: 0
+2025-05-05 15:19:18,649 - INFO - Job RESNET50 processing batch 32 at time 22.45s. Cache hit: False
+2025-05-05 15:19:18,649 - INFO - Evicted batch 26 from cache. Reuse score: 0
+2025-05-05 15:19:18,649 - INFO - Job VGG16 processing batch 33 at time 22.78s. Cache hit: False
+2025-05-05 15:19:18,649 - INFO - Evicted batch 32 from cache. Reuse score: 0
+2025-05-05 15:19:18,650 - INFO - Job RESNET50 processing batch 35 at time 22.81s. Cache hit: False
+2025-05-05 15:19:18,650 - INFO - Evicted batch 33 from cache. Reuse score: 0
+2025-05-05 15:19:18,650 - INFO - Job RESNET50 processing batch 36 at time 23.16s. Cache hit: False
+2025-05-05 15:19:18,650 - INFO - Evicted batch 35 from cache. Reuse score: 0
+2025-05-05 15:19:18,650 - INFO - Job VGG16 processing batch 34 at time 23.31s. Cache hit: False
+2025-05-05 15:19:18,651 - INFO - Evicted batch 36 from cache. Reuse score: 0
+2025-05-05 15:19:18,651 - INFO - Job RESNET50 processing batch 37 at time 23.52s. Cache hit: False
+2025-05-05 15:19:18,651 - INFO - Evicted batch 34 from cache. Reuse score: 0
+2025-05-05 15:19:18,651 - INFO - Job VGG16 processing batch 38 at time 23.85s. Cache hit: False
+2025-05-05 15:19:18,651 - INFO - Evicted batch 37 from cache. Reuse score: 0
+2025-05-05 15:19:18,651 - INFO - Job RESNET50 processing batch 39 at time 23.88s. Cache hit: False
+2025-05-05 15:19:18,652 - INFO - Evicted batch 38 from cache. Reuse score: 0
+2025-05-05 15:19:18,652 - INFO - Job RESNET50 processing batch 40 at time 24.24s. Cache hit: False
+2025-05-05 15:19:18,652 - INFO - Evicted batch 39 from cache. Reuse score: 0
+2025-05-05 15:19:18,652 - INFO - Job VGG16 processing batch 41 at time 24.38s. Cache hit: False
+2025-05-05 15:19:18,652 - INFO - Evicted batch 40 from cache. Reuse score: 0
+2025-05-05 15:19:18,652 - INFO - Job RESNET50 processing batch 43 at time 24.60s. Cache hit: False
+2025-05-05 15:19:18,653 - INFO - Evicted batch 41 from cache. Reuse score: 0
+2025-05-05 15:19:18,653 - INFO - Job VGG16 processing batch 42 at time 24.92s. Cache hit: False
+2025-05-05 15:19:18,653 - INFO - Evicted batch 43 from cache. Reuse score: 0
+2025-05-05 15:19:18,653 - INFO - Job RESNET50 processing batch 44 at time 24.96s. Cache hit: False
+2025-05-05 15:19:18,653 - INFO - Evicted batch 42 from cache. Reuse score: 0
+2025-05-05 15:19:18,654 - INFO - Job RESNET50 processing batch 45 at time 25.32s. Cache hit: False
+2025-05-05 15:19:18,654 - INFO - Evicted batch 44 from cache. Reuse score: 0
+2025-05-05 15:19:18,654 - INFO - Job VGG16 processing batch 46 at time 25.45s. Cache hit: False
+2025-05-05 15:19:18,654 - INFO - Evicted batch 45 from cache. Reuse score: 0
+2025-05-05 15:19:18,654 - INFO - Job RESNET50 processing batch 47 at time 25.68s. Cache hit: False
+2025-05-05 15:19:18,655 - INFO - Evicted batch 46 from cache. Reuse score: 0
+2025-05-05 15:19:18,655 - INFO - Job VGG16 processing batch 48 at time 25.99s. Cache hit: False
+2025-05-05 15:19:18,655 - INFO - Evicted batch 47 from cache. Reuse score: 0
+2025-05-05 15:19:18,655 - INFO - Job RESNET50 processing batch 49 at time 26.04s. Cache hit: False
+2025-05-05 15:19:18,655 - INFO - Evicted batch 48 from cache. Reuse score: 0
+2025-05-05 15:19:18,655 - INFO - Job RESNET50 processing batch 51 at time 26.40s. Cache hit: False
+2025-05-05 15:19:18,656 - INFO - Evicted batch 49 from cache. Reuse score: 0
+2025-05-05 15:19:18,656 - INFO - Job VGG16 processing batch 51 at time 26.52s. Cache hit: True
+2025-05-05 15:19:18,656 - INFO - Job RESNET50 processing batch 52 at time 26.76s. Cache hit: False
+2025-05-05 15:19:18,656 - INFO - Evicted batch 76 from cache. Reuse score: 1.9418218597558852
+2025-05-05 15:19:18,656 - INFO - Job VGG16 processing batch 52 at time 27.04s. Cache hit: True
+2025-05-05 15:19:18,656 - INFO - Job RESNET50 processing batch 53 at time 27.12s. Cache hit: False
+2025-05-05 15:19:18,656 - INFO - Job RESNET50 processing batch 54 at time 27.48s. Cache hit: False
+2025-05-05 15:19:18,657 - INFO - Evicted batch 52 from cache. Reuse score: 1.9418218597558852
+2025-05-05 15:19:18,657 - INFO - Job VGG16 processing batch 53 at time 27.55s. Cache hit: True
+2025-05-05 15:19:18,657 - INFO - Job RESNET50 processing batch 56 at time 27.84s. Cache hit: False
+2025-05-05 15:19:18,657 - INFO - Evicted batch 53 from cache. Reuse score: 1.9418218597558852
+2025-05-05 15:19:18,658 - INFO - Job VGG16 processing batch 54 at time 28.07s. Cache hit: True
+2025-05-05 15:19:18,658 - INFO - Job RESNET50 processing batch 57 at time 28.20s. Cache hit: False
+2025-05-05 15:19:18,658 - INFO - Evicted batch 54 from cache. Reuse score: 1.9418218597558852
+2025-05-05 15:19:18,658 - INFO - Job RESNET50 processing batch 58 at time 28.56s. Cache hit: False
+2025-05-05 15:19:18,658 - INFO - Evicted batch 56 from cache. Reuse score: 1.9418218597558852
+2025-05-05 15:19:18,658 - INFO - Job VGG16 processing batch 57 at time 28.58s. Cache hit: True
+2025-05-05 15:19:18,658 - INFO - Job RESNET50 processing batch 60 at time 28.92s. Cache hit: False
+2025-05-05 15:19:18,659 - INFO - Evicted batch 57 from cache. Reuse score: 1.9418218597558852
+2025-05-05 15:19:18,659 - INFO - Job VGG16 processing batch 58 at time 29.10s. Cache hit: True
+2025-05-05 15:19:18,659 - INFO - Job RESNET50 processing batch 61 at time 29.28s. Cache hit: False
+2025-05-05 15:19:18,659 - INFO - Evicted batch 83 from cache. Reuse score: 1.9418218597558852
+2025-05-05 15:19:18,659 - INFO - Job VGG16 processing batch 60 at time 29.61s. Cache hit: True
+2025-05-05 15:19:18,659 - INFO - Job RESNET50 processing batch 62 at time 29.64s. Cache hit: False
+2025-05-05 15:19:18,660 - INFO - Evicted batch 84 from cache. Reuse score: 1.9418218597558852
+2025-05-05 15:19:18,660 - INFO - Job RESNET50 processing batch 64 at time 29.99s. Cache hit: False
+2025-05-05 15:19:18,660 - INFO - Evicted batch 85 from cache. Reuse score: 1.9418218597558852
+2025-05-05 15:19:18,660 - INFO - Job VGG16 processing batch 61 at time 30.13s. Cache hit: True
+2025-05-05 15:19:18,660 - INFO - Job RESNET50 processing batch 65 at time 30.35s. Cache hit: False
+2025-05-05 15:19:18,661 - INFO - Evicted batch 86 from cache. Reuse score: 1.9418218597558852
+2025-05-05 15:19:18,661 - INFO - Job VGG16 processing batch 64 at time 30.64s. Cache hit: True
+2025-05-05 15:19:18,661 - INFO - Job RESNET50 processing batch 66 at time 30.71s. Cache hit: False
+2025-05-05 15:19:18,661 - INFO - Job RESNET50 processing batch 68 at time 31.07s. Cache hit: False
+2025-05-05 15:19:18,661 - INFO - Evicted batch 87 from cache. Reuse score: 1.9418218597558852
+2025-05-05 15:19:18,661 - INFO - Job VGG16 processing batch 65 at time 31.16s. Cache hit: True
+2025-05-05 15:19:18,661 - INFO - Job RESNET50 processing batch 69 at time 31.43s. Cache hit: False
+2025-05-05 15:19:18,662 - INFO - Evicted batch 88 from cache. Reuse score: 1.9418218597558852
+2025-05-05 15:19:18,662 - INFO - Job VGG16 processing batch 66 at time 31.67s. Cache hit: True
+2025-05-05 15:19:18,662 - INFO - Job RESNET50 processing batch 70 at time 31.79s. Cache hit: False
+2025-05-05 15:19:18,662 - INFO - Job RESNET50 processing batch 72 at time 32.15s. Cache hit: False
+2025-05-05 15:19:18,662 - INFO - Evicted batch 89 from cache. Reuse score: 1.9418218597558852
+2025-05-05 15:19:18,662 - INFO - Job VGG16 processing batch 69 at time 32.19s. Cache hit: True
+2025-05-05 15:19:18,662 - INFO - Job RESNET50 processing batch 73 at time 32.51s. Cache hit: False
+2025-05-05 15:19:18,663 - INFO - Job VGG16 processing batch 70 at time 32.70s. Cache hit: True
+2025-05-05 15:19:18,663 - INFO - Job RESNET50 processing batch 74 at time 32.87s. Cache hit: False
+2025-05-05 15:19:18,663 - INFO - Job VGG16 processing batch 72 at time 33.22s. Cache hit: True
+2025-05-05 15:19:18,663 - INFO - Job RESNET50 processing batch 77 at time 33.23s. Cache hit: False
+2025-05-05 15:19:18,663 - INFO - Evicted batch 90 from cache. Reuse score: 1.9418218597558852
+2025-05-05 15:19:18,663 - INFO - Job RESNET50 processing batch 78 at time 33.59s. Cache hit: False
+2025-05-05 15:19:18,664 - INFO - Evicted batch 91 from cache. Reuse score: 1.9418218597558852
+2025-05-05 15:19:18,664 - INFO - Job VGG16 processing batch 73 at time 33.73s. Cache hit: True
+2025-05-05 15:19:18,664 - INFO - Job RESNET50 processing batch 80 at time 33.95s. Cache hit: False
+2025-05-05 15:19:18,664 - INFO - Job VGG16 processing batch 77 at time 34.25s. Cache hit: True
+2025-05-05 15:19:18,664 - INFO - Job RESNET50 processing batch 33 at time 34.31s. Cache hit: False
+2025-05-05 15:19:18,664 - INFO - Job RESNET50 processing batch 41 at time 34.67s. Cache hit: False
+2025-05-05 15:19:18,664 - INFO - Evicted batch 33 from cache. Reuse score: 0
+2025-05-05 15:19:18,664 - INFO - Job VGG16 processing batch 78 at time 34.76s. Cache hit: True
+2025-05-05 15:19:18,665 - INFO - Job RESNET50 processing batch 48 at time 35.03s. Cache hit: False
+2025-05-05 15:19:18,665 - INFO - Job VGG16 processing batch 50 at time 35.28s. Cache hit: False
+2025-05-05 15:19:18,665 - INFO - Evicted batch 41 from cache. Reuse score: 0
+2025-05-05 15:19:18,665 - INFO - Job VGG16 processing batch 56 at time 35.81s. Cache hit: False
+2025-05-05 15:19:18,665 - INFO - Job VGG16 processing batch 59 at time 36.35s. Cache hit: False
+2025-05-05 15:19:18,665 - INFO - Job VGG16 processing batch 63 at time 36.88s. Cache hit: False
+2025-05-05 15:19:18,666 - INFO - Job VGG16 processing batch 67 at time 37.42s. Cache hit: False
+2025-05-05 15:19:18,666 - INFO - Evicted batch 48 from cache. Reuse score: 0
+2025-05-05 15:19:18,666 - INFO - Job VGG16 processing batch 71 at time 37.95s. Cache hit: False
+2025-05-05 15:19:18,666 - INFO - Job VGG16 processing batch 75 at time 38.49s. Cache hit: False
+2025-05-05 15:19:18,666 - INFO - Job VGG16 processing batch 79 at time 39.02s. Cache hit: False
+2025-05-05 15:19:18,666 - INFO - Job VGG16 processing batch 7 at time 39.56s. Cache hit: False
+2025-05-05 15:19:18,666 - INFO - Job VGG16 processing batch 8 at time 40.09s. Cache hit: False
+2025-05-05 15:19:18,667 - INFO - Evicted batch 50 from cache. Reuse score: 0
+2025-05-05 15:19:18,667 - INFO - Job VGG16 processing batch 10 at time 40.63s. Cache hit: False
+2025-05-05 15:19:18,667 - INFO - Job VGG16 processing batch 11 at time 41.16s. Cache hit: False
+2025-05-05 15:19:18,667 - INFO - Job VGG16 processing batch 14 at time 41.70s. Cache hit: False
+2025-05-05 15:19:18,667 - INFO - Job VGG16 processing batch 15 at time 42.23s. Cache hit: False
+2025-05-05 15:19:18,667 - INFO - Job VGG16 processing batch 16 at time 42.77s. Cache hit: False
+2025-05-05 15:19:18,667 - INFO - Evicted batch 56 from cache. Reuse score: 0
+2025-05-05 15:19:18,668 - INFO - Job VGG16 processing batch 17 at time 43.30s. Cache hit: False
+2025-05-05 15:19:18,668 - INFO - Evicted batch 59 from cache. Reuse score: 0
+2025-05-05 15:19:18,668 - INFO - Job VGG16 processing batch 19 at time 43.84s. Cache hit: False
+2025-05-05 15:19:18,668 - INFO - Evicted batch 63 from cache. Reuse score: 0
+2025-05-05 15:19:18,668 - INFO - Job VGG16 processing batch 20 at time 44.37s. Cache hit: False
+2025-05-05 15:19:18,668 - INFO - Evicted batch 67 from cache. Reuse score: 0
+2025-05-05 15:19:18,668 - INFO - Job VGG16 processing batch 21 at time 44.91s. Cache hit: False
+2025-05-05 15:19:18,669 - INFO - Evicted batch 71 from cache. Reuse score: 0
+2025-05-05 15:19:18,669 - INFO - Job VGG16 processing batch 23 at time 45.44s. Cache hit: False
+2025-05-05 15:19:18,669 - INFO - Evicted batch 7 from cache. Reuse score: 0
+2025-05-05 15:19:18,669 - INFO - Job VGG16 processing batch 25 at time 45.98s. Cache hit: False
+2025-05-05 15:19:18,669 - INFO - Evicted batch 8 from cache. Reuse score: 0
+2025-05-05 15:19:18,669 - INFO - Job VGG16 processing batch 27 at time 46.51s. Cache hit: False
+2025-05-05 15:19:18,670 - INFO - Evicted batch 10 from cache. Reuse score: 0
+2025-05-05 15:19:18,670 - INFO - Job VGG16 processing batch 28 at time 47.05s. Cache hit: False
+2025-05-05 15:19:18,670 - INFO - Evicted batch 11 from cache. Reuse score: 0
+2025-05-05 15:19:18,670 - INFO - Job VGG16 processing batch 29 at time 47.58s. Cache hit: False
+2025-05-05 15:19:18,670 - INFO - Evicted batch 14 from cache. Reuse score: 0
+2025-05-05 15:19:18,670 - INFO - Job VGG16 processing batch 31 at time 48.12s. Cache hit: False
+2025-05-05 15:19:18,670 - INFO - Evicted batch 15 from cache. Reuse score: 0
+2025-05-05 15:19:18,670 - INFO - Job VGG16 processing batch 32 at time 48.65s. Cache hit: False
+2025-05-05 15:19:18,671 - INFO - Job VGG16 processing batch 35 at time 49.19s. Cache hit: False
+2025-05-05 15:19:18,671 - INFO - Job VGG16 processing batch 36 at time 49.72s. Cache hit: False
+2025-05-05 15:19:18,671 - INFO - Job VGG16 processing batch 39 at time 50.26s. Cache hit: False
+2025-05-05 15:19:18,671 - INFO - Job VGG16 processing batch 40 at time 50.79s. Cache hit: False
+2025-05-05 15:19:18,671 - INFO - Job VGG16 processing batch 44 at time 51.33s. Cache hit: False
+2025-05-05 15:19:18,671 - INFO - Job VGG16 processing batch 45 at time 51.86s. Cache hit: False
+2025-05-05 15:19:18,671 - INFO - Job VGG16 processing batch 47 at time 52.40s. Cache hit: False

@@ -43,7 +43,6 @@ class SharedCache:
     def put_batch(self, batch_id) -> None:
         if batch_id in self.cache:
             return
-
         if self.cache_is_full() and self.policy != "noevict":
             logger.debug(f"Cache is full: {len(self.cache)} >= {self.cache_capacity}")
             self._evict_one()
@@ -87,18 +86,21 @@ class GlobalSampler:
     def __init__(self, total_batches: int, job_ids: List[str], cache: SharedCache, job_speeds: Dict[str, float]):
         self.total_batches = total_batches
         self.job_ids = job_ids
-        self.job_to_cursor = {jid: 0 for jid in job_ids}
         self.cache = cache
         self.batch_seen_by = collections.defaultdict(set)
         self.batch_in_progress = set()
         self.base_sequence = list(range(1, total_batches + 1))
         self.job_weights = {j: 1.0 / job_speeds[j] for j in job_ids}
+        self.reuse_count = collections.defaultdict(int)
+        self.assigned_cus_log = []
 
     def assign_next_batch(self, job_id: str) -> int:
         # Step 1: Prefer a cached batch the job hasn't seen
         candidates = [b for b in self.cache.cache if job_id not in self.batch_seen_by[b]]
         if candidates:
             best = max(candidates, key=self._cus)
+            cus_score = self._cus(best)
+            self.assigned_cus_log.append((job_id, cus_score))
             self.batch_in_progress.add(best)
             return best
 
@@ -117,8 +119,31 @@ class GlobalSampler:
     def mark_seen(self, job_id: str, batch_id: int):
         self.batch_seen_by[batch_id].add(job_id)
         self.batch_in_progress.discard(batch_id)
+        self.reuse_count[batch_id] += 1
         if len(self.batch_seen_by[batch_id]) >= self.cache.num_jobs:
             self.cache._remove(batch_id)
+    
+    def summarize_reuse(self):
+        reuse_vals = list(self.reuse_count.values())
+        if not reuse_vals:
+            return {}
+        return {
+            "avg_reuse": float(np.mean(reuse_vals)),
+            "max_reuse": int(np.max(reuse_vals)),
+            "total_batches_tracked": len(reuse_vals)
+        }
+    
+    def summarize_cus_assignments(self):
+        if not self.assigned_cus_log:
+            return {}
+        scores = [score for _, score in self.assigned_cus_log]
+        return {
+            "avg_cus_score": float(np.mean(scores)),
+            "max_cus_score": float(np.max(scores)),
+            "min_cus_score": float(np.min(scores)),
+            "assignments_logged": len(scores)
+        }
+
     
     # def get_batch_for_job(self, job_id: str, job_progress: int) -> int:
     #     return self.job_to_batches[job_id][job_progress-1]
@@ -129,14 +154,12 @@ class DLTJOB:
         self.job_id = job_id
         self.cache = cache
         self.speed = speed
-        # self.job_progress = 0
         self.cache_hit_count = 0
         self.cache_miss_count = 0
         self.elapased_time_sec = 0
-        self.throughput = 0
-        self.compute_cost = 0
+        # self.throughput = 0
+        # self.compute_cost = 0
         self.sampler:GlobalSampler = sampler
-        self.current_batch_id = None
         self.job_progress = 0
 
     def next_training_step(self, current_time_sec):
@@ -172,6 +195,9 @@ class DLTJOB:
             'cache_cost': cache_cost,
             'total_cost': total_cost,
         }
+    
+    def __lt__(self, other):
+        return self.speed < other.speed  # Compare based on speed
 
 def run_simulation(
         workload_name,
@@ -255,7 +281,8 @@ def run_simulation(
     cache_cost = (hourly_cache_cost / 3600) * elapsed_time_sec
     total_cost = aggregated_compute_cost + cache_cost  # No additional costs in this simulation
     job_speeds = {job['job_id']: job['job_speed'] for job in job_performances}
-
+    reuse_summary = sampler.summarize_reuse()
+    cus_summary = sampler.summarize_cus_assignments()
     overall_results = {
         'workload_name': workload_name,
         'job_speeds': job_speeds,
@@ -300,6 +327,8 @@ def run_simulation(
     print(f"  Cache Cost: ${cache_cost:.2f}")
     print(f"  Compute Cost: ${aggregated_compute_cost:.2f}")
     print(f"  Total Cost : ${total_cost:.2f}")
+    print(f"  cus_summary: {cus_summary}")
+    print(f"  reuse_summary: {reuse_summary}")
     print("-" * 40)
     return overall_results
 

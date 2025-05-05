@@ -4,7 +4,7 @@ from job import DLTJob
 from args import DisDLArgs
 from collections import deque, OrderedDict
 from typing import List, Optional, Dict, Tuple
-from dataset import MSCOCODataset, LibSpeechDataset
+from dataset import MSCOCODataset, LibSpeechDataset, ImageNetDataset
 from batch import Batch, BatchSet, CacheStatus
 import time
 from logger_config import logger
@@ -30,17 +30,11 @@ class CentralBatchManager:
             shuffle=args.shuffle)
         self.active_epoch_idx = None
         self.active_partition_idx = None
-        self.evict_from_cache_simulation_time = args.evict_from_cache_simulation_time
 
         print(f"Number of batches per partition: {self.sampler.calc_num_batchs_per_partition()}")
-        # self.lookahead_distance = min((self.sampler.calc_num_batchs_per_partition() -1),args.lookahead_steps)
-        self.lookahead_distance = args.lookahead_steps
-
-        # self.lookahead_steps = min(args.lookahead_steps, self.dataset.partitions[1].num_batches)
+        self.lookahead_distance =  min((self.sampler.calc_num_batchs_per_partition() -1),args.lookahead_steps)
         self.active_jobs: Dict[str, DLTJob] = {}
-        # self.epoch_partition_batches: Dict[int, Dict[int, BatchSet]] = OrderedDict()  #first key is epoch id, second key is partition id, value is the batches
-
-        self.epoch_partition_batches: Dict[int, Dict[str, BatchSet]] = OrderedDict()  #first partition id, value list of bacthes for that partition
+        self.epoch_partition_batches: Dict[int, Dict[str, BatchSet]] = OrderedDict() #epoch_id,_parition_id,_batches
 
         # Initialize prefetch service
         self.prefetch_service: Optional[PrefetchServiceAsync] = None
@@ -53,33 +47,22 @@ class CentralBatchManager:
             self.prefetch_service.start()
             # self._warm_up_cache()
             # time.sleep(20)  # Wait for the cache to warm up
-        
-        self.eviction_service: Optional[CacheEvictionService] = None
-        if args.use_keep_alive:
-            #Initialize cache eviction service
-            self.eviction_service:CacheEvictionService = CacheEvictionService(
-                cache_address=args.serverless_cache_address,
-                jobs=self.active_jobs,
-                keep_alive_time_threshold=args.cache_keep_alive_timeout,
-                simulate_keep_alvive=True
-            )     
 
         self.lock = threading.Lock()  # Lock for thread safety
-        self.job_cache_request_counts = {}
         for _ in range(self.lookahead_distance):
             self._generate_new_batch()
 
-        #wait a few seconds for the cache to be warmed up
-        time.sleep(5)
+        # #wait a few seconds for the cache to be warmed up
+        # time.sleep(5)
 
-        #wait for cache to be warmed up
-        if self.prefetch_service:
-            while self.prefetch_service.queue.qsize() > 0:
-                time.sleep(1)
+        # #wait for cache to be warmed up
+        # if self.prefetch_service:
+        #     while self.prefetch_service.queue.qsize() > 0:
+        #         time.sleep(1)
 
 
     def add_job(self):
-        #generate a job id including the dataset_name and the curren_job_count + 1
+      
         self.job_counter += 1
         # job_id = f'{self.dataset.dataset_location}_{self.job_counter}'
         job_id = str(self.job_counter)
@@ -399,8 +382,8 @@ if __name__ == "__main__":
         drop_last=False,
         workload='coco',
         serverless_cache_address=None,
-        use_prefetching=True,
-        use_keep_alive=True,
+        use_prefetching=False,
+        use_keep_alive=False,
         prefetch_lambda_name='CreateMultiModalBatch',
         prefetch_cost_cap_per_hour=None,
         cache_keep_alive_timeout=60,  # 3 minutes
@@ -409,7 +392,7 @@ if __name__ == "__main__":
     )
     dataset_location = 's3://coco-dataset/coco_train.json'
     dataset = MSCOCODataset(dataset_location)
-    # dataset = ImageNetDataset(dataset_location='s3://imagenet-dataset/train/')
+    #dataset = ImageNetDataset(dataset_location='s3://imagenet-dataset/train/')
     batch_manager = CentralBatchManager(dataset=dataset, args=args, prefetch_workers=0)
 
     def run_job(job_id, job_speed):

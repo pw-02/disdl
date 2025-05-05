@@ -60,9 +60,7 @@ class CentralBatchManager:
         #     while self.prefetch_service.queue.qsize() > 0:
         #         time.sleep(1)
 
-
     def add_job(self):
-      
         self.job_counter += 1
         # job_id = f'{self.dataset.dataset_location}_{self.job_counter}'
         job_id = str(self.job_counter)

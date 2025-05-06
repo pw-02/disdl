@@ -69,12 +69,13 @@ class CentralBatchManager:
                 simulate_time=prefetch_simulation_time
             )
             self.prefetch_service.start()
+            
         if False:
             self.cache_manager = CacheManager(
             redis_url=cache_address,
             epoch_partition_batches=self.epoch_partition_batches,
             jobs=self.jobs)
-        # self.cache_manager.start()
+            self.cache_manager.start()
 
         for _ in range(self.lookahead_distance):
             self._generate_new_batch()

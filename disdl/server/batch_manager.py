@@ -24,6 +24,8 @@ from batch import Batch, BatchSet, CacheStatus
 from sampler import PartitionedBatchSampler
 from cache_prefetching import PrefetchServiceAsync
 from logger_config import logger
+from cache_tracking import CacheManager
+
 
 
 class DLTJob:
@@ -40,6 +42,9 @@ class DLTJob:
         self.active_bacth_set_id = None
         self.future_batches: OrderedDict[str, Batch] = OrderedDict()
 
+        # Simulated job speed (steps per second); can be updated dynamically
+        self.processing_speed = 1.0
+
     def has_completed_epoch(self) -> bool:
         return len(self.partitions_covered_this_epoch) == self.num_partitions
 
@@ -47,12 +52,7 @@ class DLTJob:
         self.current_epoch_idx += 1
         self.partitions_covered_this_epoch.clear()
 
-    def next_batch(self) -> Optional[Batch]:
-        if self.future_batches:
-            batch = self.future_batches.popitem(last=False)[1]
-            batch.mark_seen_by(self.job_id)
-            return batch
-        return None
+    
 
 
 class CentralBatchManager:
@@ -91,7 +91,13 @@ class CentralBatchManager:
                 simulate_time=prefetch_simulation_time
             )
             self.prefetch_service.start()
-
+        
+        self.cache_manager = CacheManager(
+        redis_url=cache_address,
+        epoch_partition_batches=self.epoch_partition_batches,
+        jobs=self.jobs)
+        self.cache_manager.start()
+        
         for _ in range(self.lookahead_distance):
             self._generate_new_batch()
 
@@ -124,10 +130,31 @@ class CentralBatchManager:
         if batch.is_first_access:
             batch.is_first_access = False
             self._generate_new_batch()
+    
+    def _compute_reuse_score(self, batch_id: str) -> float:
+        score = 0.0
+        for job in self.jobs.values():
+            if batch_id in job.future_batches:
+                speed = getattr(job, 'processing_speed', 1.0)
+                score += 1.0 / max(speed, 1e-6)
+        return score
+    
+    
+    def _score_batch_set(self, batch_set: BatchSet, epoch_idx, partition_idx) -> float:
+        return float(f"{epoch_idx}.{partition_idx:02d}")
 
-    def assign_batches_to_job(self, job: DLTJob):
+        # num_cached = sum(1 for batch in batch_set.batches.values()
+        #                  if batch.cache_status != CacheStatus.NOT_CACHED)
+        # num_active_jobs = sum(1 for job in self.jobs.values()
+        #                       if job.active_bacth_set_id == batch_set.id)
+        # return num_cached + 2.0 * num_active_jobs  # prioritize reuse and concurrency
+
+    def assign_batch_set_to_job(self, job: DLTJob):
         if job.has_completed_epoch():
             job.reset_for_new_epoch()
+
+        best_candidate = None
+        best_score = float('-inf')
 
         for epoch_idx, partition_map in self.epoch_partition_batches.items():
             for partition_idx, batch_set in partition_map.items():
@@ -136,32 +163,76 @@ class CentralBatchManager:
                 if partition_idx in job.partitions_covered_this_epoch:
                     continue
 
-                job.used_epoch_partition_pairs.add((epoch_idx, partition_idx))
-                job.partitions_covered_this_epoch.add(partition_idx)
-                job.active_bacth_set_id = batch_set.id
+                score = self._score_batch_set(batch_set, epoch_idx, partition_idx)
+                if score > best_score:
+                    best_candidate = (epoch_idx, partition_idx, batch_set)
+                    best_score = score
+        if best_candidate is None:
+            return
 
-                for batch in batch_set.batches.values():
-                    job.future_batches[batch.batch_id] = batch
+        epoch_idx, partition_idx, batch_set = best_candidate
+        job.used_epoch_partition_pairs.add((epoch_idx, partition_idx))
+        job.partitions_covered_this_epoch.add(partition_idx)
+        job.active_bacth_set_id = batch_set.id
 
-                return  # One assignment per call
-
+        for batch in batch_set.batches.values():
+            job.future_batches[batch.batch_id] = batch
+    
     def get_next_batch_for_job(self, job_id: str) -> Optional[Batch]:
         with self.lock:
             if self.prefetch_service and self.prefetch_service.prefetch_stop_event.is_set():
                 self.prefetch_service.start()
-                
+
             job = self._get_or_register_job(job_id)
 
             if not job.future_batches:
-                self.assign_batches_to_job(job)
+                self.assign_batch_set_to_job(job)
 
-            next_batch = job.next_batch()
+          # Step 1: Prefer cached + unseen
+            eligible_cached = [
+              batch for batch in job.future_batches.values()
+              if batch.cache_status != CacheStatus.NOT_CACHED]
+
+            if eligible_cached:
+                next_batch = min(eligible_cached, key=lambda b: self._compute_reuse_score(b.batch_id))  # <<< too many ')'
+            else:
+                next_batch = None
+                for batch_id, batch in job.future_batches.items():
+                    if batch.cache_status != CacheStatus.CACHING_IN_PROGRESS:
+                        next_batch = batch
+                        break
+
+                if not next_batch and job.future_batches:
+                    next_batch = next(iter(job.future_batches.values()))
 
             if next_batch:
+                batch_id = next_batch.batch_id
+                next_batch.seen_by_jobs.add(job.job_id)
+                next_batch.last_accessed_time = time.time()
+                job.future_batches.pop(batch_id, None)
+
                 self._tag_batch_for_caching(next_batch)
                 self._maybe_trigger_batch_generation(next_batch)
 
             return next_batch
+
+    # def get_next_batch_for_job(self, job_id: str) -> Optional[Batch]:
+    #     with self.lock:
+    #         if self.prefetch_service and self.prefetch_service.prefetch_stop_event.is_set():
+    #             self.prefetch_service.start()
+
+    #         job = self._get_or_register_job(job_id)
+
+    #         if not job.future_batches:
+    #             self.assign_batch_set_to_job(job)
+
+    #         next_batch = job.next_batch()
+
+    #         if next_batch:
+    #             self._tag_batch_for_caching(next_batch)
+    #             self._maybe_trigger_batch_generation(next_batch)
+
+    #         return next_batch
 
 
 @hydra.main(version_base=None, config_path="conf", config_name="config")

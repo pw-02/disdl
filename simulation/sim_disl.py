@@ -42,30 +42,75 @@ class BatchManager:
         self.remaining_batches[job_id].remove(batch_id)
 
    
-    def get_batch_for_job(self, job_id: str) -> int:
-        # Step 1: Prefer a cached batch the job hasn't seen
-        #find all batches that the job has not seen and are in the cache
-        next_batch = None
-        eligible_cached = [
-            batch_id for batch_id in self.remaining_batches[job_id]
-            if self.cache.get_batch(batch_id) and job_id not in self.batch_seen_by[batch_id]
-            ]
-        # Prefer cached batches, sele   cting the one with the lowest reuse score
-        if eligible_cached:
-            next_batch = min(eligible_cached, key=self.reuse_score)
-        else:
-            # If no cached batches are available, select the next unseen batch
-            for batch_id in self.remaining_batches[job_id]:
-                if batch_id not in self.batch_in_progress:
-                    next_batch = batch_id
-                    break
-        
-        if next_batch is None:
-            next_batch = self.remaining_batches[job_id][0]  # Fallback to the first batch in the list
-        self._mark_batch_in_progress(next_batch, job_id)
-        # logger.info(f"Assigned batch {next_batch} to job {job_id}")
+    def get_next_batch_for_job(self, job_id: str) -> Optional[Batch]:
+        with self.lock:
+            if self.prefetch_service and self.prefetch_service.prefetch_stop_event.is_set():
+                self.prefetch_service.start()
 
-        return next_batch
+            job = self._get_or_register_job(job_id)
+
+            if not job.future_batches:
+                self.assign_batch_set_to_job(job)
+
+            reuse_score = {}  # Placeholder: plug in real reuse scores
+            batch_seen_by = {}  # Placeholder: plug in actual seen tracking
+            batch_in_progress = set()  # Placeholder: plug in actual shared set
+
+            # Step 1: Prefer cached + unseen
+            eligible_cached = [
+                batch for batch_id, batch in job.future_batches.items()
+                if batch.cache_status != CacheStatus.NOT_CACHED and
+                   job.job_id not in batch_seen_by.get(batch_id, set())
+            ]
+
+            if eligible_cached:
+                next_batch = min(eligible_cached, key=lambda b: reuse_score.get(b.batch_id, float('inf')))
+            else:
+                next_batch = None
+                for batch_id, batch in job.future_batches.items():
+                    if batch_id not in batch_in_progress:
+                        next_batch = batch
+                        break
+
+                if not next_batch and job.future_batches:
+                    next_batch = next(iter(job.future_batches.values()))
+
+            if next_batch:
+                batch_id = next_batch.batch_id
+                batch_in_progress.add(batch_id)
+                next_batch.mark_seen_by(job.job_id)
+                job.future_batches.pop(batch_id, None)
+
+                self._tag_batch_for_caching(next_batch)
+                self._maybe_trigger_batch_generation(next_batch)
+
+            return next_batch
+
+
+    # def get_batch_for_job(self, job_id: str) -> int:
+    #     # Step 1: Prefer a cached batch the job hasn't seen
+    #     #find all batches that the job has not seen and are in the cache
+    #     next_batch = None
+    #     eligible_cached = [
+    #         batch_id for batch_id in self.remaining_batches[job_id]
+    #         if self.cache.get_batch(batch_id) and job_id not in self.batch_seen_by[batch_id]
+    #         ]
+    #     # Prefer cached batches, sele   cting the one with the lowest reuse score
+    #     if eligible_cached:
+    #         next_batch = min(eligible_cached, key=self.reuse_score)
+    #     else:
+    #         # If no cached batches are available, select the next unseen batch
+    #         for batch_id in self.remaining_batches[job_id]:
+    #             if batch_id not in self.batch_in_progress:
+    #                 next_batch = batch_id
+    #                 break
+        
+    #     if next_batch is None:
+    #         next_batch = self.remaining_batches[job_id][0]  # Fallback to the first batch in the list
+    #     self._mark_batch_in_progress(next_batch, job_id)
+    #     # logger.info(f"Assigned batch {next_batch} to job {job_id}")
+
+    #     return next_batch
 
     def reuse_score(self, batch_id: int) -> float:
         unseen = [j.job_id for j in self.jobs if j.job_id not in self.batch_seen_by[batch_id]]

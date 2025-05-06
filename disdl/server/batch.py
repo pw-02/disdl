@@ -14,6 +14,7 @@ class CacheStatus(Enum):
     CACHING_IN_PROGRESS = "CACHING_IN_PROGRESS"
     NOT_CACHED = "NOT_CACHED"
 
+
 class BatchSet:
     def __init__(self, batch_set_id:str):
         self.id = batch_set_id
@@ -24,16 +25,18 @@ class BatchSet:
 class Batch:
     def __init__(self, batch_indicies, epoch_idx, partition_idx, batch_idx):
         self.indices: List[int] = batch_indicies
-        self.epoch_idx:int = epoch_idx
-        self.partition_idx:int = partition_idx
-        self.batch_idx:int = batch_idx
+        # self.epoch_idx:int = epoch_idx
+        # self.partition_idx:int = partition_idx
+        # self.batch_idx:int = batch_idx
         self.batch_id:str = self.gen_batch_id()
-        self.batch_set_id = f"{self.epoch_idx}_{self.partition_idx}"
+        self.batch_set_id = f"{epoch_idx}_{partition_idx}"
         self.cache_status:CacheStatus = CacheStatus.NOT_CACHED
         self.last_accessed_time:float = 0 #None #float('inf')
         self.is_first_access = True
         self.lock = threading.Lock()  # Lock for accessing shared resources
         self.seen_by_jobs: Set[str] = set()
+        self.reuse_score: float = 0.0
+
     
     def mark_seen_by(self, job_id: str):
         with self.lock:

@@ -311,6 +311,7 @@ class BatchManager:
         # Check if any job is currently assigned to this BatchSet
         for job in self.jobs.values():
             if job.active_bacth_set_id == batch_set.id:
+                next_batch.mark_awaiting_to_be_seen_by(job.job_id, job.weight)
                 job.future_batches[next_batch.batch_id] = next_batch
         return next_batch
     
@@ -402,6 +403,11 @@ class BatchManager:
             if batch.reuse_score > worst_score:
                 eviction_candidate = worst_id
                 pass
+        if should_cache and eviction_candidate is None:
+            # Check if the cache is full
+            if len(self.cached_batches) >= 25:
+                # Cache is full, evict the least recently used batch
+                pass
         return should_cache, eviction_candidate
     
 
@@ -476,7 +482,7 @@ def run_simulation(
                 heapq.heappush(event_queue, (time_elapsed + preprocesssing_time, "batch_fetch_complete", (job, True, False, None)))
             else:
                 job.cache_miss_count += 1
-                heapq.heappush(event_queue, (time_elapsed + load_from_s3_time, "cache_insert", (job, batch_id, eviction_candidate)))
+                heapq.heappush(event_queue, (time_elapsed + load_from_s3_time, "cache_insert", (job, next_batch, eviction_candidate)))
                 job_delay = job.speed + load_from_s3_time + preprocesssing_time
             
             job.num_batches_processed += 1
@@ -487,7 +493,8 @@ def run_simulation(
                 pass
     
         elif event_type == "cache_insert":
-            job, batch_id, eviction_candidate = payload
+            job, next_batch, eviction_candidate = payload
+            batch_id = next_batch.batch_id
             if cache.cache_is_full():
                 if eviction_candidate is None:
                     heapq.heappush(event_queue, (time_elapsed + preprocesssing_time, "batch_fetch_complete", (job, False, False, None)))

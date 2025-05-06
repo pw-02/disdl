@@ -7,131 +7,158 @@ import threading
 from logger_config import logger
 import math
 import time
+
 class DLTJob:
-    def __init__(self, job_id: str):
+    def __init__(self, job_id: str, num_partitions: int):
         self.job_id = job_id
-        self.num_partitions = 1
+        self.num_partitions = num_partitions
         self.current_epoch_idx = 0
-        # Tracks which (global epoch, partition) pairs have been used by the job
+
+        # For reuse logic
         self.used_epoch_partition_pairs: Set[Tuple[int, int]] = set()
-        # For current job-local epoch, track which partitions have been covered
         self.partitions_covered_this_epoch: Set[int] = set()
 
-        
-
-        # Keeps track of which epochs the job has completed
-        self.epoch_history:Set[int] = set()
-         # The epoch currently assigned to this job (None until assigned)
-        self.current_epoch: Optional[int] = None
-         # Tracks which batch_ids this job has processed in the current epoch
-        self.seen_batches: Set[str] = set()
-
-        self.epochs_completed_count = -1
-        self.active_partition_idx = None
+        # Active state
         self.active_bacth_set_id = None
-        self.total_steps = 0
-        self.job_registered_time = time.perf_counter()
         self.future_batches: OrderedDict[str, Batch] = OrderedDict()
-        self.time_waiting_on_data = AverageMeter('Time Waiting on Data')
-        # self.training_step_times_on_hit = AverageMeter('Training Step Time on Hit')
-        # self.training_step_times_on_miss =  AverageMeter('Training Step Time on Miss')
-        self.training_step_gpu_times =  AverageMeter('training_step_gpu_times')
-        # self.dataload_time_on_miss  = AverageMeter('Dataload Time on Miss')
-        # self.dataload_time_on_hit = AverageMeter('Dataload Time on Hit')
-        self.dataload_time = AverageMeter('Dataload Time')    
 
-        self.lock = threading.Lock()
+        # Simulated job speed (steps per second); can be updated dynamically
+        self.processing_speed = 1.0
 
-    def assign_epoch(self, epoch_idx: int):
-        """Assigns a new epoch to this job and clears current progress."""
-        self.current_epoch = epoch_idx
-        self.seen_batches.clear()
-        self.epoch_history.add(epoch_idx)
+    def has_completed_epoch(self) -> bool:
+        return len(self.partitions_covered_this_epoch) == self.num_partitions
+
+    def reset_for_new_epoch(self):
+        self.current_epoch_idx += 1
+        self.partitions_covered_this_epoch.clear()
+
+
+
+# class DLTJob:
+#     def __init__(self, job_id: str):
+#         self.job_id = job_id
+#         self.num_partitions = 1
+#         self.current_epoch_idx = 0
+#         # Tracks which (global epoch, partition) pairs have been used by the job
+#         self.used_epoch_partition_pairs: Set[Tuple[int, int]] = set()
+#         # For current job-local epoch, track which partitions have been covered
+#         self.partitions_covered_this_epoch: Set[int] = set()
+
+
+
+#         # Keeps track of which epochs the job has completed
+#         self.epoch_history:Set[int] = set()
+#          # The epoch currently assigned to this job (None until assigned)
+#         self.current_epoch: Optional[int] = None
+#          # Tracks which batch_ids this job has processed in the current epoch
+#         self.seen_batches: Set[str] = set()
+
+#         self.epochs_completed_count = -1
+#         self.active_partition_idx = None
+#         self.active_bacth_set_id = None
+#         self.total_steps = 0
+#         self.job_registered_time = time.perf_counter()
+#         self.future_batches: OrderedDict[str, Batch] = OrderedDict()
+#         self.time_waiting_on_data = AverageMeter('Time Waiting on Data')
+#         # self.training_step_times_on_hit = AverageMeter('Training Step Time on Hit')
+#         # self.training_step_times_on_miss =  AverageMeter('Training Step Time on Miss')
+#         self.training_step_gpu_times =  AverageMeter('training_step_gpu_times')
+#         # self.dataload_time_on_miss  = AverageMeter('Dataload Time on Miss')
+#         # self.dataload_time_on_hit = AverageMeter('Dataload Time on Hit')
+#         self.dataload_time = AverageMeter('Dataload Time')    
+
+#         self.lock = threading.Lock()
+
+#     def assign_epoch(self, epoch_idx: int):
+#         """Assigns a new epoch to this job and clears current progress."""
+#         self.current_epoch = epoch_idx
+#         self.seen_batches.clear()
+#         self.epoch_history.add(epoch_idx)
     
-    def has_seen_epoch(self, epoch_idx: int) -> bool:
-        return epoch_idx in self.epoch_history
+#     def has_seen_epoch(self, epoch_idx: int) -> bool:
+#         return epoch_idx in self.epoch_history
     
-    def has_seen_batch(self, batch_id: str) -> bool:
-        return batch_id in self.seen_batches
+#     def has_seen_batch(self, batch_id: str) -> bool:
+#         return batch_id in self.seen_batches
     
-    def mark_batch_seen(self, batch_id: str):
-        self.seen_batches.add(batch_id)
+#     def mark_batch_seen(self, batch_id: str):
+#         self.seen_batches.add(batch_id)
     
-    def epoch_complete(self, total_batches: int) -> bool:
-        return len(self.seen_batches) >= total_batches
+#     def epoch_complete(self, total_batches: int) -> bool:
+#         return len(self.seen_batches) >= total_batches
 
 
 
 
 
 
-    def compute_required_prefetch_concurrency(self, lambda_processing_time, buffer = 0):
-        gpu_batch_rate = 1 / self.training_step_gpu_times.avg
-        job_load_rate = 1 / self.dataload_time.avg
+#     def compute_required_prefetch_concurrency(self, lambda_processing_time, buffer = 0):
+#         gpu_batch_rate = 1 / self.training_step_gpu_times.avg
+#         job_load_rate = 1 / self.dataload_time.avg
 
-        required_prefetch_rate = gpu_batch_rate - job_load_rate
-        if required_prefetch_rate <= 0:
-            return 0 # No additional concurrency needed, no delay
-        concurrnecy = math.ceil(required_prefetch_rate * lambda_processing_time) + buffer
-        return concurrnecy
+#         required_prefetch_rate = gpu_batch_rate - job_load_rate
+#         if required_prefetch_rate <= 0:
+#             return 0 # No additional concurrency needed, no delay
+#         concurrnecy = math.ceil(required_prefetch_rate * lambda_processing_time) + buffer
+#         return concurrnecy
 
-    def get_total_batches_assigned_to_job(self):
-        return len(self.future_batches)
+#     def get_total_batches_assigned_to_job(self):
+#         return len(self.future_batches)
 
-    def __repr__(self):
-        return (f"Job(job_id={self.job_id}, current_epoch={self.active_epoch}, "
-                f"current_index={self.total_steps})")
+#     def __repr__(self):
+#         return (f"Job(job_id={self.job_id}, current_epoch={self.active_epoch}, "
+#                 f"current_index={self.total_steps})")
     
-    def get_data_loading_delay(self):
-        return self.time_waiting_on_data.avg
+#     def get_data_loading_delay(self):
+#         return self.time_waiting_on_data.avg
     
-    def get_gpu_batch_rate(self):
-        #batches per second
-        return 1 / self.training_step_gpu_times.avg
+#     def get_gpu_batch_rate(self):
+#         #batches per second
+#         return 1 / self.training_step_gpu_times.avg
     
-    def get_required_prefetching_rate(self, prefetching_cost_per_hour:float):
-        if self.training_step_gpu_times.count < 2: #ignore first two steps for GPU warm up
-                return 0
-        pass
+#     def get_required_prefetching_rate(self, prefetching_cost_per_hour:float):
+#         if self.training_step_gpu_times.count < 2: #ignore first two steps for GPU warm up
+#                 return 0
+#         pass
 
 
-    def total_lifetime(self):
-        return time.perf_counter() - self.job_registered_time
+#     def total_lifetime(self):
+#         return time.perf_counter() - self.job_registered_time
     
-    def total_training_steps (self):
-        return self.total_steps
+#     def total_training_steps (self):
+#         return self.total_steps
     
-    def update_perf_metrics(self, 
-                            previous_step_wait_for_data_time:float, 
-                            previous_step_is_cache_hit:float, 
-                            previous_step_gpu_time:float):
-         with self.lock:
-            self.total_steps += 1
-            if self.total_steps > 1: #skip the first step for recording gpu times
-                self.training_step_gpu_times.update(previous_step_gpu_time)
-                # if previous_step_is_cache_hit:
-                #     self.dataload_time_on_hit.update(previous_step_wait_for_data_time)
-                #     self.training_step_times_on_hit.update(previous_step_wait_for_data_time + previous_step_gpu_time)
-                # else:
-                #     self.dataload_time_on_miss.update(previous_step_wait_for_data_time)
-                #     self.training_step_times_on_miss.update(previous_step_wait_for_data_time + previous_step_gpu_time)
+#     def update_perf_metrics(self, 
+#                             previous_step_wait_for_data_time:float, 
+#                             previous_step_is_cache_hit:float, 
+#                             previous_step_gpu_time:float):
+#          with self.lock:
+#             self.total_steps += 1
+#             if self.total_steps > 1: #skip the first step for recording gpu times
+#                 self.training_step_gpu_times.update(previous_step_gpu_time)
+#                 # if previous_step_is_cache_hit:
+#                 #     self.dataload_time_on_hit.update(previous_step_wait_for_data_time)
+#                 #     self.training_step_times_on_hit.update(previous_step_wait_for_data_time + previous_step_gpu_time)
+#                 # else:
+#                 #     self.dataload_time_on_miss.update(previous_step_wait_for_data_time)
+#                 #     self.training_step_times_on_miss.update(previous_step_wait_for_data_time + previous_step_gpu_time)
 
-    def next_batch(self):
-        with self.lock:
-            next_training_batch = None
-            first_available_batch_id  = None  # First batch that is not already being processed
+#     def next_batch(self):
+#         with self.lock:
+#             next_training_batch = None
+#             first_available_batch_id  = None  # First batch that is not already being processed
 
-            for batch_id, batch in list(self.future_batches.items()):
-                if batch.cache_status == CacheStatus.CACHED or batch.cache_status == CacheStatus.CACHING_IN_PROGRESS: 
-                    next_training_batch = self.future_batches.pop(batch_id)  # Cached batch found
-                    break
-                elif not first_available_batch_id:
-                    first_available_batch_id = batch_id
+#             for batch_id, batch in list(self.future_batches.items()):
+#                 if batch.cache_status == CacheStatus.CACHED or batch.cache_status == CacheStatus.CACHING_IN_PROGRESS: 
+#                     next_training_batch = self.future_batches.pop(batch_id)  # Cached batch found
+#                     break
+#                 elif not first_available_batch_id:
+#                     first_available_batch_id = batch_id
 
-            if not next_training_batch and first_available_batch_id:
-                next_training_batch = self.future_batches.pop(first_available_batch_id)
-            # self.current_batch = next_training_batch
-            return next_training_batch
+#             if not next_training_batch and first_available_batch_id:
+#                 next_training_batch = self.future_batches.pop(first_available_batch_id)
+#             # self.current_batch = next_training_batch
+#             return next_training_batch
 
 
     # def next_batch(self):

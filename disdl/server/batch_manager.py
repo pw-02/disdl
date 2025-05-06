@@ -25,35 +25,7 @@ from sampler import PartitionedBatchSampler
 from cache_prefetching import PrefetchServiceAsync
 from logger_config import logger
 from cache_tracking import CacheManager
-
-
-
-class DLTJob:
-    def __init__(self, job_id: str, num_partitions: int):
-        self.job_id = job_id
-        self.num_partitions = num_partitions
-        self.current_epoch_idx = 0
-
-        # For reuse logic
-        self.used_epoch_partition_pairs: Set[Tuple[int, int]] = set()
-        self.partitions_covered_this_epoch: Set[int] = set()
-
-        # Active state
-        self.active_bacth_set_id = None
-        self.future_batches: OrderedDict[str, Batch] = OrderedDict()
-
-        # Simulated job speed (steps per second); can be updated dynamically
-        self.processing_speed = 1.0
-
-    def has_completed_epoch(self) -> bool:
-        return len(self.partitions_covered_this_epoch) == self.num_partitions
-
-    def reset_for_new_epoch(self):
-        self.current_epoch_idx += 1
-        self.partitions_covered_this_epoch.clear()
-
-    
-
+from job import DLTJob
 
 class CentralBatchManager:
     def __init__(
@@ -91,13 +63,13 @@ class CentralBatchManager:
                 simulate_time=prefetch_simulation_time
             )
             self.prefetch_service.start()
-        
-        self.cache_manager = CacheManager(
-        redis_url=cache_address,
-        epoch_partition_batches=self.epoch_partition_batches,
-        jobs=self.jobs)
-        self.cache_manager.start()
-        
+        if False:
+            self.cache_manager = CacheManager(
+            redis_url=cache_address,
+            epoch_partition_batches=self.epoch_partition_batches,
+            jobs=self.jobs)
+        # self.cache_manager.start()
+
         for _ in range(self.lookahead_distance):
             self._generate_new_batch()
 
@@ -130,16 +102,7 @@ class CentralBatchManager:
         if batch.is_first_access:
             batch.is_first_access = False
             self._generate_new_batch()
-    
-    def _compute_reuse_score(self, batch_id: str) -> float:
-        score = 0.0
-        for job in self.jobs.values():
-            if batch_id in job.future_batches:
-                speed = getattr(job, 'processing_speed', 1.0)
-                score += 1.0 / max(speed, 1e-6)
-        return score
-    
-    
+     
     def _score_batch_set(self, batch_set: BatchSet, epoch_idx, partition_idx) -> float:
         return float(f"{epoch_idx}.{partition_idx:02d}")
 
@@ -188,28 +151,28 @@ class CentralBatchManager:
             if not job.future_batches:
                 self.assign_batch_set_to_job(job)
 
-          # Step 1: Prefer cached + unseen
+            # Step 1: Prefer cached batches with highest reuse score
             eligible_cached = [
-              batch for batch in job.future_batches.values()
-              if batch.cache_status != CacheStatus.NOT_CACHED]
-
+                batch for batch in job.future_batches.values()
+                if batch.cache_status != CacheStatus.NOT_CACHED
+            ]
             if eligible_cached:
-                next_batch = min(eligible_cached, key=lambda b: self._compute_reuse_score(b.batch_id))  # <<< too many ')'
+                next_batch = min(eligible_cached, key=lambda b: b.reuse_score)
             else:
+                # Step 2: Fallback to any non-CACHING_IN_PROGRESS batch
                 next_batch = None
                 for batch_id, batch in job.future_batches.items():
                     if batch.cache_status != CacheStatus.CACHING_IN_PROGRESS:
                         next_batch = batch
                         break
 
+                # Step 3: Fallback to any available batch
                 if not next_batch and job.future_batches:
                     next_batch = next(iter(job.future_batches.values()))
 
             if next_batch:
-                batch_id = next_batch.batch_id
-                next_batch.seen_by_jobs.add(job.job_id)
-                next_batch.last_accessed_time = time.time()
-                job.future_batches.pop(batch_id, None)
+                next_batch.set_last_accessed_time()
+                job.future_batches.pop(next_batch.batch_id, None)
 
                 self._tag_batch_for_caching(next_batch)
                 self._maybe_trigger_batch_generation(next_batch)

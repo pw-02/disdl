@@ -25,10 +25,10 @@ class BatchSet:
 class Batch:
     def __init__(self, batch_indicies, epoch_idx, partition_idx, batch_idx):
         self.indices: List[int] = batch_indicies
-        # self.epoch_idx:int = epoch_idx
-        # self.partition_idx:int = partition_idx
-        # self.batch_idx:int = batch_idx
-        self.batch_id:str = self.gen_batch_id()
+        self.epoch_idx:int = epoch_idx
+        self.partition_idx:int = partition_idx
+        self.batch_idx:int = batch_idx
+        self.batch_id:str = self.gen_batch_id(epoch_idx, partition_idx, batch_idx)
         self.batch_set_id = f"{epoch_idx}_{partition_idx}"
         self.cache_status:CacheStatus = CacheStatus.NOT_CACHED
         self.last_accessed_time:float = 0 #None #float('inf')
@@ -51,13 +51,12 @@ class Batch:
         with self.lock:
             return len(self.seen_by_jobs) >= num_jobs
 
-
-    def gen_batch_id(self):
+    def gen_batch_id(self, epoch_idx:int, partition_idx:int, batch_idx:int) -> str:
         # Convert integers to strings and concatenate them
         id_string = ''.join(str(x) for x in self.indices)
         unique_id = hashlib.md5(id_string.encode()).hexdigest()
         unique_id = unique_id[:16]
-        batch_id = f"{self.epoch_idx}_{self.partition_idx}_{self.batch_idx}_{unique_id}"
+        batch_id = f"{epoch_idx}_{partition_idx}_{batch_idx}_{unique_id}"
         return batch_id
 
 

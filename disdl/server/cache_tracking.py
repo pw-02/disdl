@@ -3,7 +3,7 @@ import time
 from typing import Dict
 import redis
 from batch import BatchSet, CacheStatus
-from disdl.server.batch_manager import DLTJob
+from job import DLTJob
 
 class CacheManager:
     def __init__(self, redis_url, epoch_partition_batches, jobs):

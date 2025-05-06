@@ -16,6 +16,24 @@ from typing import OrderedDict as TypingOrderedDict
 import csv
 import os
 from cache_prefetching import PrefetchServiceAsync
+    # def get_next_batch_for_job(self, job_id: str) -> Optional[Batch]:
+    #     with self.lock:
+    #         if self.prefetch_service and self.prefetch_service.prefetch_stop_event.is_set():
+    #             self.prefetch_service.start()
+
+    #         job = self._get_or_register_job(job_id)
+
+    #         if not job.future_batches:
+    #             self.assign_batch_set_to_job(job)
+
+    #         next_batch = job.next_batch()
+
+    #         if next_batch:
+    #             self._tag_batch_for_caching(next_batch)
+    #             self._maybe_trigger_batch_generation(next_batch)
+
+    #         return next_batch
+
 
 class CentralBatchManager:
     def __init__(

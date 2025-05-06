@@ -1,3 +1,4 @@
+import random
 import threading
 import hydra
 from sampler import PartitionedBatchSampler
@@ -106,12 +107,6 @@ class CentralBatchManager:
     def _score_batch_set(self, batch_set: BatchSet, epoch_idx, partition_idx) -> float:
         return float(f"{epoch_idx}.{partition_idx:02d}")
 
-        # num_cached = sum(1 for batch in batch_set.batches.values()
-        #                  if batch.cache_status != CacheStatus.NOT_CACHED)
-        # num_active_jobs = sum(1 for job in self.jobs.values()
-        #                       if job.active_bacth_set_id == batch_set.id)
-        # return num_cached + 2.0 * num_active_jobs  # prioritize reuse and concurrency
-
     def assign_batch_set_to_job(self, job: DLTJob):
         if job.has_completed_epoch():
             job.reset_for_new_epoch()
@@ -179,25 +174,6 @@ class CentralBatchManager:
 
             return next_batch
 
-    # def get_next_batch_for_job(self, job_id: str) -> Optional[Batch]:
-    #     with self.lock:
-    #         if self.prefetch_service and self.prefetch_service.prefetch_stop_event.is_set():
-    #             self.prefetch_service.start()
-
-    #         job = self._get_or_register_job(job_id)
-
-    #         if not job.future_batches:
-    #             self.assign_batch_set_to_job(job)
-
-    #         next_batch = job.next_batch()
-
-    #         if next_batch:
-    #             self._tag_batch_for_caching(next_batch)
-    #             self._maybe_trigger_batch_generation(next_batch)
-
-    #         return next_batch
-
-
 @hydra.main(version_base=None, config_path="conf", config_name="config")
 def main(args: DisDLArgs):
     # Initialize the dataset based on the workload specified in the args
@@ -229,7 +205,24 @@ def main(args: DisDLArgs):
             print(f"Batch {batch.batch_id} with {len(batch.indices)} samples")
         else:
             print("No batch available")
+
+def simulate_training_loop(batch_manager:CentralBatchManager, num_jobs: int, steps_per_job: int = 100):
+    job_ids = [str(i) for i in range(1, num_jobs + 1)]
     
+    for job_id in job_ids:
+        batch_manager._get_or_register_job(job_id)
+
+    for step in range(steps_per_job):
+        for job_id in job_ids:
+            batch = batch_manager.get_next_batch_for_job(job_id)
+            if batch:
+                # Simulate time spent on training step
+                time.sleep(random.uniform(0.001, 0.005))  # Fast-forwarded for sim
+                print(f"Step {step:03} | Job {job_id} got batch {batch.batch_id} | Cached: {batch.cache_status.name} | Reuse: {batch.reuse_score:.2f}")
+            else:
+                print(f"Step {step:03} | Job {job_id} got no batch")
+
+    print("\nSimulation complete.")
 
 
 if __name__ == "__main__":

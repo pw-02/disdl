@@ -200,6 +200,16 @@ class ImageNetDataset():
         return {
             "num_samples": len(self)}
     
+    # def dataset_info(self):
+    #     return {
+    #         'location': self.dataset.dataset_location,
+    #         'num_samples': len(self.dataset),
+    #         'batch_size': self.sampler.batch_size,
+    #         'batches/epoch': self.sampler.batches_per_epoch,
+    #         'partitions/epoch': self.sampler.num_partitions,
+    #         'batches/partition': self.sampler.calc_num_batchs_per_partition(),
+
+    #     }
     
 class LibSpeechDataset():
     def __init__(self, 

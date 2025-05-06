@@ -1,5 +1,6 @@
 
-from collections import deque, OrderedDict
+from collections import defaultdict, deque, OrderedDict
+from typing import Dict, List, Optional, Set, Tuple
 from utils import AverageMeter
 from batch import Batch, CacheStatus
 import threading
@@ -9,8 +10,23 @@ import time
 class DLTJob:
     def __init__(self, job_id: str):
         self.job_id = job_id
+        self.num_partitions = 1
+        self.current_epoch_idx = 0
+        # Tracks which (global epoch, partition) pairs have been used by the job
+        self.used_epoch_partition_pairs: Set[Tuple[int, int]] = set()
+        # For current job-local epoch, track which partitions have been covered
+        self.partitions_covered_this_epoch: Set[int] = set()
+
+        
+
+        # Keeps track of which epochs the job has completed
+        self.epoch_history:Set[int] = set()
+         # The epoch currently assigned to this job (None until assigned)
+        self.current_epoch: Optional[int] = None
+         # Tracks which batch_ids this job has processed in the current epoch
+        self.seen_batches: Set[str] = set()
+
         self.epochs_completed_count = -1
-        self.partitions_remaining_in_current_epoch = []
         self.active_partition_idx = None
         self.active_bacth_set_id = None
         self.total_steps = 0
@@ -23,8 +39,31 @@ class DLTJob:
         # self.dataload_time_on_miss  = AverageMeter('Dataload Time on Miss')
         # self.dataload_time_on_hit = AverageMeter('Dataload Time on Hit')
         self.dataload_time = AverageMeter('Dataload Time')    
-    
+
         self.lock = threading.Lock()
+
+    def assign_epoch(self, epoch_idx: int):
+        """Assigns a new epoch to this job and clears current progress."""
+        self.current_epoch = epoch_idx
+        self.seen_batches.clear()
+        self.epoch_history.add(epoch_idx)
+    
+    def has_seen_epoch(self, epoch_idx: int) -> bool:
+        return epoch_idx in self.epoch_history
+    
+    def has_seen_batch(self, batch_id: str) -> bool:
+        return batch_id in self.seen_batches
+    
+    def mark_batch_seen(self, batch_id: str):
+        self.seen_batches.add(batch_id)
+    
+    def epoch_complete(self, total_batches: int) -> bool:
+        return len(self.seen_batches) >= total_batches
+
+
+
+
+
 
     def compute_required_prefetch_concurrency(self, lambda_processing_time, buffer = 0):
         gpu_batch_rate = 1 / self.training_step_gpu_times.avg

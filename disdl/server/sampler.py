@@ -104,12 +104,31 @@ class PartitionedBatchSampler():
 
 if __name__ == "__main__":
     
-    sampler = PartitionedBatchSampler(10, 
+    sampler = PartitionedBatchSampler(100, 
                                       batch_size=2, 
-                                      num_partitions=1, 
+                                      num_partitions=5, 
                                       drop_last=False, 
                                       shuffle=True)
+    
     epoch_partition_batches: Dict[int, Dict[int, BatchSet]] = OrderedDict()
-    for _ in range(20):
+    
+    for _ in range(50):
         next_batch:Batch = next(sampler)
         print(f"Batch {next_batch.batch_id} with {len(next_batch.indices)} samples")
+        active_epoch_idx = next_batch.epoch_idx
+        active_partition_idx = next_batch.partition_idx
+        active_batch_set_id = next_batch.batch_set_id
+
+        # Get or create partition dictionary for the current epoch
+        partition_batches = epoch_partition_batches.setdefault(
+            active_epoch_idx, OrderedDict()
+        )
+
+        # Get or create BatchSet for the current partition
+        batch_set = partition_batches.setdefault(
+            active_partition_idx, BatchSet(active_batch_set_id)
+        )
+         # Insert the batch into the batch set
+        batch_set.batches[next_batch.batch_id] = next_batch
+
+    pass

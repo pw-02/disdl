@@ -1,5 +1,5 @@
 name: 'imagenet'
-batch_size: 32 #chunk_size  = number of files per chunk
+batch_size: 512 #chunk_size  = number of files per chunk
 shuffle: True
 drop_last: False
 prefetch_lambda_name: 'CreateVisionTrainingBatch'

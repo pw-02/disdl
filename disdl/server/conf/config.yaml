@@ -3,7 +3,7 @@ defaults:
   - workload: imagenet #imagenet, librispeech, coco, openimages
   
 cache_address: 10.0.25.0:6378
-use_prefetching: False
+enable_prefetching: False
 prefetch_cost_cap_per_hour: null
 prefetch_simulation_time: null
 

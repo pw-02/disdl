@@ -151,20 +151,11 @@ def serve(cfg: DictConfig):
         logger.info("Starting DisDL ML Dataloader Service")
         logger.info(f"Config: {OmegaConf.to_yaml(cfg, resolve=True)}")
         args:DisDLArgs = DisDLArgs(
-            num_dataset_partitions = cfg.workload.num_dataset_partitions,
-            batch_size = cfg.workload.batch_size,
-            lookahead_steps = cfg.lookahead_steps,
-            serverless_cache_address = cfg.serverless_cache_address,
-            cache_keep_alive_timeout = cfg.cache_keep_alive_timeout,
-            use_prefetching = cfg.use_prefetching,
-            use_keep_alive = cfg.use_keep_alive,
-            prefetch_lambda_name = cfg.workload.prefetch_lambda_name,
-            prefetch_cost_cap_per_hour=cfg.prefetch_cost_cap_per_hour,
+            cache_address = cfg.cache_address,
+            enable_prefetching = cfg.enable_prefetching,
+            prefetch_cost_cap_per_hour = cfg.prefetch_cost_cap_per_hour,
             prefetch_simulation_time = cfg.prefetch_simulation_time,
-            evict_from_cache_simulation_time = cfg.evict_from_cache_simulation_time,
-            shuffle = cfg.workload.shuffle,
-            drop_last = cfg.workload.drop_last,
-            workload = cfg.workload.kind)
+            workload= cfg.workload.name)
         
         cache_service = CacheAwareMiniBatchService(args) 
         max_workers = 1

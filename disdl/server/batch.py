@@ -1,6 +1,6 @@
 
 import hashlib
-from typing import List
+from typing import List, Set
 import threading
 # from utils.utils import create_unique_id
 import time
@@ -15,8 +15,8 @@ class CacheStatus(Enum):
     NOT_CACHED = "NOT_CACHED"
 
 class BatchSet:
-    def __init__(self, id:str):
-        self.id = id
+    def __init__(self, batch_set_id:str):
+        self.id = batch_set_id
         self.batches: Dict[str, Batch] = OrderedDict()
         self.batches_finalized = False
         self.mark_for_eviction = False
@@ -28,12 +28,27 @@ class Batch:
         self.partition_idx:int = partition_idx
         self.batch_idx:int = batch_idx
         self.batch_id:str = self.gen_batch_id()
-        self.epoch_partition_id = f"{self.epoch_idx}_{self.partition_idx}"
+        self.batch_set_id = f"{self.epoch_idx}_{self.partition_idx}"
         self.cache_status:CacheStatus = CacheStatus.NOT_CACHED
         self.last_accessed_time:float = 0 #None #float('inf')
         self.is_first_access = True
         self.lock = threading.Lock()  # Lock for accessing shared resources
-           
+        self.seen_by_jobs: Set[str] = set()
+    
+    def mark_seen_by(self, job_id: str):
+        with self.lock:
+            self.seen_by_jobs.add(job_id)
+
+    
+    def has_been_seen_by(self, job_id: str) -> bool:
+        with self.lock:
+            return job_id in self.seen_by_jobs
+    
+    def is_fully_seen(self, num_jobs: int) -> bool:
+        with self.lock:
+            return len(self.seen_by_jobs) >= num_jobs
+
+
     def gen_batch_id(self):
         # Convert integers to strings and concatenate them
         id_string = ''.join(str(x) for x in self.indices)

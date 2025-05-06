@@ -1,102 +1,501 @@
-2025-05-06 14:53:47,948 - INFO - Job SHUFFLENETV2 processing batch 1_1_1_cfcd208495d565ef at time 0.06s. Cache hit: False
-2025-05-06 14:53:47,948 - INFO - Job RESNET18 processing batch 1_1_1_cfcd208495d565ef at time 0.10s. Cache hit: True
-2025-05-06 14:53:47,948 - INFO - Job SHUFFLENETV2 processing batch 1_1_2_c4ca4238a0b92382 at time 0.15s. Cache hit: False
-2025-05-06 14:53:47,948 - INFO - Job RESNET18 processing batch 1_1_2_c4ca4238a0b92382 at time 0.21s. Cache hit: True
-2025-05-06 14:53:47,948 - INFO - Job SHUFFLENETV2 processing batch 1_1_3_c81e728d9d4c2f63 at time 0.23s. Cache hit: False
-2025-05-06 14:53:47,948 - INFO - Job SHUFFLENETV2 processing batch 1_1_4_eccbc87e4b5ce2fe at time 0.31s. Cache hit: False
-2025-05-06 14:53:47,948 - INFO - Job RESNET18 processing batch 1_1_3_c81e728d9d4c2f63 at time 0.31s. Cache hit: True
-2025-05-06 14:53:47,948 - INFO - Job RESNET50 processing batch 1_1_1_cfcd208495d565ef at time 0.34s. Cache hit: True
-2025-05-06 14:53:47,948 - INFO - Job SHUFFLENETV2 processing batch 1_1_5_a87ff679a2f3e71d at time 0.39s. Cache hit: False
-2025-05-06 14:53:47,948 - INFO - Job RESNET18 processing batch 1_1_4_eccbc87e4b5ce2fe at time 0.42s. Cache hit: True
-2025-05-06 14:53:47,948 - INFO - Job SHUFFLENETV2 processing batch 1_1_6_e4da3b7fbbce2345 at time 0.48s. Cache hit: False
-2025-05-06 14:53:47,948 - INFO - Job VGG16 processing batch 1_1_1_cfcd208495d565ef at time 0.51s. Cache hit: True
-2025-05-06 14:53:47,948 - INFO - Job RESNET18 processing batch 1_1_5_a87ff679a2f3e71d at time 0.52s. Cache hit: True
-2025-05-06 14:53:47,957 - INFO - Job SHUFFLENETV2 processing batch 1_1_7_1679091c5a880faf at time 0.56s. Cache hit: False
-2025-05-06 14:53:47,957 - INFO - Job RESNET18 processing batch 1_1_6_e4da3b7fbbce2345 at time 0.63s. Cache hit: True
-2025-05-06 14:53:47,957 - INFO - Job SHUFFLENETV2 processing batch 1_1_8_8f14e45fceea167a at time 0.64s. Cache hit: False
-2025-05-06 14:53:47,957 - INFO - Job RESNET50 processing batch 1_1_2_c4ca4238a0b92382 at time 0.68s. Cache hit: True
-2025-05-06 14:53:47,957 - INFO - Job SHUFFLENETV2 processing batch 1_1_9_c9f0f895fb98ab91 at time 0.72s. Cache hit: False
-2025-05-06 14:53:47,957 - INFO - Job RESNET18 processing batch 1_1_7_1679091c5a880faf at time 0.73s. Cache hit: True
-2025-05-06 14:53:47,957 - INFO - Job SHUFFLENETV2 processing batch 1_1_10_45c48cce2e2d7fbd at time 0.81s. Cache hit: False
-2025-05-06 14:53:47,957 - INFO - Job RESNET18 processing batch 1_1_8_8f14e45fceea167a at time 0.84s. Cache hit: True
-2025-05-06 14:53:47,957 - INFO - Job SHUFFLENETV2 processing batch 1_1_11_d3d9446802a44259 at time 0.89s. Cache hit: False
-2025-05-06 14:53:47,957 - INFO - Job RESNET18 processing batch 1_1_9_c9f0f895fb98ab91 at time 0.94s. Cache hit: True
-2025-05-06 14:53:47,957 - INFO - Job SHUFFLENETV2 processing batch 1_1_12_6512bd43d9caa6e0 at time 0.97s. Cache hit: False
-2025-05-06 14:53:47,957 - INFO - Job RESNET50 processing batch 1_1_3_c81e728d9d4c2f63 at time 1.02s. Cache hit: True
-2025-05-06 14:53:47,957 - INFO - Job VGG16 processing batch 1_1_2_c4ca4238a0b92382 at time 1.03s. Cache hit: True
-2025-05-06 14:53:47,957 - INFO - Job RESNET18 processing batch 1_1_10_45c48cce2e2d7fbd at time 1.04s. Cache hit: True
-2025-05-06 14:53:47,957 - INFO - Job SHUFFLENETV2 processing batch 1_1_13_c20ad4d76fe97759 at time 1.05s. Cache hit: False
-2025-05-06 14:53:47,957 - INFO - Job SHUFFLENETV2 processing batch 1_1_14_c51ce410c124a10e at time 1.14s. Cache hit: False
-2025-05-06 14:53:47,957 - INFO - Job RESNET18 processing batch 1_1_11_d3d9446802a44259 at time 1.15s. Cache hit: True
-2025-05-06 14:53:47,957 - INFO - Job SHUFFLENETV2 processing batch 1_1_15_aab3238922bcc25a at time 1.22s. Cache hit: False
-2025-05-06 14:53:47,957 - INFO - Job RESNET18 processing batch 1_1_12_6512bd43d9caa6e0 at time 1.25s. Cache hit: True
-2025-05-06 14:53:47,957 - INFO - Job SHUFFLENETV2 processing batch 1_1_16_9bf31c7ff062936a at time 1.30s. Cache hit: False
-2025-05-06 14:53:47,957 - INFO - Job RESNET18 processing batch 1_1_13_c20ad4d76fe97759 at time 1.36s. Cache hit: True
-2025-05-06 14:53:47,957 - INFO - Job RESNET50 processing batch 1_1_4_eccbc87e4b5ce2fe at time 1.36s. Cache hit: True
-2025-05-06 14:53:47,957 - INFO - Job SHUFFLENETV2 processing batch 1_1_17_c74d97b01eae257e at time 1.38s. Cache hit: False
-2025-05-06 14:53:47,957 - INFO - Job RESNET18 processing batch 1_1_14_c51ce410c124a10e at time 1.46s. Cache hit: True
-2025-05-06 14:53:47,957 - INFO - Job SHUFFLENETV2 processing batch 1_1_18_70efdf2ec9b08607 at time 1.47s. Cache hit: False
-2025-05-06 14:53:47,957 - INFO - Job VGG16 processing batch 1_1_3_c81e728d9d4c2f63 at time 1.54s. Cache hit: True
-2025-05-06 14:53:47,957 - INFO - Job SHUFFLENETV2 processing batch 1_1_19_6f4922f45568161a at time 1.55s. Cache hit: False
-2025-05-06 14:53:47,957 - INFO - Job RESNET18 processing batch 1_1_15_aab3238922bcc25a at time 1.57s. Cache hit: True
-2025-05-06 14:53:47,957 - INFO - Job SHUFFLENETV2 processing batch 1_1_20_1f0e3dad99908345 at time 1.63s. Cache hit: False
-2025-05-06 14:53:47,957 - INFO - Job RESNET18 processing batch 1_1_16_9bf31c7ff062936a at time 1.67s. Cache hit: True
-2025-05-06 14:53:47,957 - INFO - Job RESNET50 processing batch 1_1_5_a87ff679a2f3e71d at time 1.70s. Cache hit: True
-2025-05-06 14:53:47,957 - INFO - Job SHUFFLENETV2 processing batch 1_1_21_98f13708210194c4 at time 1.71s. Cache hit: False
-2025-05-06 14:53:47,957 - INFO - Job RESNET18 processing batch 1_1_17_c74d97b01eae257e at time 1.78s. Cache hit: True
-2025-05-06 14:53:47,957 - INFO - Job SHUFFLENETV2 processing batch 1_1_22_3c59dc048e885024 at time 1.80s. Cache hit: False
-2025-05-06 14:53:47,957 - INFO - Job SHUFFLENETV2 processing batch 1_1_23_b6d767d2f8ed5d21 at time 1.88s. Cache hit: False
-2025-05-06 14:53:47,957 - INFO - Job RESNET18 processing batch 1_1_18_70efdf2ec9b08607 at time 1.88s. Cache hit: True
-2025-05-06 14:53:47,957 - INFO - Job SHUFFLENETV2 processing batch 1_1_24_37693cfc748049e4 at time 1.96s. Cache hit: False
-2025-05-06 14:53:47,963 - INFO - Job RESNET18 processing batch 1_1_19_6f4922f45568161a at time 1.98s. Cache hit: True
-2025-05-06 14:53:47,963 - INFO - Job RESNET50 processing batch 1_1_6_e4da3b7fbbce2345 at time 2.04s. Cache hit: True
-2025-05-06 14:53:47,963 - INFO - Job SHUFFLENETV2 processing batch 1_1_25_1ff1de774005f8da at time 2.04s. Cache hit: False
-2025-05-06 14:53:47,963 - INFO - Job VGG16 processing batch 1_1_4_eccbc87e4b5ce2fe at time 2.06s. Cache hit: True
-2025-05-06 14:53:47,963 - INFO - Job RESNET18 processing batch 1_1_20_1f0e3dad99908345 at time 2.09s. Cache hit: True
-2025-05-06 14:53:47,963 - INFO - Job SHUFFLENETV2 processing batch 1_1_26_8e296a067a375633 at time 2.13s. Cache hit: False
-2025-05-06 14:53:47,963 - INFO - Job RESNET18 processing batch 1_1_21_98f13708210194c4 at time 2.19s. Cache hit: True
-2025-05-06 14:53:47,963 - INFO - Job SHUFFLENETV2 processing batch 1_1_27_4e732ced3463d06d at time 2.21s. Cache hit: False
-2025-05-06 14:53:47,963 - INFO - Job SHUFFLENETV2 processing batch 1_1_28_02e74f10e0327ad8 at time 2.29s. Cache hit: False
-2025-05-06 14:53:47,963 - INFO - Job RESNET18 processing batch 1_1_22_3c59dc048e885024 at time 2.30s. Cache hit: True
-2025-05-06 14:53:47,963 - INFO - Job SHUFFLENETV2 processing batch 1_1_29_33e75ff09dd601bb at time 2.37s. Cache hit: False
-2025-05-06 14:53:47,963 - INFO - Job RESNET50 processing batch 1_1_7_1679091c5a880faf at time 2.38s. Cache hit: True
-2025-05-06 14:53:47,963 - INFO - Job RESNET18 processing batch 1_1_23_b6d767d2f8ed5d21 at time 2.40s. Cache hit: True
-2025-05-06 14:53:47,963 - INFO - Job SHUFFLENETV2 processing batch 1_1_30_6ea9ab1baa0efb9e at time 2.46s. Cache hit: False
-2025-05-06 14:53:47,963 - INFO - Job RESNET18 processing batch 1_1_24_37693cfc748049e4 at time 2.51s. Cache hit: True
-2025-05-06 14:53:47,963 - INFO - Job SHUFFLENETV2 processing batch 1_1_31_34173cb38f07f89d at time 2.54s. Cache hit: False
-2025-05-06 14:53:47,963 - INFO - Job VGG16 processing batch 1_1_5_a87ff679a2f3e71d at time 2.57s. Cache hit: True
-2025-05-06 14:53:47,963 - INFO - Job RESNET18 processing batch 1_1_25_1ff1de774005f8da at time 2.61s. Cache hit: True
-2025-05-06 14:53:47,963 - INFO - Job SHUFFLENETV2 processing batch 1_1_32_c16a5320fa475530 at time 2.62s. Cache hit: False
-2025-05-06 14:53:47,963 - INFO - Job SHUFFLENETV2 processing batch 1_1_33_6364d3f0f495b6ab at time 2.70s. Cache hit: False
-2025-05-06 14:53:47,963 - INFO - Job RESNET18 processing batch 1_1_26_8e296a067a375633 at time 2.71s. Cache hit: True
-2025-05-06 14:53:47,963 - INFO - Job RESNET50 processing batch 1_1_8_8f14e45fceea167a at time 2.72s. Cache hit: True
-2025-05-06 14:53:47,963 - INFO - Job SHUFFLENETV2 processing batch 1_1_34_182be0c5cdcd5072 at time 2.79s. Cache hit: False
-2025-05-06 14:53:47,963 - INFO - Job RESNET18 processing batch 1_1_27_4e732ced3463d06d at time 2.82s. Cache hit: True
-2025-05-06 14:53:47,963 - INFO - Job SHUFFLENETV2 processing batch 1_1_35_e369853df766fa44 at time 2.87s. Cache hit: False
-2025-05-06 14:53:47,963 - INFO - Job RESNET18 processing batch 1_1_28_02e74f10e0327ad8 at time 2.92s. Cache hit: True
-2025-05-06 14:53:47,963 - INFO - Job SHUFFLENETV2 processing batch 1_1_36_1c383cd30b7c298a at time 2.95s. Cache hit: False
-2025-05-06 14:53:47,963 - INFO - Job RESNET18 processing batch 1_1_29_33e75ff09dd601bb at time 3.03s. Cache hit: True
-2025-05-06 14:53:47,963 - INFO - Job SHUFFLENETV2 processing batch 1_1_37_19ca14e7ea6328a4 at time 3.03s. Cache hit: False
-2025-05-06 14:53:47,963 - INFO - Job RESNET50 processing batch 1_1_9_c9f0f895fb98ab91 at time 3.06s. Cache hit: True
-2025-05-06 14:53:47,963 - INFO - Job VGG16 processing batch 1_1_6_e4da3b7fbbce2345 at time 3.09s. Cache hit: True
-2025-05-06 14:53:47,967 - INFO - Job SHUFFLENETV2 processing batch 1_1_38_a5bfc9e07964f8dd at time 3.12s. Cache hit: False
-2025-05-06 14:53:47,967 - INFO - Job RESNET18 processing batch 1_1_30_6ea9ab1baa0efb9e at time 3.13s. Cache hit: True
-2025-05-06 14:53:47,967 - INFO - Job SHUFFLENETV2 processing batch 1_1_39_a5771bce93e200c3 at time 3.20s. Cache hit: False
-2025-05-06 14:53:47,967 - INFO - Job RESNET18 processing batch 1_1_31_34173cb38f07f89d at time 3.24s. Cache hit: True
-2025-05-06 14:53:47,967 - INFO - Job SHUFFLENETV2 processing batch 1_1_40_d67d8ab4f4c10bf2 at time 3.28s. Cache hit: False
-2025-05-06 14:53:47,967 - INFO - Job RESNET18 processing batch 1_1_32_c16a5320fa475530 at time 3.34s. Cache hit: True
-2025-05-06 14:53:47,967 - INFO - Job SHUFFLENETV2 processing batch 1_1_41_d645920e395fedad at time 3.36s. Cache hit: False
-2025-05-06 14:53:47,967 - INFO - Job RESNET50 processing batch 1_1_10_45c48cce2e2d7fbd at time 3.39s. Cache hit: True
-2025-05-06 14:53:47,967 - INFO - Job SHUFFLENETV2 processing batch 1_1_42_3416a75f4cea9109 at time 3.45s. Cache hit: False
-2025-05-06 14:53:47,967 - INFO - Job RESNET18 processing batch 1_1_33_6364d3f0f495b6ab at time 3.45s. Cache hit: True
-2025-05-06 14:53:47,967 - INFO - Job SHUFFLENETV2 processing batch 1_1_43_a1d0c6e83f027327 at time 3.53s. Cache hit: False
-2025-05-06 14:53:47,967 - INFO - Job RESNET18 processing batch 1_1_42_3416a75f4cea9109 at time 3.55s. Cache hit: True
-2025-05-06 14:53:47,967 - INFO - Job VGG16 processing batch 1_1_7_1679091c5a880faf at time 3.60s. Cache hit: True
-2025-05-06 14:53:47,967 - INFO - Job SHUFFLENETV2 processing batch 1_1_44_17e62166fc8586df at time 3.61s. Cache hit: False
-2025-05-06 14:53:47,967 - INFO - Job RESNET18 processing batch 1_1_43_a1d0c6e83f027327 at time 3.65s. Cache hit: True
-2025-05-06 14:53:47,967 - INFO - Job SHUFFLENETV2 processing batch 1_1_45_f7177163c833dff4 at time 3.69s. Cache hit: False
-2025-05-06 14:53:47,967 - INFO - Job RESNET50 processing batch 1_1_45_f7177163c833dff4 at time 3.73s. Cache hit: True
-2025-05-06 14:53:47,967 - INFO - Job RESNET18 processing batch 1_1_45_f7177163c833dff4 at time 3.76s. Cache hit: True
-2025-05-06 14:53:47,967 - INFO - Job SHUFFLENETV2 processing batch 1_1_46_6c8349cc7260ae62 at time 3.78s. Cache hit: False
-2025-05-06 14:53:47,967 - INFO - Job SHUFFLENETV2 processing batch 1_1_47_d9d4f495e875a2e0 at time 3.86s. Cache hit: False
-2025-05-06 14:53:47,967 - INFO - Job RESNET18 processing batch 1_1_46_6c8349cc7260ae62 at time 3.86s. Cache hit: True
+2025-05-06 15:24:11,366 - INFO - Starting simulation for imagenet_128_hpo with 4 jobs
+2025-05-06 15:24:11,366 - INFO - Producer generated batch 1
+2025-05-06 15:24:11,367 - INFO - Job RESNET18_3 processed batch 1 from local cache
+2025-05-06 15:24:11,367 - INFO - Job RESNET18_2 processed batch 1 from local cache
+2025-05-06 15:24:11,367 - INFO - Job RESNET18_1 processed batch 1 from local cache
+2025-05-06 15:24:11,367 - INFO - Job RESNET18_4 processed batch 1 from local cache
+2025-05-06 15:24:11,367 - INFO - Producer generated batch 2
+2025-05-06 15:24:11,367 - INFO - Job RESNET18_1 processed batch 2 from local cache
+2025-05-06 15:24:11,367 - INFO - Job RESNET18_4 processed batch 2 from local cache
+2025-05-06 15:24:11,367 - INFO - Job RESNET18_3 processed batch 2 from local cache
+2025-05-06 15:24:11,367 - INFO - Job RESNET18_2 processed batch 2 from local cache
+2025-05-06 15:24:11,367 - INFO - Producer generated batch 3
+2025-05-06 15:24:11,367 - INFO - Job RESNET18_3 processed batch 3 from local cache
+2025-05-06 15:24:11,367 - INFO - Job RESNET18_2 processed batch 3 from local cache
+2025-05-06 15:24:11,367 - INFO - Job RESNET18_1 processed batch 3 from local cache
+2025-05-06 15:24:11,367 - INFO - Job RESNET18_4 processed batch 3 from local cache
+2025-05-06 15:24:11,367 - INFO - Producer generated batch 4
+2025-05-06 15:24:11,367 - INFO - Job RESNET18_1 processed batch 4 from local cache
+2025-05-06 15:24:11,367 - INFO - Job RESNET18_4 processed batch 4 from local cache
+2025-05-06 15:24:11,368 - INFO - Job RESNET18_3 processed batch 4 from local cache
+2025-05-06 15:24:11,368 - INFO - Job RESNET18_2 processed batch 4 from local cache
+2025-05-06 15:24:11,368 - INFO - Producer generated batch 5
+2025-05-06 15:24:11,368 - INFO - Job RESNET18_3 processed batch 5 from local cache
+2025-05-06 15:24:11,368 - INFO - Job RESNET18_2 processed batch 5 from local cache
+2025-05-06 15:24:11,368 - INFO - Job RESNET18_1 processed batch 5 from local cache
+2025-05-06 15:24:11,368 - INFO - Job RESNET18_4 processed batch 5 from local cache
+2025-05-06 15:24:11,368 - INFO - Producer generated batch 6
+2025-05-06 15:24:11,368 - INFO - Job RESNET18_1 processed batch 6 from local cache
+2025-05-06 15:24:11,368 - INFO - Job RESNET18_4 processed batch 6 from local cache
+2025-05-06 15:24:11,368 - INFO - Job RESNET18_3 processed batch 6 from local cache
+2025-05-06 15:24:11,368 - INFO - Job RESNET18_2 processed batch 6 from local cache
+2025-05-06 15:24:11,368 - INFO - Producer generated batch 7
+2025-05-06 15:24:11,368 - INFO - Job RESNET18_3 processed batch 7 from local cache
+2025-05-06 15:24:11,369 - INFO - Job RESNET18_2 processed batch 7 from local cache
+2025-05-06 15:24:11,369 - INFO - Job RESNET18_1 processed batch 7 from local cache
+2025-05-06 15:24:11,369 - INFO - Job RESNET18_4 processed batch 7 from local cache
+2025-05-06 15:24:11,369 - INFO - Producer generated batch 8
+2025-05-06 15:24:11,369 - INFO - Job RESNET18_1 processed batch 8 from local cache
+2025-05-06 15:24:11,369 - INFO - Job RESNET18_4 processed batch 8 from local cache
+2025-05-06 15:24:11,369 - INFO - Job RESNET18_3 processed batch 8 from local cache
+2025-05-06 15:24:11,369 - INFO - Job RESNET18_2 processed batch 8 from local cache
+2025-05-06 15:24:11,369 - INFO - Producer generated batch 9
+2025-05-06 15:24:11,369 - INFO - Job RESNET18_3 processed batch 9 from local cache
+2025-05-06 15:24:11,369 - INFO - Job RESNET18_2 processed batch 9 from local cache
+2025-05-06 15:24:11,369 - INFO - Job RESNET18_1 processed batch 9 from local cache
+2025-05-06 15:24:11,369 - INFO - Job RESNET18_4 processed batch 9 from local cache
+2025-05-06 15:24:11,369 - INFO - Producer generated batch 10
+2025-05-06 15:24:11,369 - INFO - Job RESNET18_1 processed batch 10 from local cache
+2025-05-06 15:24:11,369 - INFO - Job RESNET18_4 processed batch 10 from local cache
+2025-05-06 15:24:11,369 - INFO - Job RESNET18_3 processed batch 10 from local cache
+2025-05-06 15:24:11,369 - INFO - Job RESNET18_2 processed batch 10 from local cache
+2025-05-06 15:24:11,370 - INFO - Producer generated batch 11
+2025-05-06 15:24:11,370 - INFO - Job RESNET18_3 processed batch 11 from local cache
+2025-05-06 15:24:11,370 - INFO - Job RESNET18_2 processed batch 11 from local cache
+2025-05-06 15:24:11,370 - INFO - Job RESNET18_1 processed batch 11 from local cache
+2025-05-06 15:24:11,370 - INFO - Job RESNET18_4 processed batch 11 from local cache
+2025-05-06 15:24:11,370 - INFO - Producer generated batch 12
+2025-05-06 15:24:11,370 - INFO - Job RESNET18_1 processed batch 12 from local cache
+2025-05-06 15:24:11,370 - INFO - Job RESNET18_4 processed batch 12 from local cache
+2025-05-06 15:24:11,370 - INFO - Job RESNET18_3 processed batch 12 from local cache
+2025-05-06 15:24:11,370 - INFO - Job RESNET18_2 processed batch 12 from local cache
+2025-05-06 15:24:11,370 - INFO - Producer generated batch 13
+2025-05-06 15:24:11,370 - INFO - Job RESNET18_3 processed batch 13 from local cache
+2025-05-06 15:24:11,370 - INFO - Job RESNET18_2 processed batch 13 from local cache
+2025-05-06 15:24:11,370 - INFO - Job RESNET18_1 processed batch 13 from local cache
+2025-05-06 15:24:11,370 - INFO - Job RESNET18_4 processed batch 13 from local cache
+2025-05-06 15:24:11,370 - INFO - Producer generated batch 14
+2025-05-06 15:24:11,370 - INFO - Job RESNET18_1 processed batch 14 from local cache
+2025-05-06 15:24:11,371 - INFO - Job RESNET18_4 processed batch 14 from local cache
+2025-05-06 15:24:11,371 - INFO - Job RESNET18_3 processed batch 14 from local cache
+2025-05-06 15:24:11,371 - INFO - Job RESNET18_2 processed batch 14 from local cache
+2025-05-06 15:24:11,371 - INFO - Producer generated batch 15
+2025-05-06 15:24:11,371 - INFO - Job RESNET18_3 processed batch 15 from local cache
+2025-05-06 15:24:11,371 - INFO - Job RESNET18_2 processed batch 15 from local cache
+2025-05-06 15:24:11,371 - INFO - Job RESNET18_1 processed batch 15 from local cache
+2025-05-06 15:24:11,371 - INFO - Job RESNET18_4 processed batch 15 from local cache
+2025-05-06 15:24:11,371 - INFO - Producer generated batch 16
+2025-05-06 15:24:11,371 - INFO - Job RESNET18_1 processed batch 16 from local cache
+2025-05-06 15:24:11,371 - INFO - Job RESNET18_4 processed batch 16 from local cache
+2025-05-06 15:24:11,371 - INFO - Job RESNET18_3 processed batch 16 from local cache
+2025-05-06 15:24:11,371 - INFO - Job RESNET18_2 processed batch 16 from local cache
+2025-05-06 15:24:11,371 - INFO - Producer generated batch 17
+2025-05-06 15:24:11,371 - INFO - Job RESNET18_3 processed batch 17 from local cache
+2025-05-06 15:24:11,371 - INFO - Job RESNET18_2 processed batch 17 from local cache
+2025-05-06 15:24:11,371 - INFO - Job RESNET18_1 processed batch 17 from local cache
+2025-05-06 15:24:11,372 - INFO - Job RESNET18_4 processed batch 17 from local cache
+2025-05-06 15:24:11,372 - INFO - Producer generated batch 18
+2025-05-06 15:24:11,372 - INFO - Job RESNET18_1 processed batch 18 from local cache
+2025-05-06 15:24:11,372 - INFO - Job RESNET18_4 processed batch 18 from local cache
+2025-05-06 15:24:11,372 - INFO - Job RESNET18_3 processed batch 18 from local cache
+2025-05-06 15:24:11,372 - INFO - Job RESNET18_2 processed batch 18 from local cache
+2025-05-06 15:24:11,372 - INFO - Producer generated batch 19
+2025-05-06 15:24:11,372 - INFO - Job RESNET18_3 processed batch 19 from local cache
+2025-05-06 15:24:11,372 - INFO - Job RESNET18_2 processed batch 19 from local cache
+2025-05-06 15:24:11,372 - INFO - Job RESNET18_1 processed batch 19 from local cache
+2025-05-06 15:24:11,372 - INFO - Job RESNET18_4 processed batch 19 from local cache
+2025-05-06 15:24:11,373 - INFO - Producer generated batch 20
+2025-05-06 15:24:11,373 - INFO - Job RESNET18_1 processed batch 20 from local cache
+2025-05-06 15:24:11,373 - INFO - Job RESNET18_4 processed batch 20 from local cache
+2025-05-06 15:24:11,373 - INFO - Job RESNET18_3 processed batch 20 from local cache
+2025-05-06 15:24:11,373 - INFO - Job RESNET18_2 processed batch 20 from local cache
+2025-05-06 15:24:11,373 - INFO - Producer generated batch 21
+2025-05-06 15:24:11,373 - INFO - Job RESNET18_3 processed batch 21 from local cache
+2025-05-06 15:24:11,373 - INFO - Job RESNET18_2 processed batch 21 from local cache
+2025-05-06 15:24:11,373 - INFO - Job RESNET18_1 processed batch 21 from local cache
+2025-05-06 15:24:11,373 - INFO - Job RESNET18_4 processed batch 21 from local cache
+2025-05-06 15:24:11,373 - INFO - Producer generated batch 22
+2025-05-06 15:24:11,373 - INFO - Job RESNET18_1 processed batch 22 from local cache
+2025-05-06 15:24:11,373 - INFO - Job RESNET18_4 processed batch 22 from local cache
+2025-05-06 15:24:11,373 - INFO - Job RESNET18_3 processed batch 22 from local cache
+2025-05-06 15:24:11,373 - INFO - Job RESNET18_2 processed batch 22 from local cache
+2025-05-06 15:24:11,373 - INFO - Producer generated batch 23
+2025-05-06 15:24:11,373 - INFO - Job RESNET18_3 processed batch 23 from local cache
+2025-05-06 15:24:11,373 - INFO - Job RESNET18_2 processed batch 23 from local cache
+2025-05-06 15:24:11,374 - INFO - Job RESNET18_1 processed batch 23 from local cache
+2025-05-06 15:24:11,374 - INFO - Job RESNET18_4 processed batch 23 from local cache
+2025-05-06 15:24:11,374 - INFO - Producer generated batch 24
+2025-05-06 15:24:11,374 - INFO - Job RESNET18_1 processed batch 24 from local cache
+2025-05-06 15:24:11,374 - INFO - Job RESNET18_4 processed batch 24 from local cache
+2025-05-06 15:24:11,374 - INFO - Job RESNET18_3 processed batch 24 from local cache
+2025-05-06 15:24:11,374 - INFO - Job RESNET18_2 processed batch 24 from local cache
+2025-05-06 15:24:11,374 - INFO - Producer generated batch 25
+2025-05-06 15:24:11,374 - INFO - Job RESNET18_3 processed batch 25 from local cache
+2025-05-06 15:24:11,374 - INFO - Job RESNET18_2 processed batch 25 from local cache
+2025-05-06 15:24:11,374 - INFO - Job RESNET18_1 processed batch 25 from local cache
+2025-05-06 15:24:11,374 - INFO - Job RESNET18_4 processed batch 25 from local cache
+2025-05-06 15:24:11,374 - INFO - Producer generated batch 26
+2025-05-06 15:24:11,374 - INFO - Job RESNET18_1 processed batch 26 from local cache
+2025-05-06 15:24:11,374 - INFO - Job RESNET18_4 processed batch 26 from local cache
+2025-05-06 15:24:11,374 - INFO - Job RESNET18_3 processed batch 26 from local cache
+2025-05-06 15:24:11,374 - INFO - Job RESNET18_2 processed batch 26 from local cache
+2025-05-06 15:24:11,375 - INFO - Producer generated batch 27
+2025-05-06 15:24:11,375 - INFO - Job RESNET18_3 processed batch 27 from local cache
+2025-05-06 15:24:11,375 - INFO - Job RESNET18_2 processed batch 27 from local cache
+2025-05-06 15:24:11,375 - INFO - Job RESNET18_1 processed batch 27 from local cache
+2025-05-06 15:24:11,375 - INFO - Job RESNET18_4 processed batch 27 from local cache
+2025-05-06 15:24:11,375 - INFO - Producer generated batch 28
+2025-05-06 15:24:11,375 - INFO - Job RESNET18_1 processed batch 28 from local cache
+2025-05-06 15:24:11,375 - INFO - Job RESNET18_4 processed batch 28 from local cache
+2025-05-06 15:24:11,375 - INFO - Job RESNET18_3 processed batch 28 from local cache
+2025-05-06 15:24:11,375 - INFO - Job RESNET18_2 processed batch 28 from local cache
+2025-05-06 15:24:11,375 - INFO - Producer generated batch 29
+2025-05-06 15:24:11,375 - INFO - Job RESNET18_3 processed batch 29 from local cache
+2025-05-06 15:24:11,375 - INFO - Job RESNET18_2 processed batch 29 from local cache
+2025-05-06 15:24:11,375 - INFO - Job RESNET18_1 processed batch 29 from local cache
+2025-05-06 15:24:11,375 - INFO - Job RESNET18_4 processed batch 29 from local cache
+2025-05-06 15:24:11,375 - INFO - Producer generated batch 30
+2025-05-06 15:24:11,376 - INFO - Job RESNET18_1 processed batch 30 from local cache
+2025-05-06 15:24:11,376 - INFO - Job RESNET18_4 processed batch 30 from local cache
+2025-05-06 15:24:11,376 - INFO - Job RESNET18_3 processed batch 30 from local cache
+2025-05-06 15:24:11,376 - INFO - Job RESNET18_2 processed batch 30 from local cache
+2025-05-06 15:24:11,376 - INFO - Producer generated batch 31
+2025-05-06 15:24:11,376 - INFO - Job RESNET18_3 processed batch 31 from local cache
+2025-05-06 15:24:11,376 - INFO - Job RESNET18_2 processed batch 31 from local cache
+2025-05-06 15:24:11,376 - INFO - Job RESNET18_1 processed batch 31 from local cache
+2025-05-06 15:24:11,376 - INFO - Job RESNET18_4 processed batch 31 from local cache
+2025-05-06 15:24:11,376 - INFO - Producer generated batch 32
+2025-05-06 15:24:11,376 - INFO - Job RESNET18_1 processed batch 32 from local cache
+2025-05-06 15:24:11,376 - INFO - Job RESNET18_4 processed batch 32 from local cache
+2025-05-06 15:24:11,376 - INFO - Job RESNET18_3 processed batch 32 from local cache
+2025-05-06 15:24:11,376 - INFO - Job RESNET18_2 processed batch 32 from local cache
+2025-05-06 15:24:11,377 - INFO - Producer generated batch 33
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_3 processed batch 33 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_2 processed batch 33 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_1 processed batch 33 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_4 processed batch 33 from local cache
+2025-05-06 15:24:11,377 - INFO - Producer generated batch 34
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_1 processed batch 34 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_4 processed batch 34 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_3 processed batch 34 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_2 processed batch 34 from local cache
+2025-05-06 15:24:11,377 - INFO - Producer generated batch 35
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_3 processed batch 35 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_2 processed batch 35 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_1 processed batch 35 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_4 processed batch 35 from local cache
+2025-05-06 15:24:11,377 - INFO - Producer generated batch 36
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_1 processed batch 36 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_4 processed batch 36 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_3 processed batch 36 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_2 processed batch 36 from local cache
+2025-05-06 15:24:11,377 - INFO - Producer generated batch 37
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_3 processed batch 37 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_2 processed batch 37 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_1 processed batch 37 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_4 processed batch 37 from local cache
+2025-05-06 15:24:11,377 - INFO - Producer generated batch 38
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_1 processed batch 38 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_4 processed batch 38 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_3 processed batch 38 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_2 processed batch 38 from local cache
+2025-05-06 15:24:11,377 - INFO - Producer generated batch 39
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_3 processed batch 39 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_2 processed batch 39 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_1 processed batch 39 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_4 processed batch 39 from local cache
+2025-05-06 15:24:11,377 - INFO - Producer generated batch 40
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_1 processed batch 40 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_4 processed batch 40 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_3 processed batch 40 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_2 processed batch 40 from local cache
+2025-05-06 15:24:11,377 - INFO - Producer generated batch 41
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_3 processed batch 41 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_2 processed batch 41 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_1 processed batch 41 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_4 processed batch 41 from local cache
+2025-05-06 15:24:11,377 - INFO - Producer generated batch 42
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_1 processed batch 42 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_4 processed batch 42 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_3 processed batch 42 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_2 processed batch 42 from local cache
+2025-05-06 15:24:11,377 - INFO - Producer generated batch 43
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_3 processed batch 43 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_2 processed batch 43 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_1 processed batch 43 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_4 processed batch 43 from local cache
+2025-05-06 15:24:11,377 - INFO - Producer generated batch 44
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_1 processed batch 44 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_4 processed batch 44 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_3 processed batch 44 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_2 processed batch 44 from local cache
+2025-05-06 15:24:11,377 - INFO - Producer generated batch 45
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_3 processed batch 45 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_2 processed batch 45 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_1 processed batch 45 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_4 processed batch 45 from local cache
+2025-05-06 15:24:11,377 - INFO - Producer generated batch 46
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_1 processed batch 46 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_4 processed batch 46 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_3 processed batch 46 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_2 processed batch 46 from local cache
+2025-05-06 15:24:11,377 - INFO - Producer generated batch 47
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_3 processed batch 47 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_2 processed batch 47 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_1 processed batch 47 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_4 processed batch 47 from local cache
+2025-05-06 15:24:11,377 - INFO - Producer generated batch 48
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_1 processed batch 48 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_4 processed batch 48 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_3 processed batch 48 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_2 processed batch 48 from local cache
+2025-05-06 15:24:11,377 - INFO - Producer generated batch 49
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_3 processed batch 49 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_2 processed batch 49 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_1 processed batch 49 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_4 processed batch 49 from local cache
+2025-05-06 15:24:11,377 - INFO - Producer generated batch 50
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_1 processed batch 50 from local cache
+2025-05-06 15:24:11,377 - INFO - Job RESNET18_4 processed batch 50 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_3 processed batch 50 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_2 processed batch 50 from local cache
+2025-05-06 15:24:11,382 - INFO - Producer generated batch 51
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_3 processed batch 51 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_2 processed batch 51 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_1 processed batch 51 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_4 processed batch 51 from local cache
+2025-05-06 15:24:11,382 - INFO - Producer generated batch 52
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_1 processed batch 52 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_4 processed batch 52 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_3 processed batch 52 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_2 processed batch 52 from local cache
+2025-05-06 15:24:11,382 - INFO - Producer generated batch 53
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_3 processed batch 53 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_2 processed batch 53 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_1 processed batch 53 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_4 processed batch 53 from local cache
+2025-05-06 15:24:11,382 - INFO - Producer generated batch 54
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_1 processed batch 54 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_4 processed batch 54 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_3 processed batch 54 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_2 processed batch 54 from local cache
+2025-05-06 15:24:11,382 - INFO - Producer generated batch 55
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_3 processed batch 55 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_2 processed batch 55 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_1 processed batch 55 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_4 processed batch 55 from local cache
+2025-05-06 15:24:11,382 - INFO - Producer generated batch 56
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_1 processed batch 56 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_4 processed batch 56 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_3 processed batch 56 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_2 processed batch 56 from local cache
+2025-05-06 15:24:11,382 - INFO - Producer generated batch 57
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_3 processed batch 57 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_2 processed batch 57 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_1 processed batch 57 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_4 processed batch 57 from local cache
+2025-05-06 15:24:11,382 - INFO - Producer generated batch 58
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_1 processed batch 58 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_4 processed batch 58 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_3 processed batch 58 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_2 processed batch 58 from local cache
+2025-05-06 15:24:11,382 - INFO - Producer generated batch 59
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_3 processed batch 59 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_2 processed batch 59 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_1 processed batch 59 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_4 processed batch 59 from local cache
+2025-05-06 15:24:11,382 - INFO - Producer generated batch 60
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_1 processed batch 60 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_4 processed batch 60 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_3 processed batch 60 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_2 processed batch 60 from local cache
+2025-05-06 15:24:11,382 - INFO - Producer generated batch 61
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_3 processed batch 61 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_2 processed batch 61 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_1 processed batch 61 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_4 processed batch 61 from local cache
+2025-05-06 15:24:11,382 - INFO - Producer generated batch 62
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_1 processed batch 62 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_4 processed batch 62 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_3 processed batch 62 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_2 processed batch 62 from local cache
+2025-05-06 15:24:11,382 - INFO - Producer generated batch 63
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_3 processed batch 63 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_2 processed batch 63 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_1 processed batch 63 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_4 processed batch 63 from local cache
+2025-05-06 15:24:11,382 - INFO - Producer generated batch 64
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_1 processed batch 64 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_4 processed batch 64 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_3 processed batch 64 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_2 processed batch 64 from local cache
+2025-05-06 15:24:11,382 - INFO - Producer generated batch 65
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_3 processed batch 65 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_2 processed batch 65 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_1 processed batch 65 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_4 processed batch 65 from local cache
+2025-05-06 15:24:11,382 - INFO - Producer generated batch 66
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_1 processed batch 66 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_4 processed batch 66 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_3 processed batch 66 from local cache
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_2 processed batch 66 from local cache
+2025-05-06 15:24:11,382 - INFO - Producer generated batch 67
+2025-05-06 15:24:11,382 - INFO - Job RESNET18_3 processed batch 67 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_2 processed batch 67 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_1 processed batch 67 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_4 processed batch 67 from local cache
+2025-05-06 15:24:11,387 - INFO - Producer generated batch 68
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_1 processed batch 68 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_4 processed batch 68 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_3 processed batch 68 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_2 processed batch 68 from local cache
+2025-05-06 15:24:11,387 - INFO - Producer generated batch 69
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_3 processed batch 69 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_2 processed batch 69 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_1 processed batch 69 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_4 processed batch 69 from local cache
+2025-05-06 15:24:11,387 - INFO - Producer generated batch 70
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_1 processed batch 70 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_4 processed batch 70 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_3 processed batch 70 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_2 processed batch 70 from local cache
+2025-05-06 15:24:11,387 - INFO - Producer generated batch 71
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_3 processed batch 71 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_2 processed batch 71 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_1 processed batch 71 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_4 processed batch 71 from local cache
+2025-05-06 15:24:11,387 - INFO - Producer generated batch 72
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_1 processed batch 72 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_4 processed batch 72 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_3 processed batch 72 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_2 processed batch 72 from local cache
+2025-05-06 15:24:11,387 - INFO - Producer generated batch 73
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_3 processed batch 73 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_2 processed batch 73 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_1 processed batch 73 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_4 processed batch 73 from local cache
+2025-05-06 15:24:11,387 - INFO - Producer generated batch 74
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_1 processed batch 74 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_4 processed batch 74 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_3 processed batch 74 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_2 processed batch 74 from local cache
+2025-05-06 15:24:11,387 - INFO - Producer generated batch 75
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_3 processed batch 75 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_2 processed batch 75 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_1 processed batch 75 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_4 processed batch 75 from local cache
+2025-05-06 15:24:11,387 - INFO - Producer generated batch 76
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_1 processed batch 76 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_4 processed batch 76 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_3 processed batch 76 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_2 processed batch 76 from local cache
+2025-05-06 15:24:11,387 - INFO - Producer generated batch 77
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_3 processed batch 77 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_2 processed batch 77 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_1 processed batch 77 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_4 processed batch 77 from local cache
+2025-05-06 15:24:11,387 - INFO - Producer generated batch 78
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_1 processed batch 78 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_4 processed batch 78 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_3 processed batch 78 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_2 processed batch 78 from local cache
+2025-05-06 15:24:11,387 - INFO - Producer generated batch 79
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_3 processed batch 79 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_2 processed batch 79 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_1 processed batch 79 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_4 processed batch 79 from local cache
+2025-05-06 15:24:11,387 - INFO - Producer generated batch 80
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_1 processed batch 80 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_4 processed batch 80 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_3 processed batch 80 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_2 processed batch 80 from local cache
+2025-05-06 15:24:11,387 - INFO - Producer generated batch 81
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_3 processed batch 81 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_2 processed batch 81 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_1 processed batch 81 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_4 processed batch 81 from local cache
+2025-05-06 15:24:11,387 - INFO - Producer generated batch 82
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_1 processed batch 82 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_4 processed batch 82 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_3 processed batch 82 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_2 processed batch 82 from local cache
+2025-05-06 15:24:11,387 - INFO - Producer generated batch 83
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_3 processed batch 83 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_2 processed batch 83 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_1 processed batch 83 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_4 processed batch 83 from local cache
+2025-05-06 15:24:11,387 - INFO - Producer generated batch 84
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_1 processed batch 84 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_4 processed batch 84 from local cache
+2025-05-06 15:24:11,387 - INFO - Job RESNET18_3 processed batch 84 from local cache
+2025-05-06 15:24:11,392 - INFO - Job RESNET18_2 processed batch 84 from local cache
+2025-05-06 15:24:11,392 - INFO - Producer generated batch 85
+2025-05-06 15:24:11,392 - INFO - Job RESNET18_3 processed batch 85 from local cache
+2025-05-06 15:24:11,392 - INFO - Job RESNET18_2 processed batch 85 from local cache
+2025-05-06 15:24:11,392 - INFO - Job RESNET18_1 processed batch 85 from local cache
+2025-05-06 15:24:11,392 - INFO - Job RESNET18_4 processed batch 85 from local cache
+2025-05-06 15:24:11,392 - INFO - Producer generated batch 86
+2025-05-06 15:24:11,392 - INFO - Job RESNET18_1 processed batch 86 from local cache
+2025-05-06 15:24:11,392 - INFO - Job RESNET18_4 processed batch 86 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_3 processed batch 86 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_2 processed batch 86 from local cache
+2025-05-06 15:24:11,393 - INFO - Producer generated batch 87
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_3 processed batch 87 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_2 processed batch 87 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_1 processed batch 87 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_4 processed batch 87 from local cache
+2025-05-06 15:24:11,393 - INFO - Producer generated batch 88
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_1 processed batch 88 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_4 processed batch 88 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_3 processed batch 88 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_2 processed batch 88 from local cache
+2025-05-06 15:24:11,393 - INFO - Producer generated batch 89
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_3 processed batch 89 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_2 processed batch 89 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_1 processed batch 89 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_4 processed batch 89 from local cache
+2025-05-06 15:24:11,393 - INFO - Producer generated batch 90
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_1 processed batch 90 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_4 processed batch 90 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_3 processed batch 90 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_2 processed batch 90 from local cache
+2025-05-06 15:24:11,393 - INFO - Producer generated batch 91
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_3 processed batch 91 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_2 processed batch 91 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_1 processed batch 91 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_4 processed batch 91 from local cache
+2025-05-06 15:24:11,393 - INFO - Producer generated batch 92
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_1 processed batch 92 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_4 processed batch 92 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_3 processed batch 92 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_2 processed batch 92 from local cache
+2025-05-06 15:24:11,393 - INFO - Producer generated batch 93
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_3 processed batch 93 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_2 processed batch 93 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_1 processed batch 93 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_4 processed batch 93 from local cache
+2025-05-06 15:24:11,393 - INFO - Producer generated batch 94
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_1 processed batch 94 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_4 processed batch 94 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_3 processed batch 94 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_2 processed batch 94 from local cache
+2025-05-06 15:24:11,393 - INFO - Producer generated batch 95
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_3 processed batch 95 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_2 processed batch 95 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_1 processed batch 95 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_4 processed batch 95 from local cache
+2025-05-06 15:24:11,393 - INFO - Producer generated batch 96
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_1 processed batch 96 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_4 processed batch 96 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_3 processed batch 96 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_2 processed batch 96 from local cache
+2025-05-06 15:24:11,393 - INFO - Producer generated batch 97
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_3 processed batch 97 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_2 processed batch 97 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_1 processed batch 97 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_4 processed batch 97 from local cache
+2025-05-06 15:24:11,393 - INFO - Producer generated batch 98
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_1 processed batch 98 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_4 processed batch 98 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_3 processed batch 98 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_2 processed batch 98 from local cache
+2025-05-06 15:24:11,393 - INFO - Producer generated batch 99
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_3 processed batch 99 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_2 processed batch 99 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_1 processed batch 99 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_4 processed batch 99 from local cache
+2025-05-06 15:24:11,393 - INFO - Producer generated batch 100
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_1 processed batch 100 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_4 processed batch 100 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_3 processed batch 100 from local cache
+2025-05-06 15:24:11,393 - INFO - Job RESNET18_2 processed batch 100 from local cache

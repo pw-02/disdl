@@ -11,12 +11,12 @@ import time
 import collections
 import random
 
-logging.basicConfig(level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    filename='app.log',         # Log file name
-    filemode='w'                # Overwrite the file each run; use 'a' to append
-)
-logger = logging.getLogger(__name__)
+# logging.basicConfig(level=logging.INFO,
+#     format='%(asctime)s - %(levelname)s - %(message)s',
+#     filename='app.log',         # Log file name
+#     filemode='w'                # Overwrite the file each run; use 'a' to append
+# )
+# logger = logging.getLogger(__name__)
 
 
 class SharedCache:
@@ -42,14 +42,14 @@ class SharedCache:
         if self.cache_is_full():
             if self.policy == "noevict":
                 # Do nothing; can't insert and can't evict
-                logger.debug(f"Cache full and noevict policy: Skipping insert for batch {batch_id}")
+                # logger.debug(f"Cache full and noevict policy: Skipping insert for batch {batch_id}")
                 return
             else:
                 self._evict_one()
         # Now safe to insert
         self.cache[batch_id] = True
         self._timestamps[batch_id] = time.time()
-        logger.debug(f"Added batch {batch_id} to cache")
+        # logger.debug(f"Added batch {batch_id} to cache")
         self.max_size_used = max(self.max_size_used, len(self.cache))
 
     def cache_is_full(self):
@@ -58,7 +58,7 @@ class SharedCache:
     def _remove(self, batch_id: Any):
         self.cache.pop(batch_id, None)
         self._timestamps.pop(batch_id, None)
-        logger.debug(f"Removed batch {batch_id} from cache")
+        # logger.debug(f"Removed batch {batch_id} from cache")
 
     def _evict_one(self):
         if self.policy == "lru":

@@ -38,13 +38,15 @@ workloads = {
         'RESNET18': 0.104419951,
         'RESNET50': 0.33947309,
         'VGG16': 0.514980298,
-        # 'prefetcher': 0.000001
     },
     'imagenet_128_hpo': {
         'RESNET18_1': 0.104419951,
         'RESNET18_2': 0.104419951,
         'RESNET18_3': 0.104419951,
         'RESNET18_4': 0.104419951
+    },
+      'imagenet_128_resnet50': {
+        'RESNET50': 0.33947309,
     },
 }
 

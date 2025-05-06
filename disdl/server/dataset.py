@@ -128,9 +128,7 @@ class OpenImagesDataset():
             "num_samples": len(self)}
 
 class ImageNetDataset():
-    def __init__(self, 
-                 dataset_location: str, 
-                 transforms=None):
+    def __init__(self, dataset_location: str, transforms=None):
         
         self.dataset_location = dataset_location
         self.s3_bucket = S3Url(self.dataset_location).bucket
@@ -203,18 +201,6 @@ class ImageNetDataset():
             "num_samples": len(self)}
     
     
-
-
-
-
-
-
-
-
-
-
-
-
 class LibSpeechDataset():
     def __init__(self, 
                  dataset_location: str, 

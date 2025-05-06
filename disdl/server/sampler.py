@@ -17,9 +17,9 @@ class PartitionedBatchSampler():
         self.batches_per_epoch = self.calc_num_batchs_per_epoch()
 
         # Initialize epoch tracking
-        self.current_epoch = 0
-        self.processed_partitions = 0  # Counts how many partitions we've used
-        self.current_idx = 0  # Counts how many batches we've generated
+        self.current_epoch = 1
+        self.current_idx = 1
+        self.processed_partitions = 0  # Track processed partitions in the current epoch
         # Start with the first partition
         self.active_partition_idx, self.active_partition = next(self.partitions_cycle)
         self.sampler = self._create_sampler(self.active_partition)
@@ -43,7 +43,6 @@ class PartitionedBatchSampler():
                 sampled_indices.append(next(self.sampler))  # Get an index from the partition
             except StopIteration:
                 if not self.drop_last and sampled_indices:
-                    
                     return self.generate_batch(sampled_indices)  # Return smaller batch if drop_last=False
                 
                 # Move to the next partition
@@ -51,7 +50,7 @@ class PartitionedBatchSampler():
                 if self.processed_partitions == self.num_partitions:
                     self.current_epoch += 1  # Full epoch completed
                     self.processed_partitions = 0  # Reset for the next epoch
-                    self.current_idx = 0  # Reset for the next epoch
+                    self.current_idx = 1  # Reset for the next epoch
                     # print(f"Epoch {self.current_epoch} completed!")  # Notify when an epoch ends
 
                 self.active_partition_idx, self.active_partition = next(self.partitions_cycle)
@@ -61,18 +60,9 @@ class PartitionedBatchSampler():
         return self.generate_batch(sampled_indices)
     
     def generate_batch(self, batch_indices):
-        batch_id = f"{self.current_epoch}_{self.active_partition_idx}_{self.current_idx}_{self.create_unique_id(batch_indices, 16)}"
-        self.current_idx += 1
-        return Batch(batch_indices, batch_id, self.current_epoch, self.active_partition_idx)
-
-    def create_unique_id(self,int_list, length = 32):
-        # Convert integers to strings and concatenate them
-        id_string = ''.join(str(x) for x in int_list)
-        
-        # Hash the concatenated string to generate a unique ID
-        unique_id = hashlib.md5(id_string.encode()).hexdigest()
-        #Truncate the hash to the desired length
-        return unique_id[:length]
+        next_batch = Batch(batch_indices, self.current_epoch, self.active_partition_idx+1, self.current_idx)
+        self.current_idx += 1  # Increment the batch index for the next batch
+        return next_batch
 
     def _partition_indices(self, num_partitions):
     # Initialize a list to hold the partitions
@@ -114,50 +104,12 @@ class PartitionedBatchSampler():
 
 if __name__ == "__main__":
     
-    from dataset import Dataset
-    dataset = Dataset(
-        data_dir="s3://sdl-cifar10/test/",
-        transforms=None,
-        max_dataset_size=None,
-        use_local_folder=False)
-    print(f"Total samples: {len(dataset)}")
-
-    sampler = PartitionedBatchSampler(len(dataset), 
-                                      batch_size=100, 
-                                      num_partitions=10, 
+    sampler = PartitionedBatchSampler(10, 
+                                      batch_size=2, 
+                                      num_partitions=1, 
                                       drop_last=False, 
                                       shuffle=True)
-    
-    epoch_partition_batches: Dict[int, Dict[int, BatchSet]] = OrderedDict()  #first key is epoch id, second key is partition id, value is the batches
-
-    # Generate initial batches
-    for _ in range(10000):
+    epoch_partition_batches: Dict[int, Dict[int, BatchSet]] = OrderedDict()
+    for _ in range(20):
         next_batch:Batch = next(sampler)
-        # Ensure epoch exists, initializing with an OrderedDict for partitions
-        partition_batches = epoch_partition_batches.setdefault(next_batch.epoch_idx, OrderedDict())
-        
-         # Ensure partition exists, initializing with a new BatchSet if needed
-        partition_batch_set = partition_batches.setdefault(
-            next_batch.partition_id, BatchSet(f'{next_batch.epoch_idx}_{next_batch.partition_id}')
-        )
-        # Store the batch in the BatchSet
-        partition_batch_set.batches[next_batch.batch_id] = next_batch
-    
-    print(epoch_partition_batches)
-
-    # # print(f"Total partitions: {len(sampler.partitions_cycle)}")
-    # paths = set()  # Use a set for quick duplicate detection
-    # path_list = []  # Maintain the ordered list for debugging
-
-    # for i, batch in enumerate(sampler):
-        
-    #     for idx in batch.indicies:
-    #         path, label = dataset._classed_items[idx]
-            
-    #         if path in paths:  # Check if path already exists
-    #             print(f"Duplicate detected! Total unique paths before duplicate: {len(paths)}")
-    #             exit()  # Stop execution immediately
-            
-    #         paths.add(path)
-    #         path_list.append(path)  # Keep track of order (for debugging)
-    #     print(f"Batch {i}: {batch.batch_id} with {len(batch.indicies)} samples")
+        print(f"Batch {next_batch.batch_id} with {len(next_batch.indices)} samples")

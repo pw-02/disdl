@@ -1,7 +1,8 @@
-kind: 'imagenet'
+name: 'imagenet'
 batch_size: 32 #chunk_size  = number of files per chunk
 shuffle: True
 drop_last: False
 prefetch_lambda_name: 'CreateVisionTrainingBatch'
 max_dataset_size: null #gb
-num_dataset_partitions: 1 
+num_partitions: 1
+min_lookahead_steps: 100

@@ -1,4 +1,6 @@
 import threading
+
+import hydra
 from sampler import PartitionedBatchSampler
 from job import DLTJob
 from args import DisDLArgs
@@ -15,50 +17,49 @@ from itertools import cycle  # Import cycle from itertools
 from typing import OrderedDict as TypingOrderedDict
 import csv
 import os
-from cache_eviction import CacheEvictionService
-from cache_prefetching import PrefetchServiceAsync, PrefetchServiceEvent
+from cache_prefetching import PrefetchServiceAsync
 
 class CentralBatchManager:
-    def __init__(self, dataset, args: DisDLArgs, prefetch_workers:int = 10):
+    def __init__(self, 
+                dataset,
+                cache_address:str,
+                batch_size:int,
+                num_partitions:int,
+                drop_last:bool,
+                shuffle:bool,
+                min_lookahead_steps:int,
+                use_prefetching:bool,
+                prefetch_lambda_name:str,
+                prefetch_simulation_time:int = None
+                ):
         self.dataset = dataset
-        self.job_counter = 0
         self.sampler = PartitionedBatchSampler(
             num_files=len(dataset),
-            batch_size=args.batch_size,
-            num_partitions=args.num_dataset_partitions,
-            drop_last=args.drop_last,
-            shuffle=args.shuffle)
+            batch_size=batch_size,
+            num_partitions=num_partitions,
+            drop_last=drop_last,
+            shuffle=shuffle)
+        
+        print(f"Number of batches per partition: {self.sampler.calc_num_batchs_per_partition()}")
         self.active_epoch_idx = None
         self.active_partition_idx = None
-
-        print(f"Number of batches per partition: {self.sampler.calc_num_batchs_per_partition()}")
-        self.lookahead_distance =  min((self.sampler.calc_num_batchs_per_partition() -1),args.lookahead_steps)
+        self.job_counter = 0
+        self.lookahead_distance =  min((self.sampler.calc_num_batchs_per_partition() -1), min_lookahead_steps)
         self.active_jobs: Dict[str, DLTJob] = {}
         self.epoch_partition_batches: Dict[int, Dict[str, BatchSet]] = OrderedDict() #epoch_id,_parition_id,_batches
+        self.lock = threading.Lock()  # Lock for thread safety
 
         # Initialize prefetch service
         self.prefetch_service: Optional[PrefetchServiceAsync] = None
-        if args.use_prefetching:
+        if use_prefetching:
             self.prefetch_service = PrefetchServiceAsync(
-                lambda_name=args.prefetch_lambda_name,
-                cache_address=args.serverless_cache_address,
-                simulate_time=args.prefetch_simulation_time,
-                num_workers=prefetch_workers)
+                lambda_name=prefetch_lambda_name,
+                cache_address=cache_address,
+                simulate_time=prefetch_simulation_time)
             self.prefetch_service.start()
-            # self._warm_up_cache()
-            # time.sleep(20)  # Wait for the cache to warm up
 
-        self.lock = threading.Lock()  # Lock for thread safety
         for _ in range(self.lookahead_distance):
             self._generate_new_batch()
-
-        # #wait a few seconds for the cache to be warmed up
-        # time.sleep(5)
-
-        # #wait for cache to be warmed up
-        # if self.prefetch_service:
-        #     while self.prefetch_service.queue.qsize() > 0:
-        #         time.sleep(1)
 
     def add_job(self):
         self.job_counter += 1
@@ -76,34 +77,8 @@ class CentralBatchManager:
             'num_partitions': self.sampler.num_partitions,
         }
     
-    def cacl_lamda_invocation_counts(self):
-        prefetch_counts = 0
-        warm_counts = 0
-        get_set_counts = 0
-        
-        if self.prefetch_service:
-            prefetch_counts = self.prefetch_service.lambda_invocations_count
-            get_set_counts = self.prefetch_service.lambda_invocations_count
-
-        if self.eviction_service:
-            eviction_counts = self.eviction_service.lambda_invocations_count
-        
-        get_set_counts = sum(self.job_cache_request_counts.values())
-
-        total_counts = prefetch_counts + warm_counts + get_set_counts
-        return {
-            'num_prefetches': prefetch_counts,
-            'num_warmup_requests': warm_counts,
-            'num_getset_requests': get_set_counts,
-            'total': total_counts
-        }
- 
     def _generate_new_batch(self):
         next_batch:Batch = next(self.sampler)
-
-        if self.evict_from_cache_simulation_time:
-            next_batch.evict_from_cache_simulation_time = self.evict_from_cache_simulation_time
-
         self.active_epoch_idx = next_batch.epoch_idx
         self.active_partition_idx = next_batch.partition_idx
         # Ensure epoch exists, initializing with an OrderedDict for partitions
@@ -143,7 +118,6 @@ class CentralBatchManager:
             if len(partition_batches) >= 2:
                 #check if any job is processing the oldest batch set
                 #get all the batch sets in the partition_batches except the last one
-
                 candidate_batch_sets = list(partition_batches.keys())[:-1]
                 for bacth_set_id in candidate_batch_sets:
                     not_in_use = True
@@ -155,21 +129,16 @@ class CentralBatchManager:
                         #remove the entire batch set from the partition_batches
                         partition_batches.pop(bacth_set_id)
                 
-            
-    
     def total_active_batches(self):
-
         count = 0
         for epoch in self.epoch_partition_batches.values():
             for partition_batches in epoch.values():
                 count += len(partition_batches.batches)
         return count
 
-    
     def total_active_partitions(self):
         return sum(len(partition_batches) for partition_batches in self.epoch_partition_batches.values())
     
-
     def _warm_up_cache(self, max_batches:int = 40):
         warm_up_started = time.perf_counter()
         prefetch_list: TypingOrderedDict[str, Tuple[Batch, str]] = OrderedDict()
@@ -194,8 +163,6 @@ class CentralBatchManager:
             if self.prefetch_service is not None and self.prefetch_service.prefetch_stop_event.is_set():  
                 self.prefetch_service.start()#prefetcher is stopped, start it
             
-            if self.eviction_service is not None and self.eviction_service.cache_eviction_stop_event.is_set():
-                self.eviction_service.start_cache_evictor() #cache evictor is stopped, start it
 
             #if this is a new job, lets add it to the active jobs
             if job_id not in self.active_jobs:
@@ -295,138 +262,29 @@ class CentralBatchManager:
                 if self.eviction_service:
                     self.eviction_service.stop_cache_evictor()
 
+@hydra.main(version_base=None, config_path="conf", config_name="config")
+def main(args: DisDLArgs):
+    # Initialize the dataset based on the workload specified in the args
+    if args.workload == 'mscoco':
+        dataset = MSCOCODataset(dataset_location=args.dataset_location)
+    elif args.workload.name == 'librispeech':
+        dataset = LibSpeechDataset(dataset_location=args.dataset_location)
+    elif args.workload.name == 'imagenet':
+        dataset = ImageNetDataset(dataset_location='ss3://imagenet1k-sdl/val/')
+    else:
+        raise ValueError(f"Unsupported workload: {args.workload}")
 
-# if __name__ == "__main__":
-#     # Constants    
-#     PREFETCH_TIME = 0.1
+    # Create the CentralBatchManager instance
+    batch_manager = CentralBatchManager(dataset=dataset,
+                                        cache_address=args.cache_address,
+                                        batch_size=args.workload.batch_size,
+                                        num_partitions=args.workload.num_partitions,
+                                        drop_last=args.workload.drop_last,
+                                        shuffle=args.workload.shuffle,
+                                        min_lookahead_steps=args.workload.min_lookahead_steps,
+                                        use_prefetching=args.use_prefetching,
+                                        prefetch_lambda_name=args.workload.prefetch_lambda_name,
+                                        prefetch_simulation_time=args.prefetch_simulation_time)
 
-#     CACHE_MISS_DELAY = 0.1
-#     CACHE_HIT_DELAY = 0.1
-#     DELAY_BETWEEN_JOBS = 1  # Delay in seconds between the start of each job
-#     BATCHES_PER_JOB = 20  # Number of batches each job will process
-#     JOB_SPEEDS = [0.1]
-
-#     # Initialize dataset and batch manager
-#     args = DisDLArgs(
-#         batch_size=10,
-#         num_dataset_partitions=1,
-#         lookahead_steps=20,
-#         shuffle=False,
-#         drop_last=False,
-#         workload='speech',
-#         serverless_cache_address=None,
-#         use_prefetching=False,
-#         use_keep_alive=True,
-#         prefetch_lambda_name='CreateVisionTrainingBatch',
-#         prefetch_cost_cap_per_hour=None,
-#         cache_keep_alive_timeout=60,  # 3 minutes
-#         prefetch_simulation_time=PREFETCH_TIME,
-#         evict_from_cache_simulation_time=None
-#     )
-
-#     # dataset = MSCOCODataset(dataset_location='s3://coco-dataset/coco_train.json')
-#     # batch_manager = CentralBatchManager(dataset=dataset, args=args, prefetch_workers=10)
-
-#     dataset = LibSpeechDataset(dataset_location="s3://disdlspeech/test-clean")
-#     batch_manager = CentralBatchManager(dataset=dataset, args=args, prefetch_workers=10)
-
-#     def run_job(job_id, job_speed):
-#         """Function to simulate a job processing batches."""
-#         cache_hits = 0
-#         cache_misses = 0
-
-#         for i in range(BATCHES_PER_JOB):
-#             batch = batch_manager.get_next_batch_for_job(job_id=job_id)
-
-#             if batch.cache_status == CacheStatus.CACHED:
-#                 time.sleep(CACHE_HIT_DELAY + job_speed)
-#                 cache_hits += 1
-#             else:
-#                 time.sleep(CACHE_MISS_DELAY + job_speed)
-#                 cache_misses += 1
-
-#             batch_manager.update_job_progess(
-#                 job_id, batch.batch_id, CACHE_MISS_DELAY, batch.cache_status == CacheStatus.CACHED, job_speed, True
-#             )
-
-#             hit_rate = cache_hits / (i + 1)
-#             if i % 1 == 0 or batch.cache_status != CacheStatus.CACHED:
-#                 logger.info(f'Step {i+1}, Job {job_id}, {batch.batch_id}, Hits: {cache_hits}, Misses: {cache_misses}, Rate: {hit_rate:.2f}')
-
-#         batch_manager.handle_job_ended(job_id)
-
-
-    # if __name__ == "__main__":
-    #     from dataset import ImageNetDataset
-    #     run_job(1,1)
-
-    
 if __name__ == "__main__":
-    # Constants    
-    PREFETCH_TIME = 0.1
-
-    CACHE_MISS_DELAY = 0.1
-    CACHE_HIT_DELAY = 0.1
-    DELAY_BETWEEN_JOBS = 1  # Delay in seconds between the start of each job
-    BATCHES_PER_JOB = 20  # Number of batches each job will process
-    JOB_SPEEDS = [0.1]
-
-    # Initialize dataset and batch manager
-    args = DisDLArgs(
-        batch_size=128,
-        num_dataset_partitions=1,
-        lookahead_steps=100,
-        shuffle=False,
-        drop_last=False,
-        workload='coco',
-        serverless_cache_address=None,
-        use_prefetching=False,
-        use_keep_alive=False,
-        prefetch_lambda_name='CreateMultiModalBatch',
-        prefetch_cost_cap_per_hour=None,
-        cache_keep_alive_timeout=60,  # 3 minutes
-        prefetch_simulation_time=PREFETCH_TIME,
-        evict_from_cache_simulation_time=60
-    )
-    dataset_location = 's3://coco-dataset/coco_train.json'
-    dataset = MSCOCODataset(dataset_location)
-    #dataset = ImageNetDataset(dataset_location='s3://imagenet-dataset/train/')
-    batch_manager = CentralBatchManager(dataset=dataset, args=args, prefetch_workers=0)
-
-    def run_job(job_id, job_speed):
-        """Function to simulate a job processing batches."""
-        cache_hits = 0
-        cache_misses = 0
-
-        for i in range(BATCHES_PER_JOB):
-            batch = batch_manager.get_next_batch_for_job(job_id=job_id)
-
-            if batch.cache_status == CacheStatus.CACHED:
-                time.sleep(CACHE_HIT_DELAY + job_speed)
-                cache_hits += 1
-            else:
-                time.sleep(CACHE_MISS_DELAY + job_speed)
-                cache_misses += 1
-
-            batch_manager.update_job_progess(
-                job_id, batch.batch_id, CACHE_MISS_DELAY, batch.cache_status == CacheStatus.CACHED, job_speed, True
-            )
-
-            hit_rate = cache_hits / (i + 1)
-            if i % 1 == 0 or batch.cache_status != CacheStatus.CACHED:
-                logger.info(f'Step {i+1}, Job {job_id}, {batch.batch_id}, Hits: {cache_hits}, Misses: {cache_misses}, Rate: {hit_rate:.2f}')
-
-        batch_manager.handle_job_ended(job_id)
-
-
-    # if __name__ == "__main__":
-    #     threads = []
-
-    #     for job_id, speed in enumerate(JOB_SPEEDS):
-    #         thread = threading.Thread(target=run_job, args=(job_id, speed,))
-    #         threads.append(thread)
-    #         thread.start()
-    #         time.sleep(DELAY_BETWEEN_JOBS)  # Stagger job start times
-
-    #     for thread in threads:
-    #         thread.join()  # Wait for all jobs to complete
+    main()

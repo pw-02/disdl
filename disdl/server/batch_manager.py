@@ -17,6 +17,7 @@ import csv
 import os
 from cache_prefetching import PrefetchServiceAsync
 # minibatch_service.py
+from sortedcontainers import SortedList
 
 import threading
 from collections import OrderedDict
@@ -55,6 +56,11 @@ class CentralBatchManager:
         self.jobs: Dict[str, DLTJob] = {}
         self.epoch_partition_batches: Dict[int, Dict[int, BatchSet]] = OrderedDict()
         self.lock = threading.Lock()
+        
+        self.cached_batches: Dict[str, Batch] = {}
+        self.eviction_index: SortedList[Tuple[float, float, str]] = SortedList() # Sorted by (reuse_score, timestamp)
+        self.eviction_index_lookup: Dict[str, Tuple[float, float, str]] = {} #delete batches from eviction_index efficiently
+        self.min_reuse_score_to_cache = 0.0 # job isnot  bottlenecked reuse_score is 0 so don't cache
 
         self.prefetch_service: Optional[PrefetchServiceAsync] = None
         if use_prefetching:
@@ -95,15 +101,33 @@ class CentralBatchManager:
             self.jobs[job_id] = DLTJob(job_id, self.num_partitions)
         return self.jobs[job_id]
 
-    def _tag_batch_for_caching(self, batch: Batch):
-        if batch.cache_status == CacheStatus.NOT_CACHED:
-            batch.cache_status = CacheStatus.CACHING_IN_PROGRESS
-
-    def _maybe_trigger_batch_generation(self, batch: Batch):
+    def _maybe_trigger_smaple_next_bacth(self, batch: Batch):
         if batch.is_first_access:
             batch.is_first_access = False
             self._generate_new_batch()
-     
+    
+    def _maybe_cache_batch(self, batch: Batch):
+        should_cache = False
+        eviction_candidate = None
+
+        if batch.cache_status in (CacheStatus.CACHED, CacheStatus.CACHING_IN_PROGRESS):
+            return should_cache, eviction_candidate
+
+        # Apply minimum score cutoff
+        if batch.reuse_score < self.min_reuse_score_to_cache:
+            logger.debug(f"Skipped caching {batch.batch_id}: reuse_score {batch.reuse_score:.2f} below threshold {self.min_reuse_score_to_cache}")
+            return should_cache, eviction_candidate
+
+        should_cache = True
+        batch.set_cache_status(CacheStatus.CACHING_IN_PROGRESS)
+
+        if self.eviction_index:
+            worst_score, _, worst_id = self.eviction_index[0]
+            if batch.reuse_score > worst_score:
+                eviction_candidate = worst_id
+
+        return should_cache, eviction_candidate
+
     def _score_batch_set(self, batch_set: BatchSet, epoch_idx, partition_idx) -> float:
         return float(f"{epoch_idx}.{partition_idx:02d}")
 
@@ -134,7 +158,30 @@ class CentralBatchManager:
         job.active_bacth_set_id = batch_set.id
 
         for batch in batch_set.batches.values():
+            batch.mark_awaiting_to_be_seen_by(job.job_id, job.processing_speed)
             job.future_batches[batch.batch_id] = batch
+    
+    def job_processed_batch_update(self, job: DLTJob, batch_is_cached: bool, job_cached_batch: bool, job_evicted_batch_id: Optional[str]):
+        batch:Batch  = job.current_batch
+        batch.mark_seen_by(job.job_id)
+
+        if batch_is_cached:
+            batch.set_cache_status(CacheStatus.CACHED)
+            
+            if job_cached_batch:
+                self.cached_batches[batch.batch_id] = batch
+
+            # Remove outdated reuse score from eviction index
+            old_entry = self.eviction_index_lookup.pop(batch.batch_id, None)
+            if old_entry:
+                self.eviction_index.discard(old_entry)
+
+            # Re-insert updated entry
+            new_entry = (batch.reuse_score, time.time(), batch.batch_id)
+            self.eviction_index.add(new_entry)
+            self.eviction_index_lookup[batch.batch_id] = new_entry
+        # update job's internal state
+        pass
     
     def get_next_batch_for_job(self, job_id: str) -> Optional[Batch]:
         with self.lock:
@@ -145,34 +192,13 @@ class CentralBatchManager:
 
             if not job.future_batches:
                 self.assign_batch_set_to_job(job)
+            
+            next_batch = job.next_batch()
+            should_cache, eivction_candidate = self._maybe_cache_batch(next_batch)
+            self._maybe_trigger_smaple_next_bacth(next_batch)
+            return next_batch, should_cache, eivction_candidate
 
-            # Step 1: Prefer cached batches with highest reuse score
-            eligible_cached = [
-                batch for batch in job.future_batches.values()
-                if batch.cache_status != CacheStatus.NOT_CACHED
-            ]
-            if eligible_cached:
-                next_batch = min(eligible_cached, key=lambda b: b.reuse_score)
-            else:
-                # Step 2: Fallback to any non-CACHING_IN_PROGRESS batch
-                next_batch = None
-                for batch_id, batch in job.future_batches.items():
-                    if batch.cache_status != CacheStatus.CACHING_IN_PROGRESS:
-                        next_batch = batch
-                        break
 
-                # Step 3: Fallback to any available batch
-                if not next_batch and job.future_batches:
-                    next_batch = next(iter(job.future_batches.values()))
-
-            if next_batch:
-                next_batch.set_last_accessed_time()
-                job.future_batches.pop(next_batch.batch_id, None)
-
-                self._tag_batch_for_caching(next_batch)
-                self._maybe_trigger_batch_generation(next_batch)
-
-            return next_batch
 
 @hydra.main(version_base=None, config_path="conf", config_name="config")
 def main(args: DisDLArgs):

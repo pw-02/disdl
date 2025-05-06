@@ -21,6 +21,17 @@ class BatchSet:
         self.batches: Dict[str, Batch] = OrderedDict()
         self.batches_finalized = False
         self.mark_for_eviction = False
+        self.lock = threading.Lock()
+        self.bacth_set_reuse_score = 0.0
+    
+    def compute_batch_set_reuse_score(self):
+        """Compute the reuse score based on the number of jobs that have seen this batch."""
+        with self.lock:
+            score = 0.0
+            for batch in self.batches.values():
+                score += batch.reuse_score
+            self.bacth_set_reuse_score = score
+    
 
 class Batch:
     def __init__(self, batch_indicies, epoch_idx, partition_idx, batch_idx):
@@ -28,30 +39,45 @@ class Batch:
         self.epoch_idx:int = epoch_idx
         self.partition_idx:int = partition_idx
         self.batch_idx:int = batch_idx
-        self.batch_id:str = self.gen_batch_id(epoch_idx, partition_idx, batch_idx)
+        self.batch_id:str = self._gen_batch_id(epoch_idx, partition_idx, batch_idx)
         self.batch_set_id = f"{epoch_idx}_{partition_idx}"
         self.cache_status:CacheStatus = CacheStatus.NOT_CACHED
         self.last_accessed_time:float = 0 #None #float('inf')
         self.is_first_access = True
         self.lock = threading.Lock()  # Lock for accessing shared resources
-        self.seen_by_jobs: Set[str] = set()
         self.reuse_score: float = 0.0
+        self.awaiting_to_be_seen_by: Dict[str, float] = {}
 
+    # def compute_weighted_reuse_score(self, current_time: float, job_next_access_times: Dict[str, float]):
+    #     #job_next_access_times is a dictionary mapping job IDs to their next expected access time for this batch.
+    #     #The score gives higher priority to batches that will be reused sooner
+    #     with self.lock:
+    #         self.reuse_score = sum(
+    #             weight / (1 + job_next_access_times[job_id] - current_time)
+    #             for job_id, weight in self.awaiting_to_be_seen_by.items()
+    #             if job_id in job_next_access_times
+    #         )
+
+    
+    def compute_weighted_reuse_score(self):
+        """Compute the reuse score based on the number of jobs that have seen this batch."""
+        with self.lock:
+            self.reuse_score = sum(self.awaiting_to_be_seen_by.values())
     
     def mark_seen_by(self, job_id: str):
         with self.lock:
-            self.seen_by_jobs.add(job_id)
+            if job_id in self.awaiting_to_be_seen_by:
+                del self.awaiting_to_be_seen_by[job_id]
+            self.compute_weighted_reuse_score()
 
-    
-    def has_been_seen_by(self, job_id: str) -> bool:
-        with self.lock:
-            return job_id in self.seen_by_jobs
-    
-    def is_fully_seen(self, num_jobs: int) -> bool:
-        with self.lock:
-            return len(self.seen_by_jobs) >= num_jobs
+    def mark_awaiting_to_be_seen_by(self, job_id: str, weight: float):
+        # with self.lock:
+            if job_id not in self.awaiting_to_be_seen_by:
+                self.awaiting_to_be_seen_by[job_id] = weight
+            self.compute_weighted_reuse_score()
 
-    def gen_batch_id(self, epoch_idx:int, partition_idx:int, batch_idx:int) -> str:
+
+    def _gen_batch_id(self, epoch_idx:int, partition_idx:int, batch_idx:int) -> str:
         # Convert integers to strings and concatenate them
         id_string = ''.join(str(x) for x in self.indices)
         unique_id = hashlib.md5(id_string.encode()).hexdigest()

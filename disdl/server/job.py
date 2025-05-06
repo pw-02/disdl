@@ -7,6 +7,7 @@ import threading
 from logger_config import logger
 import math
 import time
+# from sortedcontainers import SortedList
 
 class DLTJob:
     def __init__(self, job_id: str, num_partitions: int):
@@ -21,9 +22,16 @@ class DLTJob:
         # Active state
         self.active_bacth_set_id = None
         self.future_batches: OrderedDict[str, Batch] = OrderedDict()
-
+        # self.future_cached_batches: SortedList[Tuple[float, str]] = SortedList()
+        #job.future_cached_batches.add((batch.reuse_score, batch.batch_id))
+        ## To get the best cached one:
+        #best_cached_id = job.future_cached_batches[0][1]
+        #best_batch = job.future_batches[best_cached_id]
         # Simulated job speed (steps per second); can be updated dynamically
         self.processing_speed = 1.0
+        self.current_batch = None
+        self.dataload_delay = AverageMeter('Dataload Delay')
+        self.lock = threading.Lock()
 
     def has_completed_epoch(self) -> bool:
         return len(self.partitions_covered_this_epoch) == self.num_partitions
@@ -31,8 +39,27 @@ class DLTJob:
     def reset_for_new_epoch(self):
         self.current_epoch_idx += 1
         self.partitions_covered_this_epoch.clear()
-
-
+    
+    def next_batch(self) -> Optional[Batch]:
+        with self.lock:
+            next_batch = None
+            best_score = float('inf')
+            fallback_batch = None
+            for batch in self.future_batches.values():
+                if batch.cache_status == CacheStatus.CACHED:
+                    if batch.reuse_score < best_score:
+                        next_batch = batch
+                        best_score = batch.reuse_score
+                elif batch.cache_status != CacheStatus.CACHING_IN_PROGRESS and fallback_batch is None:
+                    fallback_batch = batch
+            if not next_batch:
+                next_batch = fallback_batch
+            
+            if next_batch:
+                next_batch.set_last_accessed_time()
+                self.future_batches.pop(next_batch.batch_id, None)
+            self.current_batch = next_batch
+            return next_batch
 
 # class DLTJob:
 #     def __init__(self, job_id: str):

@@ -1,17 +1,19 @@
+import hashlib
 import heapq
+from itertools import cycle
 import numpy as np
 import logging
-from typing import List, Tuple, Dict, Set, Any
+from typing import List, Sized, Tuple, Dict, Set, Any
 import sys
+from sortedcontainers import SortedList
 sys.path.append(".")
 from simulation.sim_workloads import workloads
 from simulation.sim_cache import SharedCache
-from simulation.sim_job import Job
-import os
-import csv
 import time
-import collections
 import random
+from enum import Enum
+from typing import List, Optional, Dict, Tuple
+from collections import deque, OrderedDict
 
 logging.basicConfig(
     level=logging.INFO,
@@ -19,138 +21,388 @@ logging.basicConfig(
     filename='app.log',         # Log file name
     filemode='w'                # Overwrite the file each run; use 'a' to append
 )
+
 logger = logging.getLogger(__name__)
 
+class CacheStatus(Enum):
+    CACHED = "CACHED"
+    CACHING_IN_PROGRESS = "CACHING_IN_PROGRESS"
+    NOT_CACHED = "NOT_CACHED"
+
+
+class BatchSet:
+    def __init__(self, batch_set_id:str):
+        self.id = batch_set_id
+        self.batches: Dict[str, Batch] = OrderedDict()
+        self.batches_finalized = False
+        self.mark_for_eviction = False
+        self.bacth_set_reuse_score = 0.0
+    
+    def compute_batch_set_reuse_score(self):
+        """Compute the reuse score based on the number of jobs that have seen this batch."""
+        with self.lock:
+            score = 0.0
+            for batch in self.batches.values():
+                score += batch.reuse_score
+            self.bacth_set_reuse_score = score
+    
+
+class Batch:
+    def __init__(self, batch_indicies, epoch_idx, partition_idx, batch_idx):
+        self.indices: List[int] = batch_indicies
+        self.epoch_idx:int = epoch_idx
+        self.partition_idx:int = partition_idx
+        self.batch_idx:int = batch_idx
+        self.batch_id:str = self._gen_batch_id(epoch_idx, partition_idx, batch_idx)
+        self.batch_set_id = f"{epoch_idx}_{partition_idx}"
+        self.cache_status:CacheStatus = CacheStatus.NOT_CACHED
+        self.last_accessed_time:float = 0 #None #float('inf')
+        self.is_first_access = True
+        self.reuse_score: float = 0.0
+        self.awaiting_to_be_seen_by: Dict[str, float] = {}
+
+    def compute_weighted_reuse_score(self):
+        """Compute the reuse score based on the number of jobs that have seen this batch."""
+        self.reuse_score = sum(self.awaiting_to_be_seen_by.values())
+    
+    def mark_seen_by(self, job_id: str):
+        # with self.lock:
+            if job_id in self.awaiting_to_be_seen_by:
+                del self.awaiting_to_be_seen_by[job_id]
+            self.compute_weighted_reuse_score()
+
+    def mark_awaiting_to_be_seen_by(self, job_id: str, weight: float):
+        # with self.lock:
+            if job_id not in self.awaiting_to_be_seen_by:
+                self.awaiting_to_be_seen_by[job_id] = weight
+            self.compute_weighted_reuse_score()
+
+
+    def _gen_batch_id(self, epoch_idx:int, partition_idx:int, batch_idx:int) -> str:
+        # Convert integers to strings and concatenate them
+        id_string = ''.join(str(x) for x in self.indices)
+        unique_id = hashlib.md5(id_string.encode()).hexdigest()
+        unique_id = unique_id[:16]
+        batch_id = f"{epoch_idx}_{partition_idx}_{batch_idx}_{unique_id}"
+        return batch_id
+
+    def time_since_last_access(self):
+        """Calculate time elapsed since last access."""
+        if self.is_first_access:
+            return 0
+        return time.perf_counter() - self.last_accessed_time
+        
+    def set_last_accessed_time(self):
+        """Set the last accessed time to the current time."""
+        self.last_accessed_time = time.perf_counter()
+    
+    def set_cache_status(self, cache_status:CacheStatus):
+        self.cache_status = cache_status
+
+
+class Dataset:
+    def __init__(self, num_samples: str):
+        self.num_samples = num_samples
+
+    def __len__(self) -> int:
+        return self.num_samples
+    
+class PartitionedBatchSampler():
+    def __init__(self, num_files:Sized, batch_size, num_partitions = 10,  drop_last=False, shuffle=True):
+        self.num_files = num_files
+        self.shuffle = shuffle
+        self.batch_size = batch_size
+        self.drop_last = drop_last
+        partitions = self._partition_indices(num_partitions) # List of partitions (each a list of indices)
+        self.partitions_cycle = cycle(enumerate(partitions))  # Track partition index
+        self.num_partitions = len(partitions)
+        self.batches_per_epoch = self.calc_num_batchs_per_epoch()
+
+        # Initialize epoch tracking
+        self.current_epoch = 1
+        self.current_idx = 1
+        self.processed_partitions = 0  # Track processed partitions in the current epoch
+        # Start with the first partition
+        self.active_partition_idx, self.active_partition = next(self.partitions_cycle)
+        self.sampler = self._create_sampler(self.active_partition)
+
+    def _create_sampler(self, partition):
+        """Create a new sampler based on the shuffle setting."""
+        if self.shuffle:
+            return iter(random.sample(partition, len(partition)))  # Random order
+        else:
+            return iter(partition)  # Sequential order
+    
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        """Generate a mini-batch from the current partition, switching partitions when needed."""
+        sampled_indices = []
+
+        while len(sampled_indices) < self.batch_size:
+            try:
+                sampled_indices.append(next(self.sampler))  # Get an index from the partition
+            except StopIteration:
+                if not self.drop_last and sampled_indices:
+                    return self.generate_batch(sampled_indices)  # Return smaller batch if drop_last=False
+                
+                # Move to the next partition
+                self.processed_partitions += 1
+                if self.processed_partitions == self.num_partitions:
+                    self.current_epoch += 1  # Full epoch completed
+                    self.processed_partitions = 0  # Reset for the next epoch
+                    self.current_idx = 1  # Reset for the next epoch
+                    # print(f"Epoch {self.current_epoch} completed!")  # Notify when an epoch ends
+
+                self.active_partition_idx, self.active_partition = next(self.partitions_cycle)
+                self.sampler = self._create_sampler(self.active_partition)
+                continue  # Restart batch sampling from new partition
+
+        return self.generate_batch(sampled_indices)
+    
+    def generate_batch(self, batch_indices):
+        next_batch = Batch(batch_indices, self.current_epoch, self.active_partition_idx+1, self.current_idx)
+        self.current_idx += 1  # Increment the batch index for the next batch
+        return next_batch
+
+    def _partition_indices(self, num_partitions):
+    # Initialize a list to hold the partitions
+        indices = list(range(self.num_files))  # Create a list of indices [0, 1, ..., num_files - 1]
+        if self.shuffle:
+            random.shuffle(indices)  # Shuffle the indices once
+
+        # Split into roughly equal partitions
+        partition_size = self.num_files // num_partitions
+        partitions = [indices[i * partition_size : (i + 1) * partition_size] for i in range(num_partitions)]
+
+        # Add remaining indices to the last partition (if num_files is not evenly divisible)
+        remainder = self.num_files % num_partitions
+        for i in range(remainder):
+            partitions[i].append(indices[num_partitions * partition_size + i])
+
+        total_files = sum(len(samples) for samples in partitions)
+        # #print number files in each partition
+        # for i, partition in enumerate(partitions):
+        #     print(f"Partition {i}: {len(partition)} files")
+        assert total_files == self.num_files
+
+        return partitions
+    
+    def calc_num_batchs_per_partition(self):
+        # Calculate the number of batches
+        if self.drop_last:
+            return len(self.active_partition) // self.batch_size
+        else:
+            return (len(self.active_partition) + self.batch_size - 1) // self.batch_size
+    
+    def calc_num_batchs_per_epoch(self):
+        # Calculate the number of batches
+        if self.drop_last:
+            return self.num_files // self.batch_size
+        else:
+            return (self.num_files + self.batch_size - 1) // self.batch_size
+    
+
+class DLTJob:
+    def __init__(self, job_id: str, num_partitions: int, speed: float):
+        self.job_id = job_id
+        self.num_partitions = num_partitions
+        self.current_epoch_idx = 0
+        # For reuse logic
+        self.used_epoch_partition_pairs: Set[Tuple[int, int]] = set()
+        self.partitions_covered_this_epoch: Set[int] = set()
+        # Active state
+        self.active_bacth_set_id = None
+        self.future_batches: OrderedDict[str, Batch] = OrderedDict()
+        self.processing_speed = 1.0
+        self.current_batch = None
+        self.num_batches_processed = 0
+        self.cache_hit_count = 0
+        self.cache_miss_count = 0
+        self.elapased_time_sec = 0
+        self.speed = speed
+
+
+    def has_completed_epoch(self) -> bool:
+        return len(self.partitions_covered_this_epoch) == self.num_partitions
+
+    def reset_for_new_epoch(self):
+        self.current_epoch_idx += 1
+        self.partitions_covered_this_epoch.clear()
+    
+    def next_batch(self) -> Optional[Batch]:
+        next_batch = None
+        best_score = float('inf')
+        fallback_batch = None
+        for batch in self.future_batches.values():
+            if batch.cache_status == CacheStatus.CACHED:
+                if batch.reuse_score < best_score:
+                    next_batch = batch
+                    best_score = batch.reuse_score
+            elif batch.cache_status != CacheStatus.CACHING_IN_PROGRESS and fallback_batch is None:
+                fallback_batch = batch
+        if not next_batch:
+            next_batch = fallback_batch
+        
+        if next_batch:
+            next_batch.set_last_accessed_time()
+            self.future_batches.pop(next_batch.batch_id, None)
+        self.current_batch = next_batch
+        return next_batch
+    
+    def perf_stats(self, horurly_ec2_cost=12.24, hourly_cache_cost=3.25):
+            hit_rate = self.cache_hit_count / (self.cache_hit_count + self.cache_miss_count) if (self.cache_hit_count + self.cache_miss_count) > 0 else 0
+            throughput = self.num_batches_processed / self.elapased_time_sec if self.elapased_time_sec > 0 else 0
+            self.compute_cost = (horurly_ec2_cost / 3600) * self.elapased_time_sec
+            cache_cost = (hourly_cache_cost / 3600) * self.elapased_time_sec
+            total_cost = self.compute_cost + hourly_cache_cost
+            return {
+                'job_id': self.job_id,
+                'job_speed': self.speed,
+                'batches_processed': self.num_batches_processed,
+                'cache_hit_count': self.cache_hit_count,
+                'cache_miss_count': self.cache_miss_count,
+                'cache_hit_%': hit_rate,
+                'elapsed_time': self.elapased_time_sec,
+                'throughput(batches/s)': throughput,
+                'compute_cost': self.compute_cost,
+                'cache_cost': cache_cost,
+                'total_cost': total_cost
+                }
+    def __lt__(self, other):
+        return self.speed < other.speed  # Compare based on speed
+
 class BatchManager:
-    def __init__(self, total_batches: int, cache: SharedCache,  jobs:List[Job] ):
-        self.cache = cache
-        self.total_batches = total_batches
-        self.batch_seen_by = collections.defaultdict(set)
-        self.batch_in_progress = set()
-        self.jobs: List[Job]  = jobs
-        self.base_sequence = list(range(1, total_batches + 1))
-        self.in_progress = False
-        self.num_jobs = len(jobs)
-        self.remaining_batches = {
-            job.job_id: list(self.base_sequence) for job in jobs
-        }
-        self.job_thetas = {job.job_id: 1 / job.speed for job in jobs}
+    def __init__(self,
+                 dataset,
+                 batch_size: int,
+                 num_partitions: int,
+                 jobs: List[DLTJob]):
+        self.dataset = dataset
+        self.sampler = PartitionedBatchSampler(num_files=len(dataset),
+                batch_size=batch_size,
+                num_partitions=num_partitions,
+                drop_last=False,
+                shuffle=False)
+        self.epoch_partition_batches: Dict[int, Dict[int, BatchSet]] = OrderedDict()
+        self.cached_batches: Dict[str, Batch] = {}
+        self.eviction_index: SortedList[Tuple[float, float, str]] = SortedList() # Sorted by (reuse_score, timestamp)
+        self.eviction_index_lookup: Dict[str, Tuple[float, float, str]] = {} #delete batches from eviction_index efficiently
+        self.lookahead_distance = min(self.sampler.calc_num_batchs_per_partition() - 1, 40)
+        self.jobs: Dict[str, DLTJob] = {job.job_id: job for job in jobs}
+        for _ in range(self.lookahead_distance):
+            self._generate_new_batch()
+    
+    def _generate_new_batch(self):
+        next_batch: Batch = next(self.sampler)
+        partition_batches = self.epoch_partition_batches.setdefault(
+            next_batch.epoch_idx, OrderedDict()
+        )
+        batch_set = partition_batches.setdefault(
+            next_batch.partition_idx, BatchSet(next_batch.batch_set_id)
+        )
+        batch_set.batches[next_batch.batch_id] = next_batch
+        # Check if any job is currently assigned to this BatchSet
+        for job in self.jobs.values():
+            if job.active_bacth_set_id == batch_set.id:
+                job.future_batches[next_batch.batch_id] = next_batch
+        return next_batch
+    
+    def _score_batch_set(self, batch_set: BatchSet, epoch_idx, partition_idx) -> float:
+        return float(f"{epoch_idx}.{partition_idx:02d}")
+    
+    def assign_batch_set_to_job(self, job: DLTJob):
+        if job.has_completed_epoch():
+            job.reset_for_new_epoch()
+
+        best_candidate = None
+        best_score = float('-inf')
+
+        for epoch_idx, partition_map in self.epoch_partition_batches.items():
+            for partition_idx, batch_set in partition_map.items():
+                if (epoch_idx, partition_idx) in job.used_epoch_partition_pairs:
+                    continue
+                if partition_idx in job.partitions_covered_this_epoch:
+                    continue
+
+                score = self._score_batch_set(batch_set, epoch_idx, partition_idx)
+                if score > best_score:
+                    best_candidate = (epoch_idx, partition_idx, batch_set)
+                    best_score = score
+        if best_candidate is None:
+            return
+
+        epoch_idx, partition_idx, batch_set = best_candidate
+        job.used_epoch_partition_pairs.add((epoch_idx, partition_idx))
+        job.partitions_covered_this_epoch.add(partition_idx)
+        job.active_bacth_set_id = batch_set.id
+
+        for batch in batch_set.batches.values():
+            batch.mark_awaiting_to_be_seen_by(job.job_id, job.processing_speed)
+            job.future_batches[batch.batch_id] = batch
+    
+    def job_processed_batch_update(self, job_id: int, batch_is_cached: bool, job_cached_batch: bool, job_evicted_batch_id: Optional[str]):
+        
+        job:DLTJob = self.jobs[job_id]
+        
+        batch:Batch  = job.current_batch
+        batch.mark_seen_by(job.job_id)
+
+        if batch_is_cached:
+            batch.set_cache_status(CacheStatus.CACHED)
+            
+            if job_cached_batch:
+                self.cached_batches[batch.batch_id] = batch
+
+            # Remove outdated reuse score from eviction index
+            old_entry = self.eviction_index_lookup.pop(batch.batch_id, None)
+            if old_entry:
+                self.eviction_index.discard(old_entry)
+
+            # Re-insert updated entry
+            new_entry = (batch.reuse_score, time.time(), batch.batch_id)
+            self.eviction_index.add(new_entry)
+            self.eviction_index_lookup[batch.batch_id] = new_entry
+        # update job's internal state
         pass
 
-    def _mark_batch_in_progress(self, batch_id: int, job_id: str = None) -> None:
-        self.batch_in_progress.add(batch_id)
-        self.remaining_batches[job_id].remove(batch_id)
+    def _maybe_cache_batch(self, batch: Batch):
+        should_cache = False
+        eviction_candidate = None
+        min_reuse_score_to_cache = 0.0
 
-   
+        if batch.cache_status in (CacheStatus.CACHED, CacheStatus.CACHING_IN_PROGRESS):
+            return should_cache, eviction_candidate
+
+        # Apply minimum score cutoff
+        if batch.reuse_score < min_reuse_score_to_cache:
+            logger.debug(f"Skipped caching {batch.batch_id}: reuse_score {batch.reuse_score:.2f} below threshold {min_reuse_score_to_cache}")
+            return should_cache, eviction_candidate
+
+        should_cache = True
+        batch.set_cache_status(CacheStatus.CACHING_IN_PROGRESS)
+
+        if self.eviction_index:
+            worst_score, _, worst_id = self.eviction_index[0]
+            if batch.reuse_score > worst_score:
+                eviction_candidate = worst_id
+
+        return should_cache, eviction_candidate
+    def _maybe_trigger_smaple_next_bacth(self, batch: Batch):
+        if batch.is_first_access:
+            batch.is_first_access = False
+            self._generate_new_batch()
+
     def get_next_batch_for_job(self, job_id: str) -> Optional[Batch]:
-        with self.lock:
-            if self.prefetch_service and self.prefetch_service.prefetch_stop_event.is_set():
-                self.prefetch_service.start()
-
-            job = self._get_or_register_job(job_id)
-
-            if not job.future_batches:
-                self.assign_batch_set_to_job(job)
-
-            reuse_score = {}  # Placeholder: plug in real reuse scores
-            batch_seen_by = {}  # Placeholder: plug in actual seen tracking
-            batch_in_progress = set()  # Placeholder: plug in actual shared set
-
-            # Step 1: Prefer cached + unseen
-            eligible_cached = [
-                batch for batch_id, batch in job.future_batches.items()
-                if batch.cache_status != CacheStatus.NOT_CACHED and
-                   job.job_id not in batch_seen_by.get(batch_id, set())
-            ]
-
-            if eligible_cached:
-                next_batch = min(eligible_cached, key=lambda b: reuse_score.get(b.batch_id, float('inf')))
-            else:
-                next_batch = None
-                for batch_id, batch in job.future_batches.items():
-                    if batch_id not in batch_in_progress:
-                        next_batch = batch
-                        break
-
-                if not next_batch and job.future_batches:
-                    next_batch = next(iter(job.future_batches.values()))
-
-            if next_batch:
-                batch_id = next_batch.batch_id
-                batch_in_progress.add(batch_id)
-                next_batch.mark_seen_by(job.job_id)
-                job.future_batches.pop(batch_id, None)
-
-                self._tag_batch_for_caching(next_batch)
-                self._maybe_trigger_batch_generation(next_batch)
-
-            return next_batch
-
-
-    # def get_batch_for_job(self, job_id: str) -> int:
-    #     # Step 1: Prefer a cached batch the job hasn't seen
-    #     #find all batches that the job has not seen and are in the cache
-    #     next_batch = None
-    #     eligible_cached = [
-    #         batch_id for batch_id in self.remaining_batches[job_id]
-    #         if self.cache.get_batch(batch_id) and job_id not in self.batch_seen_by[batch_id]
-    #         ]
-    #     # Prefer cached batches, sele   cting the one with the lowest reuse score
-    #     if eligible_cached:
-    #         next_batch = min(eligible_cached, key=self.reuse_score)
-    #     else:
-    #         # If no cached batches are available, select the next unseen batch
-    #         for batch_id in self.remaining_batches[job_id]:
-    #             if batch_id not in self.batch_in_progress:
-    #                 next_batch = batch_id
-    #                 break
-        
-    #     if next_batch is None:
-    #         next_batch = self.remaining_batches[job_id][0]  # Fallback to the first batch in the list
-    #     self._mark_batch_in_progress(next_batch, job_id)
-    #     # logger.info(f"Assigned batch {next_batch} to job {job_id}")
-
-    #     return next_batch
-
-    def reuse_score(self, batch_id: int) -> float:
-        unseen = [j.job_id for j in self.jobs if j.job_id not in self.batch_seen_by[batch_id]]
-        score = sum(self.job_thetas[j] for j in unseen)
-        return score
+        job = self.jobs[job_id]
+        if not job.future_batches:
+            self.assign_batch_set_to_job(job)
+        next_batch = job.next_batch()
+        should_cache, eivction_candidate = self._maybe_cache_batch(next_batch)
+        self._maybe_trigger_smaple_next_bacth(next_batch)
+        return next_batch, should_cache, eivction_candidate
     
-    def normalized_reuse_score(self, batch_id: int) -> float:
-        score = self.reuse_score(batch_id)
-        max_score = sum(self.job_thetas[j.job_id] for j in self.jobs)
-        # max_score = sum(self.job_thetas[j] for j in self.job_ids)
-        return score / max_score if max_score > 0 else 0.0
-
-    def mark_seen(self, job_id: str, batch_id: int) -> bool:
-        self.batch_seen_by[batch_id].add(job_id)
-        if batch_id in self.batch_in_progress:
-            self.batch_in_progress.remove(batch_id)
-        if len(self.batch_seen_by[batch_id]) >= self.num_jobs:
-            self.cache._remove(batch_id)
-            return True
-        return False
-    
-    def top_prefetch_candidates(self, N: int) -> List[int]:
-        candidates = [
-            batch_id for batch_id in self.base_sequence
-            if batch_id not in self.cache.cache and batch_id not in self.batch_in_progress
-        ]
-        candidates.sort(key=self.reuse_score, reverse=True)
-        return candidates[:N]
-
-    
-    def evict_batch_with_lowest_reuse_score(self) -> int:
-        # Find the batch with the lowest reuse score
-        #find all batches in cache first
-        eligible_cached = [batch_id for batch_id in self.cache.cache.keys()]
-        #of all the cached bacthes find the one with the lowest reuse score
-        best_batch_to_evict = min(eligible_cached, key=self.reuse_score)
-        self.cache._remove(best_batch_to_evict)
-        logger.info(f"Evicted batch {best_batch_to_evict} from cache. Reuse score: {self.reuse_score(best_batch_to_evict)}")
-
-
 def run_simulation(
     dataloader_system: str,
     workload_name: str,
@@ -163,21 +415,25 @@ def run_simulation(
     simulation_time_sec: int = None,
     batches_per_job: int = 1000,
     use_prefetcher: bool = False,
-    prefetch_delay: float = 0.1,):
+    prefetch_delay: float = 0.1,
+    num_partitions: int = 1,
+    preprocesssing_time: float = 0.01,
+    batch_size: int = 1):
     
     cache = SharedCache(capacity=cache_capacity, eviction_policy=eviction_policy)
-    jobs = [Job(job_id, speed) for job_id, speed in workload_jobs]
-    sampler = BatchManager(batches_per_job, cache,jobs)
+    jobs:List[DLTJob] = [DLTJob(job_id, num_partitions, speed) for job_id, speed in workload_jobs]
+
+    sampler = BatchManager(
+        dataset=Dataset(num_samples=batches_per_job),
+        batch_size=batch_size,
+        num_partitions=num_partitions,
+        jobs=jobs)
+    
     event_queue = []  # Priority queue for next event times
     time_elapsed = 0  # Global simulation time
 
     for job in jobs:
         heapq.heappush(event_queue, (job.speed, "step", job))
-
-    if use_prefetcher:
-        # Optional: prefetch top-N reuse-worthy batches
-        for batch_id in sampler.top_prefetch_candidates(N=2):  # N can be tuned
-            heapq.heappush(event_queue, (time_elapsed + prefetch_delay, "prefetch", batch_id))
 
     while True:
         if simulation_time_sec is not None and time_elapsed >= simulation_time_sec:
@@ -188,48 +444,55 @@ def run_simulation(
         
         time_elapsed, event_type, payload = heapq.heappop(event_queue)
         
-        if event_type == "cache_insert":
-            batch_id = payload
-            if cache.cache_is_full():
-                if eviction_policy == "reuse_score":
-                # Evict a batch with the lowest reuse score
-                    sampler.evict_batch_with_lowest_reuse_score()
-            cache.put_batch(batch_id)  # Simulate cache insert for this batch
-        
-        elif event_type == "step":
-            job:Job = payload
-            batch_id = sampler.get_batch_for_job(job.job_id)
+        if event_type == "step":
+            job:DLTJob = payload
+            next_batch, should_cache, eivction_candidate = sampler.get_next_batch_for_job(job.job_id)
+            batch_id = next_batch.batch_id
             job.elapased_time_sec = time_elapsed
             cache_hit = cache.get_batch(batch_id)
             logger.info(f"Job {job.job_id} processing batch {batch_id} at time {time_elapsed:.2f}s. Cache hit: {cache_hit}")
-            if not cache_hit:
+
+            if cache_hit:
+                job.cache_hit_count += 1
+                job_delay = job.speed
+                heapq.heappush(event_queue, (time_elapsed + preprocesssing_time, "batch_fetch_complete", (job, True, False, None)))
+            else:
                 job.cache_miss_count += 1
                 logger.debug(f"[self-load miss] Job {job.job_id} will insert {batch_id}")
-                heapq.heappush(event_queue, (time_elapsed + load_from_s3_time, "cache_insert", batch_id))
-                delay = job.speed + load_from_s3_time
-            else:
-                job.cache_hit_count += 1
-                delay = job.speed
-            job.num_batches_processed += 1
-            
-            if job.num_batches_processed > 1:
-                sampler.mark_seen(job.job_id, job.num_batches_processed -1)
-
+                heapq.heappush(event_queue, (time_elapsed + load_from_s3_time, "cache_insert", (job, batch_id, eivction_candidate)))
+                job_delay = job.speed + load_from_s3_time
+    
             if batches_per_job is None or job.num_batches_processed < batches_per_job:
-                heapq.heappush(event_queue, (time_elapsed + delay, "step", job))
-        
-        elif event_type == "prefetch":
-            batch_id = payload
-            if not cache.get_batch(batch_id):  # Only prefetch if still not present
-                if cache.cache_is_full():
-                    if eviction_policy == "reuse_score":
-                        sampler.evict_batch_with_lowest_reuse_score()
+                heapq.heappush(event_queue, (time_elapsed + job_delay, "step", job))
+    
+        elif event_type == "cache_insert":
+            job, batch_id, eivction_candidate = payload
+            if cache.cache_is_full():
+                if eivction_candidate is None:
+                    heapq.heappush(event_queue, (time_elapsed + preprocesssing_time, "batch_fetch_complete", (job, False, False, None)))
+                    logger.debug(f"Cache is full, but no eviction candidate found for {batch_id}.")
+                    return
+                else:
+                    logger.debug(f"Cache is full, evicting {eivction_candidate} for {batch_id}.")
+                    # Evict the batch with the lowest reuse score
+                    cache._remove(eivction_candidate)
+                    cache.put_batch(batch_id)
+                    heapq.heappush(event_queue, (time_elapsed + preprocesssing_time, "batch_fetch_complete", (job, True, True, eivction_candidate)))
+            else:
+                logger.debug(f"Cache is not full, inserting {batch_id}.")
                 cache.put_batch(batch_id)
-                logger.debug(f"Prefetched batch {batch_id} at time {time_elapsed:.2f}")
-            
-            for batch_id in sampler.top_prefetch_candidates(N=2):  # N can be tuned
-                    heapq.heappush(event_queue, (time_elapsed + prefetch_delay, "prefetch", batch_id))
+                heapq.heappush(event_queue, (time_elapsed + preprocesssing_time, "batch_fetch_complete", (job, True, True, None)))
 
+        elif event_type == "batch_fetch_complete":
+            job, batch_is_cached, job_cached_batch, job_evicted_batch_id = payload
+            job.num_batches_processed += 1
+            sampler.job_processed_batch_update(
+                job.job_id,
+                batch_is_cached=batch_is_cached,
+                job_cached_batch=job_cached_batch,
+                job_evicted_batch_id=job_evicted_batch_id
+            )
+    pass 
 
     
     job_performances = [job.perf_stats(hourly_ec2_cost/len(jobs), hourly_cache_cost/len(jobs)) for job in jobs]
@@ -289,4 +552,7 @@ if __name__ == "__main__":
         batches_per_job=batches_per_job,
         use_prefetcher=False,
         prefetch_delay=prefetcher_speed,
+        num_partitions=1,
+        preprocesssing_time=0.01,
+        batch_size=1
     )

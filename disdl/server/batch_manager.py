@@ -60,7 +60,6 @@ class CentralBatchManager:
         self.cached_batches: Dict[str, Batch] = {}
         self.eviction_index: SortedList[Tuple[float, float, str]] = SortedList() # Sorted by (reuse_score, timestamp)
         self.eviction_index_lookup: Dict[str, Tuple[float, float, str]] = {} #delete batches from eviction_index efficiently
-        self.min_reuse_score_to_cache = 0.0 # job isnot  bottlenecked reuse_score is 0 so don't cache
 
         self.prefetch_service: Optional[PrefetchServiceAsync] = None
         if use_prefetching:
@@ -109,13 +108,14 @@ class CentralBatchManager:
     def _maybe_cache_batch(self, batch: Batch):
         should_cache = False
         eviction_candidate = None
+        min_reuse_score_to_cache = 0.0
 
         if batch.cache_status in (CacheStatus.CACHED, CacheStatus.CACHING_IN_PROGRESS):
             return should_cache, eviction_candidate
 
         # Apply minimum score cutoff
-        if batch.reuse_score < self.min_reuse_score_to_cache:
-            logger.debug(f"Skipped caching {batch.batch_id}: reuse_score {batch.reuse_score:.2f} below threshold {self.min_reuse_score_to_cache}")
+        if batch.reuse_score < min_reuse_score_to_cache:
+            logger.debug(f"Skipped caching {batch.batch_id}: reuse_score {batch.reuse_score:.2f} below threshold {min_reuse_score_to_cache}")
             return should_cache, eviction_candidate
 
         should_cache = True
@@ -161,7 +161,10 @@ class CentralBatchManager:
             batch.mark_awaiting_to_be_seen_by(job.job_id, job.processing_speed)
             job.future_batches[batch.batch_id] = batch
     
-    def job_processed_batch_update(self, job: DLTJob, batch_is_cached: bool, job_cached_batch: bool, job_evicted_batch_id: Optional[str]):
+    def job_processed_batch_update(self, job_id: int, batch_is_cached: bool, job_cached_batch: bool, job_evicted_batch_id: Optional[str]):
+        
+        job:DLTJob = self.jobs[job_id]
+        
         batch:Batch  = job.current_batch
         batch.mark_seen_by(job.job_id)
 
@@ -198,8 +201,6 @@ class CentralBatchManager:
             self._maybe_trigger_smaple_next_bacth(next_batch)
             return next_batch, should_cache, eivction_candidate
 
-
-
 @hydra.main(version_base=None, config_path="conf", config_name="config")
 def main(args: DisDLArgs):
     # Initialize the dataset based on the workload specified in the args
@@ -225,12 +226,18 @@ def main(args: DisDLArgs):
                                         prefetch_simulation_time=args.prefetch_simulation_time)
     # print(batch_manager.dataset_info())
     # job_id = batch_manager.add_job()
-    for i in range(200):
-        batch = batch_manager.get_next_batch_for_job(job_id=1)
-        if batch is not None:
-            print(f"Batch {batch.batch_id} with {len(batch.indices)} samples")
+    for step in range(200):
+        job_id = 1
+        batch, should_cache, eivction_candidate = batch_manager.get_next_batch_for_job(job_id)
+        if batch:
+                # Simulate time spent on training step
+                time.sleep(random.uniform(0.001, 0.005))  # Fast-forwarded for sim
+                print(f"Step {step:03} | Job {job_id} got batch {batch.batch_id} | Cached: {batch.cache_status.name} | Reuse: {batch.reuse_score:.2f}")
         else:
-            print("No batch available")
+                print(f"Step {step:03} | Job {job_id} got no batch")
+        
+        batch_manager.job_processed_batch_update(job_id, batch_is_cached=True, job_cached_batch=True, job_evicted_batch_id=None)
+
 
 def simulate_training_loop(batch_manager:CentralBatchManager, num_jobs: int, steps_per_job: int = 100):
     job_ids = [str(i) for i in range(1, num_jobs + 1)]
@@ -240,16 +247,21 @@ def simulate_training_loop(batch_manager:CentralBatchManager, num_jobs: int, ste
 
     for step in range(steps_per_job):
         for job_id in job_ids:
-            batch = batch_manager.get_next_batch_for_job(job_id)
+            batch, should_cache, eivction_candidate = batch_manager.get_next_batch_for_job(job_id)
             if batch:
                 # Simulate time spent on training step
                 time.sleep(random.uniform(0.001, 0.005))  # Fast-forwarded for sim
                 print(f"Step {step:03} | Job {job_id} got batch {batch.batch_id} | Cached: {batch.cache_status.name} | Reuse: {batch.reuse_score:.2f}")
             else:
                 print(f"Step {step:03} | Job {job_id} got no batch")
+            
+
+            batch_manager.job_processed_batch_update(job_id, batch_is_cached=True, job_cached_batch=True, job_evicted_batch_id=None)
+            
 
     print("\nSimulation complete.")
 
 
 if __name__ == "__main__":
+    
     main()

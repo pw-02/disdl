@@ -65,7 +65,7 @@ class Batch:
             self.reuse_score = sum(self.awaiting_to_be_seen_by.values())
     
     def mark_seen_by(self, job_id: str):
-        with self.lock:
+        # with self.lock:
             if job_id in self.awaiting_to_be_seen_by:
                 del self.awaiting_to_be_seen_by[job_id]
             self.compute_weighted_reuse_score()

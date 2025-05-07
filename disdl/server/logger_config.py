@@ -18,11 +18,11 @@ def configure_logger(name: str = "DISDL", log_file: str = "disdlapp.log") -> log
         file_handler = logging.FileHandler(log_file, mode='w')
         file_handler.setFormatter(formatter)
 
-        stream_handler = logging.StreamHandler()
-        stream_handler.setFormatter(formatter)
+        # stream_handler = logging.StreamHandler()
+        # stream_handler.setFormatter(formatter)
 
         logger.addHandler(file_handler)
-        logger.addHandler(stream_handler)
+        # logger.addHandler(stream_handler)
 
     return logger
 

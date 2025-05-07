@@ -6,9 +6,9 @@ sys.path.append(".")
 from simulation.sim_workloads import workloads
 from simulation.sim_cache import SharedCache
 from typing import List, Optional, Dict, Tuple
-from batch_manager import BatchManager
-from job import DLTJob
-from logger_config import configure_simulation_logger
+from disdl.server.batch_manager import BatchManager
+from disdl.server.job import DLTJob
+from disdl.server.logger_config import configure_simulation_logger
 
 logger = configure_simulation_logger()
 
@@ -36,9 +36,9 @@ def run_simulation(
     num_partitions: int = 1,
     preprocesssing_time: float = 0.0001,
     batch_size: int = 1):
+    
     cache = SharedCache(capacity=cache_capacity, eviction_policy=eviction_policy)
     jobs:List[DLTJob] = [DLTJob(job_id) for job_id in workload_jobs]
-    
     for job in jobs:
         job.set_job_processing_speed(workload_jobs[job.job_id])
 
@@ -46,15 +46,17 @@ def run_simulation(
         dataset=Dataset(num_samples=batches_per_job, batch_size=batch_size, num_partitions=num_partitions),
         drop_last=False,
         shuffle=False,
-        min_lookahead_steps=90,
+        min_lookahead_steps=40,
         use_prefetching=use_prefetcher)
-    
     sampler.jobs = {job.job_id: job for job in jobs}
+
+    # for job in jobs:
+    #     sampler.register_job(job)
+    
     event_queue = []  # Priority queue for next event times
     time_elapsed = 0  # Global simulation time
     time_between_job_starts = 0.25
     next_job_start_time = 0.1
-    
     for job in jobs:
         heapq.heappush(event_queue, (next_job_start_time, "dataloader_step", job))
         next_job_start_time += time_between_job_starts

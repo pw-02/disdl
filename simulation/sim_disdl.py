@@ -518,7 +518,7 @@ def run_simulation(
             if batches_per_job is None or job.num_batches_processed < batches_per_job:
                 heapq.heappush(event_queue, (time_elapsed + job_delay, "step", job))
             else:
-                print(f"Job {job.job_id} has completed its batches.")
+                print(f"Job {job.job_id} has completed its batches after {time_elapsed:.2f}s. Throughput: {job.num_batches_processed / time_elapsed:.2f} batches/s")
                 pass
     
         elif event_type == "cache_insert":
@@ -537,7 +537,7 @@ def run_simulation(
                         evicted_batchid, evicted  = cache._remove(eviction_candidate)
                     if evicted:
                         cache.put_batch(batch_id)
-                        print(f"Evicted {evicted_batchid} for {batch_id}.")
+                        # print(f"Evicted {evicted_batchid} for {batch_id}.")
                     else:
                         logger.error(f"Batch {eviction_candidate} not found in cache when trying to evict.")
 
@@ -595,12 +595,12 @@ def run_simulation(
 
 if __name__ == "__main__":
     dataloader_system  = 'DisDL' #'CoorDL', TensorSocket, DisDL
-    workload_name = 'imagenet_128_nas' #'imagenet_128_hpo', 'imagenet_128_resnet50', imagenet_128_nas
+    workload_name = '20_jobs' #'imagenet_128_hpo', 'imagenet_128_resnet50', imagenet_128_nas
     jobs =  workloads[workload_name].items()
     simulation_time_sec = None #3600 # None  #3600 * 1 # Simulate 1 hour
-    batches_per_job = 100 * 1 # 8500 #np.inf
-    cache_capacity = 0.2 * batches_per_job #* batches_per_job #number of batches as a % of the total number of batches
-    eviction_policy = "reuse_score" # "lru", "fifo", "mru", "random", "noevict", "reuse_score"
+    batches_per_job = 1000 * 1 # 8500 #np.inf
+    cache_capacity = 0.25 * batches_per_job #* batches_per_job #number of batches as a % of the total number of batches
+    eviction_policy = "random" # "lru", "fifo", "mru", "random", "noevict", "reuse_score"
     hourly_ec2_cost = 12.24 
     hourly_cache_cost = 3.25
     load_from_s3_time = 0.2

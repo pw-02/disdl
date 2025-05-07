@@ -1,0 +1,988 @@
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 1
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job RESNET18 could not access 1
+2025-05-07 11:31:14,222 - DEBUG - Added batch 1 to cache
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 2
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job RESNET50 accessed 1
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job RESNET18 could not access 2
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job VGG16 accessed 1
+2025-05-07 11:31:14,222 - DEBUG - Added batch 2 to cache
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 3
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job RESNET50 accessed 2
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job RESNET18 could not access 3
+2025-05-07 11:31:14,222 - DEBUG - Added batch 3 to cache
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 4
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job RESNET18 could not access 4
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job RESNET50 accessed 3
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job VGG16 accessed 2
+2025-05-07 11:31:14,222 - DEBUG - Added batch 4 to cache
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 5
+2025-05-07 11:31:14,222 - DEBUG - Added batch 5 to cache
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job RESNET18 accessed 5
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job RESNET50 accessed 4
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 6
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job RESNET18 could not access 6
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job VGG16 accessed 3
+2025-05-07 11:31:14,222 - DEBUG - Added batch 6 to cache
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 7
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job RESNET50 accessed 5
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job RESNET18 could not access 7
+2025-05-07 11:31:14,222 - DEBUG - Added batch 7 to cache
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 8
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job RESNET18 could not access 8
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job RESNET50 accessed 6
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job VGG16 accessed 4
+2025-05-07 11:31:14,222 - DEBUG - Added batch 8 to cache
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 9
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job RESNET18 could not access 9
+2025-05-07 11:31:14,222 - DEBUG - Added batch 9 to cache
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job RESNET50 accessed 7
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 10
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job VGG16 accessed 5
+2025-05-07 11:31:14,222 - DEBUG - Added batch 10 to cache
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job RESNET18 accessed 10
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 11
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job RESNET50 accessed 8
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job RESNET18 could not access 11
+2025-05-07 11:31:14,222 - DEBUG - Added batch 11 to cache
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 12
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job RESNET18 could not access 12
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job RESNET50 accessed 9
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job VGG16 accessed 6
+2025-05-07 11:31:14,222 - DEBUG - Added batch 12 to cache
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 13
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job RESNET18 could not access 13
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job RESNET50 accessed 10
+2025-05-07 11:31:14,222 - DEBUG - Added batch 13 to cache
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 14
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job VGG16 accessed 7
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job RESNET18 could not access 14
+2025-05-07 11:31:14,222 - DEBUG - Added batch 14 to cache
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job RESNET50 accessed 11
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 15
+2025-05-07 11:31:14,222 - DEBUG - Added batch 15 to cache
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job RESNET18 accessed 15
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 16
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job RESNET18 could not access 16
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job RESNET50 accessed 12
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job VGG16 accessed 8
+2025-05-07 11:31:14,222 - DEBUG - Added batch 16 to cache
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 17
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job RESNET18 could not access 17
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job RESNET50 accessed 13
+2025-05-07 11:31:14,222 - DEBUG - Added batch 17 to cache
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 18
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job VGG16 accessed 9
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job RESNET18 could not access 18
+2025-05-07 11:31:14,222 - DEBUG - Added batch 18 to cache
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job RESNET50 accessed 14
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 19
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job RESNET18 could not access 19
+2025-05-07 11:31:14,222 - DEBUG - Added batch 19 to cache
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 20
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job RESNET50 accessed 15
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job VGG16 accessed 10
+2025-05-07 11:31:14,222 - DEBUG - Added batch 20 to cache
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job RESNET18 accessed 20
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 21
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job RESNET18 could not access 21
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job RESNET50 accessed 16
+2025-05-07 11:31:14,222 - DEBUG - Added batch 21 to cache
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 22
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job VGG16 accessed 11
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job RESNET18 could not access 22
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job RESNET50 accessed 17
+2025-05-07 11:31:14,222 - DEBUG - Added batch 22 to cache
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 23
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job RESNET18 could not access 23
+2025-05-07 11:31:14,222 - DEBUG - Added batch 23 to cache
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 24
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job RESNET50 accessed 18
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job VGG16 accessed 12
+2025-05-07 11:31:14,222 - DEBUG - Added batch 24 to cache
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job RESNET18 accessed 24
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 25
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job RESNET18 could not access 25
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job RESNET50 accessed 19
+2025-05-07 11:31:14,222 - DEBUG - Added batch 25 to cache
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 26
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job VGG16 accessed 13
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job RESNET18 could not access 26
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job RESNET50 accessed 20
+2025-05-07 11:31:14,222 - DEBUG - Added batch 26 to cache
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 27
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job RESNET18 could not access 27
+2025-05-07 11:31:14,222 - DEBUG - Added batch 27 to cache
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job RESNET50 accessed 21
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 28
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job VGG16 accessed 14
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job RESNET18 could not access 28
+2025-05-07 11:31:14,222 - DEBUG - Added batch 28 to cache
+2025-05-07 11:31:14,222 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 29
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job RESNET50 accessed 22
+2025-05-07 11:31:14,222 - DEBUG - Added batch 29 to cache
+2025-05-07 11:31:14,222 - DEBUG - Cache hit: Job RESNET18 accessed 29
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 30
+2025-05-07 11:31:14,232 - DEBUG - Cache hit: Job VGG16 accessed 15
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job RESNET18 could not access 30
+2025-05-07 11:31:14,232 - DEBUG - Cache hit: Job RESNET50 accessed 23
+2025-05-07 11:31:14,232 - DEBUG - Added batch 30 to cache
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 31
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job RESNET18 could not access 31
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache hit: Job RESNET50 accessed 24
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 32
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache hit: Job VGG16 accessed 16
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job RESNET18 could not access 32
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 33
+2025-05-07 11:31:14,232 - DEBUG - Cache hit: Job RESNET50 accessed 25
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job RESNET18 could not access 33
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 34
+2025-05-07 11:31:14,232 - DEBUG - Cache hit: Job VGG16 accessed 17
+2025-05-07 11:31:14,232 - DEBUG - Cache hit: Job RESNET50 accessed 26
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job RESNET18 could not access 34
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 35
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache hit: Job RESNET50 accessed 27
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 36
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job RESNET18 could not access 35
+2025-05-07 11:31:14,232 - DEBUG - Cache hit: Job VGG16 accessed 18
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache hit: Job RESNET50 accessed 28
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 37
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job RESNET18 could not access 36
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 38
+2025-05-07 11:31:14,232 - DEBUG - Cache hit: Job VGG16 accessed 19
+2025-05-07 11:31:14,232 - DEBUG - Cache hit: Job RESNET50 accessed 29
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job RESNET18 could not access 37
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 39
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job RESNET18 could not access 38
+2025-05-07 11:31:14,232 - DEBUG - Cache hit: Job RESNET50 accessed 30
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache hit: Job VGG16 accessed 20
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 40
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job RESNET18 could not access 39
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job RESNET50 could not access 31
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 41
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job RESNET18 could not access 40
+2025-05-07 11:31:14,232 - DEBUG - Cache hit: Job VGG16 accessed 21
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 42
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job RESNET50 could not access 32
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job RESNET18 could not access 41
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 43
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache hit: Job VGG16 accessed 22
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 44
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job RESNET18 could not access 42
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job RESNET50 could not access 33
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 45
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job RESNET18 could not access 43
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache hit: Job VGG16 accessed 23
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 46
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job RESNET18 could not access 44
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,232 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 47
+2025-05-07 11:31:14,238 - DEBUG - Cache miss: Job RESNET50 could not access 34
+2025-05-07 11:31:14,238 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,238 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,238 - DEBUG - Cache miss: Job RESNET18 could not access 45
+2025-05-07 11:31:14,238 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,238 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,238 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,238 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,238 - DEBUG - Cache hit: Job VGG16 accessed 24
+2025-05-07 11:31:14,238 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 48
+2025-05-07 11:31:14,238 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,238 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,238 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,238 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache miss: Job RESNET18 could not access 46
+2025-05-07 11:31:14,239 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 49
+2025-05-07 11:31:14,239 - DEBUG - Cache miss: Job RESNET50 could not access 35
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache hit: Job VGG16 accessed 25
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache miss: Job RESNET18 could not access 47
+2025-05-07 11:31:14,239 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 50
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 51
+2025-05-07 11:31:14,239 - DEBUG - Cache miss: Job RESNET18 could not access 48
+2025-05-07 11:31:14,239 - DEBUG - Cache miss: Job RESNET50 could not access 36
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache hit: Job VGG16 accessed 26
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 52
+2025-05-07 11:31:14,239 - DEBUG - Cache miss: Job RESNET18 could not access 49
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 53
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache miss: Job RESNET50 could not access 37
+2025-05-07 11:31:14,239 - DEBUG - Cache miss: Job RESNET18 could not access 50
+2025-05-07 11:31:14,239 - DEBUG - Cache hit: Job VGG16 accessed 27
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 54
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache miss: Job RESNET18 could not access 51
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 55
+2025-05-07 11:31:14,239 - DEBUG - Cache miss: Job RESNET50 could not access 38
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache hit: Job VGG16 accessed 28
+2025-05-07 11:31:14,239 - DEBUG - Cache miss: Job RESNET18 could not access 52
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 56
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache miss: Job RESNET18 could not access 53
+2025-05-07 11:31:14,239 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 57
+2025-05-07 11:31:14,239 - DEBUG - Cache miss: Job RESNET50 could not access 39
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,239 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,242 - DEBUG - Cache hit: Job VGG16 accessed 29
+2025-05-07 11:31:14,242 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,242 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,242 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 58
+2025-05-07 11:31:14,242 - DEBUG - Cache miss: Job RESNET18 could not access 54
+2025-05-07 11:31:14,242 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,242 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,242 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,242 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,242 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,242 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,242 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 59
+2025-05-07 11:31:14,242 - DEBUG - Cache miss: Job RESNET18 could not access 55
+2025-05-07 11:31:14,242 - DEBUG - Cache miss: Job RESNET50 could not access 40
+2025-05-07 11:31:14,242 - DEBUG - Cache hit: Job VGG16 accessed 30
+2025-05-07 11:31:14,242 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,242 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,242 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,242 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,242 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 60
+2025-05-07 11:31:14,242 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,242 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,242 - DEBUG - Cache miss: Job RESNET18 could not access 56
+2025-05-07 11:31:14,242 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,242 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,242 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 61
+2025-05-07 11:31:14,242 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,242 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,242 - DEBUG - Cache miss: Job RESNET50 could not access 41
+2025-05-07 11:31:14,242 - DEBUG - Cache miss: Job RESNET18 could not access 57
+2025-05-07 11:31:14,242 - DEBUG - Cache miss: Job VGG16 could not access 31
+2025-05-07 11:31:14,242 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,242 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,242 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 62
+2025-05-07 11:31:14,242 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,242 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,242 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,242 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,245 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,245 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,245 - DEBUG - Cache miss: Job RESNET18 could not access 58
+2025-05-07 11:31:14,245 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,245 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,245 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 63
+2025-05-07 11:31:14,245 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,245 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,245 - DEBUG - Cache miss: Job RESNET50 could not access 42
+2025-05-07 11:31:14,245 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,245 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,245 - DEBUG - Cache miss: Job RESNET18 could not access 59
+2025-05-07 11:31:14,245 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 64
+2025-05-07 11:31:14,245 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,245 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,245 - DEBUG - Cache miss: Job VGG16 could not access 32
+2025-05-07 11:31:14,245 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,245 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,245 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,245 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,245 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 65
+2025-05-07 11:31:14,245 - DEBUG - Cache miss: Job RESNET18 could not access 60
+2025-05-07 11:31:14,245 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,245 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,245 - DEBUG - Cache miss: Job RESNET50 could not access 43
+2025-05-07 11:31:14,245 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,246 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,246 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,246 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,246 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 66
+2025-05-07 11:31:14,246 - DEBUG - Cache miss: Job RESNET18 could not access 61
+2025-05-07 11:31:14,246 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,246 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,246 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,246 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,246 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,246 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,246 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 67
+2025-05-07 11:31:14,246 - DEBUG - Cache miss: Job VGG16 could not access 33
+2025-05-07 11:31:14,246 - DEBUG - Cache miss: Job RESNET18 could not access 62
+2025-05-07 11:31:14,246 - DEBUG - Cache miss: Job RESNET50 could not access 44
+2025-05-07 11:31:14,246 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,246 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,246 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,246 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,246 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 68
+2025-05-07 11:31:14,246 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,246 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,246 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,246 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,246 - DEBUG - Cache miss: Job RESNET18 could not access 63
+2025-05-07 11:31:14,246 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,246 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,246 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 69
+2025-05-07 11:31:14,246 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,246 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,246 - DEBUG - Cache miss: Job RESNET50 could not access 45
+2025-05-07 11:31:14,246 - DEBUG - Cache miss: Job RESNET18 could not access 64
+2025-05-07 11:31:14,246 - DEBUG - Cache miss: Job VGG16 could not access 34
+2025-05-07 11:31:14,246 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,246 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,246 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 70
+2025-05-07 11:31:14,246 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,246 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,248 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,248 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,248 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,248 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,248 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,248 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,248 - DEBUG - Cache miss: Job RESNET18 could not access 65
+2025-05-07 11:31:14,248 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 71
+2025-05-07 11:31:14,248 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,248 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,248 - DEBUG - Cache miss: Job RESNET50 could not access 46
+2025-05-07 11:31:14,248 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,248 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,248 - DEBUG - Cache miss: Job RESNET18 could not access 66
+2025-05-07 11:31:14,248 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 72
+2025-05-07 11:31:14,248 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,248 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,248 - DEBUG - Cache miss: Job VGG16 could not access 35
+2025-05-07 11:31:14,248 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,248 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,248 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,248 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,248 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 73
+2025-05-07 11:31:14,248 - DEBUG - Cache miss: Job RESNET18 could not access 67
+2025-05-07 11:31:14,248 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,248 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,248 - DEBUG - Cache miss: Job RESNET50 could not access 47
+2025-05-07 11:31:14,248 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,248 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,248 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,248 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,248 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 74
+2025-05-07 11:31:14,248 - DEBUG - Cache miss: Job RESNET18 could not access 68
+2025-05-07 11:31:14,248 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,248 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,248 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,248 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,248 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 75
+2025-05-07 11:31:14,250 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,250 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,250 - DEBUG - Cache miss: Job VGG16 could not access 36
+2025-05-07 11:31:14,250 - DEBUG - Cache miss: Job RESNET18 could not access 69
+2025-05-07 11:31:14,250 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,250 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,250 - DEBUG - Cache miss: Job RESNET50 could not access 48
+2025-05-07 11:31:14,250 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,250 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,250 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 76
+2025-05-07 11:31:14,250 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,250 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,250 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,250 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,250 - DEBUG - Cache miss: Job RESNET18 could not access 70
+2025-05-07 11:31:14,250 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,250 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,250 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 77
+2025-05-07 11:31:14,250 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,250 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,250 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,250 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,250 - DEBUG - Cache miss: Job RESNET18 could not access 71
+2025-05-07 11:31:14,250 - DEBUG - Cache miss: Job RESNET50 could not access 49
+2025-05-07 11:31:14,250 - DEBUG - Cache miss: Job VGG16 could not access 37
+2025-05-07 11:31:14,250 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 78
+2025-05-07 11:31:14,250 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,250 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,250 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,250 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,250 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,250 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,250 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,250 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,250 - DEBUG - Cache miss: Job RESNET18 could not access 72
+2025-05-07 11:31:14,250 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 79
+2025-05-07 11:31:14,252 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,252 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,252 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,252 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,252 - DEBUG - Cache miss: Job RESNET50 could not access 50
+2025-05-07 11:31:14,252 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 80
+2025-05-07 11:31:14,252 - DEBUG - Cache miss: Job RESNET18 could not access 73
+2025-05-07 11:31:14,252 - DEBUG - Cache miss: Job VGG16 could not access 38
+2025-05-07 11:31:14,252 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,252 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,252 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,252 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,252 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,252 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,252 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 81
+2025-05-07 11:31:14,252 - DEBUG - Cache miss: Job RESNET18 could not access 74
+2025-05-07 11:31:14,252 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,252 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,252 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,252 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,252 - DEBUG - Cache miss: Job RESNET50 could not access 51
+2025-05-07 11:31:14,252 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 82
+2025-05-07 11:31:14,252 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,252 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,252 - DEBUG - Cache miss: Job RESNET18 could not access 75
+2025-05-07 11:31:14,252 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,252 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,252 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,252 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,252 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 83
+2025-05-07 11:31:14,252 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,252 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,252 - DEBUG - Cache miss: Job VGG16 could not access 39
+2025-05-07 11:31:14,252 - DEBUG - Cache miss: Job RESNET18 could not access 76
+2025-05-07 11:31:14,252 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,254 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,254 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 84
+2025-05-07 11:31:14,254 - DEBUG - Cache miss: Job RESNET50 could not access 52
+2025-05-07 11:31:14,254 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,254 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,254 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,254 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,254 - DEBUG - Cache miss: Job RESNET18 could not access 77
+2025-05-07 11:31:14,254 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,254 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,254 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,254 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,254 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 85
+2025-05-07 11:31:14,254 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,254 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,254 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,254 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,254 - DEBUG - Cache miss: Job RESNET18 could not access 78
+2025-05-07 11:31:14,254 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 86
+2025-05-07 11:31:14,254 - DEBUG - Cache miss: Job RESNET50 could not access 53
+2025-05-07 11:31:14,254 - DEBUG - Cache miss: Job VGG16 could not access 40
+2025-05-07 11:31:14,254 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,254 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,254 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,254 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,254 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,254 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,254 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,255 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,255 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 87
+2025-05-07 11:31:14,255 - DEBUG - Cache miss: Job RESNET18 could not access 79
+2025-05-07 11:31:14,255 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,255 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,255 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,255 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,255 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 88
+2025-05-07 11:31:14,255 - DEBUG - Cache miss: Job RESNET50 could not access 54
+2025-05-07 11:31:14,255 - DEBUG - Cache miss: Job RESNET18 could not access 80
+2025-05-07 11:31:14,255 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,255 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job VGG16 could not access 41
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 89
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET18 could not access 81
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 90
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET50 could not access 55
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET18 could not access 82
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 91
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job VGG16 could not access 42
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET18 could not access 83
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 92
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET50 could not access 56
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET18 could not access 84
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 93
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET18 could not access 85
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 94
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job VGG16 could not access 43
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET50 could not access 57
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 95
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET18 could not access 86
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 96
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET18 could not access 87
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET50 could not access 58
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job VGG16 could not access 44
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 97
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET18 could not access 88
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 98
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET50 could not access 59
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET18 could not access 89
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 99
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job VGG16 could not access 45
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET18 could not access 90
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job SHUFFLENETV2 could not access 100
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET50 could not access 60
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET18 could not access 91
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET18 could not access 92
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job VGG16 could not access 46
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET50 could not access 61
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET18 could not access 93
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET18 could not access 94
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET50 could not access 62
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job VGG16 could not access 47
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET18 could not access 95
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET50 could not access 63
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET18 could not access 96
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job VGG16 could not access 48
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET18 could not access 97
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET50 could not access 64
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET18 could not access 98
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET18 could not access 99
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job VGG16 could not access 49
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET50 could not access 65
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET18 could not access 100
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET50 could not access 66
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job VGG16 could not access 50
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET50 could not access 67
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job VGG16 could not access 51
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET50 could not access 68
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job VGG16 could not access 52
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET50 could not access 69
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET50 could not access 70
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job VGG16 could not access 53
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET50 could not access 71
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job VGG16 could not access 54
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET50 could not access 72
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job VGG16 could not access 55
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET50 could not access 73
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET50 could not access 74
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job VGG16 could not access 56
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET50 could not access 75
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job VGG16 could not access 57
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job RESNET50 could not access 76
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,256 - DEBUG - Cache miss: Job VGG16 could not access 58
+2025-05-07 11:31:14,268 - DEBUG - Cache miss: Job RESNET50 could not access 77
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache miss: Job RESNET50 could not access 78
+2025-05-07 11:31:14,268 - DEBUG - Cache miss: Job VGG16 could not access 59
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache miss: Job RESNET50 could not access 79
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache miss: Job VGG16 could not access 60
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache miss: Job RESNET50 could not access 80
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache miss: Job VGG16 could not access 61
+2025-05-07 11:31:14,268 - DEBUG - Cache miss: Job RESNET50 could not access 81
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache miss: Job RESNET50 could not access 82
+2025-05-07 11:31:14,268 - DEBUG - Cache miss: Job VGG16 could not access 62
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache miss: Job RESNET50 could not access 83
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache miss: Job VGG16 could not access 63
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache miss: Job RESNET50 could not access 84
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache miss: Job VGG16 could not access 64
+2025-05-07 11:31:14,268 - DEBUG - Cache miss: Job RESNET50 could not access 85
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache miss: Job RESNET50 could not access 86
+2025-05-07 11:31:14,268 - DEBUG - Cache miss: Job VGG16 could not access 65
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache miss: Job RESNET50 could not access 87
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache miss: Job VGG16 could not access 66
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,268 - DEBUG - Cache miss: Job RESNET50 could not access 88
+2025-05-07 11:31:14,271 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,271 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,271 - DEBUG - Cache miss: Job VGG16 could not access 67
+2025-05-07 11:31:14,271 - DEBUG - Cache miss: Job RESNET50 could not access 89
+2025-05-07 11:31:14,271 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,271 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,271 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,271 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,271 - DEBUG - Cache miss: Job RESNET50 could not access 90
+2025-05-07 11:31:14,271 - DEBUG - Cache miss: Job VGG16 could not access 68
+2025-05-07 11:31:14,271 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,271 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,271 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,272 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,272 - DEBUG - Cache miss: Job RESNET50 could not access 91
+2025-05-07 11:31:14,272 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,272 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,272 - DEBUG - Cache miss: Job VGG16 could not access 69
+2025-05-07 11:31:14,272 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,272 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,272 - DEBUG - Cache miss: Job RESNET50 could not access 92
+2025-05-07 11:31:14,272 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,272 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,272 - DEBUG - Cache miss: Job VGG16 could not access 70
+2025-05-07 11:31:14,272 - DEBUG - Cache miss: Job RESNET50 could not access 93
+2025-05-07 11:31:14,272 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,272 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,272 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,272 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,272 - DEBUG - Cache miss: Job RESNET50 could not access 94
+2025-05-07 11:31:14,272 - DEBUG - Cache miss: Job VGG16 could not access 71
+2025-05-07 11:31:14,272 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,272 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,272 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,272 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,272 - DEBUG - Cache miss: Job RESNET50 could not access 95
+2025-05-07 11:31:14,272 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache miss: Job VGG16 could not access 72
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache miss: Job RESNET50 could not access 96
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache miss: Job VGG16 could not access 73
+2025-05-07 11:31:14,273 - DEBUG - Cache miss: Job RESNET50 could not access 97
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache miss: Job RESNET50 could not access 98
+2025-05-07 11:31:14,273 - DEBUG - Cache miss: Job VGG16 could not access 74
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache miss: Job RESNET50 could not access 99
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache miss: Job VGG16 could not access 75
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache miss: Job RESNET50 could not access 100
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache miss: Job VGG16 could not access 76
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache miss: Job VGG16 could not access 77
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache miss: Job VGG16 could not access 78
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache miss: Job VGG16 could not access 79
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache miss: Job VGG16 could not access 80
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache miss: Job VGG16 could not access 81
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache miss: Job VGG16 could not access 82
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache miss: Job VGG16 could not access 83
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache miss: Job VGG16 could not access 84
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache miss: Job VGG16 could not access 85
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache miss: Job VGG16 could not access 86
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache miss: Job VGG16 could not access 87
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,273 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,277 - DEBUG - Cache miss: Job VGG16 could not access 88
+2025-05-07 11:31:14,277 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,277 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,277 - DEBUG - Cache miss: Job VGG16 could not access 89
+2025-05-07 11:31:14,277 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,277 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,277 - DEBUG - Cache miss: Job VGG16 could not access 90
+2025-05-07 11:31:14,277 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,277 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,277 - DEBUG - Cache miss: Job VGG16 could not access 91
+2025-05-07 11:31:14,277 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,277 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,277 - DEBUG - Cache miss: Job VGG16 could not access 92
+2025-05-07 11:31:14,277 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,277 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,277 - DEBUG - Cache miss: Job VGG16 could not access 93
+2025-05-07 11:31:14,277 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,277 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,277 - DEBUG - Cache miss: Job VGG16 could not access 94
+2025-05-07 11:31:14,277 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,277 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,277 - DEBUG - Cache miss: Job VGG16 could not access 95
+2025-05-07 11:31:14,277 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,277 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,277 - DEBUG - Cache miss: Job VGG16 could not access 96
+2025-05-07 11:31:14,277 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,277 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,277 - DEBUG - Cache miss: Job VGG16 could not access 97
+2025-05-07 11:31:14,277 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,277 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,277 - DEBUG - Cache miss: Job VGG16 could not access 98
+2025-05-07 11:31:14,277 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,277 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,277 - DEBUG - Cache miss: Job VGG16 could not access 99
+2025-05-07 11:31:14,277 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,279 - DEBUG - Cache is full: 30 >= 30.0
+2025-05-07 11:31:14,279 - DEBUG - Cache miss: Job VGG16 could not access 100

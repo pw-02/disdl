@@ -22,6 +22,7 @@ logging.basicConfig(
     filemode='w'                # Overwrite the file each run; use 'a' to append
 )
 
+
 logger = logging.getLogger(__name__)
 
 class CacheStatus(Enum):
@@ -397,13 +398,13 @@ class BatchManager:
     def _maybe_cache_batch(self, batch: Batch):
         should_cache = False
         eviction_candidate = None
-        min_reuse_score_to_cache = 0.0
+        min_reuse_score_to_cache = 0.01
 
         if batch.cache_status in (CacheStatus.CACHED, CacheStatus.CACHING_IN_PROGRESS):
             return should_cache, eviction_candidate
 
         # Apply minimum score cutoff
-        if batch.reuse_score < min_reuse_score_to_cache:
+        if (batch.reuse_score) <= min_reuse_score_to_cache:
             logger.debug(f"Skipped caching {batch.batch_id}: reuse_score {batch.reuse_score:.2f} below threshold {min_reuse_score_to_cache}")
             return should_cache, eviction_candidate
 
@@ -424,7 +425,7 @@ class BatchManager:
             self._generate_new_batch()
 
     def get_next_batch_for_job(self, job_id: str) -> Optional[Batch]:
-        job = self.jobs[job_id]
+        job:DLTJob = self.jobs[job_id]
         if not job.future_batches:
             self.assign_batch_set_to_job(job)
         next_batch = job.next_batch()
@@ -434,6 +435,10 @@ class BatchManager:
         should_cache, eviction_candidate = self._maybe_cache_batch(next_batch)
         self._maybe_trigger_smaple_next_bacth(next_batch)
         return next_batch, should_cache, eviction_candidate
+    
+    # def register_job(self, job: DLTJob):
+    #     self.jobs[job.job_id] = job
+    #     self.assign_batch_set_to_job(job)
     
 def run_simulation(
     dataloader_system: str,
@@ -460,6 +465,8 @@ def run_simulation(
         batch_size=batch_size,
         num_partitions=num_partitions,
         jobs=jobs)
+    # for job in jobs:
+    #     sampler.register_job(job)
     
     event_queue = []  # Priority queue for next event times
     time_elapsed = 0  # Global simulation time

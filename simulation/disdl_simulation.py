@@ -2,15 +2,28 @@ import heapq
 import logging
 from typing import List, Sized, Tuple, Dict, Set, Any
 import sys
-sys.path.append(".")
-from simulation.sim_workloads import workloads
-from simulation.sim_cache import SharedCache
+# sys.path.append(".")
+sys.path.append("disdl\server")
+from sim_workloads import workloads
+from sim_cache import SharedCache
 from typing import List, Optional, Dict, Tuple
 from disdl.server.batch_manager import BatchManager
-from disdl.server.job import DLTJob
+# from job import DLTJob
 from disdl.server.logger_config import configure_simulation_logger
+from collections import OrderedDict
+from disdl.server.batch import Batch, CacheStatus
+from disdl.server.utils import AverageMeter
+import threading
 
-logger = configure_simulation_logger()
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    filename='simulation.log',         # Log file name
+    filemode='w'                # Overwrite the file each run; use 'a' to append
+)
+
+logger = logging.getLogger(__name__)
 
 class Dataset:
     def __init__(self, num_samples: str, batch_size:int ,  num_partitions: int = 1):
@@ -19,6 +32,86 @@ class Dataset:
         self.batch_size = batch_size
     def __len__(self) -> int:
         return self.num_samples
+    
+
+class DLTJob:
+    def __init__(self, job_id: str):
+        self.job_id = job_id
+        self.current_epoch = 0
+        # For reuse logic
+        # self.used_epoch_partition_pairs: Set[Tuple[int, int]] = set()
+        self.used_batch_set_ids: Set[str] = set()
+        self.partitions_covered_this_epoch: Set[int] = set()
+        # Active state
+        self.current_batch = None
+        self.current_batch_set_id  = None
+        self.future_batches: OrderedDict[str, Batch] = OrderedDict()
+        self.processing_speed = 1.0
+        self.optimal_throughput = 1/self.processing_speed #batches/sec
+        self.weight = self.optimal_throughput
+        self.num_batches_processed = 0
+        self.cache_hit_count = 0
+        self.cache_miss_count = 0
+        self.elapased_time_sec = 0
+        self.dataload_delay = AverageMeter('Dataload Delay')
+        self.lock = threading.Lock()
+
+    def set_job_processing_speed(self, speed: float):
+        self.processing_speed = speed
+        self.optimal_throughput = 1 / speed
+        self.weight = self.optimal_throughput
+   
+    def reset_for_new_epoch(self):
+        self.current_epoch += 1
+        self.partitions_covered_this_epoch.clear()
+    
+    def next_batch(self) -> Optional[Batch]:
+        # with self.lock:
+        next_batch = None
+        best_score = float('inf')
+        fallback_batch = None
+        for batch in self.future_batches.values():
+            if batch.cache_status == CacheStatus.CACHED:
+                if batch.reuse_score < best_score:
+                    next_batch = batch
+                    best_score = batch.reuse_score
+            elif batch.cache_status != CacheStatus.CACHING_IN_PROGRESS and fallback_batch is None:
+                fallback_batch = batch
+        if not next_batch:
+            next_batch = fallback_batch
+
+        if not next_batch:
+            #just get the next batch in the future batches
+            next_batch = next(iter(self.future_batches.values()), None)
+        
+        if next_batch:
+            next_batch.set_last_accessed_time()
+            self.future_batches.pop(next_batch.batch_id, None)
+        self.current_batch = next_batch
+        return next_batch
+    
+    def perf_stats(self, horurly_ec2_cost=12.24, hourly_cache_cost=3.25):
+            hit_rate = self.cache_hit_count / (self.cache_hit_count + self.cache_miss_count) if (self.cache_hit_count + self.cache_miss_count) > 0 else 0
+            throughput = self.num_batches_processed / self.elapased_time_sec if self.elapased_time_sec > 0 else 0
+            self.compute_cost = (horurly_ec2_cost / 3600) * self.elapased_time_sec
+            cache_cost = (hourly_cache_cost / 3600) * self.elapased_time_sec
+            total_cost = self.compute_cost + hourly_cache_cost
+            return {
+                'job_id': self.job_id,
+                'job_speed': self.processing_speed,
+                'batches_processed': self.num_batches_processed,
+                'cache_hit_count': self.cache_hit_count,
+                'cache_miss_count': self.cache_miss_count,
+                'cache_hit_%': hit_rate,
+                'elapsed_time': self.elapased_time_sec,
+                'throughput(batches/s)': throughput,
+                'optimal_throughput(batches/s)': self.optimal_throughput,
+                'compute_cost': self.compute_cost,
+                'cache_cost': cache_cost,
+                'total_cost': total_cost
+                }
+    def __lt__(self, other):
+        return self.processing_speed < other.processing_speed  # Compare based on speed
 
 def run_simulation(
     dataloader_system: str,
@@ -36,9 +129,9 @@ def run_simulation(
     num_partitions: int = 1,
     preprocesssing_time: float = 0.0001,
     batch_size: int = 1):
-    
     cache = SharedCache(capacity=cache_capacity, eviction_policy=eviction_policy)
     jobs:List[DLTJob] = [DLTJob(job_id) for job_id in workload_jobs]
+    
     for job in jobs:
         job.set_job_processing_speed(workload_jobs[job.job_id])
 
@@ -46,17 +139,15 @@ def run_simulation(
         dataset=Dataset(num_samples=batches_per_job, batch_size=batch_size, num_partitions=num_partitions),
         drop_last=False,
         shuffle=False,
-        min_lookahead_steps=40,
+        min_lookahead_steps=90,
         use_prefetching=use_prefetcher)
-    sampler.jobs = {job.job_id: job for job in jobs}
-
-    # for job in jobs:
-    #     sampler.register_job(job)
     
+    sampler.jobs = {job.job_id: job for job in jobs}
     event_queue = []  # Priority queue for next event times
     time_elapsed = 0  # Global simulation time
     time_between_job_starts = 0.25
     next_job_start_time = 0.1
+    
     for job in jobs:
         heapq.heappush(event_queue, (next_job_start_time, "dataloader_step", job))
         next_job_start_time += time_between_job_starts
@@ -171,7 +262,7 @@ def run_simulation(
     print(f"  Total Throughput: {agg_throuhgput:.2f} batches/s")
     print("-" * 40)
     # return overall_results
-    print(sampler.assigned_eviction_candidates)
+    # print(sampler.assigned_eviction_candidates)
 
 if __name__ == "__main__":
     dataloader_system  = 'DisDL' #'CoorDL', TensorSocket, DisDL
@@ -180,13 +271,13 @@ if __name__ == "__main__":
 
     simulation_time_sec = None #3600 # None  #3600 * 1 # Simulate 1 hour
     batches_per_job = 100 * 1 # 8500 #np.inf
-    cache_capacity = 0.25 * batches_per_job #* batches_per_job #number of batches as a % of the total number of batches
-    eviction_policy = "reuse_score" # "lru", "fifo", "mru", "random", "noevict", "reuse_score"
+    cache_capacity = 0.5 * batches_per_job #* batches_per_job #number of batches as a % of the total number of batches
+    eviction_policy = "lru" # "lru", "fifo", "mru", "random", "noevict", "reuse_score"
     hourly_ec2_cost = 12.24 
     hourly_cache_cost = 3.25
-    load_from_s3_time = 0.2 
+    load_from_s3_time = 0.2
     prefetcher_speed = load_from_s3_time /2
-    preprocesssing_time = 0.01
+    preprocesssing_time = 0.00
     num_partitions = 2
     batch_size = 1
 

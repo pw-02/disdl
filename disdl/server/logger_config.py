@@ -13,7 +13,7 @@ def configure_logger():
     logging.basicConfig(level=logging.DEBUG, format='[%(asctime)s][%(name)s][%(levelname)s] - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
 
     # Create and configure a logger named "SUPER"
-    logger = logging.getLogger("SUPER")
+    logger = logging.getLogger("DISDL")
     logger.setLevel(logging.DEBUG)
     return logger
 

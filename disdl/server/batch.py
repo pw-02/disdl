@@ -2,11 +2,9 @@
 import hashlib
 from typing import List, Set
 import threading
-# from utils.utils import create_unique_id
 import time
 from typing import List, Optional, Dict, Tuple
 from collections import deque, OrderedDict
-from logger_config import logger
 from enum import Enum
 
 class CacheStatus(Enum):
@@ -16,21 +14,19 @@ class CacheStatus(Enum):
 
 
 class BatchSet:
-    def __init__(self, batch_set_id:str):
-        self.id = batch_set_id
+    def __init__(self, set_id: str):
+        self.id = set_id
         self.batches: Dict[str, Batch] = OrderedDict()
-        self.batches_finalized = False
-        self.mark_for_eviction = False
+        self.is_finalized = False
+        self.marked_for_eviction = False
         self.lock = threading.Lock()
-        self.bacth_set_reuse_score = 0.0
+        self.reuse_score = 0.0
     
-    def compute_batch_set_reuse_score(self):
-        """Compute the reuse score based on the number of jobs that have seen this batch."""
+    def compute_reuse_score(self):
+        """Compute the total reuse score for this batch set."""
         with self.lock:
-            score = 0.0
-            for batch in self.batches.values():
-                score += batch.reuse_score
-            self.bacth_set_reuse_score = score
+            self.reuse_score = sum(batch.reuse_score for batch in self.batches.values())
+
     
 
 class Batch:
@@ -40,7 +36,7 @@ class Batch:
         self.partition_idx:int = partition_idx
         self.batch_idx:int = batch_idx
         self.batch_id:str = self._gen_batch_id(epoch_idx, partition_idx, batch_idx)
-        self.batch_set_id = f"{epoch_idx}_{partition_idx}"
+        self.set_id = f"{epoch_idx}_{partition_idx}"
         self.cache_status:CacheStatus = CacheStatus.NOT_CACHED
         self.last_accessed_time:float = 0 #None #float('inf')
         self.is_first_access = True
@@ -48,17 +44,6 @@ class Batch:
         self.reuse_score: float = 0.0
         self.awaiting_to_be_seen_by: Dict[str, float] = {}
 
-    # def compute_weighted_reuse_score(self, current_time: float, job_next_access_times: Dict[str, float]):
-    #     #job_next_access_times is a dictionary mapping job IDs to their next expected access time for this batch.
-    #     #The score gives higher priority to batches that will be reused sooner
-    #     with self.lock:
-    #         self.reuse_score = sum(
-    #             weight / (1 + job_next_access_times[job_id] - current_time)
-    #             for job_id, weight in self.awaiting_to_be_seen_by.items()
-    #             if job_id in job_next_access_times
-    #         )
-
-    
     def compute_weighted_reuse_score(self):
         """Compute the reuse score based on the number of jobs that have seen this batch."""
         with self.lock:

@@ -14,6 +14,7 @@ import random
 from enum import Enum
 from typing import List, Optional, Dict, Tuple
 from collections import deque, OrderedDict
+from disdl.server.sampler import PartitionedBatchSampler
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -202,6 +203,7 @@ class PartitionedBatchSampler():
         else:
             return (self.num_files + self.batch_size - 1) // self.batch_size
 
+class DLTJob:
     def __init__(self, job_id: str, num_partitions: int, speed: float):
         self.job_id = job_id
         self.num_partitions = num_partitions

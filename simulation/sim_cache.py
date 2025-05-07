@@ -37,21 +37,17 @@ class SharedCache:
         
     def put_batch(self, batch_id) -> None:
         if batch_id in self.cache:
-            return
-        
-        if self.cache_is_full():
-            if self.policy == "noevict":
-                # Do nothing; can't insert and can't evict
-                # logger.debug(f"Cache full and noevict policy: Skipping insert for batch {batch_id}")
-                return
-            else:
-                self._evict_one()
-        # Now safe to insert
+            return True
+        if self.cache_is_full() and self.policy == "noevict":
+            return False
+        if self.cache_is_full() and self.policy != "noevict":
+            self._evict_one()
         self.cache[batch_id] = True
         self._timestamps[batch_id] = time.time()
         # logger.debug(f"Added batch {batch_id} to cache")
         self.max_size_used = max(self.max_size_used, len(self.cache))
-
+        return True
+        
     def cache_is_full(self):
         return (len(self.cache) + 1) > self.capacity
     

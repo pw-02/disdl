@@ -1,9 +1,8 @@
 from typing import  Dict, Sized
 from itertools import cycle
 import random
-from batch import Batch, BatchSet
 from collections import OrderedDict
-import hashlib
+
 
 class PartitionedBatchSampler():
     def __init__(self, num_files:Sized, batch_size, num_partitions = 10,  drop_last=False, shuffle=True):
@@ -18,7 +17,7 @@ class PartitionedBatchSampler():
 
         # Initialize epoch tracking
         self.current_epoch = 1
-        self.current_idx = 1
+        self.current_idx = 0
         self.processed_partitions = 0  # Track processed partitions in the current epoch
         # Start with the first partition
         self.active_partition_idx, self.active_partition = next(self.partitions_cycle)
@@ -43,26 +42,30 @@ class PartitionedBatchSampler():
                 sampled_indices.append(next(self.sampler))  # Get an index from the partition
             except StopIteration:
                 if not self.drop_last and sampled_indices:
-                    return self.generate_batch(sampled_indices)  # Return smaller batch if drop_last=False
+                    # return self.generate_batch(sampled_indices)  # Return smaller batch if drop_last=False
+                    self.current_idx += 1
+                    return sampled_indices, self.current_epoch, self.active_partition_idx+1, self.current_idx
                 
                 # Move to the next partition
                 self.processed_partitions += 1
                 if self.processed_partitions == self.num_partitions:
                     self.current_epoch += 1  # Full epoch completed
                     self.processed_partitions = 0  # Reset for the next epoch
-                    self.current_idx = 1  # Reset for the next epoch
+                    self.current_idx = 0  # Reset for the next epoch
                     # print(f"Epoch {self.current_epoch} completed!")  # Notify when an epoch ends
 
                 self.active_partition_idx, self.active_partition = next(self.partitions_cycle)
                 self.sampler = self._create_sampler(self.active_partition)
                 continue  # Restart batch sampling from new partition
 
-        return self.generate_batch(sampled_indices)
+        # return self.generate_batch(sampled_indices)
+        self.current_idx += 1
+        return sampled_indices, self.current_epoch, self.active_partition_idx+1, self.current_idx
     
-    def generate_batch(self, batch_indices):
-        next_batch = Batch(batch_indices, self.current_epoch, self.active_partition_idx+1, self.current_idx)
-        self.current_idx += 1  # Increment the batch index for the next batch
-        return next_batch
+    # def generate_batch(self, batch_indices):
+    #     next_batch = Batch(batch_indices, self.current_epoch, self.active_partition_idx+1, self.current_idx)
+    #     self.current_idx += 1  # Increment the batch index for the next batch
+    #     return next_batch
 
     def _partition_indices(self, num_partitions):
     # Initialize a list to hold the partitions
@@ -103,7 +106,7 @@ class PartitionedBatchSampler():
 
 
 if __name__ == "__main__":
-    
+    from batch import Batch, BatchSet
     sampler = PartitionedBatchSampler(100, 
                                       batch_size=2, 
                                       num_partitions=5, 

@@ -54,7 +54,10 @@ class DLTJob:
                     fallback_batch = batch
             if not next_batch:
                 next_batch = fallback_batch
-            
+            if not next_batch:
+                #just get the next batch in the future batches
+                next_batch = next(iter(self.future_batches.values()), None)
+                
             if next_batch:
                 next_batch.set_last_accessed_time()
                 self.future_batches.pop(next_batch.batch_id, None)

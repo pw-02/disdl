@@ -18,7 +18,7 @@ from disdl.server.utils import AverageMeter
 import threading
 
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
     filename='disdlapp.log',         # Log file name
     filemode='w'                # Overwrite the file each run; use 'a' to append
@@ -60,9 +60,7 @@ class DLTJob:
         self.processing_speed = speed
         self.optimal_throughput = 1 / speed
         self.weight = self.optimal_throughput
-    # def has_completed_epoch(self) -> bool:
-    #     return len(self.partitions_covered_this_epoch) == self.num_partitions
-
+   
     def reset_for_new_epoch(self):
         self.current_epoch += 1
         self.partitions_covered_this_epoch.clear()
@@ -171,23 +169,22 @@ class BatchManager:
             self.jobs[job_id] = DLTJob(job_id)
         return self.jobs[job_id]
     
-    def get_next_batch_for_job(self, job_id: str) -> Optional[Batch]:
-            
-            job:DLTJob  = self._get_or_register_job(job_id)
+    def get_next_batch_for_job(self, job_id: str) -> Optional[Batch]:    
+        job:DLTJob  = self._get_or_register_job(job_id)
 
-            if not job.future_batches:
-                self.assign_batch_set_to_job(job)
-            
-            next_batch = job.next_batch()
-            if next_batch is None:
-                logger.error(f"Job {job.job_id} has no future batches.")
-                return None, False, None
-            
-            should_cache, eviction_candidate = self._maybe_cache_batch(next_batch)
-            
-            self._maybe_trigger_sample_next_batch(next_batch)
-            
-            return next_batch, should_cache, eviction_candidate
+        if not job.future_batches:
+            self.assign_batch_set_to_job(job)
+        
+        next_batch = job.next_batch()
+        if next_batch is None:
+            logger.error(f"Job {job.job_id} has no future batches.")
+            return None, False, None
+        
+        should_cache, eviction_candidate = self._maybe_cache_batch(next_batch)
+        
+        self._maybe_trigger_sample_next_batch(next_batch)
+        
+        return next_batch, should_cache, eviction_candidate
     
     def assign_batch_set_to_job(self, job: DLTJob):
         if len(job.partitions_covered_this_epoch) == self.dataset.num_partitions:
@@ -282,6 +279,13 @@ class BatchManager:
             batch.is_first_access = False
             self._generate_new_batch()
 
+    def get_batch_reuse_score(self, batch_id: str) -> float:
+        #find batch somehher across all the batches in the batch_sets
+        for partition_map in self.batch_sets.values():
+            for batch_set in partition_map.values():
+                if batch_id in batch_set.batches:
+                    return batch_set.batches[batch_id].reuse_score
+
 def run_simulation(
     dataloader_system: str,
     workload_name: str,
@@ -317,9 +321,11 @@ def run_simulation(
     
     event_queue = []  # Priority queue for next event times
     time_elapsed = 0  # Global simulation time
-
+    time_between_job_starts = 0.25
+    next_job_start_time = 0.1
     for job in jobs:
-        heapq.heappush(event_queue, (0, "dataloader_step", job))
+        heapq.heappush(event_queue, (next_job_start_time, "dataloader_step", job))
+        next_job_start_time += time_between_job_starts
 
     while True:
         if simulation_time_sec is not None and time_elapsed >= simulation_time_sec:
@@ -335,6 +341,7 @@ def run_simulation(
             job.elapased_time_sec = time_elapsed
             next_batch, cache_on_miss, eviction_candidate = sampler.get_next_batch_for_job(job.job_id)
             cache_hit = cache.get_batch(next_batch.batch_id)
+            logger.debug(f"Job {job.job_id} assigned batch {next_batch.batch_id} at time {time_elapsed:.2f}s")
             if cache_hit:
                 job.cache_hit_count += 1
                 delay = preprocesssing_time
@@ -353,6 +360,8 @@ def run_simulation(
             batch_is_cached  = False
             did_evict = False
             batch_id = next_batch.batch_id
+            batch_reuse_score = next_batch.reuse_score
+            canditdate_batch_reuse_score = sampler.get_batch_reuse_score(eviction_candidate) if eviction_candidate else None
 
             if cache.cache_is_full():
                 if eviction_candidate is None:
@@ -370,7 +379,7 @@ def run_simulation(
                         logger.error(f"Batch {eviction_candidate} not found in cache when trying to evict.")
                     
                     heapq.heappush(event_queue, (time_elapsed + delay, "training_step", (job, batch_is_cached, evicted_batchid, did_evict)))
-                    logger.debug(f"Evicted {evicted_batchid} for {batch_id}.")
+                    logger.debug(f"Evicted {evicted_batchid} ({sampler.get_batch_reuse_score(evicted_batchid)}) for {batch_id} ({sampler.get_batch_reuse_score(evicted_batchid)}).")
             else:
                 logger.debug(f"Cache is not full, inserting {batch_id}.")
                 batch_is_cached = cache.put_batch(batch_id)
@@ -379,6 +388,7 @@ def run_simulation(
 
         elif event_type == "training_step":
             job, batch_is_cached, eviction_candidate_batch_id, did_evict  = payload
+            logger.info(f"Job {job.job_id} processing batch {job.current_batch.batch_id} at time {time_elapsed:.2f}s. Cache hit: {batch_is_cached}.")
             job.elapased_time_sec = time_elapsed
             sampler.processed_batch_update(
                 job.job_id,
@@ -386,6 +396,7 @@ def run_simulation(
                 eviction_candidate_batch_id=eviction_candidate_batch_id,
                 did_evict=did_evict
                 )
+            # logger.debug(f"Job {job.job_id} finished processing batch {job.current_batch.batch_id} at time {time_elapsed + job.processing_speed:.2f}s")
             
             job.num_batches_processed += 1
             if batches_per_job is None or job.num_batches_processed == batches_per_job:
@@ -434,13 +445,17 @@ if __name__ == "__main__":
     workload_jobs = dict(workloads[workload_name])
 
     simulation_time_sec = None #3600 # None  #3600 * 1 # Simulate 1 hour
-    batches_per_job = 100 * 1 # 8500 #np.inf
+    batches_per_job = 8500 * 10 # 8500 #np.inf
     cache_capacity = 0.25 * batches_per_job #* batches_per_job #number of batches as a % of the total number of batches
-    eviction_policy = "reuse_score" # "lru", "fifo", "mru", "random", "noevict", "reuse_score"
+    eviction_policy = "lru" # "lru", "fifo", "mru", "random", "noevict", "reuse_score"
     hourly_ec2_cost = 12.24 
     hourly_cache_cost = 3.25
-    load_from_s3_time = 0.2
+    load_from_s3_time = 0.00002 
     prefetcher_speed = load_from_s3_time /2
+    preprocesssing_time = 0.01
+    num_partitions = 2
+    batch_size = 1
+
     run_simulation(
         dataloader_system = dataloader_system,
         workload_name = workload_name,
@@ -454,7 +469,6 @@ if __name__ == "__main__":
         batches_per_job=batches_per_job,
         use_prefetcher=False,
         prefetch_delay=prefetcher_speed,
-        num_partitions=1,
-        preprocesssing_time=0.01,
-        batch_size=1
-    )
+        num_partitions=num_partitions,
+        preprocesssing_time=preprocesssing_time,
+        batch_size= batch_size)

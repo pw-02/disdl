@@ -38,9 +38,9 @@ class SharedCache:
     def put_batch(self, batch_id) -> None:
         if batch_id in self.cache:
             return True
-        if self.cache_is_full() and self.policy == "noevict":
-            return False
-        if self.cache_is_full() and self.policy != "noevict":
+        if self.cache_is_full():
+            if self.policy == "noevict":
+                return False
             self._evict_one()
         self.cache[batch_id] = True
         self._timestamps[batch_id] = time.time()

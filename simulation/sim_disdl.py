@@ -223,7 +223,7 @@ class DLTJob:
         self.elapased_time_sec = 0
         self.speed = speed
         self.weight = 1/speed
-
+        self.optimal_throughput = 1/speed #batches/sec
 
     def has_completed_epoch(self) -> bool:
         return len(self.partitions_covered_this_epoch) == self.num_partitions
@@ -271,6 +271,7 @@ class DLTJob:
                 'cache_hit_%': hit_rate,
                 'elapsed_time': self.elapased_time_sec,
                 'throughput(batches/s)': throughput,
+                'optimal_throughput(batches/s)': self.optimal_throughput,
                 'compute_cost': self.compute_cost,
                 'cache_cost': cache_cost,
                 'total_cost': total_cost
@@ -350,21 +351,16 @@ class BatchManager:
             batch.mark_awaiting_to_be_seen_by(job.job_id, job.weight)
             job.future_batches[batch.batch_id] = batch
     
-    def job_processed_batch_update(self, job_id: int,
-                                    batch_is_cached: bool, 
-                                    job_cached_batch: bool, 
-                                    eviction_candidate_batch_id: Optional[str],
-                                    evicted: bool = False):
+    def job_processed_batch_update(self, 
+                                   job_id: int,
+                                   batch_is_cached: bool, 
+                                   job_cached_batch: bool, 
+                                   eviction_candidate_batch_id: Optional[str],
+                                   evicted: bool = False):
         
         job:DLTJob = self.jobs[job_id]
         batch:Batch  = job.current_batch
-        batch.mark_seen_by(job.job_id)
-
-        # if job_evicted_batch_id == '1_1_1_cfcd208495d565ef':
-        #     pass
-
-        if batch.reuse_score <=0.0:
-            pass
+        batch.mark_seen_by(job.job_id)    
 
         if batch_is_cached:
             batch.set_cache_status(CacheStatus.CACHED)
@@ -381,9 +377,12 @@ class BatchManager:
             new_entry = (batch.reuse_score, time.time(), batch.batch_id)
             self.eviction_index.add(new_entry)
             self.eviction_index_lookup[batch.batch_id] = new_entry
+        else:
+            batch.set_cache_status(CacheStatus.NOT_CACHED)
+            self.cached_batches.pop(batch.batch_id, None)
         
         if evicted:
-            evicted_batch = self.cached_batches.get(eviction_candidate_batch_id, None)
+            evicted_batch:Batch = self.cached_batches.get(eviction_candidate_batch_id, None)
             if evicted_batch:
                 evicted_batch.set_cache_status(CacheStatus.NOT_CACHED)
             self.cached_batches.pop(eviction_candidate_batch_id, None)
@@ -394,18 +393,6 @@ class BatchManager:
         else:
             if eviction_candidate_batch_id in self.assigned_eviction_candidates:
                 self.assigned_eviction_candidates.pop(eviction_candidate_batch_id, None)
-    
-
-    # def _maybe_cache_batch(self, batch: Batch):
-    #     if batch.cache_status in (CacheStatus.CACHED, CacheStatus.CACHING_IN_PROGRESS):
-    #         return False  # Already handled
-
-    #     batch.compute_weighted_reuse_score()
-    #     if batch.reuse_score <= 0:
-    #         return False
-
-    #     batch.set_cache_status(CacheStatus.CACHING_IN_PROGRESS)
-    #     return True
 
     def _maybe_cache_batch(self, batch: Batch):
         should_cache = False
@@ -429,16 +416,8 @@ class BatchManager:
                     self.assigned_eviction_candidates[batch_id] = batch
                     eviction_candidate = batch_id
                     break
-
-        # if self.eviction_index:
-        #     worst_score, _, worst_id = self.eviction_index[0]
-        #     if batch.reuse_score > worst_score:
-        #         eviction_candidate = worst_id
-        #         pass
-
         return should_cache, eviction_candidate
     
-
     def _maybe_trigger_smaple_next_bacth(self, batch: Batch):
         if batch.is_first_access:
             batch.is_first_access = False
@@ -574,6 +553,7 @@ def run_simulation(
     total_cost = agg_compute_cost + cache_cost  # No additional costs in this simulation
     job_speeds = {job['job_id']: job['job_speed'] for job in job_performances}
     throuhgputs_for_jobs = {job['job_id']: job['throughput(batches/s)'] for job in job_performances}
+    optimal_throughputs = {job['job_id']: job['optimal_throughput(batches/s)'] for job in job_performances}
     print(f"{dataloader_system}")
     print(f"  Jobs: {job_speeds}"),
     print(f"  Batches per Job: {batches_per_job}")
@@ -587,7 +567,8 @@ def run_simulation(
     print(f"  Total Cost : ${total_cost:.2f}")
     print(f"  Total Batches: {agg_batches_processed}")
     print(f"  Total Time: {elapsed_time_sec:.2f}s")
-    print(f"  Job Throughputs: {throuhgputs_for_jobs}")
+    print(f"  Optimal Job Throughputs: {optimal_throughputs}")
+    print(f"  Actual Job Throughputs: {throuhgputs_for_jobs}")
     print(f"  Total Throughput: {agg_throuhgput:.2f} batches/s")
     print("-" * 40)
     # return overall_results
@@ -595,12 +576,12 @@ def run_simulation(
 
 if __name__ == "__main__":
     dataloader_system  = 'DisDL' #'CoorDL', TensorSocket, DisDL
-    workload_name = '20_jobs' #'imagenet_128_hpo', 'imagenet_128_resnet50', imagenet_128_nas
+    workload_name = 'imagenet_128_nas' #'imagenet_128_hpo', 'imagenet_128_resnet50', imagenet_128_nas
     jobs =  workloads[workload_name].items()
     simulation_time_sec = None #3600 # None  #3600 * 1 # Simulate 1 hour
-    batches_per_job = 1000 * 1 # 8500 #np.inf
+    batches_per_job = 100 * 1 # 8500 #np.inf
     cache_capacity = 0.25 * batches_per_job #* batches_per_job #number of batches as a % of the total number of batches
-    eviction_policy = "random" # "lru", "fifo", "mru", "random", "noevict", "reuse_score"
+    eviction_policy = "reuse_score" # "lru", "fifo", "mru", "random", "noevict", "reuse_score"
     hourly_ec2_cost = 12.24 
     hourly_cache_cost = 3.25
     load_from_s3_time = 0.2

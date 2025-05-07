@@ -58,6 +58,7 @@ class SharedCache:
     def _remove(self, batch_id: Any):
         self.cache.pop(batch_id, None)
         self._timestamps.pop(batch_id, None)
+        return batch_id, True
         # logger.debug(f"Removed batch {batch_id} from cache")
 
     def _evict_one(self):
@@ -71,6 +72,7 @@ class SharedCache:
         if self.policy == "random":
             victim = random.choice(list(self.cache.keys()))
             return self._remove(victim)
+        
      
     def current_usage_gb(self, size_per_batch_gb: float) -> float:
         return len(self.cache) * size_per_batch_gb

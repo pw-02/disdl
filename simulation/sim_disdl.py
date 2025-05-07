@@ -294,8 +294,10 @@ class BatchManager:
         self.cached_batches: Dict[str, Batch] = {}
         self.eviction_index: SortedList[Tuple[float, float, str]] = SortedList() # Sorted by (reuse_score, timestamp)
         self.eviction_index_lookup: Dict[str, Tuple[float, float, str]] = {} #delete batches from eviction_index efficiently
+        
         self.lookahead_distance = min(self.sampler.calc_num_batchs_per_partition() - 1, 40)
         self.jobs: Dict[str, DLTJob] = {job.job_id: job for job in jobs}
+
         for _ in range(self.lookahead_distance):
             self._generate_new_batch()
     
@@ -354,6 +356,9 @@ class BatchManager:
         batch:Batch  = job.current_batch
         batch.mark_seen_by(job.job_id)
 
+        if job_evicted_batch_id == '1_1_1_cfcd208495d565ef':
+            pass
+
         if batch.reuse_score <=0.0:
             pass
 
@@ -381,11 +386,26 @@ class BatchManager:
             entry = self.eviction_index_lookup.pop(job_evicted_batch_id, None)
             if entry:
                 self.eviction_index.discard(entry)
-  
+    
+
+    def _maybe_cache_batch(self, batch: Batch):
+        if batch.cache_status in (CacheStatus.CACHED, CacheStatus.CACHING_IN_PROGRESS):
+            return False  # Already handled
+
+        batch.compute_weighted_reuse_score()
+        if batch.reuse_score <= 0:
+            return False
+
+        batch.set_cache_status(CacheStatus.CACHING_IN_PROGRESS)
+        return True
+
+
+
     def _maybe_cache_batch(self, batch: Batch):
         should_cache = False
         eviction_candidate = None
         min_reuse_score_to_cache = 0.0
+        eviction_candidates = []
 
         if batch.cache_status in (CacheStatus.CACHED, CacheStatus.CACHING_IN_PROGRESS):
             return should_cache, eviction_candidate
@@ -403,11 +423,7 @@ class BatchManager:
             if batch.reuse_score > worst_score:
                 eviction_candidate = worst_id
                 pass
-        if should_cache and eviction_candidate is None:
-            # Check if the cache is full
-            if len(self.cached_batches) >= 25:
-                # Cache is full, evict the least recently used batch
-                pass
+
         return should_cache, eviction_candidate
     
 
@@ -496,15 +512,25 @@ def run_simulation(
             job, next_batch, eviction_candidate = payload
             batch_id = next_batch.batch_id
             if cache.cache_is_full():
+                before_evict_size = len(cache.cache)
                 if eviction_candidate is None:
                     heapq.heappush(event_queue, (time_elapsed + preprocesssing_time, "batch_fetch_complete", (job, False, False, None)))
                     logger.debug(f"Cache is full, but no eviction candidate found for {batch_id}.")
                 else:
                     logger.debug(f"Cache is full, evicting {eviction_candidate} for {batch_id}.")
                     # Evict the batch with the lowest reuse score
-                    cache._remove(eviction_candidate)
+                    if eviction_policy not in ["noevict", "reuse_score"]:
+                        evicted_batchid, evicted = cache._evict_one()
+                    else:
+                        evicted_batchid, evicted  = cache._remove(eviction_candidate)
+                    after_evict_size = len(cache.cache)
+                    if after_evict_size >= before_evict_size:
+                        logger.debug(f"Cache eviction failed for {eviction_candidate}.")
+                        evicted = False
                     cache.put_batch(batch_id)
-                    heapq.heappush(event_queue, (time_elapsed + preprocesssing_time, "batch_fetch_complete", (job, True, True, eviction_candidate)))
+
+                    heapq.heappush(event_queue, (time_elapsed + preprocesssing_time, "batch_fetch_complete", (job, True, True, evicted_batchid)))
+                    logger.debug(f"Evicted {evicted_batchid} for {batch_id}.")
             else:
                 logger.debug(f"Cache is not full, inserting {batch_id}.")
                 cache.put_batch(batch_id)
@@ -560,7 +586,7 @@ if __name__ == "__main__":
     simulation_time_sec = None #3600 # None  #3600 * 1 # Simulate 1 hour
     batches_per_job = 100 * 1 # 8500 #np.inf
     cache_capacity = 0.25 * batches_per_job #* batches_per_job #number of batches as a % of the total number of batches
-    eviction_policy = "noevict" # "lru", "fifo", "mru", "random", "noevict", "reuse_score"
+    eviction_policy = "reuse_score" # "lru", "fifo", "mru", "random", "noevict", "reuse_score"
     hourly_ec2_cost = 12.24 
     hourly_cache_cost = 3.25
     load_from_s3_time = 0.2

@@ -56,22 +56,33 @@ class SharedCache:
         return (len(self.cache) + 1) > self.capacity
     
     def _remove(self, batch_id: Any):
-        self.cache.pop(batch_id, None)
-        self._timestamps.pop(batch_id, None)
-        return batch_id, True
+        if batch_id not in self.cache:
+            return batch_id, False
+        else:        
+            self.cache.pop(batch_id, None)
+            self._timestamps.pop(batch_id, None)
+            return batch_id, True
         # logger.debug(f"Removed batch {batch_id} from cache")
 
     def _evict_one(self):
         if self.policy == "lru":
-            return self.cache.popitem(last=False)
+            batch_id, _ = self.cache.popitem(last=False)
+            return batch_id, True
+        
         if self.policy == "fifo":
             oldest = min(self._timestamps, key=self._timestamps.get)
-            return self._remove(oldest)
+            batch_id, evicted = self._remove(oldest)
+            return batch_id, evicted
+        
         if self.policy == "mru":
-            return self.cache.popitem(last=True)
+            batch_id, _ = self.cache.popitem(last=True)
+            return batch_id, True
+        
         if self.policy == "random":
             victim = random.choice(list(self.cache.keys()))
-            return self._remove(victim)
+            batch_id, evicted = self._remove(victim)
+            return batch_id, evicted
+
         
      
     def current_usage_gb(self, size_per_batch_gb: float) -> float:

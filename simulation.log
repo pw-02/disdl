@@ -1,0 +1,931 @@
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_1_cfcd208495d565ef at time 0.10s
+[DISDL-SIM][DEBUG] - Cache is not full, inserting 1_1_1_cfcd208495d565ef.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_1_cfcd208495d565ef at time 0.31s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_1_cfcd208495d565ef at time 0.35s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_1_cfcd208495d565ef at time 0.36s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_2_c4ca4238a0b92382 at time 0.37s
+[DISDL-SIM][DEBUG] - Cache is not full, inserting 1_1_2_c4ca4238a0b92382.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_3_c81e728d9d4c2f63 at time 0.46s
+[DISDL-SIM][DEBUG] - Cache is not full, inserting 1_1_3_c81e728d9d4c2f63.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_2_c4ca4238a0b92382 at time 0.58s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_1_cfcd208495d565ef at time 0.60s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_1_cfcd208495d565ef at time 0.61s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_4_eccbc87e4b5ce2fe at time 0.65s
+[DISDL-SIM][DEBUG] - Cache is not full, inserting 1_1_4_eccbc87e4b5ce2fe.
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_3_c81e728d9d4c2f63 at time 0.68s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_2_c4ca4238a0b92382 at time 0.78s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_2_c4ca4238a0b92382 at time 0.79s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_1_cfcd208495d565ef at time 0.85s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_4_eccbc87e4b5ce2fe at time 0.86s. Cache hit: True.
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_1_cfcd208495d565ef at time 0.86s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_4_eccbc87e4b5ce2fe at time 0.89s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_4_eccbc87e4b5ce2fe at time 0.90s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_3_c81e728d9d4c2f63 at time 0.92s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_3_c81e728d9d4c2f63 at time 0.93s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_2_c4ca4238a0b92382 at time 0.95s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_2_c4ca4238a0b92382 at time 0.96s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_5_a87ff679a2f3e71d at time 0.99s
+[DISDL-SIM][DEBUG] - Cache is not full, inserting 1_1_5_a87ff679a2f3e71d.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_6_e4da3b7fbbce2345 at time 1.01s
+[DISDL-SIM][DEBUG] - Cache is not full, inserting 1_1_6_e4da3b7fbbce2345.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_5_a87ff679a2f3e71d at time 1.20s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_6_e4da3b7fbbce2345 at time 1.22s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_6_e4da3b7fbbce2345 at time 1.27s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_6_e4da3b7fbbce2345 at time 1.28s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_3_c81e728d9d4c2f63 at time 1.30s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_3_c81e728d9d4c2f63 at time 1.31s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_5_a87ff679a2f3e71d at time 1.32s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_5_a87ff679a2f3e71d at time 1.33s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_7_1679091c5a880faf at time 1.34s
+[DISDL-SIM][DEBUG] - Cache is not full, inserting 1_1_7_1679091c5a880faf.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_2_c4ca4238a0b92382 at time 1.37s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_2_c4ca4238a0b92382 at time 1.38s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_8_8f14e45fceea167a at time 1.44s
+[DISDL-SIM][DEBUG] - Cache is not full, inserting 1_1_8_8f14e45fceea167a.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_7_1679091c5a880faf at time 1.55s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_9_c9f0f895fb98ab91 at time 1.61s
+[DISDL-SIM][DEBUG] - Cache is not full, inserting 1_1_9_c9f0f895fb98ab91.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_4_eccbc87e4b5ce2fe at time 1.65s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_8_8f14e45fceea167a at time 1.65s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_4_eccbc87e4b5ce2fe at time 1.66s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_7_1679091c5a880faf at time 1.75s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_7_1679091c5a880faf at time 1.76s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_9_c9f0f895fb98ab91 at time 1.82s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_9_c9f0f895fb98ab91 at time 1.87s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_9_c9f0f895fb98ab91 at time 1.88s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_8_8f14e45fceea167a at time 1.89s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_8_8f14e45fceea167a at time 1.90s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_3_c81e728d9d4c2f63 at time 1.90s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_3_c81e728d9d4c2f63 at time 1.91s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_10_45c48cce2e2d7fbd at time 1.96s
+[DISDL-SIM][DEBUG] - Cache is not full, inserting 1_1_10_45c48cce2e2d7fbd.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_11_d3d9446802a44259 at time 1.98s
+[DISDL-SIM][DEBUG] - Cache is not full, inserting 1_1_11_d3d9446802a44259.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_5_a87ff679a2f3e71d at time 2.00s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_5_a87ff679a2f3e71d at time 2.01s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_10_45c48cce2e2d7fbd at time 2.17s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_11_d3d9446802a44259 at time 2.19s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_11_d3d9446802a44259 at time 2.23s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_11_d3d9446802a44259 at time 2.24s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_10_45c48cce2e2d7fbd at time 2.30s
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_12_6512bd43d9caa6e0 at time 2.30s
+[DISDL-SIM][DEBUG] - Cache is not full, inserting 1_1_12_6512bd43d9caa6e0.
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_10_45c48cce2e2d7fbd at time 2.31s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_6_e4da3b7fbbce2345 at time 2.35s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_6_e4da3b7fbbce2345 at time 2.36s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_13_c20ad4d76fe97759 at time 2.41s
+[DISDL-SIM][DEBUG] - Cache is not full, inserting 1_1_13_c20ad4d76fe97759.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_4_eccbc87e4b5ce2fe at time 2.42s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_4_eccbc87e4b5ce2fe at time 2.43s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_12_6512bd43d9caa6e0 at time 2.52s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_14_c51ce410c124a10e at time 2.58s
+[DISDL-SIM][DEBUG] - Cache is not full, inserting 1_1_14_c51ce410c124a10e.
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_13_c20ad4d76fe97759 at time 2.62s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_7_1679091c5a880faf at time 2.70s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_7_1679091c5a880faf at time 2.71s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_12_6512bd43d9caa6e0 at time 2.73s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_12_6512bd43d9caa6e0 at time 2.74s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_14_c51ce410c124a10e at time 2.79s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_14_c51ce410c124a10e at time 2.84s
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_13_c20ad4d76fe97759 at time 2.85s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_14_c51ce410c124a10e at time 2.85s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_13_c20ad4d76fe97759 at time 2.86s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_15_aab3238922bcc25a at time 2.92s
+[DISDL-SIM][DEBUG] - Cache is not full, inserting 1_1_15_aab3238922bcc25a.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_5_a87ff679a2f3e71d at time 2.95s
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_16_9bf31c7ff062936a at time 2.96s
+[DISDL-SIM][DEBUG] - Cache is not full, inserting 1_1_16_9bf31c7ff062936a.
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_5_a87ff679a2f3e71d at time 2.96s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_8_8f14e45fceea167a at time 3.05s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_8_8f14e45fceea167a at time 3.06s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_15_aab3238922bcc25a at time 3.14s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_16_9bf31c7ff062936a at time 3.17s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_16_9bf31c7ff062936a at time 3.20s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_16_9bf31c7ff062936a at time 3.21s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_17_c74d97b01eae257e at time 3.27s
+[DISDL-SIM][DEBUG] - Cache is not full, inserting 1_1_17_c74d97b01eae257e.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_15_aab3238922bcc25a at time 3.27s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_15_aab3238922bcc25a at time 3.28s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_18_70efdf2ec9b08607 at time 3.39s
+[DISDL-SIM][DEBUG] - Cache is not full, inserting 1_1_18_70efdf2ec9b08607.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_9_c9f0f895fb98ab91 at time 3.40s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_9_c9f0f895fb98ab91 at time 3.41s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_6_e4da3b7fbbce2345 at time 3.47s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_17_c74d97b01eae257e at time 3.48s. Cache hit: True.
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_6_e4da3b7fbbce2345 at time 3.48s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_19_6f4922f45568161a at time 3.54s
+[DISDL-SIM][DEBUG] - Cache is not full, inserting 1_1_19_6f4922f45568161a.
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_18_70efdf2ec9b08607 at time 3.60s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_17_c74d97b01eae257e at time 3.70s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_17_c74d97b01eae257e at time 3.71s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_10_45c48cce2e2d7fbd at time 3.75s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_19_6f4922f45568161a at time 3.75s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_10_45c48cce2e2d7fbd at time 3.76s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_19_6f4922f45568161a at time 3.82s
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_18_70efdf2ec9b08607 at time 3.82s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_19_6f4922f45568161a at time 3.83s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_18_70efdf2ec9b08607 at time 3.83s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_20_1f0e3dad99908345 at time 3.89s
+[DISDL-SIM][DEBUG] - Cache is not full, inserting 1_1_20_1f0e3dad99908345.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_21_98f13708210194c4 at time 3.93s
+[DISDL-SIM][DEBUG] - Cache is not full, inserting 1_1_21_98f13708210194c4.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_7_1679091c5a880faf at time 4.00s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_7_1679091c5a880faf at time 4.01s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_11_d3d9446802a44259 at time 4.09s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_20_1f0e3dad99908345 at time 4.10s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_11_d3d9446802a44259 at time 4.10s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_21_98f13708210194c4 at time 4.14s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_21_98f13708210194c4 at time 4.16s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_21_98f13708210194c4 at time 4.17s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_22_3c59dc048e885024 at time 4.24s
+[DISDL-SIM][DEBUG] - Cache is not full, inserting 1_1_22_3c59dc048e885024.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_20_1f0e3dad99908345 at time 4.25s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_20_1f0e3dad99908345 at time 4.26s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_23_b6d767d2f8ed5d21 at time 4.36s
+[DISDL-SIM][DEBUG] - Cache is not full, inserting 1_1_23_b6d767d2f8ed5d21.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_12_6512bd43d9caa6e0 at time 4.44s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_22_3c59dc048e885024 at time 4.45s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_12_6512bd43d9caa6e0 at time 4.45s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_24_37693cfc748049e4 at time 4.51s
+[DISDL-SIM][DEBUG] - Cache is not full, inserting 1_1_24_37693cfc748049e4.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_8_8f14e45fceea167a at time 4.52s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_8_8f14e45fceea167a at time 4.53s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_23_b6d767d2f8ed5d21 at time 4.57s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_22_3c59dc048e885024 at time 4.68s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_22_3c59dc048e885024 at time 4.69s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_24_37693cfc748049e4 at time 4.72s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_23_b6d767d2f8ed5d21 at time 4.78s
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_24_37693cfc748049e4 at time 4.79s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_23_b6d767d2f8ed5d21 at time 4.79s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_13_c20ad4d76fe97759 at time 4.79s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_24_37693cfc748049e4 at time 4.80s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_13_c20ad4d76fe97759 at time 4.80s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_25_1ff1de774005f8da at time 4.86s
+[DISDL-SIM][DEBUG] - Cache is not full, inserting 1_1_25_1ff1de774005f8da.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_26_8e296a067a375633 at time 4.91s
+[DISDL-SIM][DEBUG] - Evicted 1_1_2_c4ca4238a0b92382 (0) for 1_1_26_8e296a067a375633 (0).
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_9_c9f0f895fb98ab91 at time 5.05s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_9_c9f0f895fb98ab91 at time 5.06s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_25_1ff1de774005f8da at time 5.07s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_26_8e296a067a375633 at time 5.12s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_26_8e296a067a375633 at time 5.13s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_26_8e296a067a375633 at time 5.14s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_14_c51ce410c124a10e at time 5.14s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_14_c51ce410c124a10e at time 5.15s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_27_4e732ced3463d06d at time 5.20s
+[DISDL-SIM][DEBUG] - Evicted 1_1_1_cfcd208495d565ef (0) for 1_1_27_4e732ced3463d06d (0).
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_25_1ff1de774005f8da at time 5.22s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_25_1ff1de774005f8da at time 5.23s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_28_02e74f10e0327ad8 at time 5.33s
+[DISDL-SIM][DEBUG] - Evicted 1_1_3_c81e728d9d4c2f63 (0) for 1_1_28_02e74f10e0327ad8 (0).
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_27_4e732ced3463d06d at time 5.41s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_29_33e75ff09dd601bb at time 5.47s
+[DISDL-SIM][DEBUG] - Evicted 1_1_4_eccbc87e4b5ce2fe (0) for 1_1_29_33e75ff09dd601bb (0).
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_15_aab3238922bcc25a at time 5.49s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_15_aab3238922bcc25a at time 5.50s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_28_02e74f10e0327ad8 at time 5.55s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_10_45c48cce2e2d7fbd at time 5.57s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_10_45c48cce2e2d7fbd at time 5.58s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_27_4e732ced3463d06d at time 5.65s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_27_4e732ced3463d06d at time 5.66s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_29_33e75ff09dd601bb at time 5.69s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_28_02e74f10e0327ad8 at time 5.75s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_28_02e74f10e0327ad8 at time 5.76s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_29_33e75ff09dd601bb at time 5.76s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_29_33e75ff09dd601bb at time 5.77s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_30_6ea9ab1baa0efb9e at time 5.82s
+[DISDL-SIM][DEBUG] - Evicted 1_1_5_a87ff679a2f3e71d (0) for 1_1_30_6ea9ab1baa0efb9e (0).
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_16_9bf31c7ff062936a at time 5.84s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_16_9bf31c7ff062936a at time 5.85s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_31_34173cb38f07f89d at time 5.88s
+[DISDL-SIM][DEBUG] - Evicted 1_1_6_e4da3b7fbbce2345 (0) for 1_1_31_34173cb38f07f89d (0).
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_30_6ea9ab1baa0efb9e at time 6.03s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_31_34173cb38f07f89d at time 6.09s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_31_34173cb38f07f89d at time 6.09s
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_11_d3d9446802a44259 at time 6.10s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_31_34173cb38f07f89d at time 6.10s. Cache hit: True.
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_11_d3d9446802a44259 at time 6.11s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_32_c16a5320fa475530 at time 6.17s
+[DISDL-SIM][DEBUG] - Evicted 1_1_7_1679091c5a880faf (0) for 1_1_32_c16a5320fa475530 (0).
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_17_c74d97b01eae257e at time 6.19s
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_30_6ea9ab1baa0efb9e at time 6.19s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_17_c74d97b01eae257e at time 6.20s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_30_6ea9ab1baa0efb9e at time 6.20s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_33_6364d3f0f495b6ab at time 6.31s
+[DISDL-SIM][DEBUG] - Evicted 1_1_8_8f14e45fceea167a (0) for 1_1_33_6364d3f0f495b6ab (0).
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_32_c16a5320fa475530 at time 6.38s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_34_182be0c5cdcd5072 at time 6.44s
+[DISDL-SIM][DEBUG] - Evicted 1_1_9_c9f0f895fb98ab91 (0) for 1_1_34_182be0c5cdcd5072 (0).
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_33_6364d3f0f495b6ab at time 6.52s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_18_70efdf2ec9b08607 at time 6.54s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_18_70efdf2ec9b08607 at time 6.55s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_32_c16a5320fa475530 at time 6.62s
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_12_6512bd43d9caa6e0 at time 6.62s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_32_c16a5320fa475530 at time 6.63s. Cache hit: True.
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_12_6512bd43d9caa6e0 at time 6.63s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_34_182be0c5cdcd5072 at time 6.65s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_33_6364d3f0f495b6ab at time 6.71s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_33_6364d3f0f495b6ab at time 6.72s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_34_182be0c5cdcd5072 at time 6.74s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_34_182be0c5cdcd5072 at time 6.75s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_35_e369853df766fa44 at time 6.79s
+[DISDL-SIM][DEBUG] - Evicted 1_1_10_45c48cce2e2d7fbd (0) for 1_1_35_e369853df766fa44 (0).
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_36_1c383cd30b7c298a at time 6.85s
+[DISDL-SIM][DEBUG] - Evicted 1_1_11_d3d9446802a44259 (0) for 1_1_36_1c383cd30b7c298a (0).
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_19_6f4922f45568161a at time 6.89s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_19_6f4922f45568161a at time 6.90s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_35_e369853df766fa44 at time 7.00s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_37_19ca14e7ea6328a4 at time 7.06s
+[DISDL-SIM][DEBUG] - Evicted 1_1_12_6512bd43d9caa6e0 (0) for 1_1_37_19ca14e7ea6328a4 (0).
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_36_1c383cd30b7c298a at time 7.06s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_13_c20ad4d76fe97759 at time 7.15s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_13_c20ad4d76fe97759 at time 7.16s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_35_e369853df766fa44 at time 7.17s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_35_e369853df766fa44 at time 7.18s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_20_1f0e3dad99908345 at time 7.24s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_20_1f0e3dad99908345 at time 7.25s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_37_19ca14e7ea6328a4 at time 7.27s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_37_19ca14e7ea6328a4 at time 7.28s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_37_19ca14e7ea6328a4 at time 7.29s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_36_1c383cd30b7c298a at time 7.33s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_36_1c383cd30b7c298a at time 7.34s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_38_a5bfc9e07964f8dd at time 7.40s
+[DISDL-SIM][DEBUG] - Evicted 1_1_13_c20ad4d76fe97759 (0) for 1_1_38_a5bfc9e07964f8dd (0).
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_39_a5771bce93e200c3 at time 7.41s
+[DISDL-SIM][DEBUG] - Evicted 1_1_14_c51ce410c124a10e (1.9418218597558852) for 1_1_39_a5771bce93e200c3 (1.9418218597558852).
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_21_98f13708210194c4 at time 7.59s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_21_98f13708210194c4 at time 7.60s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_38_a5bfc9e07964f8dd at time 7.61s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_39_a5771bce93e200c3 at time 7.62s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_14_c51ce410c124a10e at time 7.67s
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_38_a5bfc9e07964f8dd at time 7.68s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_38_a5bfc9e07964f8dd at time 7.69s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_39_a5771bce93e200c3 at time 7.71s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_39_a5771bce93e200c3 at time 7.72s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_40_d67d8ab4f4c10bf2 at time 7.75s
+[DISDL-SIM][DEBUG] - Evicted 1_1_15_aab3238922bcc25a (1.9418218597558852) for 1_1_40_d67d8ab4f4c10bf2 (1.9418218597558852).
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_41_d645920e395fedad at time 7.83s
+[DISDL-SIM][DEBUG] - Evicted 1_1_16_9bf31c7ff062936a (1.9418218597558852) for 1_1_41_d645920e395fedad (1.9418218597558852).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_14_c51ce410c124a10e at time 7.88s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_22_3c59dc048e885024 at time 7.94s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_22_3c59dc048e885024 at time 7.95s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_40_d67d8ab4f4c10bf2 at time 7.96s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_42_3416a75f4cea9109 at time 8.03s
+[DISDL-SIM][DEBUG] - Evicted 1_1_17_c74d97b01eae257e (1.9418218597558852) for 1_1_42_3416a75f4cea9109 (1.9418218597558852).
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_41_d645920e395fedad at time 8.04s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_40_d67d8ab4f4c10bf2 at time 8.14s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_40_d67d8ab4f4c10bf2 at time 8.15s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_42_3416a75f4cea9109 at time 8.24s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_42_3416a75f4cea9109 at time 8.26s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_42_3416a75f4cea9109 at time 8.27s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_23_b6d767d2f8ed5d21 at time 8.29s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_23_b6d767d2f8ed5d21 at time 8.30s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_41_d645920e395fedad at time 8.30s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_41_d645920e395fedad at time 8.31s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_43_a1d0c6e83f027327 at time 8.37s
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_44_17e62166fc8586df at time 8.37s
+[DISDL-SIM][DEBUG] - Evicted 1_1_18_70efdf2ec9b08607 (1.9418218597558852) for 1_1_43_a1d0c6e83f027327 (1.9418218597558852).
+[DISDL-SIM][DEBUG] - Evicted 1_1_19_6f4922f45568161a (1.9418218597558852) for 1_1_44_17e62166fc8586df (1.9418218597558852).
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_15_aab3238922bcc25a at time 8.40s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_43_a1d0c6e83f027327 at time 8.58s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_44_17e62166fc8586df at time 8.58s. Cache hit: True.
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_15_aab3238922bcc25a at time 8.61s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_24_37693cfc748049e4 at time 8.64s
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_43_a1d0c6e83f027327 at time 8.65s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_24_37693cfc748049e4 at time 8.65s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_43_a1d0c6e83f027327 at time 8.66s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_44_17e62166fc8586df at time 8.69s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_44_17e62166fc8586df at time 8.70s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_45_f7177163c833dff4 at time 8.72s
+[DISDL-SIM][DEBUG] - Evicted 1_1_20_1f0e3dad99908345 (1.9418218597558852) for 1_1_45_f7177163c833dff4 (1.9418218597558852).
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_46_6c8349cc7260ae62 at time 8.80s
+[DISDL-SIM][DEBUG] - Evicted 1_1_21_98f13708210194c4 (1.9418218597558852) for 1_1_46_6c8349cc7260ae62 (1.9418218597558852).
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_45_f7177163c833dff4 at time 8.93s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_25_1ff1de774005f8da at time 8.99s
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_47_d9d4f495e875a2e0 at time 8.99s
+[DISDL-SIM][DEBUG] - Evicted 1_1_22_3c59dc048e885024 (1.9418218597558852) for 1_1_47_d9d4f495e875a2e0 (1.9418218597558852).
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_25_1ff1de774005f8da at time 9.00s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_46_6c8349cc7260ae62 at time 9.01s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_45_f7177163c833dff4 at time 9.12s
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_16_9bf31c7ff062936a at time 9.12s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_45_f7177163c833dff4 at time 9.13s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_47_d9d4f495e875a2e0 at time 9.20s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_47_d9d4f495e875a2e0 at time 9.23s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_47_d9d4f495e875a2e0 at time 9.24s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_46_6c8349cc7260ae62 at time 9.26s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_46_6c8349cc7260ae62 at time 9.27s. Cache hit: True.
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_16_9bf31c7ff062936a at time 9.33s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_26_8e296a067a375633 at time 9.34s
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_48_67c6a1e7ce56d3d6 at time 9.34s
+[DISDL-SIM][DEBUG] - Evicted 1_1_23_b6d767d2f8ed5d21 (1.9418218597558852) for 1_1_48_67c6a1e7ce56d3d6 (1.9418218597558852).
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_49_642e92efb7942173 at time 9.35s
+[DISDL-SIM][DEBUG] - Evicted 1_1_24_37693cfc748049e4 (1.9418218597558852) for 1_1_49_642e92efb7942173 (1.9418218597558852).
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_26_8e296a067a375633 at time 9.35s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_48_67c6a1e7ce56d3d6 at time 9.55s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_49_642e92efb7942173 at time 9.56s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_49_642e92efb7942173 at time 9.61s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_49_642e92efb7942173 at time 9.62s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_48_67c6a1e7ce56d3d6 at time 9.66s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_48_67c6a1e7ce56d3d6 at time 9.67s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_1_50_f457c545a9ded88f at time 9.68s
+[DISDL-SIM][DEBUG] - Evicted 1_1_25_1ff1de774005f8da (1.9418218597558852) for 1_1_50_f457c545a9ded88f (1.9418218597558852).
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_27_4e732ced3463d06d at time 9.69s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_27_4e732ced3463d06d at time 9.70s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_1_50_f457c545a9ded88f at time 9.78s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_1_50_f457c545a9ded88f at time 9.79s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_17_c74d97b01eae257e at time 9.85s
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_51_c0c7c76d30bd3dca at time 9.89s
+[DISDL-SIM][DEBUG] - Evicted 1_1_26_8e296a067a375633 (1.9418218597558852) for 1_2_51_c0c7c76d30bd3dca (1.9418218597558852).
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_1_50_f457c545a9ded88f at time 9.89s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_52_2838023a778dfaec at time 9.96s
+[DISDL-SIM][DEBUG] - Evicted 1_1_27_4e732ced3463d06d (1.9418218597558852) for 1_2_52_2838023a778dfaec (1.9418218597558852).
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_28_02e74f10e0327ad8 at time 10.04s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_28_02e74f10e0327ad8 at time 10.05s. Cache hit: True.
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_17_c74d97b01eae257e at time 10.06s. Cache hit: False.
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_51_c0c7c76d30bd3dca at time 10.10s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_52_2838023a778dfaec at time 10.17s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_52_2838023a778dfaec at time 10.21s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_52_2838023a778dfaec at time 10.22s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_51_c0c7c76d30bd3dca at time 10.23s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_51_c0c7c76d30bd3dca at time 10.24s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_53_9a1158154dfa42ca at time 10.30s
+[DISDL-SIM][DEBUG] - Evicted 1_2_51_c0c7c76d30bd3dca (0) for 1_2_53_9a1158154dfa42ca (0).
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_54_d82c8d1619ad8176 at time 10.32s
+[DISDL-SIM][DEBUG] - Evicted 1_2_52_2838023a778dfaec (0) for 1_2_54_d82c8d1619ad8176 (0).
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_29_33e75ff09dd601bb at time 10.39s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_29_33e75ff09dd601bb at time 10.40s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_53_9a1158154dfa42ca at time 10.51s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_54_d82c8d1619ad8176 at time 10.53s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_18_70efdf2ec9b08607 at time 10.57s
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_54_d82c8d1619ad8176 at time 10.58s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_54_d82c8d1619ad8176 at time 10.59s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_53_9a1158154dfa42ca at time 10.64s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_53_9a1158154dfa42ca at time 10.65s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_55_a684eceee76fc522 at time 10.65s
+[DISDL-SIM][DEBUG] - Evicted 1_2_53_9a1158154dfa42ca (0) for 1_2_55_a684eceee76fc522 (0).
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_30_6ea9ab1baa0efb9e at time 10.73s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_30_6ea9ab1baa0efb9e at time 10.74s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_56_b53b3a3d6ab90ce0 at time 10.75s
+[DISDL-SIM][DEBUG] - Evicted 1_2_54_d82c8d1619ad8176 (0) for 1_2_56_b53b3a3d6ab90ce0 (0).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_18_70efdf2ec9b08607 at time 10.78s. Cache hit: False.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_55_a684eceee76fc522 at time 10.86s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_57_9f61408e3afb633e at time 10.92s
+[DISDL-SIM][DEBUG] - Evicted 1_1_28_02e74f10e0327ad8 (1.9418218597558852) for 1_2_57_9f61408e3afb633e (1.9418218597558852).
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_56_b53b3a3d6ab90ce0 at time 10.96s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_55_a684eceee76fc522 at time 11.07s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_55_a684eceee76fc522 at time 11.08s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_31_34173cb38f07f89d at time 11.08s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_31_34173cb38f07f89d at time 11.09s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_57_9f61408e3afb633e at time 11.13s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_57_9f61408e3afb633e at time 11.18s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_57_9f61408e3afb633e at time 11.19s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_56_b53b3a3d6ab90ce0 at time 11.20s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_56_b53b3a3d6ab90ce0 at time 11.21s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_58_72b32a1f754ba1c0 at time 11.27s
+[DISDL-SIM][DEBUG] - Evicted 1_2_55_a684eceee76fc522 (0) for 1_2_58_72b32a1f754ba1c0 (0).
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_59_66f041e16a60928b at time 11.29s
+[DISDL-SIM][DEBUG] - Evicted 1_2_56_b53b3a3d6ab90ce0 (0) for 1_2_59_66f041e16a60928b (0).
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_19_6f4922f45568161a at time 11.30s
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_32_c16a5320fa475530 at time 11.43s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_32_c16a5320fa475530 at time 11.44s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_58_72b32a1f754ba1c0 at time 11.48s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_59_66f041e16a60928b at time 11.50s. Cache hit: True.
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_19_6f4922f45568161a at time 11.51s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_59_66f041e16a60928b at time 11.54s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_59_66f041e16a60928b at time 11.55s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_58_72b32a1f754ba1c0 at time 11.61s
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_60_093f65e080a295f8 at time 11.61s
+[DISDL-SIM][DEBUG] - Evicted 1_2_57_9f61408e3afb633e (0) for 1_2_60_093f65e080a295f8 (0).
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_58_72b32a1f754ba1c0 at time 11.62s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_61_072b030ba126b2f4 at time 11.72s
+[DISDL-SIM][DEBUG] - Evicted 1_2_58_72b32a1f754ba1c0 (0) for 1_2_61_072b030ba126b2f4 (0).
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_33_6364d3f0f495b6ab at time 11.78s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_33_6364d3f0f495b6ab at time 11.79s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_60_093f65e080a295f8 at time 11.83s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_62_7f39f8317fbdb198 at time 11.89s
+[DISDL-SIM][DEBUG] - Evicted 1_2_59_66f041e16a60928b (0) for 1_2_62_7f39f8317fbdb198 (0).
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_61_072b030ba126b2f4 at time 11.93s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_20_1f0e3dad99908345 at time 12.02s
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_60_093f65e080a295f8 at time 12.04s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_60_093f65e080a295f8 at time 12.05s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_62_7f39f8317fbdb198 at time 12.10s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_34_182be0c5cdcd5072 at time 12.13s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_34_182be0c5cdcd5072 at time 12.14s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_62_7f39f8317fbdb198 at time 12.15s
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_61_072b030ba126b2f4 at time 12.16s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_62_7f39f8317fbdb198 at time 12.16s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_61_072b030ba126b2f4 at time 12.17s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_63_44f683a84163b352 at time 12.23s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_20_1f0e3dad99908345 at time 12.23s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Evicted 1_2_60_093f65e080a295f8 (0) for 1_2_63_44f683a84163b352 (0).
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_64_03afdbd66e7929b1 at time 12.27s
+[DISDL-SIM][DEBUG] - Evicted 1_2_61_072b030ba126b2f4 (0) for 1_2_64_03afdbd66e7929b1 (0).
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_63_44f683a84163b352 at time 12.45s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_64_03afdbd66e7929b1 at time 12.48s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_35_e369853df766fa44 at time 12.48s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_35_e369853df766fa44 at time 12.49s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_64_03afdbd66e7929b1 at time 12.51s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_64_03afdbd66e7929b1 at time 12.52s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_65_ea5d2f1c4608232e at time 12.58s
+[DISDL-SIM][DEBUG] - Evicted 1_2_62_7f39f8317fbdb198 (0) for 1_2_65_ea5d2f1c4608232e (0).
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_63_44f683a84163b352 at time 12.58s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_63_44f683a84163b352 at time 12.59s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_66_fc490ca45c00b124 at time 12.70s
+[DISDL-SIM][DEBUG] - Evicted 1_2_63_44f683a84163b352 (0) for 1_2_66_fc490ca45c00b124 (0).
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_21_98f13708210194c4 at time 12.75s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_65_ea5d2f1c4608232e at time 12.79s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_36_1c383cd30b7c298a at time 12.83s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_36_1c383cd30b7c298a at time 12.84s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_67_3295c76acbf4caae at time 12.85s
+[DISDL-SIM][DEBUG] - Evicted 1_2_64_03afdbd66e7929b1 (0) for 1_2_67_3295c76acbf4caae (0).
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_66_fc490ca45c00b124 at time 12.91s. Cache hit: True.
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_21_98f13708210194c4 at time 12.96s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_65_ea5d2f1c4608232e at time 13.01s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_65_ea5d2f1c4608232e at time 13.02s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_67_3295c76acbf4caae at time 13.06s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_66_fc490ca45c00b124 at time 13.13s
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_67_3295c76acbf4caae at time 13.13s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_66_fc490ca45c00b124 at time 13.14s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_67_3295c76acbf4caae at time 13.14s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_37_19ca14e7ea6328a4 at time 13.18s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_37_19ca14e7ea6328a4 at time 13.19s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_68_735b90b4568125ed at time 13.20s
+[DISDL-SIM][DEBUG] - Evicted 1_2_65_ea5d2f1c4608232e (0) for 1_2_68_735b90b4568125ed (0).
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_69_a3f390d88e4c41f2 at time 13.24s
+[DISDL-SIM][DEBUG] - Evicted 1_2_66_fc490ca45c00b124 (0) for 1_2_69_a3f390d88e4c41f2 (0).
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_68_735b90b4568125ed at time 13.41s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_69_a3f390d88e4c41f2 at time 13.45s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_69_a3f390d88e4c41f2 at time 13.47s
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_22_3c59dc048e885024 at time 13.47s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_69_a3f390d88e4c41f2 at time 13.48s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_38_a5bfc9e07964f8dd at time 13.53s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_38_a5bfc9e07964f8dd at time 13.54s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_70_14bfa6bb14875e45 at time 13.55s
+[DISDL-SIM][DEBUG] - Evicted 1_2_67_3295c76acbf4caae (0) for 1_2_70_14bfa6bb14875e45 (0).
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_68_735b90b4568125ed at time 13.56s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_68_735b90b4568125ed at time 13.57s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_71_7cbbc409ec990f19 at time 13.67s
+[DISDL-SIM][DEBUG] - Evicted 1_2_69_a3f390d88e4c41f2 (0) for 1_2_71_7cbbc409ec990f19 (0).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_22_3c59dc048e885024 at time 13.68s. Cache hit: False.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_70_14bfa6bb14875e45 at time 13.76s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_72_e2c420d928d4bf8c at time 13.82s
+[DISDL-SIM][DEBUG] - Evicted 1_2_68_735b90b4568125ed (0) for 1_2_72_e2c420d928d4bf8c (0).
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_39_a5771bce93e200c3 at time 13.88s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_71_7cbbc409ec990f19 at time 13.88s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_39_a5771bce93e200c3 at time 13.89s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_70_14bfa6bb14875e45 at time 13.99s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_70_14bfa6bb14875e45 at time 14.00s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_72_e2c420d928d4bf8c at time 14.03s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_71_7cbbc409ec990f19 at time 14.09s
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_72_e2c420d928d4bf8c at time 14.10s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_71_7cbbc409ec990f19 at time 14.10s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_72_e2c420d928d4bf8c at time 14.11s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_73_32bb90e8976aab52 at time 14.17s
+[DISDL-SIM][DEBUG] - Evicted 1_2_70_14bfa6bb14875e45 (0) for 1_2_73_32bb90e8976aab52 (0).
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_23_b6d767d2f8ed5d21 at time 14.20s
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_74_d2ddea18f00665ce at time 14.22s
+[DISDL-SIM][DEBUG] - Evicted 1_2_71_7cbbc409ec990f19 (0) for 1_2_74_d2ddea18f00665ce (0).
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_40_d67d8ab4f4c10bf2 at time 14.23s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_40_d67d8ab4f4c10bf2 at time 14.24s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_73_32bb90e8976aab52 at time 14.38s. Cache hit: True.
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_23_b6d767d2f8ed5d21 at time 14.41s. Cache hit: False.
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_74_d2ddea18f00665ce at time 14.43s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_74_d2ddea18f00665ce at time 14.44s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_74_d2ddea18f00665ce at time 14.45s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_75_ad61ab143223efbc at time 14.51s
+[DISDL-SIM][DEBUG] - Evicted 1_2_72_e2c420d928d4bf8c (0) for 1_2_75_ad61ab143223efbc (0).
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_73_32bb90e8976aab52 at time 14.53s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_73_32bb90e8976aab52 at time 14.54s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_41_d645920e395fedad at time 14.58s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_41_d645920e395fedad at time 14.59s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_76_d09bf41544a3365a at time 14.65s
+[DISDL-SIM][DEBUG] - Evicted 1_2_74_d2ddea18f00665ce (0) for 1_2_76_d09bf41544a3365a (0).
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_75_ad61ab143223efbc at time 14.72s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_77_fbd7939d674997cd at time 14.78s
+[DISDL-SIM][DEBUG] - Evicted 1_2_73_32bb90e8976aab52 (0) for 1_2_77_fbd7939d674997cd (0).
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_76_d09bf41544a3365a at time 14.86s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_24_37693cfc748049e4 at time 14.92s
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_42_3416a75f4cea9109 at time 14.93s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_42_3416a75f4cea9109 at time 14.94s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_75_ad61ab143223efbc at time 14.96s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_75_ad61ab143223efbc at time 14.97s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_77_fbd7939d674997cd at time 15.00s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_76_d09bf41544a3365a at time 15.06s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_76_d09bf41544a3365a at time 15.07s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_77_fbd7939d674997cd at time 15.08s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_77_fbd7939d674997cd at time 15.09s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_78_28dd2c7955ce9264 at time 15.13s
+[DISDL-SIM][DEBUG] - Evicted 1_2_75_ad61ab143223efbc (0) for 1_2_78_28dd2c7955ce9264 (0).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_24_37693cfc748049e4 at time 15.13s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_79_35f4a8d465e6e1ed at time 15.19s
+[DISDL-SIM][DEBUG] - Evicted 1_2_76_d09bf41544a3365a (0) for 1_2_79_35f4a8d465e6e1ed (0).
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_43_a1d0c6e83f027327 at time 15.28s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_43_a1d0c6e83f027327 at time 15.29s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_78_28dd2c7955ce9264 at time 15.34s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_79_35f4a8d465e6e1ed at time 15.40s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_79_35f4a8d465e6e1ed at time 15.40s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_79_35f4a8d465e6e1ed at time 15.41s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_80_d1fe173d08e95939 at time 15.48s
+[DISDL-SIM][DEBUG] - Evicted 1_2_77_fbd7939d674997cd (0) for 1_2_80_d1fe173d08e95939 (0).
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_78_28dd2c7955ce9264 at time 15.51s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_78_28dd2c7955ce9264 at time 15.52s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_81_f033ab37c30201f7 at time 15.62s
+[DISDL-SIM][DEBUG] - Evicted 1_2_78_28dd2c7955ce9264 (0) for 1_2_81_f033ab37c30201f7 (0).
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_44_17e62166fc8586df at time 15.63s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_44_17e62166fc8586df at time 15.64s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_25_1ff1de774005f8da at time 15.65s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_80_d1fe173d08e95939 at time 15.69s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_82_43ec517d68b6edd3 at time 15.75s
+[DISDL-SIM][DEBUG] - Evicted 1_2_79_35f4a8d465e6e1ed (0) for 1_2_82_43ec517d68b6edd3 (0).
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_81_f033ab37c30201f7 at time 15.83s. Cache hit: True.
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_25_1ff1de774005f8da at time 15.86s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_80_d1fe173d08e95939 at time 15.94s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_80_d1fe173d08e95939 at time 15.95s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_82_43ec517d68b6edd3 at time 15.96s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_45_f7177163c833dff4 at time 15.98s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_45_f7177163c833dff4 at time 15.99s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_81_f033ab37c30201f7 at time 16.02s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_81_f033ab37c30201f7 at time 16.03s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_82_43ec517d68b6edd3 at time 16.05s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_82_43ec517d68b6edd3 at time 16.06s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_83_9778d5d219c5080b at time 16.10s
+[DISDL-SIM][DEBUG] - Evicted 1_2_80_d1fe173d08e95939 (0) for 1_2_83_9778d5d219c5080b (0).
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_84_fe9fc289c3ff0af1 at time 16.16s
+[DISDL-SIM][DEBUG] - Evicted 1_2_81_f033ab37c30201f7 (0) for 1_2_84_fe9fc289c3ff0af1 (0).
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_83_9778d5d219c5080b at time 16.31s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_46_6c8349cc7260ae62 at time 16.33s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_46_6c8349cc7260ae62 at time 16.34s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_85_68d30a9594728bc3 at time 16.37s
+[DISDL-SIM][DEBUG] - Evicted 1_2_82_43ec517d68b6edd3 (0) for 1_2_85_68d30a9594728bc3 (0).
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_26_8e296a067a375633 at time 16.37s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_84_fe9fc289c3ff0af1 at time 16.38s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_83_9778d5d219c5080b at time 16.48s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_83_9778d5d219c5080b at time 16.49s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_85_68d30a9594728bc3 at time 16.58s. Cache hit: True.
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_26_8e296a067a375633 at time 16.58s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_85_68d30a9594728bc3 at time 16.59s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_85_68d30a9594728bc3 at time 16.60s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_84_fe9fc289c3ff0af1 at time 16.64s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_84_fe9fc289c3ff0af1 at time 16.65s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_47_d9d4f495e875a2e0 at time 16.68s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_47_d9d4f495e875a2e0 at time 16.69s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_86_3ef815416f775098 at time 16.71s
+[DISDL-SIM][DEBUG] - Evicted 1_2_83_9778d5d219c5080b (0) for 1_2_86_3ef815416f775098 (0).
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_87_93db85ed909c1383 at time 16.72s
+[DISDL-SIM][DEBUG] - Evicted 1_2_84_fe9fc289c3ff0af1 (0) for 1_2_87_93db85ed909c1383 (0).
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_86_3ef815416f775098 at time 16.92s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_87_93db85ed909c1383 at time 16.93s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_86_3ef815416f775098 at time 16.99s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_86_3ef815416f775098 at time 17.00s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_87_93db85ed909c1383 at time 17.02s
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_48_67c6a1e7ce56d3d6 at time 17.03s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_87_93db85ed909c1383 at time 17.03s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_48_67c6a1e7ce56d3d6 at time 17.04s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_88_c7e1249ffc03eb9d at time 17.06s
+[DISDL-SIM][DEBUG] - Evicted 1_2_85_68d30a9594728bc3 (0) for 1_2_88_c7e1249ffc03eb9d (0).
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_27_4e732ced3463d06d at time 17.10s
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_89_2a38a4a9316c49e5 at time 17.14s
+[DISDL-SIM][DEBUG] - Evicted 1_2_86_3ef815416f775098 (0) for 1_2_89_2a38a4a9316c49e5 (0).
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_88_c7e1249ffc03eb9d at time 17.27s. Cache hit: True.
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_27_4e732ced3463d06d at time 17.31s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_90_7647966b7343c290 at time 17.34s
+[DISDL-SIM][DEBUG] - Evicted 1_2_87_93db85ed909c1383 (0) for 1_2_90_7647966b7343c290 (0).
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_89_2a38a4a9316c49e5 at time 17.35s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_49_642e92efb7942173 at time 17.37s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_49_642e92efb7942173 at time 17.38s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_88_c7e1249ffc03eb9d at time 17.45s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_88_c7e1249ffc03eb9d at time 17.46s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_90_7647966b7343c290 at time 17.55s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_90_7647966b7343c290 at time 17.57s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_90_7647966b7343c290 at time 17.58s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_89_2a38a4a9316c49e5 at time 17.61s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_89_2a38a4a9316c49e5 at time 17.62s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_91_8613985ec49eb8f7 at time 17.68s
+[DISDL-SIM][DEBUG] - Evicted 1_2_88_c7e1249ffc03eb9d (0) for 1_2_91_8613985ec49eb8f7 (0).
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_92_54229abfcfa5649e at time 17.68s
+[DISDL-SIM][DEBUG] - Evicted 1_2_89_2a38a4a9316c49e5 (0) for 1_2_92_54229abfcfa5649e (0).
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_1_50_f457c545a9ded88f at time 17.72s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_1_50_f457c545a9ded88f at time 17.73s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_28_02e74f10e0327ad8 at time 17.82s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_91_8613985ec49eb8f7 at time 17.89s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_92_54229abfcfa5649e at time 17.89s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_92_54229abfcfa5649e at time 17.96s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_92_54229abfcfa5649e at time 17.97s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_91_8613985ec49eb8f7 at time 18.00s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_91_8613985ec49eb8f7 at time 18.01s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_93_92cc227532d17e56 at time 18.03s
+[DISDL-SIM][DEBUG] - Evicted 1_2_90_7647966b7343c290 (0) for 1_2_93_92cc227532d17e56 (0).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_28_02e74f10e0327ad8 at time 18.03s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_51_c0c7c76d30bd3dca at time 18.07s
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_94_98dce83da57b0395 at time 18.11s
+[DISDL-SIM][DEBUG] - Evicted 1_2_92_54229abfcfa5649e (2.945741590298071) for 1_2_94_98dce83da57b0395 (2.945741590298071).
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_93_92cc227532d17e56 at time 18.24s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_51_c0c7c76d30bd3dca at time 18.28s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_95_f4b9ec30ad9f68f8 at time 18.30s
+[DISDL-SIM][DEBUG] - Evicted 1_2_91_8613985ec49eb8f7 (2.945741590298071) for 1_2_95_f4b9ec30ad9f68f8 (2.945741590298071).
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_94_98dce83da57b0395 at time 18.32s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_93_92cc227532d17e56 at time 18.43s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_93_92cc227532d17e56 at time 18.44s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_95_f4b9ec30ad9f68f8 at time 18.51s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_95_f4b9ec30ad9f68f8 at time 18.54s
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_29_33e75ff09dd601bb at time 18.55s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_95_f4b9ec30ad9f68f8 at time 18.55s. Cache hit: True.
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_29_33e75ff09dd601bb at time 18.56s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_94_98dce83da57b0395 at time 18.57s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_94_98dce83da57b0395 at time 18.58s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_52_2838023a778dfaec at time 18.62s
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_96_812b4ba287f5ee0b at time 18.65s
+[DISDL-SIM][DEBUG] - Evicted 1_1_29_33e75ff09dd601bb (0) for 1_2_96_812b4ba287f5ee0b (0).
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_97_26657d5ff9020d2a at time 18.66s
+[DISDL-SIM][DEBUG] - Evicted 1_1_30_6ea9ab1baa0efb9e (1.9418218597558852) for 1_2_97_26657d5ff9020d2a (1.9418218597558852).
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_52_2838023a778dfaec at time 18.83s. Cache hit: False.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_96_812b4ba287f5ee0b at time 18.86s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_97_26657d5ff9020d2a at time 18.87s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_97_26657d5ff9020d2a at time 18.92s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_97_26657d5ff9020d2a at time 18.93s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_96_812b4ba287f5ee0b at time 18.97s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_96_812b4ba287f5ee0b at time 18.98s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_98_e2ef524fbf3d9fe6 at time 18.99s
+[DISDL-SIM][DEBUG] - Evicted 1_1_31_34173cb38f07f89d (1.9418218597558852) for 1_2_98_e2ef524fbf3d9fe6 (1.9418218597558852).
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_30_6ea9ab1baa0efb9e at time 19.07s
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_99_ed3d2c21991e3bef at time 19.09s
+[DISDL-SIM][DEBUG] - Evicted 1_1_32_c16a5320fa475530 (1.9418218597558852) for 1_2_99_ed3d2c21991e3bef (1.9418218597558852).
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_53_9a1158154dfa42ca at time 19.17s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_98_e2ef524fbf3d9fe6 at time 19.20s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_100_ac627ab1ccbdb62e at time 19.27s
+[DISDL-SIM][DEBUG] - Evicted 1_1_33_6364d3f0f495b6ab (1.9418218597558852) for 1_2_100_ac627ab1ccbdb62e (1.9418218597558852).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_30_6ea9ab1baa0efb9e at time 19.28s. Cache hit: False.
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_99_ed3d2c21991e3bef at time 19.30s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_53_9a1158154dfa42ca at time 19.38s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_98_e2ef524fbf3d9fe6 at time 19.40s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_98_e2ef524fbf3d9fe6 at time 19.41s. Cache hit: True.
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_100_ac627ab1ccbdb62e at time 19.48s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET18 assigned batch 1_2_100_ac627ab1ccbdb62e at time 19.52s
+[DISDL-SIM][INFO] - Job RESNET18 processing batch 1_2_100_ac627ab1ccbdb62e at time 19.53s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job SHUFFLENETV2 assigned batch 1_2_99_ed3d2c21991e3bef at time 19.54s
+[DISDL-SIM][INFO] - Job SHUFFLENETV2 processing batch 1_2_99_ed3d2c21991e3bef at time 19.55s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_54_d82c8d1619ad8176 at time 19.72s
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_31_34173cb38f07f89d at time 19.80s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_54_d82c8d1619ad8176 at time 19.93s. Cache hit: False.
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_31_34173cb38f07f89d at time 20.01s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_55_a684eceee76fc522 at time 20.27s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_55_a684eceee76fc522 at time 20.48s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_32_c16a5320fa475530 at time 20.52s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_32_c16a5320fa475530 at time 20.73s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_56_b53b3a3d6ab90ce0 at time 20.82s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_56_b53b3a3d6ab90ce0 at time 21.03s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_33_6364d3f0f495b6ab at time 21.25s
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_57_9f61408e3afb633e at time 21.37s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_33_6364d3f0f495b6ab at time 21.46s. Cache hit: False.
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_57_9f61408e3afb633e at time 21.58s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_58_72b32a1f754ba1c0 at time 21.92s
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_34_182be0c5cdcd5072 at time 21.97s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_34_182be0c5cdcd5072 at time 21.98s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_58_72b32a1f754ba1c0 at time 22.13s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_59_66f041e16a60928b at time 22.47s
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_35_e369853df766fa44 at time 22.50s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_35_e369853df766fa44 at time 22.51s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_59_66f041e16a60928b at time 22.68s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_60_093f65e080a295f8 at time 23.02s
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_36_1c383cd30b7c298a at time 23.02s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_36_1c383cd30b7c298a at time 23.03s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_60_093f65e080a295f8 at time 23.23s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_37_19ca14e7ea6328a4 at time 23.55s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_37_19ca14e7ea6328a4 at time 23.56s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_61_072b030ba126b2f4 at time 23.57s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_61_072b030ba126b2f4 at time 23.78s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_38_a5bfc9e07964f8dd at time 24.07s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_38_a5bfc9e07964f8dd at time 24.08s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_62_7f39f8317fbdb198 at time 24.12s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_62_7f39f8317fbdb198 at time 24.33s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_39_a5771bce93e200c3 at time 24.60s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_39_a5771bce93e200c3 at time 24.61s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_63_44f683a84163b352 at time 24.67s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_63_44f683a84163b352 at time 24.88s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_40_d67d8ab4f4c10bf2 at time 25.12s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_40_d67d8ab4f4c10bf2 at time 25.13s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_64_03afdbd66e7929b1 at time 25.22s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_64_03afdbd66e7929b1 at time 25.43s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_41_d645920e395fedad at time 25.65s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_41_d645920e395fedad at time 25.66s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_65_ea5d2f1c4608232e at time 25.77s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_65_ea5d2f1c4608232e at time 25.98s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_42_3416a75f4cea9109 at time 26.17s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_42_3416a75f4cea9109 at time 26.18s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_66_fc490ca45c00b124 at time 26.32s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_66_fc490ca45c00b124 at time 26.53s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_43_a1d0c6e83f027327 at time 26.70s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_43_a1d0c6e83f027327 at time 26.71s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_67_3295c76acbf4caae at time 26.87s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_67_3295c76acbf4caae at time 27.08s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_44_17e62166fc8586df at time 27.22s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_44_17e62166fc8586df at time 27.23s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_68_735b90b4568125ed at time 27.41s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_68_735b90b4568125ed at time 27.62s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_45_f7177163c833dff4 at time 27.75s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_45_f7177163c833dff4 at time 27.76s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_69_a3f390d88e4c41f2 at time 27.96s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_69_a3f390d88e4c41f2 at time 28.17s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_46_6c8349cc7260ae62 at time 28.27s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_46_6c8349cc7260ae62 at time 28.28s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_70_14bfa6bb14875e45 at time 28.51s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_70_14bfa6bb14875e45 at time 28.72s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_47_d9d4f495e875a2e0 at time 28.80s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_47_d9d4f495e875a2e0 at time 28.81s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_71_7cbbc409ec990f19 at time 29.06s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_71_7cbbc409ec990f19 at time 29.27s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_48_67c6a1e7ce56d3d6 at time 29.32s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_48_67c6a1e7ce56d3d6 at time 29.33s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_72_e2c420d928d4bf8c at time 29.61s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_72_e2c420d928d4bf8c at time 29.82s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_49_642e92efb7942173 at time 29.85s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_49_642e92efb7942173 at time 29.86s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_73_32bb90e8976aab52 at time 30.16s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_73_32bb90e8976aab52 at time 30.37s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_1_50_f457c545a9ded88f at time 30.37s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_1_50_f457c545a9ded88f at time 30.38s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_74_d2ddea18f00665ce at time 30.71s
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_74_d2ddea18f00665ce at time 30.90s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_74_d2ddea18f00665ce at time 30.92s. Cache hit: False.
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_74_d2ddea18f00665ce at time 31.11s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_75_ad61ab143223efbc at time 31.26s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_75_ad61ab143223efbc at time 31.47s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_76_d09bf41544a3365a at time 31.62s
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_76_d09bf41544a3365a at time 31.81s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_76_d09bf41544a3365a at time 31.83s. Cache hit: False.
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_76_d09bf41544a3365a at time 32.02s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_77_fbd7939d674997cd at time 32.35s
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_77_fbd7939d674997cd at time 32.36s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_77_fbd7939d674997cd at time 32.56s. Cache hit: False.
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_77_fbd7939d674997cd at time 32.57s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_78_28dd2c7955ce9264 at time 32.91s
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_78_28dd2c7955ce9264 at time 33.07s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_78_28dd2c7955ce9264 at time 33.12s. Cache hit: False.
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_78_28dd2c7955ce9264 at time 33.28s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_79_35f4a8d465e6e1ed at time 33.46s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_79_35f4a8d465e6e1ed at time 33.67s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_80_d1fe173d08e95939 at time 33.80s
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_80_d1fe173d08e95939 at time 34.01s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_80_d1fe173d08e95939 at time 34.01s. Cache hit: False.
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_80_d1fe173d08e95939 at time 34.22s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_81_f033ab37c30201f7 at time 34.52s
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_81_f033ab37c30201f7 at time 34.56s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_81_f033ab37c30201f7 at time 34.73s. Cache hit: False.
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_81_f033ab37c30201f7 at time 34.77s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_82_43ec517d68b6edd3 at time 35.11s
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_82_43ec517d68b6edd3 at time 35.25s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_82_43ec517d68b6edd3 at time 35.32s. Cache hit: False.
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_82_43ec517d68b6edd3 at time 35.46s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_83_9778d5d219c5080b at time 35.66s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_83_9778d5d219c5080b at time 35.87s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_84_fe9fc289c3ff0af1 at time 35.97s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_84_fe9fc289c3ff0af1 at time 36.18s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_85_68d30a9594728bc3 at time 36.21s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_85_68d30a9594728bc3 at time 36.42s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_86_3ef815416f775098 at time 36.70s
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_86_3ef815416f775098 at time 36.76s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_86_3ef815416f775098 at time 36.91s. Cache hit: False.
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_86_3ef815416f775098 at time 36.97s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_87_93db85ed909c1383 at time 37.31s
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_87_93db85ed909c1383 at time 37.42s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_87_93db85ed909c1383 at time 37.52s. Cache hit: False.
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_87_93db85ed909c1383 at time 37.63s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_88_c7e1249ffc03eb9d at time 37.85s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_88_c7e1249ffc03eb9d at time 38.06s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_89_2a38a4a9316c49e5 at time 38.15s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_89_2a38a4a9316c49e5 at time 38.36s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_90_7647966b7343c290 at time 38.40s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_90_7647966b7343c290 at time 38.61s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_91_8613985ec49eb8f7 at time 38.87s
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_91_8613985ec49eb8f7 at time 38.95s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_91_8613985ec49eb8f7 at time 39.08s. Cache hit: False.
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_91_8613985ec49eb8f7 at time 39.16s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_92_54229abfcfa5649e at time 39.50s
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_92_54229abfcfa5649e at time 39.60s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_92_54229abfcfa5649e at time 39.71s. Cache hit: False.
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_92_54229abfcfa5649e at time 39.81s. Cache hit: False.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_93_92cc227532d17e56 at time 40.05s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_93_92cc227532d17e56 at time 40.06s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_93_92cc227532d17e56 at time 40.32s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_93_92cc227532d17e56 at time 40.33s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_94_98dce83da57b0395 at time 40.40s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_94_98dce83da57b0395 at time 40.41s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_95_f4b9ec30ad9f68f8 at time 40.75s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_95_f4b9ec30ad9f68f8 at time 40.76s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_94_98dce83da57b0395 at time 40.85s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_94_98dce83da57b0395 at time 40.86s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_96_812b4ba287f5ee0b at time 41.10s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_96_812b4ba287f5ee0b at time 41.11s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_95_f4b9ec30ad9f68f8 at time 41.37s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_95_f4b9ec30ad9f68f8 at time 41.38s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_97_26657d5ff9020d2a at time 41.45s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_97_26657d5ff9020d2a at time 41.46s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_98_e2ef524fbf3d9fe6 at time 41.80s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_98_e2ef524fbf3d9fe6 at time 41.81s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_96_812b4ba287f5ee0b at time 41.90s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_96_812b4ba287f5ee0b at time 41.91s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_99_ed3d2c21991e3bef at time 42.15s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_99_ed3d2c21991e3bef at time 42.16s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_97_26657d5ff9020d2a at time 42.42s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_97_26657d5ff9020d2a at time 42.43s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_100_ac627ab1ccbdb62e at time 42.50s
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_100_ac627ab1ccbdb62e at time 42.51s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_84_fe9fc289c3ff0af1 at time 42.85s
+[DISDL-SIM][DEBUG] - Evicted 1_1_34_182be0c5cdcd5072 (0) for 1_2_84_fe9fc289c3ff0af1 (0).
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_98_e2ef524fbf3d9fe6 at time 42.95s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_98_e2ef524fbf3d9fe6 at time 42.96s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_84_fe9fc289c3ff0af1 at time 43.06s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job RESNET50 assigned batch 1_2_89_2a38a4a9316c49e5 at time 43.40s
+[DISDL-SIM][DEBUG] - Evicted 1_1_35_e369853df766fa44 (0) for 1_2_89_2a38a4a9316c49e5 (0).
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_99_ed3d2c21991e3bef at time 43.47s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_99_ed3d2c21991e3bef at time 43.48s. Cache hit: True.
+[DISDL-SIM][INFO] - Job RESNET50 processing batch 1_2_89_2a38a4a9316c49e5 at time 43.61s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_100_ac627ab1ccbdb62e at time 44.00s
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_100_ac627ab1ccbdb62e at time 44.01s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_51_c0c7c76d30bd3dca at time 44.52s
+[DISDL-SIM][DEBUG] - Evicted 1_1_36_1c383cd30b7c298a (0) for 1_2_51_c0c7c76d30bd3dca (0).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_51_c0c7c76d30bd3dca at time 44.73s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_52_2838023a778dfaec at time 45.25s
+[DISDL-SIM][DEBUG] - Evicted 1_1_37_19ca14e7ea6328a4 (0) for 1_2_52_2838023a778dfaec (0).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_52_2838023a778dfaec at time 45.46s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_53_9a1158154dfa42ca at time 45.98s
+[DISDL-SIM][DEBUG] - Evicted 1_1_38_a5bfc9e07964f8dd (0) for 1_2_53_9a1158154dfa42ca (0).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_53_9a1158154dfa42ca at time 46.19s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_54_d82c8d1619ad8176 at time 46.70s
+[DISDL-SIM][DEBUG] - Evicted 1_1_39_a5771bce93e200c3 (0) for 1_2_54_d82c8d1619ad8176 (0).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_54_d82c8d1619ad8176 at time 46.91s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_55_a684eceee76fc522 at time 47.43s
+[DISDL-SIM][DEBUG] - Evicted 1_1_40_d67d8ab4f4c10bf2 (0) for 1_2_55_a684eceee76fc522 (0).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_55_a684eceee76fc522 at time 47.64s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_56_b53b3a3d6ab90ce0 at time 48.15s
+[DISDL-SIM][DEBUG] - Evicted 1_1_41_d645920e395fedad (0) for 1_2_56_b53b3a3d6ab90ce0 (0).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_56_b53b3a3d6ab90ce0 at time 48.36s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_57_9f61408e3afb633e at time 48.88s
+[DISDL-SIM][DEBUG] - Evicted 1_1_42_3416a75f4cea9109 (0) for 1_2_57_9f61408e3afb633e (0).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_57_9f61408e3afb633e at time 49.09s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_58_72b32a1f754ba1c0 at time 49.61s
+[DISDL-SIM][DEBUG] - Evicted 1_1_43_a1d0c6e83f027327 (0) for 1_2_58_72b32a1f754ba1c0 (0).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_58_72b32a1f754ba1c0 at time 49.82s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_59_66f041e16a60928b at time 50.33s
+[DISDL-SIM][DEBUG] - Evicted 1_1_44_17e62166fc8586df (0) for 1_2_59_66f041e16a60928b (0).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_59_66f041e16a60928b at time 50.54s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_60_093f65e080a295f8 at time 51.06s
+[DISDL-SIM][DEBUG] - Evicted 1_1_45_f7177163c833dff4 (0) for 1_2_60_093f65e080a295f8 (0).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_60_093f65e080a295f8 at time 51.27s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_61_072b030ba126b2f4 at time 51.78s
+[DISDL-SIM][DEBUG] - Evicted 1_1_46_6c8349cc7260ae62 (0) for 1_2_61_072b030ba126b2f4 (0).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_61_072b030ba126b2f4 at time 51.99s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_62_7f39f8317fbdb198 at time 52.51s
+[DISDL-SIM][DEBUG] - Evicted 1_1_47_d9d4f495e875a2e0 (0) for 1_2_62_7f39f8317fbdb198 (0).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_62_7f39f8317fbdb198 at time 52.72s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_63_44f683a84163b352 at time 53.24s
+[DISDL-SIM][DEBUG] - Evicted 1_1_48_67c6a1e7ce56d3d6 (0) for 1_2_63_44f683a84163b352 (0).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_63_44f683a84163b352 at time 53.45s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_64_03afdbd66e7929b1 at time 53.96s
+[DISDL-SIM][DEBUG] - Evicted 1_1_49_642e92efb7942173 (0) for 1_2_64_03afdbd66e7929b1 (0).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_64_03afdbd66e7929b1 at time 54.17s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_65_ea5d2f1c4608232e at time 54.69s
+[DISDL-SIM][DEBUG] - Evicted 1_1_50_f457c545a9ded88f (0) for 1_2_65_ea5d2f1c4608232e (0).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_65_ea5d2f1c4608232e at time 54.90s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_66_fc490ca45c00b124 at time 55.41s
+[DISDL-SIM][DEBUG] - Evicted 1_2_93_92cc227532d17e56 (0) for 1_2_66_fc490ca45c00b124 (0).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_66_fc490ca45c00b124 at time 55.62s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_67_3295c76acbf4caae at time 56.14s
+[DISDL-SIM][DEBUG] - Evicted 1_2_94_98dce83da57b0395 (0) for 1_2_67_3295c76acbf4caae (0).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_67_3295c76acbf4caae at time 56.35s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_68_735b90b4568125ed at time 56.87s
+[DISDL-SIM][DEBUG] - Evicted 1_2_95_f4b9ec30ad9f68f8 (0) for 1_2_68_735b90b4568125ed (0).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_68_735b90b4568125ed at time 57.08s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_69_a3f390d88e4c41f2 at time 57.59s
+[DISDL-SIM][DEBUG] - Evicted 1_2_96_812b4ba287f5ee0b (0) for 1_2_69_a3f390d88e4c41f2 (0).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_69_a3f390d88e4c41f2 at time 57.80s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_70_14bfa6bb14875e45 at time 58.32s
+[DISDL-SIM][DEBUG] - Evicted 1_2_97_26657d5ff9020d2a (0) for 1_2_70_14bfa6bb14875e45 (0).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_70_14bfa6bb14875e45 at time 58.53s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_71_7cbbc409ec990f19 at time 59.04s
+[DISDL-SIM][DEBUG] - Evicted 1_2_98_e2ef524fbf3d9fe6 (0) for 1_2_71_7cbbc409ec990f19 (0).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_71_7cbbc409ec990f19 at time 59.25s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_72_e2c420d928d4bf8c at time 59.77s
+[DISDL-SIM][DEBUG] - Evicted 1_2_84_fe9fc289c3ff0af1 (0) for 1_2_72_e2c420d928d4bf8c (0).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_72_e2c420d928d4bf8c at time 59.98s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_73_32bb90e8976aab52 at time 60.50s
+[DISDL-SIM][DEBUG] - Evicted 1_2_89_2a38a4a9316c49e5 (0) for 1_2_73_32bb90e8976aab52 (0).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_73_32bb90e8976aab52 at time 60.71s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_75_ad61ab143223efbc at time 61.22s
+[DISDL-SIM][DEBUG] - Evicted 1_2_99_ed3d2c21991e3bef (0) for 1_2_75_ad61ab143223efbc (0).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_75_ad61ab143223efbc at time 61.43s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_79_35f4a8d465e6e1ed at time 61.95s
+[DISDL-SIM][DEBUG] - Evicted 1_2_100_ac627ab1ccbdb62e (0) for 1_2_79_35f4a8d465e6e1ed (0).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_79_35f4a8d465e6e1ed at time 62.16s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_83_9778d5d219c5080b at time 62.67s
+[DISDL-SIM][DEBUG] - Evicted 1_2_51_c0c7c76d30bd3dca (0) for 1_2_83_9778d5d219c5080b (0).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_83_9778d5d219c5080b at time 62.88s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_85_68d30a9594728bc3 at time 63.40s
+[DISDL-SIM][DEBUG] - Evicted 1_2_52_2838023a778dfaec (0) for 1_2_85_68d30a9594728bc3 (0).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_85_68d30a9594728bc3 at time 63.61s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_88_c7e1249ffc03eb9d at time 64.13s
+[DISDL-SIM][DEBUG] - Evicted 1_2_53_9a1158154dfa42ca (0) for 1_2_88_c7e1249ffc03eb9d (0).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_88_c7e1249ffc03eb9d at time 64.34s. Cache hit: True.
+[DISDL-SIM][DEBUG] - Job VGG16 assigned batch 1_2_90_7647966b7343c290 at time 64.85s
+[DISDL-SIM][DEBUG] - Evicted 1_2_54_d82c8d1619ad8176 (0) for 1_2_90_7647966b7343c290 (0).
+[DISDL-SIM][INFO] - Job VGG16 processing batch 1_2_90_7647966b7343c290 at time 65.06s. Cache hit: True.

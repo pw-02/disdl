@@ -27,8 +27,6 @@ class BatchSet:
         with self.lock:
             self.reuse_score = sum(batch.reuse_score for batch in self.batches.values())
 
-    
-
 class Batch:
     def __init__(self, batch_indicies, epoch_idx, partition_idx, batch_idx):
         self.indices: List[int] = batch_indicies
@@ -86,3 +84,4 @@ class Batch:
     def set_cache_status(self, cache_status:CacheStatus):
         with self.lock:
             self.cache_status = cache_status
+

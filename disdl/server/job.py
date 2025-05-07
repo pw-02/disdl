@@ -4,9 +4,7 @@ from typing import Dict, List, Optional, Set, Tuple
 from utils import AverageMeter
 from batch import Batch, CacheStatus
 import threading
-from logger_config import logger
-import math
-import time
+
 # from sortedcontainers import SortedList
 
 class DLTJob:

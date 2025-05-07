@@ -7,15 +7,15 @@ from typing import Dict, List, Optional, Set, Tuple
 import hydra
 from sortedcontainers import SortedList
 
-from args import DisDLArgs
+# from args import DisDLArgs
 from batch import Batch, BatchSet, CacheStatus
 from cache_prefetching import PrefetchServiceAsync
-from cache_tracking import CacheManager
 from dataset import *  # Consider listing explicit imports instead of *
 from job import DLTJob
-from logger_config import logger
+from logger_config import configure_logger
 from sampler import PartitionedBatchSampler
 
+logger = configure_logger()
 
 class BatchManager:
     def __init__(self, 
@@ -200,7 +200,7 @@ class BatchManager:
                     return batch_set.batches[batch_id].reuse_score
 
 @hydra.main(version_base=None, config_path="conf", config_name="config")
-def main(args: DisDLArgs):
+def main(args):
     # Initialize the dataset based on the workload specified in the args
     if args.workload == 'mscoco':
         dataset = MSCOCODataset(dataset_location=args.dataset_location)

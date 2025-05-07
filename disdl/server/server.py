@@ -3,22 +3,24 @@ from concurrent import futures
 import minibatch_service_pb2 as minibatch_service_pb2
 import minibatch_service_pb2_grpc as minibatch_service_pb2_grpc
 import google.protobuf.empty_pb2
-from logger_config import logger
+from logger_config import configure_logger
 import hydra
 from omegaconf import DictConfig
 from args import DisDLArgs
-from batch_manager import CentralBatchManager
+from batch_manager import BatchManager
 from omegaconf import OmegaConf
 from typing import Dict
 from job import DLTJob
-from dataset import ImageNetDataset,MSCOCODataset, LibSpeechDataset, OpenImagesDataset
+from dataset import ImageNetDataset,MSCOCODataset, OpenImagesDataset
 from batch import Batch, CacheStatus
 import json
+
+logger = configure_logger(__name__)
 
 class CacheAwareMiniBatchService(minibatch_service_pb2_grpc.MiniBatchServiceServicer):
     def __init__(self, args:DisDLArgs):
         self.args = args
-        self.datasets: Dict[str,CentralBatchManager] = {}
+        self.datasets: Dict[str,BatchManager] = {}
         self.jobs: Dict[DLTJob] = {}
 
     def Ping(self, request, context):
@@ -42,12 +44,12 @@ class CacheAwareMiniBatchService(minibatch_service_pb2_grpc.MiniBatchServiceServ
                     dataset = MSCOCODataset(dataset_location, transforms)
                 elif self.args.workload == 'imagenet':
                     dataset = ImageNetDataset(dataset_location, transforms)
-                elif self.args.workload == 'librispeech':
-                    dataset = LibSpeechDataset(dataset_location, transforms)
+                # elif self.args.workload == 'librispeech':
+                #     dataset = LibSpeechDataset(dataset_location, transforms)
                 elif self.args.workload == 'openimages':
                     dataset = OpenImagesDataset(dataset_location, transforms)
                 print(len(dataset))
-                self.datasets[dataset_location] = CentralBatchManager(dataset=dataset, args=self.args)
+                self.datasets[dataset_location] = BatchManager(dataset=dataset, args=self.args)
                 print(self.datasets[dataset_location])
                 dataset_info = self.datasets[dataset_location].dataset_info()
                 logger.info(f"Dataset '{dataset_location}' added. Total Files: {len(dataset)}, Total Batches:{dataset_info['num_batches']}")

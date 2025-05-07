@@ -8,7 +8,12 @@ from queue import Queue, Empty
 from datetime import datetime, timezone
 from batch import Batch, CacheStatus  # Ensure these are properly defined
 from queue import Queue, Empty
-from logger_config import logger
+# from logger_config import configure_logger
+import logging
+# logger = configure_logger()
+
+logger = logging.getLogger()
+
 import redis
 
 class PrefetchServiceAsync:

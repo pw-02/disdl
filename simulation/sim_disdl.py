@@ -15,6 +15,7 @@ from collections import deque, OrderedDict
 from disdl.server.sampler import PartitionedBatchSampler
 from disdl.server.batch import Batch, BatchSet, CacheStatus
 from disdl.server.utils import AverageMeter
+from disdl.server.job import DLTJob
 import threading
 
 logging.basicConfig(
@@ -34,85 +35,6 @@ class Dataset:
     def __len__(self) -> int:
         return self.num_samples
     
-class DLTJob:
-    def __init__(self, job_id: str):
-        self.job_id = job_id
-        self.current_epoch = 0
-        # For reuse logic
-        # self.used_epoch_partition_pairs: Set[Tuple[int, int]] = set()
-        self.used_batch_set_ids: Set[str] = set()
-        self.partitions_covered_this_epoch: Set[int] = set()
-        # Active state
-        self.current_batch = None
-        self.current_batch_set_id  = None
-        self.future_batches: OrderedDict[str, Batch] = OrderedDict()
-        self.processing_speed = 1.0
-        self.optimal_throughput = 1/self.processing_speed #batches/sec
-        self.weight = self.optimal_throughput
-        self.num_batches_processed = 0
-        self.cache_hit_count = 0
-        self.cache_miss_count = 0
-        self.elapased_time_sec = 0
-        self.dataload_delay = AverageMeter('Dataload Delay')
-        self.lock = threading.Lock()
-
-    def set_job_processing_speed(self, speed: float):
-        self.processing_speed = speed
-        self.optimal_throughput = 1 / speed
-        self.weight = self.optimal_throughput
-   
-    def reset_for_new_epoch(self):
-        self.current_epoch += 1
-        self.partitions_covered_this_epoch.clear()
-    
-    def next_batch(self) -> Optional[Batch]:
-        # with self.lock:
-        next_batch = None
-        best_score = float('inf')
-        fallback_batch = None
-        for batch in self.future_batches.values():
-            if batch.cache_status == CacheStatus.CACHED:
-                if batch.reuse_score < best_score:
-                    next_batch = batch
-                    best_score = batch.reuse_score
-            elif batch.cache_status != CacheStatus.CACHING_IN_PROGRESS and fallback_batch is None:
-                fallback_batch = batch
-        if not next_batch:
-            next_batch = fallback_batch
-
-        if not next_batch:
-            #just get the next batch in the future batches
-            next_batch = next(iter(self.future_batches.values()), None)
-        
-        if next_batch:
-            next_batch.set_last_accessed_time()
-            self.future_batches.pop(next_batch.batch_id, None)
-        self.current_batch = next_batch
-        return next_batch
-    
-    def perf_stats(self, horurly_ec2_cost=12.24, hourly_cache_cost=3.25):
-            hit_rate = self.cache_hit_count / (self.cache_hit_count + self.cache_miss_count) if (self.cache_hit_count + self.cache_miss_count) > 0 else 0
-            throughput = self.num_batches_processed / self.elapased_time_sec if self.elapased_time_sec > 0 else 0
-            self.compute_cost = (horurly_ec2_cost / 3600) * self.elapased_time_sec
-            cache_cost = (hourly_cache_cost / 3600) * self.elapased_time_sec
-            total_cost = self.compute_cost + hourly_cache_cost
-            return {
-                'job_id': self.job_id,
-                'job_speed': self.processing_speed,
-                'batches_processed': self.num_batches_processed,
-                'cache_hit_count': self.cache_hit_count,
-                'cache_miss_count': self.cache_miss_count,
-                'cache_hit_%': hit_rate,
-                'elapsed_time': self.elapased_time_sec,
-                'throughput(batches/s)': throughput,
-                'optimal_throughput(batches/s)': self.optimal_throughput,
-                'compute_cost': self.compute_cost,
-                'cache_cost': cache_cost,
-                'total_cost': total_cost
-                }
-    def __lt__(self, other):
-        return self.processing_speed < other.processing_speed  # Compare based on speed
-
 class BatchManager:
     def __init__(self, 
                  dataset:Dataset, 

@@ -6,3 +6,4 @@ server.log
 logs/
 logs/*
 data/
+disdlapp.log

@@ -1,44 +1,33 @@
 import random
 import threading
-import hydra
-from sampler import PartitionedBatchSampler
-from args import DisDLArgs
-from collections import deque, OrderedDict
-from typing import List, Optional, Dict, Set, Tuple
-from dataset import MSCOCODataset, LibSpeechDataset, ImageNetDataset
-from batch import Batch, BatchSet, CacheStatus
 import time
-from logger_config import logger
-import json
-from datetime import datetime, timezone
-from itertools import cycle  # Import cycle from itertools
-from typing import OrderedDict as TypingOrderedDict
-import csv
-import os
-from cache_prefetching import PrefetchServiceAsync
-# minibatch_service.py
+from collections import OrderedDict, deque
+from typing import Dict, List, Optional, Set, Tuple
+
+import hydra
 from sortedcontainers import SortedList
 
-import threading
-from collections import OrderedDict
-from typing import Dict, Set, Tuple, Optional
+from args import DisDLArgs
 from batch import Batch, BatchSet, CacheStatus
-from sampler import PartitionedBatchSampler
 from cache_prefetching import PrefetchServiceAsync
-from logger_config import logger
 from cache_tracking import CacheManager
+from dataset import *  # Consider listing explicit imports instead of *
 from job import DLTJob
+from logger_config import logger
+from sampler import PartitionedBatchSampler
+
 
 class BatchManager:
     def __init__(self, 
-                 dataset:Dataset, 
+                 dataset:S3DatasetBase, 
                  drop_last: bool = False,
                  shuffle: bool = False,
                  min_lookahead_steps: int = 40,
                  use_prefetching: bool = False,
                  prefetch_lambda_name: str = None,
-                 prefetch_simulation_time: int = None
-                ):
+                 prefetch_simulation_time: int = None,
+                 cache_address: str = None
+                 ):
         
         self.dataset = dataset
         self.sampler = PartitionedBatchSampler(
@@ -58,13 +47,13 @@ class BatchManager:
         # self.jobs: Dict[str, DLTJob] = {job.job_id: job for job in jobs}
         self.jobs: Dict[str, DLTJob] = {}
         
-        # if use_prefetching:
-        #     self.prefetch_service = PrefetchServiceAsync(
-        #         lambda_name=prefetch_lambda_name,
-        #         cache_address=cache_address,
-        #         simulate_time=prefetch_simulation_time
-        #     )
-        #     self.prefetch_service.start()
+        if use_prefetching:
+            self.prefetch_service = PrefetchServiceAsync(
+                lambda_name=prefetch_lambda_name,
+                cache_address=cache_address,
+                simulate_time=prefetch_simulation_time
+            )
+            self.prefetch_service.start()
 
         for _ in range(self.lookahead_distance):
             self._generate_new_batch()
@@ -215,8 +204,8 @@ def main(args: DisDLArgs):
     # Initialize the dataset based on the workload specified in the args
     if args.workload == 'mscoco':
         dataset = MSCOCODataset(dataset_location=args.dataset_location)
-    elif args.workload.name == 'librispeech':
-        dataset = LibSpeechDataset(dataset_location=args.dataset_location)
+    # elif args.workload.name == 'librispeech':
+    #     dataset = LibSpeechDataset(dataset_location=args.dataset_location)
     elif args.workload.name == 'imagenet':
         dataset = ImageNetDataset(dataset_location='ss3://imagenet1k-sdl/val/')
     else:

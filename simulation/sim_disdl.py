@@ -14,6 +14,7 @@ import random
 from enum import Enum
 from typing import List, Optional, Dict, Tuple
 from collections import deque, OrderedDict
+from disdl.server.sampler import PartitionedBatchSampler
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -40,13 +41,11 @@ class BatchSet:
         self.bacth_set_reuse_score = 0.0
     
     def compute_batch_set_reuse_score(self):
-        """Compute the reuse score based on the number of jobs that have seen this batch."""
-        with self.lock:
-            score = 0.0
-            for batch in self.batches.values():
-                score += batch.reuse_score
-            self.bacth_set_reuse_score = score
-    
+        score = 0.0
+        for batch in self.batches.values():
+            score += batch.reuse_score
+        self.bacth_set_reuse_score = score
+
 
 class Batch:
     def __init__(self, batch_indicies, epoch_idx, partition_idx, batch_idx):
@@ -203,7 +202,6 @@ class PartitionedBatchSampler():
             return self.num_files // self.batch_size
         else:
             return (self.num_files + self.batch_size - 1) // self.batch_size
-    
 
 class DLTJob:
     def __init__(self, job_id: str, num_partitions: int, speed: float):

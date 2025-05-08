@@ -113,15 +113,18 @@ class BatchManager:
                 if partition_idx in job.partitions_covered_this_epoch:
                     continue
 
-                score = self._score_batch_set(batch_set, epoch_idx, partition_idx)
+                # score = self._score_batch_set(batch_set, epoch_idx, partition_idx)
+                score = batch_set.compute_reuse_score()
                 if score > best_score:
                     best_candidate = (partition_idx, batch_set)
                     best_score = score
+                # print(f"BatchSet {batch_set.id} has score {score:.2f}. Job {job.job_id}")
         if best_candidate is None:
             return
 
         partition_idx, batch_set = best_candidate
-        job.used_batch_set_ids.add(batch_set.id)
+        # date_time_str = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        job.used_batch_set_ids[batch_set.id] = job.elapased_time_sec
         job.partitions_covered_this_epoch.add(partition_idx)
         job.current_batch_set_id = batch_set.id
 
@@ -150,6 +153,10 @@ class BatchManager:
                     eviction_candidate = batch_id
                     break
         return True, eviction_candidate
+    
+    # def clean_up_old_batch_sets(self):
+    #      #clean up old batches that are no longer needed
+    #     for epoch_idx, partition_map in list(self.batch_sets.items()):
 
 
     
@@ -234,7 +241,7 @@ def main(args):
         else:
                 print(f"Step {step:03} | Job {job_id} got no batch")
         
-        batch_manager.job_processed_batch_update(job_id, batch_is_cached=True, job_cached_batch=True, job_evicted_batch_id=None)
+        batch_manager.processed_batch_update(job_id, batch_is_cached=True, job_cached_batch=True, job_evicted_batch_id=None)
 
 
 def simulate_training_loop(batch_manager:BatchManager, num_jobs: int, steps_per_job: int = 100):

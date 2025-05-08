@@ -24,9 +24,10 @@ class BatchSet:
     
     def compute_reuse_score(self):
         """Compute the total reuse score for this batch set."""
-        with self.lock:
-            self.reuse_score = sum(batch.reuse_score for batch in self.batches.values())
-
+            #count number of batches in the set whose cache status is CACHED
+        num_cached_batches = sum(batch.cache_status == CacheStatus.CACHED for batch in self.batches.values())
+        self.reuse_score = num_cached_batches
+        return self.reuse_score
 class Batch:
     def __init__(self, batch_indicies, epoch_idx, partition_idx, batch_idx):
         self.indices: List[int] = batch_indicies

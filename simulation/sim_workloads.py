@@ -48,6 +48,11 @@ workloads = {
       'imagenet_128_resnet50': {
         'RESNET50': 0.33947309,
     },
+     'imagenet_slowfast': {
+        'SHUFFLENETV2': 0.062516984,
+        'VGG16': 0.514980298,
+
+    },
 
     #dict of 20 jobs operating at different speeds, labels 1-20
     '20_jobs': {

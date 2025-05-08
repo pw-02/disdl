@@ -4,12 +4,13 @@ from typing import Dict, List, Optional, Set, Tuple
 from utils import AverageMeter
 from batch import Batch, CacheStatus
 import threading
-
+import time
 # from sortedcontainers import SortedList
 
 class DLTJob:
     def __init__(self, job_id: str):
         self.job_id = job_id
+        self.job_start_time = time.perf_counter()
         self.current_epoch = 0
         # For reuse logic
         # self.used_epoch_partition_pairs: Set[Tuple[int, int]] = set()
@@ -45,7 +46,7 @@ class DLTJob:
         fallback_batch = None
         for batch in self.future_batches.values():
             if batch.cache_status == CacheStatus.CACHED:
-                if batch.reuse_score < best_score:
+                if batch.reuse_score > best_score:
                     next_batch = batch
                     best_score = batch.reuse_score
             elif batch.cache_status != CacheStatus.CACHING_IN_PROGRESS and fallback_batch is None:

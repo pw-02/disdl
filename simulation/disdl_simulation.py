@@ -145,21 +145,19 @@ class BatchManager:
         self.eviction_index: SortedList[Tuple[float, float, str]] = SortedList() # Sorted by (reuse_score, timestamp)
         self.eviction_index_lookup: Dict[str, Tuple[float, float, str]] = {} #delete batches from eviction_index efficiently
         self.assigned_eviction_candidates: Dict[str, Batch] = {}
-        self.lookahead_distance = min(self.sampler.calc_num_batchs_per_partition() - 1, 40)
+        self.lookahead_distance = self.sampler.calc_num_batchs_per_partition() #min(self.sampler.calc_num_batchs_per_partition() - 1, 40)
         # self.jobs: Dict[str, DLTJob] = {job.job_id: job for job in jobs}
         self.jobs: Dict[str, DLTJob] = {}
         self.shared_cache = shared_cache
-        
-
-        for _ in range(self.lookahead_distance):
-            self._generate_new_batch()
+        self.sample_next_lookahead_batches()
+    
     
     def _generate_new_batch(self):
         batch_indices, epoch_idx, partition_idx, batch_idx = next(self.sampler)
         next_batch = Batch(batch_indices, epoch_idx, partition_idx, batch_idx)
 
         epoch_map = self.batch_sets.setdefault(next_batch.epoch_idx, OrderedDict())
-        batch_set = epoch_map.setdefault(next_batch.partition_idx, BatchSet(set_id=next_batch.set_id))
+        batch_set = epoch_map.setdefault(next_batch.partition_idx, BatchSet(set_id=next_batch.set_id, num_batches=self.sampler.calc_num_batchs_per_partition()))
         batch_set.batches[next_batch.batch_id] = next_batch
 
         # Check if any job is currently assigned to this BatchSet
@@ -196,10 +194,11 @@ class BatchManager:
         
         return next_batch, should_cache, eviction_candidate
     
-    def assign_batch_set_to_job(self, job: DLTJob):
-        if len(job.partitions_covered_this_epoch) == self.dataset.num_partitions:
-            job.reset_for_new_epoch()
-        
+    def sample_next_lookahead_batches(self):
+        for _ in range(self.lookahead_distance):
+            self._generate_new_batch()
+
+    def _find_best_batch_set_for_job(self, job: DLTJob) -> Optional[Tuple[int, Any]]:
         best_candidate = None
         best_score = float('-inf')
 
@@ -210,19 +209,33 @@ class BatchManager:
                 if partition_idx in job.partitions_covered_this_epoch:
                     continue
 
-                # score = self._score_batch_set(batch_set, epoch_idx, partition_idx)
                 score = batch_set.compute_reuse_score()
                 if score > best_score:
                     best_candidate = (partition_idx, batch_set)
                     best_score = score
-                    if batch_set.id == '3_1' and job.job_id == 'VGG16':
-                        pass
-                # print(f"BatchSet {batch_set.id} has score {score:.2f}. Job {job.job_id}")
-        if best_candidate is None:
+
+        return best_candidate
+    
+    def assign_batch_set_to_job(self, job: DLTJob):
+        
+        if job.job_id == 'VGG16':
+           pass
+
+        if len(job.partitions_covered_this_epoch) == self.dataset.num_partitions:
+            job.reset_for_new_epoch()
+
+        # First attempt
+        candidate = self._find_best_batch_set_for_job(job)
+
+        if candidate is None:
+            self.sample_next_lookahead_batches()
+            candidate = self._find_best_batch_set_for_job(job)
+
+        if candidate is None:
+            logger.warning(f"[assign_batch_set_to_job] No batch set available for job {job.job_id}")
             return
 
-        partition_idx, batch_set = best_candidate
-        # date_time_str = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        partition_idx, batch_set = candidate
         job.used_batch_set_ids[batch_set.id] = job.elapased_time_sec
         job.partitions_covered_this_epoch.add(partition_idx)
         job.current_batch_set_id = batch_set.id
@@ -230,8 +243,50 @@ class BatchManager:
         for batch in batch_set.batches.values():
             batch.mark_awaiting_to_be_seen_by(job.job_id, job.weight)
             job.future_batches[batch.batch_id] = batch
+
+
+
+
+
+    # def assign_batch_set_to_job(self, job: DLTJob):
+    #     if job.job_id == 'VGG16':
+    #         pass
         
-        # self.clean_up_old_batch_sets()
+    #     if len(job.partitions_covered_this_epoch) == self.dataset.num_partitions:
+    #         job.reset_for_new_epoch()
+        
+    #     best_candidate = None
+    #     best_score = float('-inf')
+
+    #     for epoch_idx, partition_map in self.batch_sets.items():
+    #         for partition_idx, batch_set in partition_map.items():
+    #             if batch_set.id in job.used_batch_set_ids:
+    #                 continue
+    #             if partition_idx in job.partitions_covered_this_epoch:
+    #                 continue
+
+    #             # score = self._score_batch_set(batch_set, epoch_idx, partition_idx)
+    #             score = batch_set.compute_reuse_score()
+    #             if score > best_score:
+    #                 best_candidate = (partition_idx, batch_set)
+    #                 best_score = score
+    #                 if batch_set.id == '3_1' and job.job_id == 'VGG16':
+    #                     pass
+    #             # print(f"BatchSet {batch_set.id} has score {score:.2f}. Job {job.job_id}")
+    #     if best_candidate is None:
+    #         self.sample_next_lookahead_batches()
+    #         self.assign_batch_set_to_job(job)
+
+    #     partition_idx, batch_set = best_candidate
+    #     # date_time_str = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+    #     job.used_batch_set_ids[batch_set.id] = job.elapased_time_sec
+    #     job.partitions_covered_this_epoch.add(partition_idx)
+    #     job.current_batch_set_id = batch_set.id
+
+    #     for batch in batch_set.batches.values():
+    #         batch.mark_awaiting_to_be_seen_by(job.job_id, job.weight)
+    #         job.future_batches[batch.batch_id] = batch
+        
 
     def _maybe_cache_batch(self, batch: Batch):
         min_reuse_score_to_cache = 0.00
@@ -267,11 +322,17 @@ class BatchManager:
             for partition_id, batch_set in partitions.items():
                 newer_found = False
 
-                # Look for newer epochs that have the same partition
+                # Look for newer epochs that have the same partition, and that parition is finalized
                 for later_epoch_id in epochs[i + 1:]:
                     later_partitions = self.batch_sets[later_epoch_id]
-                    if partition_id in later_partitions:
-                        newer_found = True
+                    if partition_id in later_partitions and later_partitions[partition_id].is_finalized():
+                        #check if any job is using this later partition
+
+                        in_use = any( 
+                            job.current_batch_set_id == f"{later_epoch_id}_{partition_id}"
+                            for job in self.jobs.values())
+                        if in_use:
+                            newer_found = True
                         break
                 if not newer_found:
                     continue  # Keep if no newer version of this partition exists
@@ -282,7 +343,8 @@ class BatchManager:
                     job.current_batch_set_id == batch_set_id
                     for job in self.jobs.values())
                 
-                if not still_in_use and batch_set.id != '2_1':
+                
+                if not still_in_use:
                     # if batch_set.id == '2_1':
                     #     pass
                     # Remove all batches in the cache from the batch set
@@ -514,9 +576,9 @@ if __name__ == "__main__":
     workload_jobs = dict(workloads[workload_name])
 
     simulation_time_sec = None #3600 # None  #3600 * 1 # Simulate 1 hour
-    batches_per_epoch = 8000 # batches
+    batches_per_epoch = 100 # batches
     epochs_per_job = 2 #np.inf
-    cache_capacity =  0.5 * batches_per_epoch  #np.inf #5.0 * batches_per_epoch #number of batches as a % of the total number of batches
+    cache_capacity = 50 #0.5 * batches_per_epoch  #np.inf #5.0 * batches_per_epoch #number of batches as a % of the total number of batches
     eviction_policy = "reuse_score" # "lru", "fifo", "mru", "random", "noevict", "reuse_score"
     hourly_ec2_cost = 12.24 
     hourly_cache_cost = 3.25

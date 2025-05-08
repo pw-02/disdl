@@ -245,49 +245,6 @@ class BatchManager:
             job.future_batches[batch.batch_id] = batch
 
 
-
-
-
-    # def assign_batch_set_to_job(self, job: DLTJob):
-    #     if job.job_id == 'VGG16':
-    #         pass
-        
-    #     if len(job.partitions_covered_this_epoch) == self.dataset.num_partitions:
-    #         job.reset_for_new_epoch()
-        
-    #     best_candidate = None
-    #     best_score = float('-inf')
-
-    #     for epoch_idx, partition_map in self.batch_sets.items():
-    #         for partition_idx, batch_set in partition_map.items():
-    #             if batch_set.id in job.used_batch_set_ids:
-    #                 continue
-    #             if partition_idx in job.partitions_covered_this_epoch:
-    #                 continue
-
-    #             # score = self._score_batch_set(batch_set, epoch_idx, partition_idx)
-    #             score = batch_set.compute_reuse_score()
-    #             if score > best_score:
-    #                 best_candidate = (partition_idx, batch_set)
-    #                 best_score = score
-    #                 if batch_set.id == '3_1' and job.job_id == 'VGG16':
-    #                     pass
-    #             # print(f"BatchSet {batch_set.id} has score {score:.2f}. Job {job.job_id}")
-    #     if best_candidate is None:
-    #         self.sample_next_lookahead_batches()
-    #         self.assign_batch_set_to_job(job)
-
-    #     partition_idx, batch_set = best_candidate
-    #     # date_time_str = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-    #     job.used_batch_set_ids[batch_set.id] = job.elapased_time_sec
-    #     job.partitions_covered_this_epoch.add(partition_idx)
-    #     job.current_batch_set_id = batch_set.id
-
-    #     for batch in batch_set.batches.values():
-    #         batch.mark_awaiting_to_be_seen_by(job.job_id, job.weight)
-    #         job.future_batches[batch.batch_id] = batch
-        
-
     def _maybe_cache_batch(self, batch: Batch):
         min_reuse_score_to_cache = 0.00
 
@@ -565,7 +522,7 @@ def run_simulation(
     print(f"  Total Throughput: {agg_throuhgput:.2f} batches/s")
     print("-" * 40)
     for job in jobs:
-        print(f"  Job {job.job_id}: {list(job.used_batch_set_ids.items())}")
+        print(f"  Job {job.job_id}: {list(job.used_batch_set_ids.keys())}")
 
     # return overall_results
     # print(sampler.assigned_eviction_candidates)
@@ -577,7 +534,7 @@ if __name__ == "__main__":
 
     simulation_time_sec = None #3600 # None  #3600 * 1 # Simulate 1 hour
     batches_per_epoch = 100 # batches
-    epochs_per_job = 2 #np.inf
+    epochs_per_job = 10 #np.inf
     cache_capacity = 50 #0.5 * batches_per_epoch  #np.inf #5.0 * batches_per_epoch #number of batches as a % of the total number of batches
     eviction_policy = "reuse_score" # "lru", "fifo", "mru", "random", "noevict", "reuse_score"
     hourly_ec2_cost = 12.24 
@@ -585,7 +542,7 @@ if __name__ == "__main__":
     load_from_s3_time = 0.2
     prefetcher_speed = load_from_s3_time /2
     preprocesssing_time = 0.00
-    num_partitions = 2
+    num_partitions = 1
     batch_size = 1
 
     run_simulation(

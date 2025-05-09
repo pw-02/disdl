@@ -212,8 +212,13 @@ def run_simulation(
     job_weights = {j: 1.0 / job_speeds[j] for j in job_speeds}
     shared_cache.job_weights = job_weights
     event_queue = []  # Priority queue for next event times
+    time_between_job_starts = 20
+    next_job_start_time = 0.1
     for job in jobs:
-        heapq.heappush(event_queue, (job.speed, "step", job))
+        heapq.heappush(event_queue, (next_job_start_time, "step", job))
+        next_job_start_time += time_between_job_starts
+    # for job in jobs:
+    #     heapq.heappush(event_queue, (job.speed, "step", job))
     
     time_elapsed = 0  # Global simulation time
     while True:
@@ -263,6 +268,7 @@ def run_simulation(
     cache_cost = (hourly_cache_cost / 3600) * elapsed_time_sec
     total_cost = aggregated_compute_cost + cache_cost  # No additional costs in this simulation
     job_speeds = {job['job_id']: job['job_speed'] for job in job_performances}
+    jobs_cache_hit_percent = {job['job_id']: job['cache_hit_%'] for job in job_performances}
 
     overall_results = {
         'workload_name': workload_name,
@@ -279,6 +285,7 @@ def run_simulation(
         'cache_hit_count': aggregated_cache_hits,
         'cache_miss_count': aggregated_cache_misses,
         'cache_hit_percent': aggregated_cache_hit_percent,
+        'jobs_cache_hit_percent': jobs_cache_hit_percent,
         'total_batches_processed': aggregated_batches_processed,
         'time_elapsed': elapsed_time_sec,
         'total_job_time': aggregated_time_sec,
@@ -312,16 +319,16 @@ def run_simulation(
     return overall_results
 
 if __name__ == "__main__":
-    workload_name = 'imagenet_128_nas'
+    workload_name = '20_jobs' # 'imagenet_128_nas' # 'imagenet_128_hpo' # 'imagenet_128_resnet50' # 'imagenet_slowfast'
     jobs =  workloads[workload_name].items()
     simulation_time_sec = None #3600 # None  #3600 * 1 # Simulate 1 hour
-    batches_per_job = 100 * 1 # 8500 #np.inf
-    cache_capacity = 0.3* batches_per_job #number of batches as a % of the total number of batches
+    batches_per_job = 1000 * 1 # 8500 #np.inf
+    cache_capacity = 0.33* batches_per_job #number of batches as a % of the total number of batches
     eviction_policy = "noevict" # "lru", "fifo", "mru", "random", "noevict"
     hourly_ec2_cost = 12.24 
-    hourly_cache_cost = 3.25
-    cache_miss_penalty = 0.2
-    batch_assignment_strategy = "sequential" # "sequential", "shuffle", "rotate"
+    hourly_cache_cost =  3.25
+    cache_miss_penalty = 0.1
+    batch_assignment_strategy = "rotate" # "sequential", "shuffle", "rotate"
     run_simulation(
         workload_name = workload_name,
         workload_jobs = jobs,

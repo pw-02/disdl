@@ -166,7 +166,7 @@ if __name__ == "__main__":
     workload_jobs = dict(workloads[workload_name])
     batches_per_epoch = 100 # batches
     epochs_per_job = 1 #np.inf
-    buffer_size = 10
+    buffer_size = 1
     hourly_ec2_cost = 12.24 
     hourly_cache_cost = 3.25
     load_from_s3_time = 0.1

@@ -169,6 +169,22 @@ def run_simulation(
         
         time_elapsed, event_type, payload = heapq.heappop(event_queue)
 
+        if event_type == "prefetcher_step":
+            #find all batches that are not in the cache acorss all jobs based on the next x batches per job
+            to_cache = []
+            for job in jobs:
+                #check the next x batches in each jobs future batches
+                counter = 1
+                for batch in job.future_batches.values():
+                    if counter >= 30:
+                        break
+                    if batch.cache_status == CacheStatus.NOT_CACHED:
+                        to_cache.append(batch)
+                    counter += 1
+            for batch in to_cache:
+                eviction_candidate = sampler.get_eviction_candidate(batch.batch_id)
+                heapq.heappush(event_queue, (time_elapsed + load_from_s3_time, "cache_insert", (None,batch,eviction_candidate)))
+
         if event_type == "dataloader_step":
             job:DLTJob = payload
             job.elapased_time_sec = time_elapsed
@@ -197,7 +213,7 @@ def run_simulation(
             canditdate_batch_reuse_score = sampler.get_batch_reuse_score(eviction_candidate) if eviction_candidate else None
             
             if cache.cache_is_full():
-                if eviction_candidate is None:
+                if eviction_candidate is None and eviction_policy in ["noevict", "reuse_score"]:
                     heapq.heappush(event_queue, (time_elapsed + delay, "training_step", (job, batch_is_cached, eviction_candidate, did_evict, False)))
                     logger.debug(f"Cache is full, but no eviction candidate found for {batch_id}.")
                 else:
@@ -269,21 +285,21 @@ def run_simulation(
     print(f"  Actual Job Throughputs: {throuhgputs_for_jobs}")
     print(f"  Total Throughput: {agg_throuhgput:.2f} batches/s")
     print("-" * 40)
-    for job in jobs:
-        print(f"  Job {job.job_id}: {list(job.used_batch_set_ids.keys())}")
+    # for job in jobs:
+    #     print(f"  Job {job.job_id}: {list(job.used_batch_set_ids.keys())}")
 
     # return overall_results
     # print(sampler.assigned_eviction_candidates)
 
 if __name__ == "__main__":
     dataloader_system  = 'DisDL' #'CoorDL', TensorSocket, DisDL
-    workload_name = '20_jobs' #'imagenet_128_hpo', 'imagenet_128_resnet50', imagenet_128_nas, imagenet_slowfast
+    workload_name = 'imagenet_128_nas' #'imagenet_128_hpo', 'imagenet_128_resnet50', imagenet_128_nas, imagenet_slowfast
     workload_jobs = dict(workloads[workload_name])
 
     simulation_time_sec = None #3600 # None  #3600 * 1 # Simulate 1 hour
     batches_per_epoch = 1000 # batches
-    epochs_per_job = 10 #np.inf
-    cache_capacity = 0.33 * batches_per_epoch #0.5 * batches_per_epoch  #np.inf #5.0 * batches_per_epoch #number of batches as a % of the total number of batches
+    epochs_per_job = 5 #np.inf
+    cache_capacity = 0.25 * batches_per_epoch #0.5 * batches_per_epoch  #np.inf #5.0 * batches_per_epoch #number of batches as a % of the total number of batches
     eviction_policy = "reuse_score" # "lru", "fifo", "mru", "random", "noevict", "reuse_score"
     hourly_ec2_cost = 12.24 
     hourly_cache_cost = 3.25

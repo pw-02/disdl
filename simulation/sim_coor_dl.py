@@ -109,83 +109,7 @@ class CoorDLBatchScheduler:
 
         return False
 
-    
-    # def _assign_batches(self) -> Dict[str, List[int]]:
-    #     job_batches = {jid: [] for jid in self.job_ids}
-    #     #batch_ids for all batches
-    #     base_sequence = [batch.batch_id for batch in self.batches_to_process]
 
-    #     if self.assignment_strategy == "round_robin":
-    #         # Round-robin assignment
-    #         for i, batch in enumerate(self.batches_to_process):
-    #             batch_id = batch.batch_id
-    #             x = i + 1
-    #             jid = self.job_ids[x % len(self.job_ids)]
-    #             job_batches[jid].append(batch_id)
-
-    #     elif self.assignment_strategy == "sequential":
-    #         # All jobs process the same sequence in the same order
-    #         for jid in self.job_ids:
-    #             job_batches[jid] = base_sequence[:]
-
-    #     elif self.assignment_strategy == "shuffle":
-    #         # Each job gets a fully independent shuffled view (no coordination)
-    #         for jid in self.job_ids:
-    #             shuffled = base_sequence[:]
-    #             random.shuffle(shuffled)
-    #             job_batches[jid] = shuffled
-    #     elif self.assignment_strategy == "rotate":
-    #         # Shared shuffled base, each job gets a deterministic rotation
-    #         shuffled = base_sequence[:]
-    #         # random.shuffle(shuffled)
-    #         for i, jid in enumerate(self.job_ids):
-    #             rotated = shuffled[i:] + shuffled[:i]
-    #             job_batches[jid] = rotated
-    #     else:
-    #         raise ValueError(f"Unknown batch assignment strategy: {self.assignment_strategy}")
-
-    #     return job_batches
-
-    # def _assign_batches(self) -> Dict[str, List[int]]:
-    #     """
-    #     Round-robin batch assignment.
-    #     """
-    #     job_batches = {jid: [] for jid in self.job_ids}
-    #     for i, batch in enumerate(self.batches_to_process):
-    #         x = i+1
-    #         batch_id = batch.batch_id
-    #         jid = self.job_ids[x % len(self.job_ids)]
-    #         job_batches[jid].append(batch_id)
-    #     return job_batches
-
-    # def _build_global_schedule(self) -> List[tuple]:
-    #     """
-    #     Interleaved sequence of all batches with their owner.
-    #     """
-    #     max_len = max(len(b) for b in self.job_to_batches.values())
-    #     schedule = []
-    #     for i in range(max_len):
-    #         for jid in self.job_ids:
-    #             if i < len(self.job_to_batches[jid]):
-    #                 schedule.append((self.job_to_batches[jid][i], jid))
-    #     return schedule
-
-    # def get_batch_for_job(self, job_id: str) -> tuple:
-    #     """
-    #     Returns the next batch in the global schedule for this job.
-    #     Skips over batches not in the job's assignment, but still includes them for coordination.
-    #     Returns a tuple: (batch_id, self_load_flag)
-    #     """
-    #     ptr = self.job_pointers[job_id]
-    #     while ptr < len(self.global_sequence):
-    #         batch_id, owner = self.global_sequence[ptr]
-    #         self_load = (owner == job_id)
-    #         logger.info(f"Job {job_id} assigned batch {batch_id} (owner: {owner})")
-    #         return batch_id, self_load
-
-    #     raise IndexError(f"Job {job_id} has no more batches to process.")
-
-   
     
 
 def run_simulation(
@@ -324,7 +248,7 @@ if __name__ == "__main__":
     workload_name = 'imagenet_128_nas'
     workload_jobs = dict(workloads[workload_name])
     batches_per_epoch = 1000 # batches
-    epochs_per_job = 1 #np.inf
+    epochs_per_job = 5 #np.inf
     cache_capacity = 0.25 * batches_per_epoch
     # eviction_policy = "noevict" # "lru", "fifo", "mru", "random", "noevict", "reuse_score"
     hourly_ec2_cost = 12.24 

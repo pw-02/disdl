@@ -126,6 +126,39 @@ class BatchManager:
 
         return best_candidate
     
+    def _mark_batch_evicted(self, batch: Batch):
+        # Remove the batch from the eviction index
+        batch_id = batch.batch_id
+        self.assigned_eviction_candidates.pop(batch_id, None)
+        self.cached_batches.pop(batch_id, None)
+        evicted_entry = self.eviction_index_lookup.pop(batch_id, None)
+        if evicted_entry:
+            self.eviction_index.discard(evicted_entry)
+        batch.set_cache_status(CacheStatus.NOT_CACHED)
+
+        # evicted_entry = self.eviction_index_lookup.pop(batch.batch_id, None)
+        # if evicted_entry:
+        #     self.eviction_index.discard(evicted_entry)
+        # # Remove the batch from the cache
+        # # self.shared_cache._remove(batch.batch_id)
+        # # Remove the batch from the cached batches
+        # self.cached_batches.pop(batch.batch_id, None)
+        # batch.set_cache_status(CacheStatus.NOT_CACHED)
+    
+    def _mark_batch_cached(self, batch: Batch):
+        batch.set_cache_status(CacheStatus.CACHED)
+        self.cached_batches[batch.batch_id] = batch
+        #Update eviction index entry
+        old_entry = self.eviction_index_lookup.pop(batch.batch_id, None)
+        if old_entry:
+            self.eviction_index.discard(old_entry)
+
+        # Re-insert updated entry
+        new_entry = (batch.reuse_score, time.time(), batch.batch_id)
+        self.eviction_index.add(new_entry)
+        self.eviction_index_lookup[batch.batch_id] = new_entry
+
+    
     def assign_batch_set_to_job(self, job: DLTJob):
 
         if len(job.partitions_covered_this_epoch) == self.dataset.num_partitions:
@@ -165,13 +198,14 @@ class BatchManager:
 
         # Mark as eligible for caching
         batch.set_cache_status(CacheStatus.CACHING_IN_PROGRESS)
-        eviction_candidate = None
-        if self.eviction_index:
-            for score, ts, batch_id in self.eviction_index:
-                if batch.reuse_score > score and batch_id not in self.assigned_eviction_candidates:
-                    self.assigned_eviction_candidates[batch_id] = batch
-                    eviction_candidate = batch_id
-                    break
+        eviction_candidate = self._get_eviction_candidates(batch)
+        # eviction_candidate = None
+        # if self.eviction_index:
+        #     for score, ts, batch_id in self.eviction_index:
+        #         if batch.reuse_score > score and batch_id not in self.assigned_eviction_candidates:
+        #             self.assigned_eviction_candidates[batch_id] = batch
+        #             eviction_candidate = batch_id
+        #             break
         return True, eviction_candidate
     
     # 'For each (epoch_id, partition_id) in self.batch_sets, if a newer epoch exists that also contains the same partition, '
@@ -242,17 +276,18 @@ class BatchManager:
         batch.mark_seen_by(job.job_id)
 
         if batch_is_cached:
-            batch.set_cache_status(CacheStatus.CACHED)
-            self.cached_batches[batch.batch_id] = batch
-            #Update eviction index entry
-            old_entry = self.eviction_index_lookup.pop(batch.batch_id, None)
-            if old_entry:
-                self.eviction_index.discard(old_entry)
+            self._mark_batch_cached(batch)
+            # batch.set_cache_status(CacheStatus.CACHED)
+            # self.cached_batches[batch.batch_id] = batch
+            # #Update eviction index entry
+            # old_entry = self.eviction_index_lookup.pop(batch.batch_id, None)
+            # if old_entry:
+            #     self.eviction_index.discard(old_entry)
 
-            # Re-insert updated entry
-            new_entry = (batch.reuse_score, time.time(), batch.batch_id)
-            self.eviction_index.add(new_entry)
-            self.eviction_index_lookup[batch.batch_id] = new_entry
+            # # Re-insert updated entry
+            # new_entry = (batch.reuse_score, time.time(), batch.batch_id)
+            # self.eviction_index.add(new_entry)
+            # self.eviction_index_lookup[batch.batch_id] = new_entry
         else:
             batch.set_cache_status(CacheStatus.NOT_CACHED)
             self.cached_batches.pop(batch.batch_id, None)
@@ -260,10 +295,23 @@ class BatchManager:
         if eviction_candidate_batch_id:
             self.assigned_eviction_candidates.pop(eviction_candidate_batch_id, None)
             if did_evict:
-                self.cached_batches.pop(eviction_candidate_batch_id, None)
-                evicted_entry = self.eviction_index_lookup.pop(eviction_candidate_batch_id, None)
-                if evicted_entry:
-                    self.eviction_index.discard(evicted_entry)
+                self._mark_batch_evicted(self.cached_batches[eviction_candidate_batch_id])
+                # self.cached_batches.pop(eviction_candidate_batch_id, None)
+                # evicted_entry = self.eviction_index_lookup.pop(eviction_candidate_batch_id, None)
+                # if evicted_entry:
+                #     self.eviction_index.discard(evicted_entry)
+
+
+    def _get_eviction_candidates(self, batch: Batch) -> List[Batch]:
+        # Find batches that are eligible for eviction
+        eviction_candidate = None
+        if self.eviction_index:
+            for score, ts, batch_id in self.eviction_index:
+                if batch.reuse_score > score and batch_id not in self.assigned_eviction_candidates:
+                    self.assigned_eviction_candidates[batch_id] = batch
+                    eviction_candidate = batch_id
+                    break
+        return eviction_candidate
 
     def _maybe_trigger_sample_next_batch(self, batch: Batch):
         if batch.is_first_access:

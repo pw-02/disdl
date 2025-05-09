@@ -319,7 +319,7 @@ def run_simulation(
     return overall_results
 
 if __name__ == "__main__":
-    workload_name = '20_jobs' # 'imagenet_128_nas' # 'imagenet_128_hpo' # 'imagenet_128_resnet50' # 'imagenet_slowfast'
+    workload_name = 'imagenet_128_nas' # 'imagenet_128_nas' # 'imagenet_128_hpo' # 'imagenet_128_resnet50' # 'imagenet_slowfast'
     jobs =  workloads[workload_name].items()
     simulation_time_sec = None #3600 # None  #3600 * 1 # Simulate 1 hour
     batches_per_job = 1000 * 1 # 8500 #np.inf

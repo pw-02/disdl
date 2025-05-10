@@ -179,19 +179,27 @@ def run_simulation(
                 logger.debug(f"[job_step] Job {job.job_id} processing batch {batch_id} (owner={job_is_owner})")
 
             else:
-                if syncronized_mode:
+             
+                if job_is_owner:
+                    # Schedule prefetch
+                    job.cache_miss_count += 1
+                    cache_delay = load_from_s3_time + preprocesssing_time
+                    delay = cache_delay + job.processing_speed
+                    heapq.heappush(event_queue, (time_elapsed + cache_delay, "cache_insert", (job, batch_id)))
+                    heapq.heappush(event_queue, (time_elapsed + delay, "end_training_step", (job, batch_id)))
+                    # logger.debug(f"[job_step] Job {job.job_id} processing batch {batch_id} (owner={job_is_owner})")
+
+                elif not syncronized_mode:
+                    # Non-owner but allowed to proceed
+                    job.cache_miss_count += 1
+                    delay = load_from_s3_time + preprocesssing_time + job.processing_speed
+                    heapq.heappush(event_queue, (time_elapsed + delay, "end_training_step", (job, batch_id)))
+                    # logger.debug(f"[job_step] Job {job.job_id} processing batch {batch_id} (owner={job_is_owner})")
+                else:
                     # Non-owner must wait and retry
                     delay = 0.05
                     heapq.heappush(event_queue, (time_elapsed + delay, "start_training_step", job))
-                    # logger.debug(f"[job_step] Job {job.job_id} processing batch {batch_id} (owner={job_is_owner})")
-                else:
-                    job.cache_miss_count += 1
-                    delay = load_from_s3_time + preprocesssing_time + job.processing_speed
-                    if job_is_owner:
-                        cache_delay = load_from_s3_time + preprocesssing_time
-                        heapq.heappush(event_queue, (time_elapsed + cache_delay, "cache_insert", (job, batch_id)))
-                    heapq.heappush(event_queue, (time_elapsed + delay, "end_training_step", (job, batch_id)))
-                    
+        
         elif event_type == "end_training_step":
             job, batch_id = payload
             job.elapased_time_sec = time_elapsed

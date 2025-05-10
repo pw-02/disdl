@@ -6,34 +6,7 @@ import time
 from typing import List, Optional, Dict, Tuple
 from collections import deque, OrderedDict
 from enum import Enum
-
-class CacheStatus(Enum):
-    CACHED = "CACHED"
-    CACHING_IN_PROGRESS = "CACHING_IN_PROGRESS"
-    NOT_CACHED = "NOT_CACHED"
-
-
-class BatchSet:
-    def __init__(self, set_id: str, num_batches: int):
-        self.id = set_id
-        self.batches: Dict[str, Batch] = OrderedDict()
-        self.num_batches = num_batches
-        self.marked_for_eviction = False
-        self.lock = threading.Lock()
-        self.reuse_score = 0.0
-    
-    def is_finalized(self):
-        if len(self.batches) >= self.num_batches:
-            return True
-        return False
-    
-    def compute_reuse_score(self):
-        """Compute the total reuse score for this batch set."""
-            #count number of batches in the set whose cache status is CACHED
-        # num_cached_batches = sum(batch.cache_status == CacheStatus.CACHED for batch in self.batches.values())
-        reuse_score_of_all_batches = sum(batch.reuse_score for batch in self.batches.values())
-        self.reuse_score = reuse_score_of_all_batches
-        return self.reuse_score
+from cache_status import CacheStatus
 class Batch:
     def __init__(self, batch_indicies, epoch_idx, partition_idx, batch_idx):
         self.indices: List[int] = batch_indicies
@@ -92,3 +65,34 @@ class Batch:
         with self.lock:
             self.cache_status = cache_status
 
+    def is_cached(self):
+        with self.lock:
+            return self.cache_status == CacheStatus.CACHED or self.cache_status == CacheStatus.CACHING_IN_PROGRESS
+
+class BatchSet:
+    def __init__(self, set_id: str, num_batches: int):
+        self.id = set_id
+        self.batches: Dict[str, Batch] = OrderedDict()
+        self.num_batches = num_batches
+        self.marked_for_eviction = False
+        self.lock = threading.Lock()
+        self.reuse_score = 0.0
+    
+    def is_finalized(self):
+        if len(self.batches) >= self.num_batches:
+            return True
+        return False
+    
+    def compute_reuse_score(self):
+        """Compute the total reuse score for this batch set."""
+        #count number of batches in the set whose cache status is CACHED
+        # num_cached_batches = sum(batch.cache_status == CacheStatus.CACHED for batch in self.batches.values())
+        if not self.batches:
+            return 0.0
+        total_score = sum(batch.reuse_score for batch in self.batches.values())
+        return total_score / len(self.batches)
+       
+       
+        # reuse_score_of_all_batches = sum(batch.reuse_score for batch in self.batches.values())
+        # self.reuse_score = reuse_score_of_all_batches
+        # return self.reuse_score

@@ -2,7 +2,8 @@
 from collections import defaultdict, deque, OrderedDict
 from typing import Dict, List, Optional, Set, Tuple
 from utils import AverageMeter
-from batch import Batch, CacheStatus
+from batch import Batch
+from cache_status import CacheStatus
 import threading
 import time
 # from sortedcontainers import SortedList
@@ -29,6 +30,7 @@ class DLTJob:
         self.elapased_time_sec = 0
         self.dataload_delay = AverageMeter('Dataload Delay')
         self.lock = threading.Lock()
+        self.current_eviction_candidate = None
 
     def set_job_processing_speed(self, speed: float):
         self.processing_speed = speed
@@ -63,6 +65,9 @@ class DLTJob:
             self.future_batches.pop(next_batch.batch_id, None)
         self.current_batch = next_batch
         return next_batch
+    
+    def set_eviction_candidate(self, batch: Batch):
+        self.current_eviction_candidate = batch
     
     def perf_stats(self, horurly_ec2_cost=12.24, hourly_cache_cost=3.25):
             hit_rate = self.cache_hit_count / (self.cache_hit_count + self.cache_miss_count) if (self.cache_hit_count + self.cache_miss_count) > 0 else 0

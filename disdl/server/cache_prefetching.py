@@ -6,8 +6,9 @@ import concurrent.futures
 import logging
 from queue import Queue, Empty
 from datetime import datetime, timezone
-from batch import Batch, CacheStatus  # Ensure these are properly defined
-from queue import Queue, Empty
+from batch import Batch  # Ensure these are properly defined
+
+from cache_status import CacheStatus
 # from logger_config import configure_logger
 import logging
 # logger = configure_logger()

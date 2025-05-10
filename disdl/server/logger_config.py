@@ -1,6 +1,6 @@
 import logging
 
-def configure_logger(name: str = "DISDL", log_file: str = "disdlapp.log") -> logging.Logger:
+def configure_logger(name: str = "DISDL", log_file: str = "disd.log") -> logging.Logger:
     # Silence noisy libraries
     for noisy in ["PIL", "botocore", "urllib3", "boto3", "hydra.core.utils"]:
         logging.getLogger(noisy).setLevel(logging.WARNING)

@@ -2,6 +2,7 @@ from typing import  Dict, Sized
 from itertools import cycle
 import random
 from collections import OrderedDict
+from batch import Batch, BatchSet
 
 
 class PartitionedBatchSampler():
@@ -42,9 +43,9 @@ class PartitionedBatchSampler():
                 sampled_indices.append(next(self.sampler))  # Get an index from the partition
             except StopIteration:
                 if not self.drop_last and sampled_indices:
-                    # return self.generate_batch(sampled_indices)  # Return smaller batch if drop_last=False
-                    self.current_idx += 1
-                    return sampled_indices, self.current_epoch, self.active_partition_idx+1, self.current_idx
+                    return self.generate_batch(sampled_indices)  # Return smaller batch if drop_last=False
+                    # self.current_idx += 1
+                    # return sampled_indices, self.current_epoch, self.active_partition_idx+1, self.current_idx
                 
                 # Move to the next partition
                 self.processed_partitions += 1
@@ -58,14 +59,14 @@ class PartitionedBatchSampler():
                 self.sampler = self._create_sampler(self.active_partition)
                 continue  # Restart batch sampling from new partition
 
-        # return self.generate_batch(sampled_indices)
-        self.current_idx += 1
-        return sampled_indices, self.current_epoch, self.active_partition_idx+1, self.current_idx
+        return self.generate_batch(sampled_indices)
+        # self.current_idx += 1
+        # return sampled_indices, self.current_epoch, self.active_partition_idx+1, self.current_idx
     
-    # def generate_batch(self, batch_indices):
-    #     next_batch = Batch(batch_indices, self.current_epoch, self.active_partition_idx+1, self.current_idx)
-    #     self.current_idx += 1  # Increment the batch index for the next batch
-    #     return next_batch
+    def generate_batch(self, batch_indices):
+        next_batch = Batch(batch_indices, self.current_epoch, self.active_partition_idx+1, self.current_idx)
+        self.current_idx += 1  # Increment the batch index for the next batch
+        return next_batch
 
     def _partition_indices(self, num_partitions):
     # Initialize a list to hold the partitions
@@ -103,6 +104,7 @@ class PartitionedBatchSampler():
             return self.num_files // self.batch_size
         else:
             return (self.num_files + self.batch_size - 1) // self.batch_size
+    
 
 
 if __name__ == "__main__":

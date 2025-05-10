@@ -12,7 +12,8 @@ from omegaconf import OmegaConf
 from typing import Dict
 from job import DLTJob
 from dataset import ImageNetDataset,MSCOCODataset, OpenImagesDataset
-from batch import Batch, CacheStatus
+from batch import Batch
+from cache_status import CacheStatus
 import json
 
 logger = configure_logger(__name__)

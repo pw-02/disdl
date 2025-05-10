@@ -31,9 +31,9 @@ class CacheManager:
                 return batch_id
         return None
     
-    def _remove_eviction_candidate(self, batch_id: str):
+    def _remove_eviction_candidate(self, eviction_candidate_id: str):
         """Remove a batch from the eviction candidates."""
-        self.assigned_eviction_candidates.pop(batch_id, None)
+        self.assigned_eviction_candidates.pop(eviction_candidate_id, None)
 
     def mark_cached(self, batch: Batch):
         """Insert or update a batch in the eviction index and mark as cached."""

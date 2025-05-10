@@ -16,7 +16,7 @@ from batch import Batch
 from cache_status import CacheStatus
 import json
 
-logger = configure_logger(__name__)
+# logger = configure_logger(__name__)
 
 class CacheAwareMiniBatchService(minibatch_service_pb2_grpc.MiniBatchServiceServicer):
     def __init__(self, args:DisDLArgs):
@@ -53,13 +53,13 @@ class CacheAwareMiniBatchService(minibatch_service_pb2_grpc.MiniBatchServiceServ
                 self.datasets[dataset_location] = BatchManager(dataset=dataset, args=self.args)
                 print(self.datasets[dataset_location])
                 dataset_info = self.datasets[dataset_location].dataset_info()
-                logger.info(f"Dataset '{dataset_location}' added. Total Files: {len(dataset)}, Total Batches:{dataset_info['num_batches']}")
+                # logger.info(f"Dataset '{dataset_location}' added. Total Files: {len(dataset)}, Total Batches:{dataset_info['num_batches']}")
                 job_id = self.datasets[dataset_location].add_job()
             message = f"Job '{job_id}' registered for dataset '{dataset_location}'. Total Jobs: {len(self.datasets[dataset_location].active_jobs)}"
-            logger.info(message)
+            # logger.info(message)
         except Exception as e:
             error_message = f"Failed to register job with dataset '{dataset_location}'. Error: {str(e)}"
-            logger.error(error_message)
+            # logger.error(error_message)
         return minibatch_service_pb2.RegisterJobResponse(
             job_id=job_id, 
             dataset_info=str(dataset_info),
@@ -151,8 +151,8 @@ class CacheAwareMiniBatchService(minibatch_service_pb2_grpc.MiniBatchServiceServ
 @hydra.main(version_base=None, config_path="conf", config_name="config")
 def serve(cfg: DictConfig):
     try:
-        logger.info("Starting DisDL ML Dataloader Service")
-        logger.info(f"Config: {OmegaConf.to_yaml(cfg, resolve=True)}")
+        # logger.info("Starting DisDL ML Dataloader Service")
+        # logger.info(f"Config: {OmegaConf.to_yaml(cfg, resolve=True)}")
         args:DisDLArgs = DisDLArgs(
             cache_address = cfg.cache_address,
             enable_prefetching = cfg.enable_prefetching,
@@ -167,16 +167,16 @@ def serve(cfg: DictConfig):
         minibatch_service_pb2_grpc.add_MiniBatchServiceServicer_to_server(cache_service, server)
         server.add_insecure_port('[::]:50051')
         server.start()
-        logger.info(f"Server started. Listening on port 50051 with {max_workers} workers.")
+        # logger.info(f"Server started. Listening on port 50051 with {max_workers} workers.")
 
         # Keep the server running until interrupted
         server.wait_for_termination()
 
     except KeyboardInterrupt:
-        logger.info("Server stopped due to keyboard interrupt")
+        # logger.info("Server stopped due to keyboard interrupt")
         server.stop(0)
     except Exception as e:
-            logger.exception(f"{e}. Shutting Down.")
+            # logger.exception(f"{e}. Shutting Down.")
             if  'server' in locals():
                 server.stop(0)
     finally:

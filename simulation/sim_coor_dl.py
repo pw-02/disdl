@@ -104,7 +104,7 @@ class CoorDLBatchScheduler:
 
         # Evict if all jobs have seen it
         if len(self.batch_seen_by[batch_id]) >= self.num_jobs:
-            self.cache._remove(batch_id)
+            self.cache.remove_batch(batch_id)
             return True
 
         return False
@@ -117,7 +117,7 @@ def run_simulation(
         workload_name,
         workload_jobs,
         cache_capacity,
-        # eviction_policy,
+        eviction_policy,
         load_from_s3_time,
         hourly_cache_cost,
         hourly_ec2_cost,
@@ -128,7 +128,7 @@ def run_simulation(
         batch_size,
         syncronized_mode):
     logger.info(f"Starting simulation for {workload_name} with {len(workload_jobs)} jobs")
-    cache = SharedCache(capacity=cache_capacity)
+    cache = SharedCache(capacity=cache_capacity, eviction_policy=eviction_policy)
     batches_per_job = batches_per_epoch * epochs_per_job
     sampler = PartitionedBatchSampler(
         num_files=len(Dataset(num_samples=batches_per_epoch, batch_size=batch_size)),
@@ -139,20 +139,23 @@ def run_simulation(
     
     batches_to_process =[]
     for _ in range(batches_per_job):
-        batch_indices, epoch_idx, partition_idx, batch_idx = next(sampler)
-        batches_to_process.append(Batch(batch_indices, epoch_idx, partition_idx, batch_idx))
+        next_batch:Batch = next(sampler)
+        batches_to_process.append(next_batch)
     
     jobs:List[DLTJob] = [DLTJob(job_id) for job_id in workload_jobs]
     for job in jobs:
         job.set_job_processing_speed(workload_jobs[job.job_id])
     
-
     scheduler = CoorDLBatchScheduler(batches_to_process=batches_to_process, job_ids=[job.job_id for job in jobs], cache=cache)
-    event_queue = []  # Priority queue for next event times    
-    for job in jobs:
-        heapq.heappush(event_queue, (job.processing_speed, "job_step", job))
-
     time_elapsed = 0  # Global simulation time
+    event_queue = []  # Priority queue for next event times    
+    time_between_job_starts = 0.1
+    next_job_start_time = time_elapsed
+
+    for job in jobs:
+        heapq.heappush(event_queue, (next_job_start_time, "start_training_step", job))
+        next_job_start_time += time_between_job_starts
+
     while True:
         if simulation_time_sec is not None and time_elapsed >= simulation_time_sec:
             break
@@ -161,49 +164,48 @@ def run_simulation(
             break
 
         time_elapsed, event_type, payload = heapq.heappop(event_queue)
-        if event_type == "cache_insert":
-            batch_id = payload
-            cache.put_batch(batch_id)  # Simulate cache insert for this batch
         
-        if event_type == "job_step":
+        if event_type == "start_training_step":
             job: DLTJob = payload
             job.elapased_time_sec = time_elapsed
 
             batch_id, job_is_owner = scheduler.get_batch_for_job(job.job_id)
-            in_cache = cache.get_batch(batch_id)
-
-            if in_cache:
+            cache_hit = cache.get_batch(batch_id)
+            
+            if cache_hit:
                 job.cache_hit_count += 1
-                job.num_batches_processed += 1
-                delay = job.processing_speed
-                scheduler.mark_seen(job.job_id, batch_id)
+                delay = preprocesssing_time + job.processing_speed
+                heapq.heappush(event_queue, (time_elapsed + delay, "end_training_step", (job, batch_id)))
                 logger.debug(f"[job_step] Job {job.job_id} processing batch {batch_id} (owner={job_is_owner})")
 
             else:
-                if job_is_owner:
-                    # Schedule prefetch
-                    heapq.heappush(event_queue, (time_elapsed + load_from_s3_time, "cache_insert", batch_id))
-                    delay = job.processing_speed + load_from_s3_time + preprocesssing_time
-                    job.cache_miss_count += 1
-                    job.num_batches_processed += 1
-                    scheduler.mark_seen(job.job_id, batch_id)
-                    logger.debug(f"[job_step] Job {job.job_id} processing batch {batch_id} (owner={job_is_owner})")
-
-                elif not syncronized_mode:
-                    # Non-owner but allowed to proceed
-                    delay = job.processing_speed + load_from_s3_time + preprocesssing_time
-                    job.cache_miss_count += 1
-                    job.num_batches_processed += 1
-                    scheduler.mark_seen(job.job_id, batch_id)
-                    logger.debug(f"[job_step] Job {job.job_id} processing batch {batch_id} (owner={job_is_owner})")
-
-                else:
+                if syncronized_mode:
                     # Non-owner must wait and retry
                     delay = 0.05
-                    logger.debug(f"[consumer miss] Job {job.job_id} retrying for {batch_id}")
+                    heapq.heappush(event_queue, (time_elapsed + delay, "start_training_step", job))
+                    # logger.debug(f"[job_step] Job {job.job_id} processing batch {batch_id} (owner={job_is_owner})")
+                else:
+                    job.cache_miss_count += 1
+                    delay = load_from_s3_time + preprocesssing_time + job.processing_speed
+                    if job_is_owner:
+                        cache_delay = load_from_s3_time + preprocesssing_time
+                        heapq.heappush(event_queue, (time_elapsed + cache_delay, "cache_insert", (job, batch_id)))
+                    heapq.heappush(event_queue, (time_elapsed + delay, "end_training_step", (job, batch_id)))
+                    
+        elif event_type == "end_training_step":
+            job, batch_id = payload
+            job.elapased_time_sec = time_elapsed
+            job.num_batches_processed += 1
+            scheduler.mark_seen(job.job_id, batch_id)
 
-            if batches_per_job is None or job.num_batches_processed < batches_per_job:
-                heapq.heappush(event_queue, (time_elapsed + delay, "job_step", job))
+            if batches_per_job is None or job.num_batches_processed == batches_per_job:
+                print(f"Job {job.job_id} has completed its batches after {time_elapsed:.2f}s. Throughput: {job.num_batches_processed / time_elapsed:.2f} batches/s")
+            else:
+                heapq.heappush(event_queue, (time_elapsed, "start_training_step", job))
+
+        elif event_type == "cache_insert":
+            job, batch_id = payload
+            cache.put_batch(batch_id)  # Simulate cache insert for this batch
 
     job_performances = [job.perf_stats(hourly_ec2_cost/len(jobs), hourly_cache_cost/len(jobs)) for job in jobs]
     agg_batches_processed = sum(job['batches_processed'] for job in job_performances)
@@ -220,14 +222,17 @@ def run_simulation(
     job_speeds = {job['job_id']: job['job_speed'] for job in job_performances}
     throuhgputs_for_jobs = {job['job_id']: job['throughput(batches/s)'] for job in job_performances}
     optimal_throughputs = {job['job_id']: job['optimal_throughput(batches/s)'] for job in job_performances}
+    job_cache_hit_percent = {job['job_id']: job['cache_hit_%'] for job in job_performances}
+
     print(f"{dataloader_system}")
     print(f"  Jobs: {job_speeds}"),
     print(f"  Batches per Job: {batches_per_job}")
     print(f"  S3_load_time: {load_from_s3_time:.2f}s")
-    # print(f"  Eviction Policy: {eviction_policy}")
+    print(f"  Eviction Policy: {eviction_policy}")
     print(f"  Cache Capacity: {cache_capacity:.0f} batches")
     print(f"  Cache Used: {max_cache_capacity_used:} batches")
     print(f"  Cache Hit %: {agg_cache_hit_percent:.2f}%, Hits: {agg_cache_hits}, Misses: {agg_cache_misses}")
+    print(f"  Cache Hit % per Job: {job_cache_hit_percent}")
     print(f"  Cache Cost: ${cache_cost:.2f}")
     print(f"  Compute Cost: ${agg_compute_cost:.2f}")
     print(f"  Total Cost : ${total_cost:.2f}")
@@ -247,10 +252,10 @@ if __name__ == "__main__":
     dataloader_system  = 'CoorDL' 
     workload_name = 'imagenet_128_nas'
     workload_jobs = dict(workloads[workload_name])
-    batches_per_epoch = 1000 # batches
+    batches_per_epoch = 100 # batches
     epochs_per_job = 5 #np.inf
     cache_capacity = 0.25 * batches_per_epoch
-    # eviction_policy = "noevict" # "lru", "fifo", "mru", "random", "noevict", "reuse_score"
+    eviction_policy = "noevict" # "lru", "fifo", "mru", "random", "noevict"
     hourly_ec2_cost = 12.24 
     hourly_cache_cost = 3.25
     load_from_s3_time = 0.1
@@ -263,7 +268,7 @@ if __name__ == "__main__":
         workload_name = workload_name,
         workload_jobs = workload_jobs,
         cache_capacity = cache_capacity,
-        # eviction_policy = eviction_policy,
+        eviction_policy = eviction_policy,
         load_from_s3_time=load_from_s3_time,
         hourly_cache_cost = hourly_cache_cost,
         hourly_ec2_cost = hourly_ec2_cost,

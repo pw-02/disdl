@@ -9,9 +9,9 @@ from sampler import PartitionedBatchSampler
 from batch import Batch, BatchSet
 from cache_status import CacheStatus
 from job import DLTJob
-from logger_config import configure_logger
+# from logger_config import configure_logger
 from dataset import S3DatasetBase
-logger = configure_logger()
+# logger = configure_logger()
 
 class BatchManager:
     def __init__(self, 
@@ -26,7 +26,7 @@ class BatchManager:
                  shared_cache=None):
 
         self.dataset:S3DatasetBase = dataset
-        self.registry = JobRegistry()
+        self.job_registry = JobRegistry()
         self.cache = CacheManager()
         self.sampler = PartitionedBatchSampler(
             num_files=len(dataset),
@@ -57,13 +57,13 @@ class BatchManager:
         for _ in range(self.lookahead_distance):
             self._generate_new_batch()
 
-    def register_job(self, job_id: str):
-        job = self.registry.register(job_id)
-        if not job.future_batches:
-            self.assign_batch_set_to_job(job)
+    def register_job(self, job_id: str, processing_speed: Optional[float] = 1.0):
+        job = self.job_registry.register(job_id, processing_speed)
+        # if not job.future_batches:
+        #     self.assign_batch_set_to_job(job)
 
-    def get_next_batch_for_job(self, job_id: str) -> Tuple[Optional[Batch], bool, Optional[str]]:
-        job = self.registry.get(job_id)
+    def get_next_batch_for_job(self, job_id: str) -> Tuple[Batch, bool, Optional[str]]:
+        job = self.job_registry.get(job_id)
         if not job.future_batches:
             self.assign_batch_set_to_job(job)
 
@@ -71,7 +71,7 @@ class BatchManager:
         if next_batch is None:
             return None, False, None
 
-        # job_weights = self.registry.job_weights()
+        # job_weights = self.job_registry.job_weights()
         # next_batch.update_reuse_score(job_weights)
 
         should_cache, eviction_candidate = self.cache.maybe_cache(next_batch)
@@ -81,7 +81,7 @@ class BatchManager:
         return next_batch, should_cache, eviction_candidate
 
     def assign_batch_set_to_job(self, job: DLTJob):
-        self.registry.reset_if_new_epoch(job, self.dataset.num_partitions)
+        self.job_registry.reset_if_new_epoch(job, self.dataset.num_partitions)
 
         candidate = self._find_best_batch_set_for_job(job)
         if candidate is None:
@@ -89,28 +89,29 @@ class BatchManager:
             candidate = self._find_best_batch_set_for_job(job)
 
         if candidate is None:
-            logger.warning(f"[assign_batch_set_to_job] No batch set available for job {job.job_id}")
+            # logger.warning(f"[assign_batch_set_to_job] No batch set available for job {job.job_id}")
             return
 
         partition_idx, batch_set = candidate
-        self.registry.update_assignment(job, batch_set, job.elapased_time_sec)
+        self.job_registry.update_assignment(job, batch_set, job.elapased_time_sec)
     
     def processed_batch_update(self,
                                job_id: str,
-                               did_cache: bool,
+                               batch_is_cached: bool,
                                evicited_batch_id: Optional[str]):
         
-        job = self.registry.get(job_id)
+        job = self.job_registry.get(job_id)
         batch = job.current_batch
         batch.mark_seen_by(job.job_id) # Mark the batch as seen by the job and update the reuse score
-        eviction_candidate_batch = job.current_eviction_candidate
+        eviction_candidate_batch_id = job.current_eviction_candidate
     
-        if did_cache:
+        if batch_is_cached:
             self.cache.mark_cached(batch)
         else:
             self.cache.mark_not_cached(batch)
-        
-        self.cache._remove_eviction_candidate(eviction_candidate_batch.batch_id)
+
+        if eviction_candidate_batch_id is not None:
+            self.cache._remove_eviction_candidate(eviction_candidate_batch_id)
 
         if evicited_batch_id is not None:
             #find the batch somehow from the batch set dict
@@ -125,7 +126,7 @@ class BatchManager:
     #                            eviction_candidate_batch_id: Optional[str],
     #                            did_evict: bool = False):
         
-    #     job = self.registry.get(job_id)
+    #     job = self.job_registry.get(job_id)
     #     batch = job.current_batch
     #     batch.mark_seen_by(job.job_id)
 
@@ -150,7 +151,7 @@ class BatchManager:
                                                                  num_batches=self.sampler.calc_num_batchs_per_partition()))
         batch_set.batches[next_batch.batch_id] = next_batch
 
-        for job in self.registry.all():
+        for job in self.job_registry.all():
             if job.current_batch_set_id == batch_set.id:
                 next_batch.mark_awaiting_to_be_seen_by(job.job_id, job.weight)
                 job.future_batches[next_batch.batch_id] = next_batch

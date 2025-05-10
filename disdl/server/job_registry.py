@@ -7,9 +7,9 @@ class JobRegistry:
     def __init__(self):
         self.jobs: Dict[str, DLTJob] = {}
 
-    def register(self, job_id: str) -> DLTJob:
+    def register(self, job_id: str, processing_speed) -> DLTJob:
         if job_id not in self.jobs:
-            self.jobs[job_id] = DLTJob(job_id)
+            self.jobs[job_id] = DLTJob(job_id, processing_speed)
         return self.jobs[job_id]
 
     def get(self, job_id: str) -> DLTJob:

@@ -9,19 +9,20 @@ import time
 # from sortedcontainers import SortedList
 
 class DLTJob:
-    def __init__(self, job_id: str):
+    def __init__(self, job_id: str, processing_speed: Optional[float] = 1.0):
         self.job_id = job_id
         self.job_start_time = time.perf_counter()
         self.current_epoch = 0
         # For reuse logic
         # self.used_epoch_partition_pairs: Set[Tuple[int, int]] = set()
-        self.used_batch_set_ids: Set[str] = set()
+        self.used_batch_set_ids: Dict[str, float] = {}
         self.partitions_covered_this_epoch: Set[int] = set()
         # Active state
         self.current_batch = None
         self.current_batch_set_id  = None
+        self.current_eviction_candidate = None
         self.future_batches: OrderedDict[str, Batch] = OrderedDict()
-        self.processing_speed = 1.0
+        self.processing_speed = processing_speed
         self.optimal_throughput = 1/self.processing_speed #batches/sec
         self.weight = self.optimal_throughput
         self.num_batches_processed = 0
@@ -30,7 +31,7 @@ class DLTJob:
         self.elapased_time_sec = 0
         self.dataload_delay = AverageMeter('Dataload Delay')
         self.lock = threading.Lock()
-        self.current_eviction_candidate = None
+        # self.reset_for_new_epoch()
 
     def set_job_processing_speed(self, speed: float):
         self.processing_speed = speed
@@ -48,7 +49,7 @@ class DLTJob:
         fallback_batch = None
         for batch in self.future_batches.values():
             if batch.cache_status == CacheStatus.CACHED:
-                if batch.reuse_score > best_score:
+                if batch.reuse_score < best_score:
                     next_batch = batch
                     best_score = batch.reuse_score
             elif batch.cache_status != CacheStatus.CACHING_IN_PROGRESS and fallback_batch is None:

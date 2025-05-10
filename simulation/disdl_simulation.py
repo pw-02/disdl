@@ -106,9 +106,11 @@ def run_simulation(
                 job.cache_miss_count += 1
                 delay = load_from_s3_time + preprocesssing_time
                 if should_cache_on_miss:
-                    heapq.heappush(event_queue, (time_elapsed + delay, "cache_insert", (job, next_batch, eviction_candidate)))
+                    cache_delay = load_from_s3_time + preprocesssing_time
+                    heapq.heappush(event_queue, (time_elapsed + cache_delay, "cache_insert", (job, next_batch, eviction_candidate)))
                 else:
-                    heapq.heappush(event_queue, (time_elapsed + delay + job.processing_speed, "end_training_step", (job, False, None)))
+                    delay = load_from_s3_time + preprocesssing_time + job.processing_speed
+                    heapq.heappush(event_queue, (time_elapsed + delay, "end_training_step", (job, False, None)))
         
         elif event_type == "end_training_step":
             job, batch_is_cached, evicited_batch_id = payload
@@ -129,6 +131,7 @@ def run_simulation(
         elif event_type == "cache_insert":
             job, next_batch, eviction_candidate_batch_id = payload
             batch_id = next_batch.batch_id
+            job.elapased_time_sec = time_elapsed
             #check if the batch is already in the cache
             if cache.batch_exists(batch_id):
                 logger.debug(f"Batch {batch_id} already in cache, skipping insertion.")

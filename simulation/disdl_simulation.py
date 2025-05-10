@@ -200,7 +200,8 @@ if __name__ == "__main__":
     simulation_time_sec = None #3600 # None  #3600 * 1 # Simulate 1 hour
     batches_per_epoch = 100 # batches
     epochs_per_job = 5 #np.inf
-    cache_capacity = 0.25 * batches_per_epoch #0.5 * batches_per_epoch  #np.inf #5.0 * batches_per_epoch #number of batches as a % of the total number of batches
+    batches_per_job = batches_per_epoch * epochs_per_job
+    cache_capacity = 0.5 * batches_per_job #0.5 * batches_per_epoch  #np.inf #5.0 * batches_per_epoch #number of batches as a % of the total number of batches
     cache_policy = "noevict" # "lru", "fifo", "mru", "random", "noevict", "reuse_score"
     hourly_ec2_cost = 12.24
     hourly_cache_cost = 3.25

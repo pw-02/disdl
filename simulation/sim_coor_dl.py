@@ -168,18 +168,14 @@ def run_simulation(
         if event_type == "start_training_step":
             job: DLTJob = payload
             job.elapased_time_sec = time_elapsed
-
             batch_id, job_is_owner = scheduler.get_batch_for_job(job.job_id)
             cache_hit = cache.get_batch(batch_id)
-            
             if cache_hit:
                 job.cache_hit_count += 1
                 delay = preprocesssing_time + job.processing_speed
                 heapq.heappush(event_queue, (time_elapsed + delay, "end_training_step", (job, batch_id)))
                 logger.debug(f"[job_step] Job {job.job_id} processing batch {batch_id} (owner={job_is_owner})")
-
             else:
-             
                 if job_is_owner:
                     # Schedule prefetch
                     job.cache_miss_count += 1
@@ -262,7 +258,8 @@ if __name__ == "__main__":
     workload_jobs = dict(workloads[workload_name])
     batches_per_epoch = 100 # batches
     epochs_per_job = 5 #np.inf
-    cache_capacity = 0.25 * batches_per_epoch
+    batches_per_job = batches_per_epoch * epochs_per_job
+    cache_capacity = 0.5 * batches_per_job
     eviction_policy = "noevict" # "lru", "fifo", "mru", "random", "noevict"
     hourly_ec2_cost = 12.24 
     hourly_cache_cost = 3.25

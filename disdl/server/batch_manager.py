@@ -72,7 +72,9 @@ class BatchManager:
             return None, False, None
 
         next_batch.mark_seen_by(job.job_id) # Mark the batch as seen by the job and update the reuse score
-        should_cache, eviction_candidate = self.cache.maybe_cache(next_batch, job.weight)
+        should_cache, eviction_candidate = self.cache.maybe_cache(next_batch)
+        if not self.shared_cache.batch_exists(eviction_candidate) and eviction_candidate is not None:
+            pass
         job.set_eviction_candidate(eviction_candidate)
         self._maybe_trigger_sample_next_batch(next_batch)
 
@@ -102,7 +104,12 @@ class BatchManager:
         batch = job.current_batch
         # batch.mark_seen_by(job.job_id) # Mark the batch as seen by the job and update the reuse score
         eviction_candidate_batch_id = job.current_eviction_candidate
-    
+
+        if eviction_candidate_batch_id == '1_1_69_14bfa6bb14875e45':
+            pass
+
+        if batch.batch_id == '1_1_69_14bfa6bb14875e45':
+            pass
         if batch_is_cached:
             self.cache.mark_cached(batch)
         else:
@@ -137,6 +144,7 @@ class BatchManager:
     def _find_best_batch_set_for_job(self, job: DLTJob) -> Optional[Tuple[int, BatchSet]]:
         best_candidate = None
         best_score = float('-inf')
+        sequential = False
 
         for epoch_idx, partition_map in self.batch_sets.items():
             for partition_idx, batch_set in partition_map.items():
@@ -144,7 +152,8 @@ class BatchManager:
                     continue  # Already processed
                 if partition_idx in job.partitions_covered_this_epoch:
                     continue  # Already covered in this epoch
-
+                if sequential:
+                    return (epoch_idx, batch_set)
                 reuse_score = batch_set.score_batch_set(alpha=1.0, beta=0.5)
 
                 if reuse_score > best_score:

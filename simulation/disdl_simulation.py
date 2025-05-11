@@ -69,7 +69,7 @@ def run_simulation(
     event_queue = []  # Priority queue for next event times
     time_elapsed = 0  # Global simulation time
     batches_per_job = batches_per_epoch * epochs_per_job
-    time_between_job_starts = 0.1
+    time_between_job_starts = 0
     next_job_start_time = time_elapsed
 
     for job in manager.job_registry.all():
@@ -93,30 +93,36 @@ def run_simulation(
             job:DLTJob = payload
             job.elapased_time_sec = time_elapsed
             next_bacth, should_cache_on_miss, eviction_candidate = manager.get_next_batch_for_job(job.job_id)
+            if next_bacth.batch_id == '1_1_69_14bfa6bb14875e45':
+                pass
             next_batch:Batch = next_bacth
             logger.debug(f"Job {job.job_id} assigned batch {next_batch.batch_id} at time {time_elapsed:.2f}s")
 
             #load the next batch
             cache_hit = cache.get_batch(next_batch.batch_id)
             if cache_hit:
+                batch_is_cached = True
                 job.cache_hit_count += 1
-                delay = preprocesssing_time + job.processing_speed
-                heapq.heappush(event_queue, (time_elapsed + delay, "end_training_step", (job, False, None)))
+                delay = preprocesssing_time
+                heapq.heappush(event_queue, (time_elapsed + delay, "end_training_step", (job, batch_is_cached, None)))
             else:
+                if job.job_id == "RESNET18":
+                    pass
                 job.cache_miss_count += 1
                 delay = load_from_s3_time + preprocesssing_time
                 if should_cache_on_miss:
                     cache_delay = load_from_s3_time + preprocesssing_time
                     heapq.heappush(event_queue, (time_elapsed + cache_delay, "cache_insert", (job, next_batch, eviction_candidate)))
                 else:
-                    delay = load_from_s3_time + preprocesssing_time + job.processing_speed
+                    delay = load_from_s3_time + preprocesssing_time
                     heapq.heappush(event_queue, (time_elapsed + delay, "end_training_step", (job, False, None)))
+            logger.info(f"Job {job.job_id} processing batch {job.current_batch.batch_id}. Time {time_elapsed:.2f}s. Cache hit: {cache_hit}.")
+
         
         elif event_type == "end_training_step":
             job, batch_is_cached, evicited_batch_id = payload
             job.elapased_time_sec = time_elapsed
             job.num_batches_processed += 1
-            logger.info(f"Job {job.job_id} finished processing batch {job.current_batch.batch_id} at time {time_elapsed:.2f}s")
 
             manager.processed_batch_update(
                 job_id=job.job_id,
@@ -126,7 +132,7 @@ def run_simulation(
             if batches_per_job is None or job.num_batches_processed == batches_per_job:
                 print(f"Job {job.job_id} has completed its batches after {time_elapsed:.2f}s. Throughput: {job.num_batches_processed / time_elapsed:.2f} batches/s")
             else:
-                heapq.heappush(event_queue, (time_elapsed, "start_training_step", job))
+                heapq.heappush(event_queue, (time_elapsed + job.processing_speed, "start_training_step", job))
         
         elif event_type == "cache_insert":
             job, next_batch, eviction_candidate_batch_id = payload
@@ -135,7 +141,7 @@ def run_simulation(
             #check if the batch is already in the cache
             if cache.batch_exists(batch_id):
                 logger.debug(f"Batch {batch_id} already in cache, skipping insertion.")
-                heapq.heappush(event_queue, (time_elapsed + job.processing_speed, "end_training_step", (job, True, None)))
+                heapq.heappush(event_queue, (time_elapsed, "end_training_step", (job, True, None)))
             else:
                 # Try inserting into the cache
                 batch_is_cached, evicted_batch_id = cache.put_batch(batch_id)
@@ -147,9 +153,9 @@ def run_simulation(
                         batch_is_cached, _ = cache.put_batch(batch_id)
                     
                     if not batch_is_cached:
-                        logger.error(f"Failed to insert batch {batch_id} even after manual eviction of {eviction_candidate_batch_id}.")
+                        logger.error(f"Failed to insert batch {batch_id} even after manual attempt eviction of {eviction_candidate_batch_id}.")
 
-                heapq.heappush(event_queue, (time_elapsed + job.processing_speed, "end_training_step", (job, batch_is_cached, evicted_batch_id)))
+                heapq.heappush(event_queue, (time_elapsed, "end_training_step", (job, batch_is_cached, evicted_batch_id)))
 
     jobs = manager.job_registry.all()
     job_performances = [job.perf_stats(hourly_ec2_cost/len(jobs), hourly_cache_cost/len(jobs)) for job in jobs]
@@ -198,14 +204,14 @@ if __name__ == "__main__":
     workload_jobs = dict(workloads[workload_name])
 
     simulation_time_sec = None #3600 # None  #3600 * 1 # Simulate 1 hour
-    batches_per_epoch = 100 # batches
-    epochs_per_job = 5 #np.inf
+    batches_per_epoch = 1000 # batches
+    epochs_per_job = 1 #np.inf
     batches_per_job = batches_per_epoch * epochs_per_job
     cache_capacity = 0.5 * batches_per_job #0.5 * batches_per_epoch  #np.inf #5.0 * batches_per_epoch #number of batches as a % of the total number of batches
     cache_policy = "noevict" # "lru", "fifo", "mru", "random", "noevict", "reuse_score"
     hourly_ec2_cost = 12.24
     hourly_cache_cost = 3.25
-    load_from_s3_time = 0.1
+    load_from_s3_time = 0.0
     prefetcher_speed = 3
     preprocesssing_time = 0.00
     num_partitions = 1

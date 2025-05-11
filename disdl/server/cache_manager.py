@@ -14,6 +14,8 @@ class CacheManager:
 
     def maybe_cache(self, batch: Batch, job_weight:float = 0) -> Tuple[bool, Optional[str]]:
         """Decide whether to cache a batch and suggest an eviction candidate if needed."""
+        if batch.batch_id  == '1_1_835_4d5b995358e7798b':
+            pass
         if batch.cache_status in (CacheStatus.CACHED, CacheStatus.CACHING_IN_PROGRESS):
             return False, None
 

@@ -7,6 +7,7 @@ from typing import List, Optional, Dict, Tuple
 from collections import deque, OrderedDict
 from enum import Enum
 from cache_status import CacheStatus
+# from job import DLTJob
 class Batch:
     def __init__(self, batch_indicies, epoch_idx, partition_idx, batch_idx):
         self.indices: List[int] = batch_indicies
@@ -77,13 +78,46 @@ class BatchSet:
         self.marked_for_eviction = False
         self.lock = threading.Lock()
         self.reuse_score = 0.0
+        self.last_used_time = 0.0
     
     def is_finalized(self):
         if len(self.batches) >= self.num_batches:
             return True
         return False
     
-    def score_batch_set(self, alpha=1.0, beta=1.0):
+    def set_last_used_time(self):
+        with self.lock:
+            self.last_used_time = time.perf_counter()
+
+    # def score_batch_set(self, job, all_jobs, alpha=1.0, beta=1.0, gamma=1.0, delta=0.01):
+    #     total_reuse_score = 0.0
+    #     cached_count = 0
+    #     batches = self.batches.values()
+    #     total_batches = 0
+
+    #     for b in batches:
+    #         total_reuse_score += b.reuse_score
+    #         if b.cache_status == CacheStatus.CACHED:
+    #             cached_count += 1
+    #         total_batches += 1
+
+    #     if total_batches == 0:
+    #         return float('-inf')
+
+    #     cached_fraction = cached_count / total_batches
+    #     popularity = sum(1 for j in all_jobs if self.id not in j.used_batch_set_ids and j.job_id != job.job_id)
+    #     current_time = time.perf_counter()
+    #     # Time since last use
+    #     age = current_time - self.last_used_time if self.last_used_time else float('inf')
+    #     staleness_penalty = delta * age  # e.g., subtract 1 point per 100s
+
+    #     return alpha * total_reuse_score + beta * cached_fraction + gamma * popularity - staleness_penalty
+
+
+    def score_batch_set(self, job, all_jobs, alpha=1.0, beta=1.0, gamma=1.0):
+        # epoxh_idx, partition_idx = map(int, self.id.split("_"))
+        # return epoxh_idx +partition_idx
+        
         total_reuse_score = 0.0
         cached_count = 0
         batches = self.batches.values()
@@ -99,7 +133,10 @@ class BatchSet:
             return float('-inf')  # discourage empty sets
 
         cached_fraction = cached_count / total_batches
-        return alpha * total_reuse_score + beta * cached_fraction
+        
+        popularity = sum(1 for j in all_jobs if self.id not in j.used_batch_set_ids and j.job_id != job.job_id)
+
+        return alpha * total_reuse_score + beta * cached_fraction + gamma * popularity
 
     
     # def compute_reuse_score(self):

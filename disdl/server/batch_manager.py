@@ -140,6 +140,12 @@ class BatchManager:
         best_candidate = None
         best_score = float('-inf')
         sequential = False
+        # if job.current_batch_set_id is not None:
+        #     # Check if the current batch set is still valid
+        #     current_batch_set = self.batch_sets.get(job.current_batch_set_id.split("_")[0], {}).get(job.current_batch_set_id.split("_")[1])
+        #     if current_batch_set:
+        #         current_batch_set.set_last_used_time()
+            
 
         for epoch_idx, partition_map in self.batch_sets.items():
             for partition_idx, batch_set in partition_map.items():
@@ -149,7 +155,10 @@ class BatchManager:
                     continue  # Already covered in this epoch
                 if sequential:
                     return (epoch_idx, batch_set)
-                reuse_score = batch_set.score_batch_set(alpha=1.0, beta=0.5)
+            
+                reuse_score = batch_set.score_batch_set(job,
+                                                        self.job_registry.all(),
+                                                        alpha=1.0, beta=3.0)
 
                 if reuse_score > best_score:
                     best_score = reuse_score

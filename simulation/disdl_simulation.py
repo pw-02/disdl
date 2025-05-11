@@ -155,7 +155,8 @@ def run_simulation(
                     
                     if not batch_is_cached:
                         logger.error(f"Failed to insert batch {batch_id} even after manual attempt eviction of {eviction_candidate_batch_id}.")
-
+                
+                    logger.info(f"Batch {batch_id} inserted into cache. Evicted batch: {evicted_batch_id}.")
                 heapq.heappush(event_queue, (time_elapsed, "end_training_step", (job, batch_is_cached, evicted_batch_id)))
 
     #do a sanity check that batches in cache mactch all batch in manager.cache
@@ -205,7 +206,7 @@ def run_simulation(
     print(f"  Total Throughput: {agg_throuhgput:.2f} batches/s")
     print("-" * 40)
     for job in jobs:
-        print(f"  Job {job.job_id}: {list(job.used_batch_set_ids.keys())}")
+        print(f"  Job {job.job_id}: {list(job.used_batch_set_ids.items())}")
 
     # return overall_results
     # print(sampler.assigned_eviction_candidates)
@@ -216,8 +217,8 @@ if __name__ == "__main__":
     workload_jobs = dict(workloads[workload_name])
 
     simulation_time_sec = None #3600 # None  #3600 * 1 # Simulate 1 hour
-    batches_per_epoch = 1000 # batches
-    epochs_per_job = 1 #np.inf
+    batches_per_epoch = 500 # batches
+    epochs_per_job = 4 #np.inf
     batches_per_job = batches_per_epoch * epochs_per_job
     cache_capacity = 0.5 * batches_per_job #0.5 * batches_per_epoch  #np.inf #5.0 * batches_per_epoch #number of batches as a % of the total number of batches
     cache_policy = "noevict" # "lru", "fifo", "mru", "random", "noevict", "reuse_score"
@@ -226,7 +227,7 @@ if __name__ == "__main__":
     load_from_s3_time = 0.1
     prefetcher_speed = 3
     preprocesssing_time = 0.00
-    num_partitions = 1
+    num_partitions = 2
     batch_size = 1
 
     run_simulation(

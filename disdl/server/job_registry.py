@@ -26,7 +26,7 @@ class JobRegistry:
 
     def update_assignment(self, job: DLTJob, batch_set: BatchSet, elapsed_time: float):
         """Assigns a new batch set to a job and updates job tracking state."""
-        job.used_batch_set_ids[batch_set.id] = elapsed_time
+        job.used_batch_set_ids[batch_set.id] = f"{job.elapased_time_sec:.2f}s"
         partition_id = int(batch_set.id.split("_")[1])
         job.partitions_covered_this_epoch.add(partition_id)
         job.current_batch_set_id = batch_set.id

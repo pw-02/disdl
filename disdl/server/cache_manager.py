@@ -12,14 +12,13 @@ class CacheManager:
         self.eviction_index_lookup: Dict[str, Tuple[float, float, str]] = {}
         self.assigned_eviction_candidates: Dict[str, Batch] = {}
 
-    def maybe_cache(self, batch: Batch) -> Tuple[bool, Optional[str]]:
+    def maybe_cache(self, batch: Batch, job_weight:float = 0) -> Tuple[bool, Optional[str]]:
         """Decide whether to cache a batch and suggest an eviction candidate if needed."""
         if batch.cache_status in (CacheStatus.CACHED, CacheStatus.CACHING_IN_PROGRESS):
             return False, None
 
-        if batch.reuse_score <= 0.0:
-            return False, None
-
+        if batch.reuse_score - job_weight <= 0.0:
+            return True, None #only cache if there is some cache space
         batch.set_cache_status(CacheStatus.CACHING_IN_PROGRESS)
         eviction_candidate = self._find_eviction_candidate(batch)
         return True, eviction_candidate

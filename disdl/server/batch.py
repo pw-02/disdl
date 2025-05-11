@@ -83,14 +83,33 @@ class BatchSet:
             return True
         return False
     
-    def compute_reuse_score(self):
-        """Compute the total reuse score for this batch set."""
-        #count number of batches in the set whose cache status is CACHED
-        # num_cached_batches = sum(batch.cache_status == CacheStatus.CACHED for batch in self.batches.values())
-        if not self.batches:
-            return 0.0
-        total_score = sum(batch.reuse_score for batch in self.batches.values())
-        return total_score / len(self.batches)
+    def score_batch_set(self, alpha=1.0, beta=1.0):
+        total_reuse_score = 0.0
+        cached_count = 0
+        batches = self.batches.values()
+        total_batches = 0
+
+        for b in batches:
+            total_reuse_score += b.reuse_score
+            if b.cache_status == CacheStatus.CACHED:
+                cached_count += 1
+            total_batches += 1
+
+        if total_batches == 0:
+            return float('-inf')  # discourage empty sets
+
+        cached_fraction = cached_count / total_batches
+        return alpha * total_reuse_score + beta * cached_fraction
+
+    
+    # def compute_reuse_score(self):
+    #     """Compute the total reuse score for this batch set."""
+    #     #count number of batches in the set whose cache status is CACHED
+    #     # num_cached_batches = sum(batch.cache_status == CacheStatus.CACHED for batch in self.batches.values())
+    #     if not self.batches:
+    #         return 0.0
+    #     total_score = sum(batch.reuse_score for batch in self.batches.values())
+    #     return total_score / len(self.batches)
        
        
         # reuse_score_of_all_batches = sum(batch.reuse_score for batch in self.batches.values())

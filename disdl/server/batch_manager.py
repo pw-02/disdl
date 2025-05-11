@@ -71,10 +71,8 @@ class BatchManager:
         if next_batch is None:
             return None, False, None
 
-        # job_weights = self.job_registry.job_weights()
-        # next_batch.update_reuse_score(job_weights)
-
-        should_cache, eviction_candidate = self.cache.maybe_cache(next_batch)
+        next_batch.mark_seen_by(job.job_id) # Mark the batch as seen by the job and update the reuse score
+        should_cache, eviction_candidate = self.cache.maybe_cache(next_batch, job.weight)
         job.set_eviction_candidate(eviction_candidate)
         self._maybe_trigger_sample_next_batch(next_batch)
 
@@ -102,7 +100,7 @@ class BatchManager:
         
         job = self.job_registry.get(job_id)
         batch = job.current_batch
-        batch.mark_seen_by(job.job_id) # Mark the batch as seen by the job and update the reuse score
+        # batch.mark_seen_by(job.job_id) # Mark the batch as seen by the job and update the reuse score
         eviction_candidate_batch_id = job.current_eviction_candidate
     
         if batch_is_cached:
@@ -120,28 +118,6 @@ class BatchManager:
             evicted_batch = self.batch_sets[epoxh_id][partition_id].batches.get(evicited_batch_id)
             self.cache.mark_evicted(evicted_batch) 
 
-    # def processed_batch_update(self, 
-    #                            job_id: str,
-    #                            batch_is_cached: bool,
-    #                            eviction_candidate_batch_id: Optional[str],
-    #                            did_evict: bool = False):
-        
-    #     job = self.job_registry.get(job_id)
-    #     batch = job.current_batch
-    #     batch.mark_seen_by(job.job_id)
-
-    #     if batch_is_cached:
-    #         self.cache.mark_cached(batch)
-    #     else:
-    #         batch.set_cache_status(CacheStatus.NOT_CACHED)
-    #         self.cache.cached_batches.pop(batch.batch_id, None)
-
-    #     if eviction_candidate_batch_id:
-    #         self.cache.assigned_eviction_candidates.pop(eviction_candidate_batch_id, None)
-    #         if did_evict:
-    #             evicted_batch = self.cache.cached_batches.get(eviction_candidate_batch_id)
-    #             if evicted_batch:
-    #                 self.cache.mark_evicted(evicted_batch)
 
     def _generate_new_batch(self):
         next_batch:Batch = next(self.sampler)
@@ -169,7 +145,7 @@ class BatchManager:
                 if partition_idx in job.partitions_covered_this_epoch:
                     continue  # Already covered in this epoch
 
-                reuse_score = batch_set.compute_reuse_score()
+                reuse_score = batch_set.score_batch_set(alpha=1.0, beta=0.5)
 
                 if reuse_score > best_score:
                     best_score = reuse_score
@@ -177,16 +153,6 @@ class BatchManager:
 
         return best_candidate
 
-
-    # def _find_best_batch_set_for_job(self, job:DLTJob) -> Optional[Tuple[int, BatchSet]]:
-    #     for epoch_idx, partition_map in self.batch_sets.items():
-    #         for partition_idx, batch_set in partition_map.items():
-    #             if batch_set.id in job.used_batch_set_ids:
-    #                 continue
-    #             if partition_idx in job.partitions_covered_this_epoch:
-    #                 continue
-    #             return (partition_idx, batch_set)
-    #     return None
 
     def _maybe_trigger_sample_next_batch(self, batch: Batch):
         if batch.is_first_access:

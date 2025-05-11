@@ -208,7 +208,7 @@ if __name__ == "__main__":
     load_from_s3_time = 0.1
     prefetcher_speed = 3
     preprocesssing_time = 0.00
-    num_partitions = 2
+    num_partitions = 1
     batch_size = 1
 
     run_simulation(

@@ -212,7 +212,7 @@ def run_simulation(
 
 if __name__ == "__main__":
     dataloader_system  = 'DisDL' #'CoorDL', TensorSocket, DisDL
-    workload_name = 'imagenet_128_nas' #'imagenet_128_hpo', 'imagenet_128_resnet50', imagenet_128_nas, imagenet_slowfast
+    workload_name = 'imagenet_slowfast' #'imagenet_128_hpo', 'imagenet_128_resnet50', imagenet_128_nas, imagenet_slowfast
     workload_jobs = dict(workloads[workload_name])
 
     simulation_time_sec = None #3600 # None  #3600 * 1 # Simulate 1 hour

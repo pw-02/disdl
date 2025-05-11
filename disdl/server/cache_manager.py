@@ -16,12 +16,14 @@ class CacheManager:
         """Decide whether to cache a batch and suggest an eviction candidate if needed."""
         if batch.batch_id  == '1_1_835_4d5b995358e7798b':
             pass
-        if batch.cache_status in (CacheStatus.CACHED, CacheStatus.CACHING_IN_PROGRESS):
+               
+        if batch.cache_status in [CacheStatus.CACHED]:
             return False, None
-
+        
+        batch.set_cache_status(CacheStatus.CACHING_IN_PROGRESS)
+        
         if batch.reuse_score - job_weight <= 0.0:
             return True, None #only cache if there is some cache space
-        batch.set_cache_status(CacheStatus.CACHING_IN_PROGRESS)
         eviction_candidate = self._find_eviction_candidate(batch)
         return True, eviction_candidate
 

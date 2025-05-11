@@ -66,7 +66,8 @@ class BatchManager:
         job = self.job_registry.get(job_id)
         if not job.future_batches:
             self.assign_batch_set_to_job(job)
-
+        if job.job_id  == 'VGG16':
+            pass
         next_batch = job.next_batch()
         if next_batch is None:
             return None, False, None
@@ -108,8 +109,8 @@ class BatchManager:
         if eviction_candidate_batch_id == '1_1_69_14bfa6bb14875e45':
             pass
 
-        if batch.batch_id == '1_1_69_14bfa6bb14875e45':
-            pass
+        # if batch.batch_id == '1_1_69_14bfa6bb14875e45':
+        #     pass
         if batch_is_cached:
             self.cache.mark_cached(batch)
         else:

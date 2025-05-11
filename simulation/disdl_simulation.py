@@ -106,8 +106,8 @@ def run_simulation(
                 delay = preprocesssing_time
                 heapq.heappush(event_queue, (time_elapsed + delay, "end_training_step", (job, batch_is_cached, None)))
             else:
-                if job.job_id == "RESNET18":
-                    pass
+                # if job.job_id == "RESNET18":
+                #     pass
                 job.cache_miss_count += 1
                 delay = load_from_s3_time + preprocesssing_time
                 if should_cache_on_miss:
@@ -130,7 +130,8 @@ def run_simulation(
                 evicited_batch_id=evicited_batch_id)
             
             if batches_per_job is None or job.num_batches_processed == batches_per_job:
-                print(f"Job {job.job_id} has completed its batches after {time_elapsed:.2f}s. Throughput: {job.num_batches_processed / time_elapsed:.2f} batches/s")
+                job.elapased_time_sec += job.processing_speed
+                print(f"Job {job.job_id} has completed its batches after {job.elapased_time_sec:.2f}s. Throughput: {job.num_batches_processed / job.elapased_time_sec:.2f} batches/s")
             else:
                 heapq.heappush(event_queue, (time_elapsed + job.processing_speed, "start_training_step", job))
         
@@ -156,6 +157,17 @@ def run_simulation(
                         logger.error(f"Failed to insert batch {batch_id} even after manual attempt eviction of {eviction_candidate_batch_id}.")
 
                 heapq.heappush(event_queue, (time_elapsed, "end_training_step", (job, batch_is_cached, evicted_batch_id)))
+
+    #do a sanity check that batches in cache mactch all batch in manager.cache
+    for batch_id in cache.cache:
+        if batch_id not in manager.cache.cached_batches:
+            logger.error(f"Batch {batch_id} in cache but not in manager cache.")
+    for batch_id in manager.cache.cached_batches:
+        if batch_id not in cache.cache:
+            logger.error(f"Batch {batch_id} in manager cache but not in cache.")
+    if len(cache.cache) != len(manager.cache.cached_batches):
+        logger.error(f"Cache size mismatch: {len(cache.cache)} in cache but {len(manager.cache.cached_batches)} in manager cache.")
+        
 
     jobs = manager.job_registry.all()
     job_performances = [job.perf_stats(hourly_ec2_cost/len(jobs), hourly_cache_cost/len(jobs)) for job in jobs]
@@ -211,7 +223,7 @@ if __name__ == "__main__":
     cache_policy = "noevict" # "lru", "fifo", "mru", "random", "noevict", "reuse_score"
     hourly_ec2_cost = 12.24
     hourly_cache_cost = 3.25
-    load_from_s3_time = 0.0
+    load_from_s3_time = 0.1
     prefetcher_speed = 3
     preprocesssing_time = 0.00
     num_partitions = 1

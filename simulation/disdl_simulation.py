@@ -13,6 +13,21 @@ from disdl.server.batch_manager import BatchManager, Batch, CacheStatus, DLTJob
 from disdl.server.utils import AverageMeter
 import threading
 import numpy as np
+import time
+
+fun_meetrs= {}
+def timed(func):
+    def wrapper(*args, **kwargs):
+        start = time.perf_counter()
+        out = func(*args, **kwargs)
+        elapsed = time.perf_counter() - start
+        if func.__name__ not in fun_meetrs:
+            fun_meetrs[func.__name__] = AverageMeter(func.__name__)
+        fun_meetrs[func.__name__].update(elapsed)
+        # print(f"[TIMER] {func.__name__} took {elapsed:.6f} seconds")
+        return out
+    return wrapper
+
 
 logging.basicConfig(
     level=logging.INFO,
@@ -31,7 +46,8 @@ class Dataset:
 
     def __len__(self) -> int:
         return self.num_samples
-    
+
+@timed   
 def run_simulation(
     dataloader_system: str,
     workload_name: str,
@@ -55,7 +71,7 @@ def run_simulation(
         dataset=Dataset(num_samples=batches_per_epoch, batch_size=batch_size, num_partitions=num_partitions),
         drop_last=False,
         shuffle=False,
-        prefetch_lookahead_steps=90,
+        prefetch_lookahead_steps=100,
         use_prefetching=False,
         prefetch_lambda_name=None,
         prefetch_simulation_time=None,
@@ -69,7 +85,7 @@ def run_simulation(
     event_queue = []  # Priority queue for next event times
     time_elapsed = 0  # Global simulation time
     batches_per_job = batches_per_epoch * epochs_per_job
-    time_between_job_starts = 0
+    time_between_job_starts = 0.5
     next_job_start_time = time_elapsed
 
     for job in manager.job_registry.all():
@@ -93,10 +109,8 @@ def run_simulation(
             job:DLTJob = payload
             job.elapased_time_sec = time_elapsed
             next_bacth, should_cache_on_miss, eviction_candidate = manager.get_next_batch_for_job(job.job_id)
-            if next_bacth.batch_id == '1_1_69_14bfa6bb14875e45':
-                pass
+
             next_batch:Batch = next_bacth
-            logger.debug(f"Job {job.job_id} assigned batch {next_batch.batch_id} at time {time_elapsed:.2f}s")
 
             #load the next batch
             cache_hit = cache.get_batch(next_batch.batch_id)
@@ -106,8 +120,6 @@ def run_simulation(
                 delay = preprocesssing_time
                 heapq.heappush(event_queue, (time_elapsed + delay, "end_training_step", (job, batch_is_cached, None)))
             else:
-                # if job.job_id == "RESNET18":
-                #     pass
                 job.cache_miss_count += 1
                 delay = load_from_s3_time + preprocesssing_time
                 if should_cache_on_miss:
@@ -116,7 +128,7 @@ def run_simulation(
                 else:
                     delay = load_from_s3_time + preprocesssing_time
                     heapq.heappush(event_queue, (time_elapsed + delay, "end_training_step", (job, False, None)))
-            logger.info(f"Job {job.job_id} processing batch {job.current_batch.batch_id}. Time {time_elapsed:.2f}s. Cache hit: {cache_hit}.")
+            logger.info(f"Job {job.job_id} assigned batch {job.current_batch.batch_id}. Time {time_elapsed:.2f}s. Cache hit: {cache_hit}.")
 
         
         elif event_type == "end_training_step":
@@ -156,7 +168,7 @@ def run_simulation(
                     if not batch_is_cached:
                         logger.error(f"Failed to insert batch {batch_id} even after manual attempt eviction of {eviction_candidate_batch_id}.")
                 
-                    logger.info(f"Batch {batch_id} inserted into cache. Evicted batch: {evicted_batch_id}.")
+                    logger.info(f"Batch {batch_id}({manager.get_batch_reuse_score(batch_id)}) inserted into cache. Evicted batch: {evicted_batch_id}({manager.get_batch_reuse_score(evicited_batch_id)}).")
                 heapq.heappush(event_queue, (time_elapsed, "end_training_step", (job, batch_is_cached, evicted_batch_id)))
 
     #do a sanity check that batches in cache mactch all batch in manager.cache
@@ -207,27 +219,27 @@ def run_simulation(
     print("-" * 40)
     for job in jobs:
         print(f"  Job {job.job_id}: {list(job.used_batch_set_ids.items())}")
-
+    manager.summarize_functions()
     # return overall_results
     # print(sampler.assigned_eviction_candidates)
 
 if __name__ == "__main__":
     dataloader_system  = 'DisDL' #'CoorDL', TensorSocket, DisDL
-    workload_name = 'imagenet_slowfast' #'imagenet_128_hpo', 'imagenet_128_resnet50', imagenet_128_nas, imagenet_slowfast
+    workload_name = 'imagenet_128_nas' #'imagenet_128_hpo', 'imagenet_128_resnet50', imagenet_128_nas, imagenet_slowfast
     workload_jobs = dict(workloads[workload_name])
 
     simulation_time_sec = None #3600 # None  #3600 * 1 # Simulate 1 hour
-    batches_per_epoch = 500 # batches
-    epochs_per_job = 4 #np.inf
+    batches_per_epoch = 8500 # batches
+    epochs_per_job = 1 #np.inf
     batches_per_job = batches_per_epoch * epochs_per_job
-    cache_capacity = 0.5 * batches_per_job #0.5 * batches_per_epoch  #np.inf #5.0 * batches_per_epoch #number of batches as a % of the total number of batches
+    cache_capacity = 0.5 * batches_per_epoch  #np.inf #5.0 * batches_per_epoch #number of batches as a % of the total number of batches
     cache_policy = "noevict" # "lru", "fifo", "mru", "random", "noevict", "reuse_score"
     hourly_ec2_cost = 12.24
     hourly_cache_cost = 3.25
     load_from_s3_time = 0.1
     prefetcher_speed = 3
     preprocesssing_time = 0.00
-    num_partitions = 2
+    num_partitions = 1
     batch_size = 1
 
     run_simulation(

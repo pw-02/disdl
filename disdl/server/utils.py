@@ -49,6 +49,7 @@ class AverageMeter(object):
         return fmtstr.format(**self.__dict__)
 
 
+
 def hash_list(int_list, length = 32):
     # Convert integers to strings and concatenate them
     id_string = ''.join(str(x) for x in int_list)

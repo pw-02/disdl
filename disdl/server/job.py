@@ -94,6 +94,15 @@ class DLTJob:
                 }
     def __lt__(self, other):
         return self.processing_speed < other.processing_speed  # Compare based on speed
+    
+
+    def set_data_loading_delay(self, delay: float):
+        self.dataload_delay.update(delay)
+
+        
+
+
+
 # class DLTJob:
 #     def __init__(self, job_id: str):
 #         self.job_id = job_id

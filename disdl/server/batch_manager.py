@@ -13,12 +13,31 @@ from job import DLTJob
 from dataset import S3DatasetBase
 # logger = configure_logger()
 
+import time
+
+from utils import AverageMeter
+
+fun_meetrs= {}
+def timed(func):
+    def wrapper(*args, **kwargs):
+        start = time.perf_counter()
+        out = func(*args, **kwargs)
+        elapsed = time.perf_counter() - start
+        if func.__name__ not in fun_meetrs:
+            fun_meetrs[func.__name__] = AverageMeter(func.__name__)
+        fun_meetrs[func.__name__].update(elapsed)
+        # print(f"[TIMER] {func.__name__} took {elapsed:.6f} seconds")
+        return out
+    return wrapper
+
+
+
 class BatchManager:
     def __init__(self, 
                  dataset:S3DatasetBase,
                  drop_last=False,
                  shuffle=False,
-                 prefetch_lookahead_steps=40,
+                 prefetch_lookahead_steps=100,
                  use_prefetching=False,
                  prefetch_lambda_name=None,
                  prefetch_simulation_time=None,
@@ -38,7 +57,7 @@ class BatchManager:
         self.lock = threading.Lock()
         self.batch_sets: Dict[int, Dict[int, BatchSet]] = OrderedDict()
         # self.lookahead_distance = min(self.sampler.calc_num_batchs_per_partition() - 1, min_lookahead_steps)
-        self.lookahead_distance = max(self.sampler.calc_num_batchs_per_partition() - 1, prefetch_lookahead_steps)
+        self.lookahead_distance = min(self.sampler.calc_num_batchs_per_partition() - 1, prefetch_lookahead_steps)
         self.shared_cache = shared_cache
 
         if use_prefetching:
@@ -50,6 +69,16 @@ class BatchManager:
 
         self.sample_next_lookahead_batches()
     
+    def get_batch_reuse_score(self, batch_id) -> float:
+        if batch_id is None:
+            return 0.0
+        epoch_idx = int(batch_id.split("_")[0])
+        partition_idx = int(batch_id.split("_")[1])
+        batch = self.batch_sets.get(epoch_idx, {}).get(partition_idx, None).batches.get(batch_id)
+        if batch is None:
+            return 0.0
+        return batch.reuse_score
+
     def sampple_next_batch_set(self):
         pass
     
@@ -57,11 +86,12 @@ class BatchManager:
         for _ in range(self.lookahead_distance):
             self._generate_new_batch()
 
+    @timed
     def register_job(self, job_id: str, processing_speed: Optional[float] = 1.0):
         job = self.job_registry.register(job_id, processing_speed)
-        # if not job.future_batches:
-        #     self.assign_batch_set_to_job(job)
-
+        if not job.future_batches:
+            self.assign_batch_set_to_job(job)
+    @timed
     def get_next_batch_for_job(self, job_id: str) -> Tuple[Batch, bool, Optional[str]]:
         job = self.job_registry.get(job_id)
         if not job.future_batches:
@@ -71,15 +101,15 @@ class BatchManager:
         if next_batch is None:
             return None, False, None
 
-        next_batch.mark_seen_by(job.job_id) # Mark the batch as seen by the job and update the reuse score
-        should_cache, eviction_candidate = self.cache.maybe_cache(next_batch)
-        if not self.shared_cache.batch_exists(eviction_candidate) and eviction_candidate is not None:
-            pass
+        # next_batch.mark_seen_by(job.job_id) # Mark the batch as seen by the job and update the reuse score
+        should_cache, eviction_candidate = self.cache.maybe_cache(next_batch, job.weight)
+        # if not self.shared_cache.batch_exists(eviction_candidate) and eviction_candidate is not None:
+        #     pass
         job.set_eviction_candidate(eviction_candidate)
         self._maybe_trigger_sample_next_batch(next_batch)
 
         return next_batch, should_cache, eviction_candidate
-
+    @timed
     def assign_batch_set_to_job(self, job: DLTJob):
         self.job_registry.reset_if_new_epoch(job, self.dataset.num_partitions)
 
@@ -95,6 +125,7 @@ class BatchManager:
         partition_idx, batch_set = candidate
         self.job_registry.update_assignment(job, batch_set, job.elapased_time_sec)
     
+    @timed
     def processed_batch_update(self,
                                job_id: str,
                                batch_is_cached: bool,
@@ -102,7 +133,7 @@ class BatchManager:
         
         job = self.job_registry.get(job_id)
         batch = job.current_batch
-        # batch.mark_seen_by(job.job_id) # Mark the batch as seen by the job and update the reuse score
+        batch.mark_seen_by(job.job_id) # Mark the batch as seen by the job and update the reuse score
         eviction_candidate_batch_id = job.current_eviction_candidate
 
         if batch_is_cached:
@@ -120,7 +151,7 @@ class BatchManager:
             evicted_batch = self.batch_sets[epoxh_id][partition_id].batches.get(evicited_batch_id)
             self.cache.mark_evicted(evicted_batch) 
 
-
+    @timed
     def _generate_new_batch(self):
         next_batch:Batch = next(self.sampler)
 
@@ -135,11 +166,12 @@ class BatchManager:
                 job.future_batches[next_batch.batch_id] = next_batch
 
         return next_batch
-
+    
+    @timed
     def _find_best_batch_set_for_job(self, job: DLTJob) -> Optional[Tuple[int, BatchSet]]:
         best_candidate = None
         best_score = float('-inf')
-        sequential = False
+        sequential = True
         # if job.current_batch_set_id is not None:
         #     # Check if the current batch set is still valid
         #     current_batch_set = self.batch_sets.get(job.current_batch_set_id.split("_")[0], {}).get(job.current_batch_set_id.split("_")[1])
@@ -171,3 +203,7 @@ class BatchManager:
         if batch.is_first_access:
             batch.is_first_access = False
             self._generate_new_batch()
+
+    def summarize_functions(self):
+        for func_name, meter in fun_meetrs.items():
+            print(f"[TIMER] {func_name} took {meter.avg:.6f} seconds on average over {meter.count} calls")

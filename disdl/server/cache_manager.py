@@ -14,15 +14,15 @@ class CacheManager:
 
     def maybe_cache(self, batch: Batch, job_weight:float = 0) -> Tuple[bool, Optional[str]]:
         """Decide whether to cache a batch and suggest an eviction candidate if needed."""
-        if batch.batch_id  == '3_1_0_cfcd208495d565ef':
-            pass
+        # if batch.batch_id  == '3_1_0_cfcd208495d565ef':
+        #     pass
                
         if batch.cache_status in [CacheStatus.CACHED]:
             return False, None
         
         batch.set_cache_status(CacheStatus.CACHING_IN_PROGRESS)
         
-        if batch.reuse_score <= 0.0:
+        if batch.reuse_score - job_weight <= 0.0:
             return True, None #only cache if there is some cache space, since currently is not going to be reused by another job
         eviction_candidate = self._find_eviction_candidate(batch)
         return True, eviction_candidate

@@ -259,7 +259,7 @@ if __name__ == "__main__":
     batches_per_epoch = 1000 # batches
     epochs_per_job = 1 #np.inf
     batches_per_job = batches_per_epoch * epochs_per_job
-    cache_capacity = 0.5 * batches_per_job
+    cache_capacity = 200 #0.5 * batches_per_job
     eviction_policy = "noevict" # "lru", "fifo", "mru", "random", "noevict"
     hourly_ec2_cost = 12.24 
     hourly_cache_cost = 3.25
@@ -267,7 +267,7 @@ if __name__ == "__main__":
     preprocesssing_time = 0.00
     batch_size = 1
     simulation_time_sec = None #3600 # None  #3600 * 1 # Simulate 1 hour
-    syncronized_mode = True
+    syncronized_mode = False
     run_simulation(
         dataloader_system = dataloader_system,
         workload_name = workload_name,

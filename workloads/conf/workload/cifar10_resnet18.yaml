@@ -1,6 +1,6 @@
 #dataloading configuration
 #dataloading configuration
-name: cifar10_resnet18
+name: cifar10
 s3_bucket: sdl-cifar10
 s3_train_prefix: s3://sdl-cifar10/train/
 s3_val_prefix: s3://sdl-cifar10/val/

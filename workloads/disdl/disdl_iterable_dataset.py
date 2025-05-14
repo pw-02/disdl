@@ -1,8 +1,5 @@
-from disdl.disdl_client import DisDLClient
-#from disdl_client import DisDLClient
+
 import torch
-import boto3
-from PIL import Image
 import torch
 from typing import List, Dict, Optional, Tuple
 import time
@@ -10,14 +7,9 @@ from urllib.parse import urlparse
 import redis
 from io import BytesIO
 import lz4.frame
-import botocore.config
-from concurrent.futures import ThreadPoolExecutor, as_completed
-from torch.nn.utils.rnn import pad_sequence
 from torch.utils.data import IterableDataset
 from disdl.minibatch_client import MiniBatchClient
-import json
 import logging
-import torchvision.transforms as T
 from disdl.s3_loader_factory import BaseS3Loader # your factory class
 from dataclasses import dataclass
 
@@ -46,6 +38,7 @@ class DISDLDataset(IterableDataset):
             self.use_cache = True
         self.ssl = False
         self.redis_client = None
+        self.use_cache = False
 
     def _initialize_cache_client(self):
         """Initialize Redis cache client if not already connected."""
@@ -137,18 +130,18 @@ class DISDLDataset(IterableDataset):
         while True:
             iter_start_time = time.perf_counter()
             grpc_start = time.perf_counter()
-            batch_metadata = mini_batch_client.get_next_batch_metadata(self.job_id)
+            batch_id, samples, should_cache, eviction_candidate = mini_batch_client.get_next_batch_metadata(self.job_id)
             metadata_overhead = time.perf_counter() - grpc_start
 
-            batch_id = batch_metadata["batch_id"]
-            should_cache = batch_metadata["should_cache"]
-            eviction_candidate = batch_metadata.get("evict_batch_id")
-            samples = batch_metadata["samples"]
+            # batch_id = batch_metadata["batch_id"]
+            # should_cache = batch_metadata["should_cache"]
+            # eviction_candidate = batch_metadata.get("evict_batch_id")
+            # samples = batch_metadata["samples"]
 
             cache_hit = False
             preprocess_time = cache_time = data_fetch_time = 0.0
             evicted_key = None
-
+            batch_is_cached = False
             next_minibatch = None
             if self.use_cache:
                 next_minibatch = self.get_cached_minibatch_with_retries(batch_id, max_retries=0, retry_interval=0.25)
@@ -158,6 +151,7 @@ class DISDLDataset(IterableDataset):
                 batch_data, batch_labels = self.deserialize_batch_tensor(next_minibatch)
                 preprocess_time = time.perf_counter() - decode_start
                 cache_hit = True
+                batch_is_cached = True
             else:
                 batch_data, batch_labels, _, preprocess_time = self.s3_loader.load_batch(samples)
                 cache_hit = False
@@ -170,16 +164,15 @@ class DISDLDataset(IterableDataset):
                     cache_success, evicted_key = self.cache_minibatch_with_retries(
                         batch_id, serialized, max_retries=1, eviction_candidate_key=eviction_candidate
                     )
+                    if cache_success:
+                        batch_is_cached = True
                     cache_time = time.perf_counter() - cache_start
 
             report_start = time.perf_counter()
-            mini_batch_client.report_job_progress(
+            mini_batch_client.report_job_update(
                 job_id=self.job_id,
-                batch_id=batch_id,
-                data_fetch_time=data_fetch_time,
-                was_cache_hit=cache_hit,
-                evicted_batch_id=evicted_key if not cache_hit else None
-            )
+                batch_is_cached=batch_is_cached,
+                evicted_batch_id=evicted_key )
             report_overhead = time.perf_counter() - report_start
 
             total_elapsed = time.perf_counter() - iter_start_time

@@ -91,6 +91,9 @@ class S3LoaderFactory:
     def create(dataset_name: str, dataset_location: str, transform=None, use_local_folder=False) -> BaseS3Loader:
         if "imagenet" in dataset_name.lower():
             return ImageNetS3Loader(dataset_location, transform, use_local_folder)
+        elif "cifar" in dataset_name.lower():
+            return ImageNetS3Loader(dataset_location, transform, use_local_folder)
+        
         # Later:
         # elif "coco" in dataset_name.lower():
         #     return CocoS3Loader(...)

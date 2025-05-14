@@ -52,7 +52,7 @@ def run_training_job(config: DictConfig, train_logger: CSVLogger, val_logger: CS
     max_time = config.workload.max_training_time_sec
     max_steps = config.workload.max_steps
     max_epochs = config.workload.max_epochs
-    sim_time = config.workload.sim_time
+    sim_time = config.workload.sim_time if config.simulation_mode else None
 
     while not should_stop:
         current_epoch += 1
@@ -230,8 +230,8 @@ def setup_disdl_dataloader(config: DictConfig, fabric: Fabric):
      # Set up S3 data loader
     s3_loader = S3LoaderFactory.create(
         dataset_name=config.workload.name,
-        dataset_location=config.workload.dataset_location,
-        transform=get_transform(config.workload.dataset_location)
+        dataset_location=config.workload.s3_train_prefix,
+        transform=get_transform(config.workload.s3_train_prefix)
     )
      # Create iterable dataset
     train_dataset = DISDLDataset(
@@ -239,8 +239,8 @@ def setup_disdl_dataloader(config: DictConfig, fabric: Fabric):
         dataset_name=config.workload.name,
         grpc_address=config.dataloader.grpc_server_address,
         s3_loader=s3_loader,
-        redis_host=config.cache.redis_host,
-        redis_port=config.cache.redis_port
+        redis_host=config.dataloader.cache_host,
+        redis_port=config.dataloader.cache_port
     )
      # Wrap in PyTorch DataLoader
     train_dataloader = DataLoader(
@@ -268,16 +268,11 @@ def get_model(config: DictConfig):
 
     model = timm.create_model(
         model_name=model_arch,
-        pretrained=False,
+        pretrained=True,
         num_classes=config.workload.num_classes
     )
     print_model_stats(model, model_arch)
     return model
-
-
-
-
-
 
 
 

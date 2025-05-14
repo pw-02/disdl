@@ -18,7 +18,7 @@ from disdl.minibatch_client import MiniBatchClient
 import json
 import logging
 import torchvision.transforms as T
-from s3_loader_factory import BaseS3Loader # your factory class
+from disdl.s3_loader_factory import BaseS3Loader # your factory class
 from dataclasses import dataclass
 
 @dataclass

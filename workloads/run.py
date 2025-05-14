@@ -21,7 +21,7 @@ from lightning.pytorch.core.saving import save_hparams_to_yaml
 
 from disdl.disdl_iterable_dataset import DISDLDataset
 from disdl.minibatch_client import MiniBatchClient
-from workloads.disdl.s3_loader_factory import S3LoaderFactory
+from disdl.s3_loader_factory import S3LoaderFactory
 
 def run_training_job(config: DictConfig, train_logger: CSVLogger, val_logger: CSVLogger):
     # Set up Fabric
@@ -35,6 +35,7 @@ def run_training_job(config: DictConfig, train_logger: CSVLogger, val_logger: CS
 
     # Model and optimizer
     model = get_model(config=config)
+
     optimizer = optim.Adam(model.parameters(), lr=config.workload.learning_rate)
     model, optimizer = fabric.setup(model, optimizer)
 
@@ -265,11 +266,24 @@ def get_model(config: DictConfig):
     if model_arch not in timm.list_models():
         raise ValueError(f"Unsupported model architecture: '{model_arch}'")
 
-    return timm.create_model(
+    model = timm.create_model(
         model_name=model_arch,
         pretrained=False,
         num_classes=config.workload.num_classes
     )
+    print_model_stats(model, model_arch)
+    return model
+
+
+
+
+
+
+
+
+def print_model_stats(model, model_name=""):
+    num_params = sum(p.numel() for p in model.parameters())
+    print(f"{model_name} - Total Parameters: {num_params:,}")
 
 @hydra.main(version_base=None, config_path="./conf", config_name="config")
 def main(config: DictConfig):

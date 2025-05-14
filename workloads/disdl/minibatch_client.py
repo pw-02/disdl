@@ -1,4 +1,7 @@
 import grpc
+import sys
+sys.path.append(".")
+sys.path.append("disdl\protos")
 import minibatch_service_pb2 as pb
 import minibatch_service_pb2_grpc as pb_grpc
 from google.protobuf.empty_pb2 import Empty
@@ -8,6 +11,7 @@ class MiniBatchClient:
     def __init__(self, address="localhost:50051"):
         self.channel = grpc.insecure_channel(address)
         self.stub = pb_grpc.MiniBatchServiceStub(self.channel)
+        self.ping()
 
     def close(self):
         self.channel.close()
@@ -26,41 +30,56 @@ class MiniBatchClient:
             raise RuntimeError(response.errorMessage)
         return response.job_id
 
-    def get_next_batch(self, job_id):
+    def get_next_batch_metadata(self, job_id):
         request = pb.GetNextBatchForJobRequest(job_id=job_id)
         response = self.stub.GetNextBatchForJob(request)
         batch = response.batch
+        should_cache = response.should_cache
+        eviction_candidate = response.eviction_candidate if response.eviction_candidate else None
+        batch_id = batch.batch_id
+        samples = json.loads(batch.samples)
         if batch.batch_id == "None":
             return None
-        return json.loads(batch.samples), batch.is_cached
+        return batch_id, samples, should_cache, eviction_candidate
 
     def end_job(self, job_id):
         request = pb.JobEndedRequest(job_id=job_id)
         self.stub.JobEnded(request)
 
-    def get_next_batch_metadata(self, job_id):
-        request = pb.GetNextBatchForJobRequest(job_id=job_id)
-        response = self.stub.GetNextBatchForJob(request)
-        batch = response.batch
-        if batch.batch_id == "None":
-            return None
-        return {"batch_id": batch.batch_id}
-    
 
-    def report_job_progress(self,
+    def report_job_update(self,
                             job_id: str,
-                            batch_id: str,
-                            data_fetch_time: float,
-                            was_cache_hit: bool,
-                            evicted_batch_id: str = ""):
-    
+                            batch_is_cached: str,
+                            evicted_batch_id: str = None):
+       
         request = pb.JobUpdateRequest(
             job_id=job_id,
-            batch_id=batch_id,
-            data_fetch_time=data_fetch_time,
-            was_cache_hit=was_cache_hit,
-            evicted_batch_id=evicted_batch_id or ""
+            batch_is_cached=batch_is_cached,
+            evicted_batch_id=evicted_batch_id
         )
         self.stub.JobUpdate(request)
 
+
+def test_client():
+    client = MiniBatchClient()
+    response = client.ping()
+    print(f"✅ Ping successful: {response}")
+    datasets = client.list_datasets()
+    print("Datasets:", datasets)
+    
+    if datasets:
+        job_id = client.register_job(datasets[0])
+        print("Registered job ID:", job_id)
+        
+        while True:
+            batch_id, samples, should_cache, eviction_candidate = client.get_next_batch_metadata(job_id)
+          
+            print("Batch:", batch_id)
+            client.report_job_update(job_id, False, eviction_candidate)
+        
+        client.end_job(job_id)
+    
+    client.close()
+if __name__ == "__main__":
+    test_client()
 

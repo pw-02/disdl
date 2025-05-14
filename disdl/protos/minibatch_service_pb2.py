@@ -25,7 +25,7 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1eprotos/minibatch_service.proto\x1a\x1bgoogle/protobuf/empty.proto\"6\n\x14ListDatasetsResponse\x12\x1e\n\x08\x64\x61tasets\x18\x01 \x03(\x0b\x32\x0c.DatasetInfo\"o\n\x0b\x44\x61tasetInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x10\n\x08location\x18\x02 \x01(\t\x12\x13\n\x0bnum_samples\x18\x03 \x01(\x05\x12\x13\n\x0bnum_batches\x18\x04 \x01(\x05\x12\x16\n\x0enum_partitions\x18\x05 \x01(\x05\"\r\n\x0bPingRequest\"\x1f\n\x0cPingResponse\x12\x0f\n\x07message\x18\x01 \x01(\t\"*\n\x12RegisterJobRequest\x12\x14\n\x0c\x64\x61taset_name\x18\x01 \x01(\t\"%\n\x13RegisterJobResponse\x12\x0e\n\x06job_id\x18\x01 \x01(\t\"+\n\x19GetNextBatchForJobRequest\x12\x0e\n\x06job_id\x18\x01 \x01(\t\"*\n\x06Sample\x12\x11\n\tdata_path\x18\x01 \x01(\t\x12\r\n\x05label\x18\x02 \x01(\t\"=\n\x05\x42\x61tch\x12\x10\n\x08\x62\x61tch_id\x18\x01 \x01(\t\x12\x0f\n\x07samples\x18\x02 \x01(\t\x12\x11\n\tis_cached\x18\x03 \x01(\x08\"3\n\x1aGetNextBatchForJobResponse\x12\x15\n\x05\x62\x61tch\x18\x01 \x01(\x0b\x32\x06.Batch\"!\n\x0fJobEndedRequest\x12\x0e\n\x06job_id\x18\x01 \x01(\t\"\xcf\x01\n\x10JobUpdateRequest\x12\x0e\n\x06job_id\x18\x01 \x01(\t\x12\x1e\n\x16previous_step_batch_id\x18\x03 \x01(\t\x12(\n previous_step_wait_for_data_time\x18\x04 \x01(\x01\x12\"\n\x1aprevious_step_is_cache_hit\x18\x05 \x01(\x08\x12\x1e\n\x16previous_step_gpu_time\x18\x06 \x01(\x01\x12\x1d\n\x15prefetched_next_batch\x18\x07 \x01(\x08\x32\xed\x02\n\x10MiniBatchService\x12#\n\x04Ping\x12\x0c.PingRequest\x1a\r.PingResponse\x12\x38\n\x0bRegisterJob\x12\x13.RegisterJobRequest\x1a\x14.RegisterJobResponse\x12M\n\x12GetNextBatchForJob\x12\x1a.GetNextBatchForJobRequest\x1a\x1b.GetNextBatchForJobResponse\x12\x34\n\x08JobEnded\x12\x10.JobEndedRequest\x1a\x16.google.protobuf.Empty\x12\x36\n\tJobUpdate\x12\x11.JobUpdateRequest\x1a\x16.google.protobuf.Empty\x12=\n\x0cListDatasets\x12\x16.google.protobuf.Empty\x1a\x15.ListDatasetsResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1eprotos/minibatch_service.proto\x1a\x1bgoogle/protobuf/empty.proto\"6\n\x14ListDatasetsResponse\x12\x1e\n\x08\x64\x61tasets\x18\x01 \x03(\x0b\x32\x0c.DatasetInfo\"o\n\x0b\x44\x61tasetInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x10\n\x08location\x18\x02 \x01(\t\x12\x13\n\x0bnum_samples\x18\x03 \x01(\x05\x12\x13\n\x0bnum_batches\x18\x04 \x01(\x05\x12\x16\n\x0enum_partitions\x18\x05 \x01(\x05\"\r\n\x0bPingRequest\"\x1f\n\x0cPingResponse\x12\x0f\n\x07message\x18\x01 \x01(\t\"*\n\x12RegisterJobRequest\x12\x14\n\x0c\x64\x61taset_name\x18\x01 \x01(\t\";\n\x13RegisterJobResponse\x12\x0e\n\x06job_id\x18\x01 \x01(\t\x12\x14\n\x0c\x65rrorMessage\x18\x02 \x01(\t\"+\n\x19GetNextBatchForJobRequest\x12\x0e\n\x06job_id\x18\x01 \x01(\t\"*\n\x06Sample\x12\x11\n\tdata_path\x18\x01 \x01(\t\x12\r\n\x05label\x18\x02 \x01(\t\"=\n\x05\x42\x61tch\x12\x10\n\x08\x62\x61tch_id\x18\x01 \x01(\t\x12\x0f\n\x07samples\x18\x02 \x01(\t\x12\x11\n\tis_cached\x18\x03 \x01(\x08\"e\n\x1aGetNextBatchForJobResponse\x12\x15\n\x05\x62\x61tch\x18\x01 \x01(\x0b\x32\x06.Batch\x12\x14\n\x0cshould_cache\x18\x02 \x01(\x08\x12\x1a\n\x12\x65viction_candidate\x18\x03 \x01(\t\"!\n\x0fJobEndedRequest\x12\x0e\n\x06job_id\x18\x01 \x01(\t\"o\n\x10JobUpdateRequest\x12\x0e\n\x06job_id\x18\x01 \x01(\t\x12\x17\n\x0f\x62\x61tch_is_cached\x18\x02 \x01(\x08\x12\x1d\n\x10\x65victed_batch_id\x18\x03 \x01(\tH\x00\x88\x01\x01\x42\x13\n\x11_evicted_batch_id2\xed\x02\n\x10MiniBatchService\x12#\n\x04Ping\x12\x0c.PingRequest\x1a\r.PingResponse\x12\x38\n\x0bRegisterJob\x12\x13.RegisterJobRequest\x1a\x14.RegisterJobResponse\x12M\n\x12GetNextBatchForJob\x12\x1a.GetNextBatchForJobRequest\x1a\x1b.GetNextBatchForJobResponse\x12\x34\n\x08JobEnded\x12\x10.JobEndedRequest\x1a\x16.google.protobuf.Empty\x12\x36\n\tJobUpdate\x12\x11.JobUpdateRequest\x1a\x16.google.protobuf.Empty\x12=\n\x0cListDatasets\x12\x16.google.protobuf.Empty\x1a\x15.ListDatasetsResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -43,19 +43,19 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_REGISTERJOBREQUEST']._serialized_start=280
   _globals['_REGISTERJOBREQUEST']._serialized_end=322
   _globals['_REGISTERJOBRESPONSE']._serialized_start=324
-  _globals['_REGISTERJOBRESPONSE']._serialized_end=361
-  _globals['_GETNEXTBATCHFORJOBREQUEST']._serialized_start=363
-  _globals['_GETNEXTBATCHFORJOBREQUEST']._serialized_end=406
-  _globals['_SAMPLE']._serialized_start=408
-  _globals['_SAMPLE']._serialized_end=450
-  _globals['_BATCH']._serialized_start=452
-  _globals['_BATCH']._serialized_end=513
-  _globals['_GETNEXTBATCHFORJOBRESPONSE']._serialized_start=515
-  _globals['_GETNEXTBATCHFORJOBRESPONSE']._serialized_end=566
-  _globals['_JOBENDEDREQUEST']._serialized_start=568
-  _globals['_JOBENDEDREQUEST']._serialized_end=601
-  _globals['_JOBUPDATEREQUEST']._serialized_start=604
-  _globals['_JOBUPDATEREQUEST']._serialized_end=811
-  _globals['_MINIBATCHSERVICE']._serialized_start=814
-  _globals['_MINIBATCHSERVICE']._serialized_end=1179
+  _globals['_REGISTERJOBRESPONSE']._serialized_end=383
+  _globals['_GETNEXTBATCHFORJOBREQUEST']._serialized_start=385
+  _globals['_GETNEXTBATCHFORJOBREQUEST']._serialized_end=428
+  _globals['_SAMPLE']._serialized_start=430
+  _globals['_SAMPLE']._serialized_end=472
+  _globals['_BATCH']._serialized_start=474
+  _globals['_BATCH']._serialized_end=535
+  _globals['_GETNEXTBATCHFORJOBRESPONSE']._serialized_start=537
+  _globals['_GETNEXTBATCHFORJOBRESPONSE']._serialized_end=638
+  _globals['_JOBENDEDREQUEST']._serialized_start=640
+  _globals['_JOBENDEDREQUEST']._serialized_end=673
+  _globals['_JOBUPDATEREQUEST']._serialized_start=675
+  _globals['_JOBUPDATEREQUEST']._serialized_end=786
+  _globals['_MINIBATCHSERVICE']._serialized_start=789
+  _globals['_MINIBATCHSERVICE']._serialized_end=1154
 # @@protoc_insertion_point(module_scope)

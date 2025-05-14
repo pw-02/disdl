@@ -1,5 +1,8 @@
 import grpc
 from concurrent import futures
+import sys
+sys.path.append(".")
+sys.path.append("disdl\protos")
 import minibatch_service_pb2 as minibatch_service_pb2
 import minibatch_service_pb2_grpc as minibatch_service_pb2_grpc
 import google.protobuf.empty_pb2
@@ -63,7 +66,6 @@ class CacheAwareMiniBatchService(minibatch_service_pb2_grpc.MiniBatchServiceServ
             ))
         
         return minibatch_service_pb2.ListDatasetsResponse(datasets=dataset_infos)
-  
     
     def Ping(self, request, context):
         return minibatch_service_pb2.PingResponse(message = 'pong')
@@ -78,7 +80,7 @@ class CacheAwareMiniBatchService(minibatch_service_pb2_grpc.MiniBatchServiceServ
                     errorMessage=f"Dataset '{dataset_name}' not registered."
                 )
             
-            job_id=str(uuid.uuid4())
+            job_id = uuid.uuid4().hex[:8]  # Generate a unique job ID
             self.job_to_dataset[job_id] = dataset_name
             self.datasets[dataset_name].add_job(job_id=job_id)
             logger.info(f"Registered job {job_id} for dataset '{dataset_name}'")
@@ -104,21 +106,24 @@ class CacheAwareMiniBatchService(minibatch_service_pb2_grpc.MiniBatchServiceServ
                 batch=minibatch_service_pb2.Batch(batch_id="None", samples="", is_cached=False)
             )
         try:
-            next_batch: Batch = self.datasets[dataset_name].get_next_batch_for_job(job_id)
+            next_batch, should_cache, eviction_candidate = self.datasets[dataset_name].get_next_batch_for_job(job_id)
+            is_cached = False
             if next_batch is None:
                 return minibatch_service_pb2.GetNextBatchForJobResponse(
                     batch=minibatch_service_pb2.Batch(batch_id="None", samples="", is_cached=False)
                 )
 
             samples = self.datasets[dataset_name].dataset.get_samples(next_batch.indices)
-            is_cached = next_batch.cache_status in [CacheStatus.CACHED, CacheStatus.CACHING_IN_PROGRESS]
+            is_cached = next_batch.cache_status in [CacheStatus.CACHED]
 
             return minibatch_service_pb2.GetNextBatchForJobResponse(
                 batch=minibatch_service_pb2.Batch(
                     batch_id=next_batch.batch_id,
                     samples=json.dumps(samples),
                     is_cached=is_cached
-                )
+                ),
+                should_cache=should_cache,
+                eviction_candidate=eviction_candidate,
             )
         except Exception as e:
             logger.exception(f"Error getting batch for job {job_id}: {e}")
@@ -135,6 +140,24 @@ class CacheAwareMiniBatchService(minibatch_service_pb2_grpc.MiniBatchServiceServ
 
         # self.datasets[dataset_name].handle_job_ended(job_id)
         logger.info(f"Job {job_id} ended for dataset {dataset_name}")
+        return Empty()
+    
+    def JobUpdate(self, request, context):
+        job_id = request.job_id
+        dataset_name = self.job_to_dataset.get(job_id)
+        if dataset_name is None:
+            logger.warning(f"Unknown job_id {job_id}")
+            return Empty()
+
+        batch_is_cached = request.batch_is_cached
+        evicted_batch_id = request.evicted_batch_id
+
+        self.datasets[dataset_name].processed_batch_update(
+            job_id=job_id,
+            batch_is_cached=batch_is_cached,
+            evicited_batch_id=evicted_batch_id
+        )
+        logger.info(f"Job {job_id} update reported for dataset {dataset_name}")
         return Empty()
 
 

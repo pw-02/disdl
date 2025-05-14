@@ -54,6 +54,8 @@ message RegisterJobRequest {
 
 message RegisterJobResponse {
   string job_id = 1;
+  string errorMessage = 2; // Optional error message
+
 }
 
 /* ----------------------------- Batch Fetching ----------------------------- */
@@ -75,6 +77,8 @@ message Batch {
 
 message GetNextBatchForJobResponse {
   Batch batch = 1;
+  bool should_cache = 2; // Indicates if the batch should be cached
+  string eviction_candidate = 3; // Optional: ID of a batch to evict
   // repeated Batch batches = 2;  // Optional future extension
 }
 
@@ -83,12 +87,11 @@ message JobEndedRequest {
   string job_id = 1;
 }
 
-
 message JobUpdateRequest {
   string job_id = 1;
-  bool bacth_is_cached = 2;
-  double data_bottleneck_time = 3;        // e.g., time to fetch data from S3/Redis
-  optional string evicted_batch_id = 4;
+  bool batch_is_cached = 2;
+  //double data_bottleneck_time = 3;        // e.g., time to fetch data from S3/Redis
+  optional string evicted_batch_id = 3;
 }
 
 /*

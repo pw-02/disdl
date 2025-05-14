@@ -136,7 +136,10 @@ class BatchManager:
                                job_id: str,
                                batch_is_cached: bool,
                                evicited_batch_id: Optional[str]):
-        
+        #check if evicited_batch_id empty string
+        if evicited_batch_id == "":
+            evicited_batch_id = None
+
         job = self.job_registry.get(job_id)
         batch = job.current_batch
         batch.mark_seen_by(job.job_id) # Mark the batch as seen by the job and update the reuse score

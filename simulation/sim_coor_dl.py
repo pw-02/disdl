@@ -24,7 +24,8 @@ class Dataset:
         self.batch_size = batch_size
     def __len__(self) -> int:
         return self.num_samples
-    
+
+
 
 class CoorDLBatchScheduler:
     def __init__(self, batches_to_process: List[Batch], job_ids: List[str], cache: SharedCache, assignment_strategy="rotate"):
@@ -174,7 +175,7 @@ def run_simulation(
                 job.cache_hit_count += 1
                 delay = preprocesssing_time + job.processing_speed
                 heapq.heappush(event_queue, (time_elapsed + delay, "end_training_step", (job, batch_id)))
-                logger.debug(f"[job_step] Job {job.job_id} processing batch {batch_id} (owner={job_is_owner})")
+                logger.info(f"[job_step] Job {job.job_id} processing batch {batch_id} (owner={job_is_owner})")
             else:
                 if job_is_owner:
                     # Schedule prefetch
@@ -183,14 +184,14 @@ def run_simulation(
                     delay = cache_delay + job.processing_speed
                     heapq.heappush(event_queue, (time_elapsed + cache_delay, "cache_insert", (job, batch_id)))
                     heapq.heappush(event_queue, (time_elapsed + delay, "end_training_step", (job, batch_id)))
-                    # logger.debug(f"[job_step] Job {job.job_id} processing batch {batch_id} (owner={job_is_owner})")
+                    logger.info(f"[job_step] Job {job.job_id} processing batch {batch_id} (owner={job_is_owner})")
 
                 elif not syncronized_mode:
                     # Non-owner but allowed to proceed
                     job.cache_miss_count += 1
                     delay = load_from_s3_time + preprocesssing_time + job.processing_speed
                     heapq.heappush(event_queue, (time_elapsed + delay, "end_training_step", (job, batch_id)))
-                    # logger.debug(f"[job_step] Job {job.job_id} processing batch {batch_id} (owner={job_is_owner})")
+                    logger.info(f"[job_step] Job {job.job_id} processing batch {batch_id} (owner={job_is_owner})")
                 else:
                     # Non-owner must wait and retry
                     delay = 0.05
@@ -256,7 +257,7 @@ if __name__ == "__main__":
     dataloader_system  = 'CoorDL' 
     workload_name = 'imagenet_128_nas'
     workload_jobs = dict(workloads[workload_name])
-    batches_per_epoch = 1000 # batches
+    batches_per_epoch = 10 # batches
     epochs_per_job = 1 #np.inf
     batches_per_job = batches_per_epoch * epochs_per_job
     cache_capacity = 200 #0.5 * batches_per_job

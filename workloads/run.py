@@ -142,6 +142,8 @@ def train_loop(fabric:Fabric,
         metrics = OrderedDict({
             "Epoch": current_epoch,
             "Batch Id": meta.batch_id,
+            "Num Torch Workers": train_dataloader.num_workers,
+            "Device": fabric.global_rank,
             "Batch Index": batch_idx,
             "Batch Size": inputs.size(0),
             "Iteration Time (s)": time.perf_counter() - last_step_time,

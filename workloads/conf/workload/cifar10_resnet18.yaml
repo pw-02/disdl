@@ -1,10 +1,9 @@
 #dataloading configuration
 #dataloading configuration
-name: imagenet_resnet18
-
-s3_bucket: imagenet1k-sdl
-s3_train_prefix: s3://imagenet1k-sdl/train/
-s3_val_prefix: s3://imagenet1k-sdl/val/
+name: cifar10_resnet18
+s3_bucket: sdl-cifar10
+s3_train_prefix: s3://sdl-cifar10/train/
+s3_val_prefix: s3://sdl-cifar10/val/
 num_pytorch_workers: 0
 max_dataset_size: null #5 #gb
 

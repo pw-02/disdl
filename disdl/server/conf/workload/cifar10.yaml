@@ -1,0 +1,9 @@
+name: "cifar10"
+batch_size: 128                     # Default chunk size (128 images per batch)
+shuffle: true                       # Enables shuffling between epochs
+drop_last: false                    # Keep partial batches at end of epoch
+prefetch_lambda_name: "CreateVisionTrainingBatch"  # Lambda for dynamic batch creation
+max_dataset_size: null              # No enforced cap; could be used for sampling or cost control
+num_partitions: 1                   # Logical partitions for sampler/distributed jobs
+min_lookahead_steps: 25             # How far ahead to prefetch
+storage_backend: "s3://sdl-cifar10/train/"  # Cloud location of raw files

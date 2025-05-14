@@ -35,9 +35,9 @@ def timed(func):
 class BatchManager:
     def __init__(self, 
                  dataset:S3DatasetBase,
-                 drop_last=False,
-                 shuffle=False,
-                 prefetch_lookahead_steps=100,
+                #  drop_last=False,
+                #  shuffle=False,
+                #  prefetch_lookahead_steps=100,
                  use_prefetching=False,
                  prefetch_lambda_name=None,
                  prefetch_simulation_time=None,
@@ -51,13 +51,13 @@ class BatchManager:
             num_files=len(dataset),
             batch_size=dataset.batch_size,
             num_partitions=dataset.num_partitions,
-            drop_last=drop_last,
-            shuffle=shuffle)
+            drop_last=dataset.drop_last,
+            shuffle=dataset.shuffle)
 
         self.lock = threading.Lock()
         self.batch_sets: Dict[int, Dict[int, BatchSet]] = OrderedDict()
         # self.lookahead_distance = min(self.sampler.calc_num_batchs_per_partition() - 1, min_lookahead_steps)
-        self.lookahead_distance = min(self.sampler.calc_num_batchs_per_partition() - 1, prefetch_lookahead_steps)
+        self.lookahead_distance = min(self.sampler.calc_num_batchs_per_partition() - 1, dataset.min_lookahead_steps)
         self.shared_cache = shared_cache
 
         if use_prefetching:
@@ -87,7 +87,13 @@ class BatchManager:
             self._generate_new_batch()
 
     @timed
-    def register_job(self, job_id: str, processing_speed: Optional[float] = 1.0):
+    def add_job(self, job_id: str, processing_speed: Optional[float] = 1.0):
+        job = self.job_registry.register(job_id, processing_speed)
+        if not job.future_batches:
+            self.assign_batch_set_to_job(job)
+
+            
+    def add_job(self, job_id: str, processing_speed: Optional[float] = 1.0):
         job = self.job_registry.register(job_id, processing_speed)
         if not job.future_batches:
             self.assign_batch_set_to_job(job)

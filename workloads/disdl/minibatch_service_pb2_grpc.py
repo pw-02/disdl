@@ -4,9 +4,7 @@ import grpc
 import warnings
 
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
-import disdl.minibatch_service_pb2 as protos_dot_minibatch__service__pb2
-# import minibatch_service_pb2 as protos_dot_minibatch__service__pb2
-
+import minibatch_service_pb2 as protos_dot_minibatch__service__pb2
 
 GRPC_GENERATED_VERSION = '1.70.0'
 GRPC_VERSION = grpc.__version__
@@ -62,6 +60,11 @@ class MiniBatchServiceStub(object):
                 request_serializer=protos_dot_minibatch__service__pb2.JobUpdateRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 _registered_method=True)
+        self.ListDatasets = channel.unary_unary(
+                '/MiniBatchService/ListDatasets',
+                request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+                response_deserializer=protos_dot_minibatch__service__pb2.ListDatasetsResponse.FromString,
+                _registered_method=True)
 
 
 class MiniBatchServiceServicer(object):
@@ -75,14 +78,14 @@ class MiniBatchServiceServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def RegisterJob(self, request, context):
-        """Register a dataset for a job
+        """Register a training job to a known dataset
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def GetNextBatchForJob(self, request, context):
-        """Get the next batch for a given job
+        """Fetch the next batch for a given job
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -96,7 +99,14 @@ class MiniBatchServiceServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def JobUpdate(self, request, context):
-        """Update job status (e.g., batch consumption rate)
+        """Report job metrics (e.g., timing, cache status)
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ListDatasets(self, request, context):
+        """List all available datasets on this server
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -129,6 +139,11 @@ def add_MiniBatchServiceServicer_to_server(servicer, server):
                     servicer.JobUpdate,
                     request_deserializer=protos_dot_minibatch__service__pb2.JobUpdateRequest.FromString,
                     response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            ),
+            'ListDatasets': grpc.unary_unary_rpc_method_handler(
+                    servicer.ListDatasets,
+                    request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                    response_serializer=protos_dot_minibatch__service__pb2.ListDatasetsResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -266,6 +281,33 @@ class MiniBatchService(object):
             '/MiniBatchService/JobUpdate',
             protos_dot_minibatch__service__pb2.JobUpdateRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def ListDatasets(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/MiniBatchService/ListDatasets',
+            google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            protos_dot_minibatch__service__pb2.ListDatasetsResponse.FromString,
             options,
             channel_credentials,
             insecure,

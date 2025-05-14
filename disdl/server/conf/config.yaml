@@ -1,11 +1,35 @@
-defaults:
-  - _self_
-  - workload: imagenet #imagenet, librispeech, coco, openimages
-  
-cache_address: 10.0.25.0:6378
-enable_prefetching: False
-prefetch_cost_cap_per_hour: null
-prefetch_simulation_time: null
+# conf/config.yaml
+
+available_datasets:
+  # - name: "imagenet"
+  #   storage_backend: "s3://datasets/imagenet/train"
+  #   batch_size: 128
+  #   shuffle: true
+  #   drop_last: false
+  #   num_partitions: 4
+  #   prefetch_lambda_name: "CreateImageNetTrainingBatch"
+
+  - name: "cifar10"
+    storage_backend: "s3://sdl-cifar10/train"
+    batch_size: 128
+    shuffle: true
+    drop_last: false
+    num_partitions: 1
+    prefetch_lambda_name: "CreateVisionTrainingBatch"
+
+  # - name: "mscoco"
+  #   storage_backend: "s3://datasets/coco/train2017"
+  #   batch_size: 64
+  #   shuffle: true
+  #   drop_last: true
+  #   num_partitions: 2
+  #   prefetch_lambda_name: "CreateCOCOTrainingBatch"
+
+cache_address: "redis://localhost:6379"
+enable_prefetching: false
+prefetch_cost_cap_per_hour: 0.25
+# prefetch_simulation_time: null  # Optional if simulating fetch cost/time
+
 
 
 hydra:

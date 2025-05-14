@@ -1,83 +1,104 @@
-/* 
-Command to create stub files:
+/*
+Command to generate Python gRPC stubs:
 python -m grpc_tools.protoc --proto_path=. protos/minibatch_service.proto --python_out=. --grpc_python_out=.
 */
 
 syntax = "proto3";
 
-import "google/protobuf/empty.proto";  // Import Empty type for responses
-
+import "google/protobuf/empty.proto";
 
 service MiniBatchService {
   // Health check
   rpc Ping (PingRequest) returns (PingResponse);
 
-  // Register a dataset for a job
-  rpc RegisterJob(RegisterJobRequest) returns (RegisterJobResponse);
+  // Register a training job to a known dataset
+  rpc RegisterJob (RegisterJobRequest) returns (RegisterJobResponse);
 
-  // Get the next batch for a given job
-  rpc GetNextBatchForJob(GetNextBatchForJobRequest) returns (GetNextBatchForJobResponse);
+  // Fetch the next batch for a given job
+  rpc GetNextBatchForJob (GetNextBatchForJobRequest) returns (GetNextBatchForJobResponse);
 
   // Notify server when a job ends
   rpc JobEnded (JobEndedRequest) returns (google.protobuf.Empty);
 
-  // Update job status (e.g., batch consumption rate)
+  // Report job metrics (e.g., timing, cache status)
   rpc JobUpdate (JobUpdateRequest) returns (google.protobuf.Empty);
+
+  // List all available datasets on this server
+  rpc ListDatasets (google.protobuf.Empty) returns (ListDatasetsResponse);
 }
 
-/* --- Ping (Health Check) --- */
+/* ----------------------------- Dataset Listing ----------------------------- */
+message ListDatasetsResponse {
+  repeated DatasetInfo datasets = 1;
+}
+
+message DatasetInfo {
+  string name = 1;
+  string location = 2;
+  int32 num_samples = 3;
+  int32 num_batches = 4;
+  int32 num_partitions = 5;
+}
+
+/* ----------------------------- Health Check ----------------------------- */
 message PingRequest {}
+
 message PingResponse {
-string message = 1;
+  string message = 1;
 }
 
-/* --- Job Registration --- */
+/* ----------------------------- Job Registration ----------------------------- */
 message RegisterJobRequest {
-  string dataset_location = 1; //s3 directory, local directory, etc.
+  string dataset_name = 1; // e.g., "imagenet", "cifar10"
 }
 
 message RegisterJobResponse {
   string job_id = 1;
-  string dataset_info = 2;
-  string errorMessage = 3;
 }
 
-/* --- Batch Retrieval --- */
+/* ----------------------------- Batch Fetching ----------------------------- */
 message GetNextBatchForJobRequest {
   string job_id = 1;
-  string dataset_location = 2;  // Optional, useful for multi-dataset scenarios
 }
 
 message Sample {
-  string data_path = 1;  // Path to the data
-  string label = 2;       // The corresponding label
+  string data_path = 1;  // Path to image or data file
+  string label = 2;      // Class label or metadata
 }
 
 message Batch {
   string batch_id = 1;
-  string samples = 2;  // Using uint32 as indices are non-negative
-  bool is_cached = 3;  // Indicates if batch was precomputed and cached
-  //int64 timestamp = 4;  // (Optional) Time when batch was created, useful for cache management
+  string samples = 2;    // JSON-encoded sample list; can change to `repeated Sample` later
+  bool is_cached = 3;
+  // int64 timestamp = 4; // Optional: creation time
 }
 
 message GetNextBatchForJobResponse {
-  Batch batch = 1;  // Currently fetching one batch, but expandable
-  // repeated Batch batches = 2;  // Future-proofing for multi-batch responses
+  Batch batch = 1;
+  // repeated Batch batches = 2;  // Optional future extension
 }
 
-
-/* --- Job Management --- */
+/* ----------------------------- Job Lifecycle ----------------------------- */
 message JobEndedRequest {
   string job_id = 1;
-  string dataset_location = 2;  // Optional, useful for multi-dataset scenarios
 }
+
 
 message JobUpdateRequest {
   string job_id = 1;
-  string dataset_id = 2;  // Optional, useful for multi-dataset scenarios
-  string previous_step_batch_id = 3;
-  double previous_step_wait_for_data_time = 4;  // More precise timing
-  bool previous_step_is_cache_hit = 5;
-  double previous_step_gpu_time = 6;
-  bool prefetched_next_batch = 7;  // More descriptive than "cached_previous_batch"
+  bool bacth_is_cached = 2;
+  double data_bottleneck_time = 3;        // e.g., time to fetch data from S3/Redis
+  optional string evicted_batch_id = 4;
 }
+
+/*
+
+message JobUpdateRequest {
+  string job_id = 1;
+  string previous_step_batch_id = 3;
+  double previous_step_wait_for_data_time = 4; // seconds
+  bool previous_step_is_cache_hit = 5;
+  double previous_step_gpu_time = 6; // seconds
+  bool prefetched_next_batch = 7;
+}
+*/

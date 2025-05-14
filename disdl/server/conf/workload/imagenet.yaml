@@ -6,3 +6,4 @@ prefetch_lambda_name: 'CreateVisionTrainingBatch'
 max_dataset_size: null #gb
 num_partitions: 2
 min_lookahead_steps: 100
+dataset_location: s3://imagenet1k-sdl/train/

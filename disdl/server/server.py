@@ -6,178 +6,172 @@ import google.protobuf.empty_pb2
 from logger_config import configure_logger
 import hydra
 from omegaconf import DictConfig
-from args import DisDLArgs
+from args import DisDLArgs, DatasetConfig
 from batch_manager import BatchManager
 from omegaconf import OmegaConf
-from typing import Dict
+from typing import Dict, List
 from job import DLTJob
-from dataset import ImageNetDataset,MSCOCODataset, OpenImagesDataset
+from dataset import S3DatasetFactory
 from batch import Batch
 from cache_status import CacheStatus
 import json
-
-# logger = configure_logger(__name__)
+from omegaconf import OmegaConf
+from omegaconf import DictConfig
+from dacite import from_dict
+logger = configure_logger(__name__)
+from google.protobuf.empty_pb2 import Empty
+import uuid
 
 class CacheAwareMiniBatchService(minibatch_service_pb2_grpc.MiniBatchServiceServicer):
     def __init__(self, args:DisDLArgs):
         self.args = args
-        self.datasets: Dict[str,BatchManager] = {}
-        self.jobs: Dict[DLTJob] = {}
+        self.datasets: Dict[str, BatchManager] = {}  # dataset_name -> BatchManager
+        self.job_to_dataset: Dict[str, str] = {}
 
+        for cfg in args.available_datasets:
+            dataset = S3DatasetFactory.create_dataset(
+                dataset_location=cfg.storage_backend,
+                batch_size=cfg.batch_size,
+                num_partitions=cfg.num_partitions,
+                shuffle=cfg.shuffle,
+                drop_last=cfg.drop_last,
+                min_lookahead_steps=50,  # or cfg.min_lookahead_steps if available
+                transforms=None  # or cfg.transforms if you add support
+            )
+            self.datasets[cfg.name] = BatchManager(
+                dataset=dataset,
+                use_prefetching=args.enable_prefetching,
+                prefetch_lambda_name=cfg.prefetch_lambda_name,
+                prefetch_simulation_time=None,
+                cache_address=args.cache_address,
+                shared_cache=None
+            )
+            logger.info(f"Registered dataset '{cfg.name}' with {len(dataset)} samples.")
+        logger.info("All datasets registered successfully.")
+
+    
+    def ListDatasets(self, request: Empty, context):
+        dataset_infos = []
+        for name, batch_manager in self.datasets.items():
+            info = batch_manager.dataset.dataset_info()
+            dataset_infos.append(minibatch_service_pb2.DatasetInfo(
+                name=name,
+                location=info["location"],
+                num_samples=info["num_samples"],
+                num_batches=info["num_batches"],
+                num_partitions=info["num_partitions"]
+            ))
+        
+        return minibatch_service_pb2.ListDatasetsResponse(datasets=dataset_infos)
+  
+    
     def Ping(self, request, context):
         return minibatch_service_pb2.PingResponse(message = 'pong')
     
     def RegisterJob(self, request, context):
         try:
-            error_message = None
-            dataset_location = request.dataset_location
-            transforms = None
-            if dataset_location in self.datasets:
-                #datasets already registered by another job, add new job to dataset and return job_id, and dataset info
-                job_id = self.datasets[dataset_location].add_job()
-                dataset_info = self.datasets[dataset_location].dataset_info()
-            else:
-                #register dataset and add job
-                if self.args.workload == 'coco':
-                    print(dataset_location)
-                    print(transforms)
-                    # print(self.args.workload)
-                    dataset = MSCOCODataset(dataset_location, transforms)
-                elif self.args.workload == 'imagenet':
-                    dataset = ImageNetDataset(dataset_location, transforms)
-                # elif self.args.workload == 'librispeech':
-                #     dataset = LibSpeechDataset(dataset_location, transforms)
-                elif self.args.workload == 'openimages':
-                    dataset = OpenImagesDataset(dataset_location, transforms)
-                print(len(dataset))
-                self.datasets[dataset_location] = BatchManager(dataset=dataset, args=self.args)
-                print(self.datasets[dataset_location])
-                dataset_info = self.datasets[dataset_location].dataset_info()
-                # logger.info(f"Dataset '{dataset_location}' added. Total Files: {len(dataset)}, Total Batches:{dataset_info['num_batches']}")
-                job_id = self.datasets[dataset_location].add_job()
-            message = f"Job '{job_id}' registered for dataset '{dataset_location}'. Total Jobs: {len(self.datasets[dataset_location].active_jobs)}"
-            # logger.info(message)
+            dataset_name = request.dataset_name
+            if dataset_name not in self.datasets:
+                return minibatch_service_pb2.RegisterJobResponse(
+                    job_id="",
+                    dataset_info="",
+                    errorMessage=f"Dataset '{dataset_name}' not registered."
+                )
+            
+            job_id=str(uuid.uuid4())
+            self.job_to_dataset[job_id] = dataset_name
+            self.datasets[dataset_name].add_job(job_id=job_id)
+            logger.info(f"Registered job {job_id} for dataset '{dataset_name}'")
+
+            return minibatch_service_pb2.RegisterJobResponse(
+                job_id=job_id,
+                errorMessage=""
+            )
         except Exception as e:
-            error_message = f"Failed to register job with dataset '{dataset_location}'. Error: {str(e)}"
-            # logger.error(error_message)
-        return minibatch_service_pb2.RegisterJobResponse(
-            job_id=job_id, 
-            dataset_info=str(dataset_info),
-            errorMessage=error_message)
-    
+            logger.exception(f"Failed to register job for dataset '{dataset_name}': {e}")
+            return minibatch_service_pb2.RegisterJobResponse(
+                job_id="",
+                errorMessage=str(e)
+            )
+        
     def GetNextBatchForJob(self, request, context):
         job_id = request.job_id
-        dataset_location = request.dataset_location
-       
-        next_batch:Batch = self.datasets[dataset_location].get_next_batch_for_job(job_id)
-        samples = self.datasets[dataset_location].dataset.get_samples(next_batch.indices)
-        use_cache = True if next_batch.cache_status == CacheStatus.CACHED or next_batch.cache_status == CacheStatus.CACHING_IN_PROGRESS else False
-        if next_batch is None:
+        dataset_name = self.job_to_dataset.get(job_id)
+
+        if dataset_name is None:
+            logger.warning(f"Unknown job_id {job_id}")
             return minibatch_service_pb2.GetNextBatchForJobResponse(
-                batch=minibatch_service_pb2.Batch(batch_id='None', indicies=[], is_cached=False))
-        else:
+                batch=minibatch_service_pb2.Batch(batch_id="None", samples="", is_cached=False)
+            )
+        try:
+            next_batch: Batch = self.datasets[dataset_name].get_next_batch_for_job(job_id)
+            if next_batch is None:
+                return minibatch_service_pb2.GetNextBatchForJobResponse(
+                    batch=minibatch_service_pb2.Batch(batch_id="None", samples="", is_cached=False)
+                )
+
+            samples = self.datasets[dataset_name].dataset.get_samples(next_batch.indices)
+            is_cached = next_batch.cache_status in [CacheStatus.CACHED, CacheStatus.CACHING_IN_PROGRESS]
+
             return minibatch_service_pb2.GetNextBatchForJobResponse(
                 batch=minibatch_service_pb2.Batch(
-                    batch_id=next_batch.batch_id, 
-                    samples=json.dumps(samples), 
-                    is_cached=use_cache))
-        # return response
-    
+                    batch_id=next_batch.batch_id,
+                    samples=json.dumps(samples),
+                    is_cached=is_cached
+                )
+            )
+        except Exception as e:
+            logger.exception(f"Error getting batch for job {job_id}: {e}")
+            return minibatch_service_pb2.GetNextBatchForJobResponse(
+                batch=minibatch_service_pb2.Batch(batch_id="None", samples="", is_cached=False)
+            )
+        
     def JobEnded(self, request, context):
         job_id = request.job_id
-        dataset_location = request.dataset_location
-        self.datasets[dataset_location].handle_job_ended(job_id=job_id)
-        return google.protobuf.empty_pb2.Empty()
-    
+        dataset_name = self.job_to_dataset.get(job_id)
+        if dataset_name is None:
+            logger.warning(f"Unknown job_id {job_id}")
+            return Empty()
+
+        # self.datasets[dataset_name].handle_job_ended(job_id)
+        logger.info(f"Job {job_id} ended for dataset {dataset_name}")
+        return Empty()
+
 
     
-
-    
-    
-
-    # def JobUpdate(self, request, context):
-    #     job_id = request.job_id
-    #     data_dir = request.data_dir
-    #     previous_step_batch_id = request.previous_step_batch_id
-    #     previous_step_wait_for_data_time = request.previous_step_wait_for_data_time
-    #     previous_step_is_cache_hit = request.previous_step_is_cache_hit
-    #     previous_step_gpu_time = request.previous_step_gpu_time
-    #     cached_previous_batch = request.cached_previous_batch
-        
-    #     if isinstance(self.args, CoorDLArgs):
-    #         self.datasets[data_dir].update_job_progess(
-    #             previous_step_batch_id,
-    #             previous_step_is_cache_hit,
-    #             cached_previous_batch)
-    #     else:
-    #         self.datasets[data_dir].update_job_progess(
-    #             job_id,
-    #             previous_step_batch_id,
-    #             previous_step_wait_for_data_time,
-    #             previous_step_is_cache_hit,
-    #             previous_step_gpu_time,
-    #             cached_previous_batch)
-    #     return google.protobuf.empty_pb2.Empty()
-    
-    # def GetNextBatchForJob(self, request, context):
-    #     job_id = request.job_id
-    #     data_dir = request.data_dir
-       
-    #     if data_dir not in self.datasets:
-    #         message = f"Failed to register job with id '{job_id}' because data dir '{data_dir}' was not found in SUPER."
-    #         logger.info(message)
-        
-    #     next_batch:Batch = self.datasets[data_dir].get_next_batch(job_id)
-    #     if next_batch is None:
-    #         return minibatch_service_pb2.GetNextBatchForJobResponse(
-    #             job_id=job_id,
-    #             batch=minibatch_service_pb2.Batch(batch_id='None', indicies=[], is_cached=False))
-    #     else:
-                
-    #         return minibatch_service_pb2.GetNextBatchForJobResponse(
-    #             job_id=request.job_id,
-    #             batch=minibatch_service_pb2.Batch(batch_id=next_batch.batch_id, 
-    #                                             indicies=next_batch.indicies, 
-    #                                             is_cached=next_batch.is_cached))
-    #     # return response
-    
-    # def JobEnded(self, request, context):
-    #     job_id = request.job_id
-    #     data_dir = request.data_dir
-    #     self.datasets[data_dir].job_ended(job_id=job_id)
-    #     return google.protobuf.empty_pb2.Empty()
-
 
 @hydra.main(version_base=None, config_path="conf", config_name="config")
 def serve(cfg: DictConfig):
     try:
-        # logger.info("Starting DisDL ML Dataloader Service")
-        # logger.info(f"Config: {OmegaConf.to_yaml(cfg, resolve=True)}")
-        args:DisDLArgs = DisDLArgs(
-            cache_address = cfg.cache_address,
-            enable_prefetching = cfg.enable_prefetching,
-            prefetch_cost_cap_per_hour = cfg.prefetch_cost_cap_per_hour,
-            prefetch_simulation_time = cfg.prefetch_simulation_time,
-            workload= cfg.workload.name)
-        
-        cache_service = CacheAwareMiniBatchService(args) 
+        logger.info("Starting DisDL ML Dataloader Service")
+        logger.info(f"Loaded Config:\n{OmegaConf.to_yaml(cfg, resolve=True)}")
+
+        # Automatically convert DictConfig to DisDLArgs dataclass
+        # args = OmegaConf.to_object(cfg)  # This assumes cfg matches DisDLArgs structure exactly
+        # disdl_args = DisDLArgs(**args)
+        args_dict = OmegaConf.to_container(cfg, resolve=True)
+        disdl_args = from_dict(data_class=DisDLArgs, data=args_dict)
+        # Start the minibatch service with all datasets registered
+        cache_service = CacheAwareMiniBatchService(disdl_args)
+
+        # Launch the gRPC server
         max_workers = 1
         server = grpc.server(futures.ThreadPoolExecutor(max_workers=max_workers))
-
         minibatch_service_pb2_grpc.add_MiniBatchServiceServicer_to_server(cache_service, server)
         server.add_insecure_port('[::]:50051')
         server.start()
-        # logger.info(f"Server started. Listening on port 50051 with {max_workers} workers.")
+        logger.info(f"Server started. Listening on port 50051 with {max_workers} worker(s).")
 
         # Keep the server running until interrupted
         server.wait_for_termination()
 
     except KeyboardInterrupt:
-        # logger.info("Server stopped due to keyboard interrupt")
-        server.stop(0)
+        logger.info("Server stopped due to keyboard interrupt")
+        if 'server' in locals():
+            server.stop(0)
     except Exception as e:
-            # logger.exception(f"{e}. Shutting Down.")
-            if  'server' in locals():
+            logger.exception(f"Exception occurred during server execution: {e}")
+            if 'server' in locals():
                 server.stop(0)
     finally:
         pass

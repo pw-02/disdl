@@ -1,5 +1,7 @@
 import torch
 import sys
+
+from disdl.client.disdl_client import DisDLClient
 print(sys.path)
 import torch.nn as nn
 import torch.optim as optim

@@ -2,7 +2,7 @@
 defaults:
   - _self_
   - dataloader: disdl #disdl, tensorsocket, coordl
-  - workload: cifar10_resnet18  #albef_retrieval, coco_nas, openimages_nas, imagenet_resnet18
+  - workload: imagenet_resnet18  #albef_retrieval, coco_nas, openimages_nas, imagenet_resnet18
  
   - override hydra/job_logging: disabled
   - override hydra/hydra_logging: disabled  
@@ -13,7 +13,7 @@ devices: 1 # Number of devices to use for training (e.g. GPUs) per job
 log_interval: 1 # flush Log every N steps
 log_dir: logs # Directory to save logs
 checkpoint_dir: checkpoints # Save a checkpoint every N steps
-precision: 32 # 16, 32, 64
+precision: 16 # 16, 32, 64
 simulation_mode: False # Run in simulation mode
 exp_id: single_job
 job_id: 1

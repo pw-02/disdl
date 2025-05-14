@@ -19,6 +19,8 @@ from lightning.fabric import Fabric, seed_everything
 from lightning.fabric.loggers import CSVLogger
 from lightning.pytorch.core.saving import save_hparams_to_yaml
 
+
+
 from disdl.disdl_iterable_dataset import DISDLDataset
 from disdl.minibatch_client import MiniBatchClient
 from disdl.s3_loader_factory import S3LoaderFactory
@@ -116,18 +118,20 @@ def train_loop(fabric:Fabric,
         wait_for_data_time = time.perf_counter() - last_step_time 
         if fabric.device.type == "cuda":
             torch.cuda.synchronize()
-
+        
+        gpu_start = time.perf_counter()
         if sim_time is not None:
             time.sleep(sim_time)
             loss = torch.tensor(0.0)
-            gpu_time = sim_time
+            gpu_time = time.perf_counter() - gpu_start
+
         else:
-            gpu_start = time.perf_counter()
             outputs = model(inputs)
             loss = criterion(outputs, labels)
             optimizer.zero_grad()
             fabric.backward(loss)
             optimizer.step()
+            torch.cuda.synchronize()
             gpu_time = time.perf_counter() - gpu_start
         
         total_samples += inputs.size(0)
@@ -142,6 +146,7 @@ def train_loop(fabric:Fabric,
             "Batch Id": meta.batch_id,
             "Batch Index": batch_idx,
             "Batch Size": inputs.size(0),
+            "Iteration Time (s)": time.perf_counter() - last_step_time,
             "Train Loss (Avg)": avg_loss,
             "Top-1 Accuracy": acc["top1"],
             "Top-5 Accuracy": acc["top5"],
@@ -155,10 +160,18 @@ def train_loop(fabric:Fabric,
         })
         train_logger.log_metrics(metrics, step=global_step_count)
         fabric.print(
-            f"Job {job_id} | [{current_epoch}:{batch_idx}] batch_id={meta.batch_id} "
-            f"loss={avg_loss:.3f} gpu={gpu_time:.2f}s fetch={meta.data_fetch_time:.2f}s "
-            f"preprocess={meta.preprocess_time:.2f}s cache_hit={meta.cache_hit}, elapsed={elapsed:.2f}s "
-        )
+                    f" Job {job_id} | Epoch:{metrics['Epoch']}({metrics['Batch Index']}) |"
+                    f" Batch:{metrics['Batch Id']} |"
+                    # f" iter:{metrics['Iteration Time (s)']:.2f}s |"
+                    f" delay:{metrics['Wait for Data Time (s)']:.2f}s |"
+                    f" fetch:{metrics['Data Load Time (s)']:.2f}s |"
+                    f" transform:{metrics['Transform Time (s)']:.2f}s |"
+                    f" gpu:{metrics['GPU Processing Time (s)']:.2f}s |"
+                    # f" elapsed:{metrics['Elapsed Time (s)']:.2f}s |"
+                    f" loss: {metrics['Train Loss (Avg)']:.3f} |"
+                    # f" acc: {metrics['Train Accuracy (Avg)']:.3f} |"
+                    # F" cache hit: {metrics['Cache_Hit (Batch)']} |"
+                    )
 
         if (max_training_time and elapsed >= max_training_time) or (max_steps and global_step_count >= max_steps):
             break
@@ -258,8 +271,13 @@ def setup_disdl_dataloader(config: DictConfig, fabric: Fabric):
 
 
 def get_model(config: DictConfig):
-    model_arch = config.workload.model_architecture
+    from torchvision.models import get_model as get_torchvision_model
+    from torchvision.models import list_models as list_torchvision_models
 
+    model_arch = config.workload.model_architecture
+    # if model_arch in list_torchvision_models():
+    #     model = get_torchvision_model(name=model_arch, weights=None, num_classes=config.workload.num_classes)
+    #     return model
     if model_arch == "albef_retrieval":
         raise NotImplementedError("ALBEF model is not implemented yet.")
 

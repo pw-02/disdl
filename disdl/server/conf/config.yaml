@@ -1,13 +1,13 @@
 # conf/config.yaml
 
 available_datasets:
-  # - name: "imagenet"
-  #   storage_backend: "s3://datasets/imagenet/train"
-  #   batch_size: 128
-  #   shuffle: true
-  #   drop_last: false
-  #   num_partitions: 4
-  #   prefetch_lambda_name: "CreateImageNetTrainingBatch"
+  - name: "imagenet"
+    storage_backend: "s3://imagenet1k-sdl/train/"
+    batch_size: 128
+    shuffle: true
+    drop_last: false
+    num_partitions: 1
+    prefetch_lambda_name: "CreateImageNetTrainingBatch"
 
   - name: "cifar10"
     storage_backend: "s3://sdl-cifar10/train"

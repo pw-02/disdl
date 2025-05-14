@@ -45,13 +45,18 @@ class ImageNetS3Loader(BaseS3Loader):
         self.dataset_location = dataset_location
         self.transform = transform or T.ToTensor()
         self.use_local_folder = use_local_folder
-        self.s3_client = boto3.client("s3") if not use_local_folder else None
-
+        self.s3_client = None  # Delay init
+    
+    def _ensure_s3_client(self):
+        if self.s3_client is None and not self.use_local_folder:
+            self.s3_client = boto3.client("s3")
+    
     def load_batch(self, samples: List[Tuple[str, int]]) -> Tuple[List[torch.Tensor], List[int], float, float]:
         """
         Load a batch of ImageNet-style (image_path, label) pairs.
         Returns: images, labels, retrieval_time, transform_time
         """
+        self._ensure_s3_client()
         retrieval_start = time.perf_counter()
 
         def load_image(path):

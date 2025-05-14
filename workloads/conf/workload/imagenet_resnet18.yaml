@@ -1,6 +1,6 @@
 #dataloading configuration
 #dataloading configuration
-name: imagenet_resnet18
+name: imagenet
 
 s3_bucket: imagenet1k-sdl
 s3_train_prefix: s3://imagenet1k-sdl/train/

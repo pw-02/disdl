@@ -1,12 +1,12 @@
-
 import hashlib
-from typing import List, Set
 import threading
 import time
-from typing import List, Optional, Dict, Tuple
+from typing import List, Set, Optional, Dict, Tuple
 from collections import deque, OrderedDict
 from enum import Enum
-from cache_status import CacheStatus
+
+from disdl.cache.cache_status import CacheStatus
+
 # from job import DLTJob
 class Batch:
     def __init__(self, batch_indicies, epoch_idx, partition_idx, batch_idx):

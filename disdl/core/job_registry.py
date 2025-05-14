@@ -1,7 +1,9 @@
 from typing import Dict, Iterable
 from collections import OrderedDict
-from batch import Batch, BatchSet
-from disdl.server.core.job import DLTJob  # Assumes each job tracks weights, future batches, etc.
+
+from disdl.core.batch import Batch, BatchSet
+from disdl.core.job import DLTJob  # Tracks job state, weights, future_batches, etc.
+
 
 class JobRegistry:
     def __init__(self):

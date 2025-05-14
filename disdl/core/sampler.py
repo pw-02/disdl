@@ -2,7 +2,7 @@ from typing import  Dict, Sized
 from itertools import cycle
 import random
 from collections import OrderedDict
-from batch import Batch, BatchSet
+from disdl.core.batch import Batch, BatchSet
 
 
 class PartitionedBatchSampler():

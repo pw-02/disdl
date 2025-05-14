@@ -1,8 +1,9 @@
 import time
 from typing import Dict, Optional, Tuple
 from sortedcontainers import SortedList
-from batch import Batch  # Ensure these are properly defined
-from cache_status import CacheStatus
+
+from disdl.core.batch import Batch
+from disdl.cache.cache_status import CacheStatus
 
 
 class CacheManager:

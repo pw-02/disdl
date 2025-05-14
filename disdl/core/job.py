@@ -1,11 +1,13 @@
 
-from collections import defaultdict, deque, OrderedDict
-from typing import Dict, List, Optional, Set, Tuple
-from disdl.server.utils.utils import AverageMeter
-from batch import Batch
-from cache_status import CacheStatus
 import threading
 import time
+from collections import defaultdict, deque, OrderedDict
+from typing import Dict, List, Optional, Set, Tuple
+
+from disdl.utils.utils import AverageMeter
+from disdl.core.batch import Batch
+from disdl.cache.cache_status import CacheStatus
+
 # from sortedcontainers import SortedList
 
 class DLTJob:

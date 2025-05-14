@@ -6,16 +6,12 @@ import concurrent.futures
 import logging
 from queue import Queue, Empty
 from datetime import datetime, timezone
-from batch import Batch  # Ensure these are properly defined
-
-from cache_status import CacheStatus
-# from logger_config import configure_logger
-import logging
-# logger = configure_logger()
-
-logger = logging.getLogger()
 
 import redis
+
+from disdl.core.batch import Batch
+from disdl.cache.cache_status import CacheStatus
+from disdl.utils.logger_config import configure_logger
 
 class PrefetchServiceAsync:
     def __init__(self, lambda_name: str, cache_address: str, simulate_time: float = None):

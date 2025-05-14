@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch DisDL Server",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/disdl/bin/launch_server.py",
+      "console": "integratedTerminal",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}"
+      }
+    }
+  ]
+}

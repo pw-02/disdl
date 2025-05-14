@@ -4,7 +4,7 @@ import grpc
 import warnings
 
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
-import minibatch_service_pb2 as protos_dot_minibatch__service__pb2
+from . import minibatch_service_pb2 as minibatch__service__pb2
 
 GRPC_GENERATED_VERSION = '1.70.0'
 GRPC_VERSION = grpc.__version__
@@ -19,7 +19,7 @@ except ImportError:
 if _version_not_supported:
     raise RuntimeError(
         f'The grpc package installed is at version {GRPC_VERSION},'
-        + f' but the generated code in protos/minibatch_service_pb2_grpc.py depends on'
+        + f' but the generated code in minibatch_service_pb2_grpc.py depends on'
         + f' grpcio>={GRPC_GENERATED_VERSION}.'
         + f' Please upgrade your grpc module to grpcio>={GRPC_GENERATED_VERSION}'
         + f' or downgrade your generated code using grpcio-tools<={GRPC_VERSION}.'
@@ -37,33 +37,33 @@ class MiniBatchServiceStub(object):
         """
         self.Ping = channel.unary_unary(
                 '/MiniBatchService/Ping',
-                request_serializer=protos_dot_minibatch__service__pb2.PingRequest.SerializeToString,
-                response_deserializer=protos_dot_minibatch__service__pb2.PingResponse.FromString,
+                request_serializer=minibatch__service__pb2.PingRequest.SerializeToString,
+                response_deserializer=minibatch__service__pb2.PingResponse.FromString,
                 _registered_method=True)
         self.RegisterJob = channel.unary_unary(
                 '/MiniBatchService/RegisterJob',
-                request_serializer=protos_dot_minibatch__service__pb2.RegisterJobRequest.SerializeToString,
-                response_deserializer=protos_dot_minibatch__service__pb2.RegisterJobResponse.FromString,
+                request_serializer=minibatch__service__pb2.RegisterJobRequest.SerializeToString,
+                response_deserializer=minibatch__service__pb2.RegisterJobResponse.FromString,
                 _registered_method=True)
         self.GetNextBatchForJob = channel.unary_unary(
                 '/MiniBatchService/GetNextBatchForJob',
-                request_serializer=protos_dot_minibatch__service__pb2.GetNextBatchForJobRequest.SerializeToString,
-                response_deserializer=protos_dot_minibatch__service__pb2.GetNextBatchForJobResponse.FromString,
+                request_serializer=minibatch__service__pb2.GetNextBatchForJobRequest.SerializeToString,
+                response_deserializer=minibatch__service__pb2.GetNextBatchForJobResponse.FromString,
                 _registered_method=True)
         self.JobEnded = channel.unary_unary(
                 '/MiniBatchService/JobEnded',
-                request_serializer=protos_dot_minibatch__service__pb2.JobEndedRequest.SerializeToString,
+                request_serializer=minibatch__service__pb2.JobEndedRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 _registered_method=True)
         self.JobUpdate = channel.unary_unary(
                 '/MiniBatchService/JobUpdate',
-                request_serializer=protos_dot_minibatch__service__pb2.JobUpdateRequest.SerializeToString,
+                request_serializer=minibatch__service__pb2.JobUpdateRequest.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 _registered_method=True)
         self.ListDatasets = channel.unary_unary(
                 '/MiniBatchService/ListDatasets',
                 request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-                response_deserializer=protos_dot_minibatch__service__pb2.ListDatasetsResponse.FromString,
+                response_deserializer=minibatch__service__pb2.ListDatasetsResponse.FromString,
                 _registered_method=True)
 
 
@@ -117,33 +117,33 @@ def add_MiniBatchServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'Ping': grpc.unary_unary_rpc_method_handler(
                     servicer.Ping,
-                    request_deserializer=protos_dot_minibatch__service__pb2.PingRequest.FromString,
-                    response_serializer=protos_dot_minibatch__service__pb2.PingResponse.SerializeToString,
+                    request_deserializer=minibatch__service__pb2.PingRequest.FromString,
+                    response_serializer=minibatch__service__pb2.PingResponse.SerializeToString,
             ),
             'RegisterJob': grpc.unary_unary_rpc_method_handler(
                     servicer.RegisterJob,
-                    request_deserializer=protos_dot_minibatch__service__pb2.RegisterJobRequest.FromString,
-                    response_serializer=protos_dot_minibatch__service__pb2.RegisterJobResponse.SerializeToString,
+                    request_deserializer=minibatch__service__pb2.RegisterJobRequest.FromString,
+                    response_serializer=minibatch__service__pb2.RegisterJobResponse.SerializeToString,
             ),
             'GetNextBatchForJob': grpc.unary_unary_rpc_method_handler(
                     servicer.GetNextBatchForJob,
-                    request_deserializer=protos_dot_minibatch__service__pb2.GetNextBatchForJobRequest.FromString,
-                    response_serializer=protos_dot_minibatch__service__pb2.GetNextBatchForJobResponse.SerializeToString,
+                    request_deserializer=minibatch__service__pb2.GetNextBatchForJobRequest.FromString,
+                    response_serializer=minibatch__service__pb2.GetNextBatchForJobResponse.SerializeToString,
             ),
             'JobEnded': grpc.unary_unary_rpc_method_handler(
                     servicer.JobEnded,
-                    request_deserializer=protos_dot_minibatch__service__pb2.JobEndedRequest.FromString,
+                    request_deserializer=minibatch__service__pb2.JobEndedRequest.FromString,
                     response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             ),
             'JobUpdate': grpc.unary_unary_rpc_method_handler(
                     servicer.JobUpdate,
-                    request_deserializer=protos_dot_minibatch__service__pb2.JobUpdateRequest.FromString,
+                    request_deserializer=minibatch__service__pb2.JobUpdateRequest.FromString,
                     response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             ),
             'ListDatasets': grpc.unary_unary_rpc_method_handler(
                     servicer.ListDatasets,
                     request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-                    response_serializer=protos_dot_minibatch__service__pb2.ListDatasetsResponse.SerializeToString,
+                    response_serializer=minibatch__service__pb2.ListDatasetsResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -171,8 +171,8 @@ class MiniBatchService(object):
             request,
             target,
             '/MiniBatchService/Ping',
-            protos_dot_minibatch__service__pb2.PingRequest.SerializeToString,
-            protos_dot_minibatch__service__pb2.PingResponse.FromString,
+            minibatch__service__pb2.PingRequest.SerializeToString,
+            minibatch__service__pb2.PingResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -198,8 +198,8 @@ class MiniBatchService(object):
             request,
             target,
             '/MiniBatchService/RegisterJob',
-            protos_dot_minibatch__service__pb2.RegisterJobRequest.SerializeToString,
-            protos_dot_minibatch__service__pb2.RegisterJobResponse.FromString,
+            minibatch__service__pb2.RegisterJobRequest.SerializeToString,
+            minibatch__service__pb2.RegisterJobResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -225,8 +225,8 @@ class MiniBatchService(object):
             request,
             target,
             '/MiniBatchService/GetNextBatchForJob',
-            protos_dot_minibatch__service__pb2.GetNextBatchForJobRequest.SerializeToString,
-            protos_dot_minibatch__service__pb2.GetNextBatchForJobResponse.FromString,
+            minibatch__service__pb2.GetNextBatchForJobRequest.SerializeToString,
+            minibatch__service__pb2.GetNextBatchForJobResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -252,7 +252,7 @@ class MiniBatchService(object):
             request,
             target,
             '/MiniBatchService/JobEnded',
-            protos_dot_minibatch__service__pb2.JobEndedRequest.SerializeToString,
+            minibatch__service__pb2.JobEndedRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options,
             channel_credentials,
@@ -279,7 +279,7 @@ class MiniBatchService(object):
             request,
             target,
             '/MiniBatchService/JobUpdate',
-            protos_dot_minibatch__service__pb2.JobUpdateRequest.SerializeToString,
+            minibatch__service__pb2.JobUpdateRequest.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options,
             channel_credentials,
@@ -307,7 +307,7 @@ class MiniBatchService(object):
             target,
             '/MiniBatchService/ListDatasets',
             google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-            protos_dot_minibatch__service__pb2.ListDatasetsResponse.FromString,
+            minibatch__service__pb2.ListDatasetsResponse.FromString,
             options,
             channel_credentials,
             insecure,

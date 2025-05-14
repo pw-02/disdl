@@ -56,12 +56,21 @@ class CoorDLBatchScheduler:
         self.producer_to_batch_ids = {
             jid: [b.batch_id for b in self.job_owns[jid]] for jid in job_ids
         }
-
     def _assign_batches(self):
+        base = self.total_batches // self.num_jobs
+        extra = self.total_batches % self.num_jobs
+        cursor = 0
+
         for i, job_id in enumerate(self.job_ids):
-            start = i * self.batches_per_job
-            end = start + self.batches_per_job
-            self.job_owns[job_id] = self.batches_to_process[start:end]
+            count = base + (1 if i < extra else 0)
+            self.job_owns[job_id] = self.batches_to_process[cursor:cursor + count]
+            cursor += count
+
+    # def _assign_batches(self):
+    #     for i, job_id in enumerate(self.job_ids):
+    #         start = i * self.batches_per_job
+    #         end = start + self.batches_per_job
+    #         self.job_owns[job_id] = self.batches_to_process[start:end]
 
     def get_batch_for_job(self, job_id: str) -> tuple:
         ptrs = self.job_producer_ptrs[job_id]
@@ -175,7 +184,7 @@ def run_simulation(
                 job.cache_hit_count += 1
                 delay = preprocesssing_time + job.processing_speed
                 heapq.heappush(event_queue, (time_elapsed + delay, "end_training_step", (job, batch_id)))
-                logger.info(f"[job_step] Job {job.job_id} processing batch {batch_id} (owner={job_is_owner})")
+                # logger.info(f"[job_step] Job {job.job_id} processing batch {batch_id} (owner={job_is_owner})")
             else:
                 if job_is_owner:
                     # Schedule prefetch
@@ -191,7 +200,7 @@ def run_simulation(
                     job.cache_miss_count += 1
                     delay = load_from_s3_time + preprocesssing_time + job.processing_speed
                     heapq.heappush(event_queue, (time_elapsed + delay, "end_training_step", (job, batch_id)))
-                    logger.info(f"[job_step] Job {job.job_id} processing batch {batch_id} (owner={job_is_owner})")
+                    # logger.info(f"[job_step] Job {job.job_id} processing batch {batch_id} (owner={job_is_owner})")
                 else:
                     # Non-owner must wait and retry
                     delay = 0.05

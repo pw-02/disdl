@@ -1,140 +1,84 @@
-
-import random
+from torch.utils.data.sampler import BatchSampler, SequentialSampler, RandomSampler
+from typing import Any, Dict, Iterable, Iterator, List, Optional, Union, Sized, Tuple
 import hashlib
-from typing import Sized, List, Dict, Tuple, Any
-import redis
+import torch
+import random
 
-
-class CoorDLBatchSampler():
-    def __init__(self, num_files:Sized, batch_size, jobid, drop_last=False, shuffle=True,
-                cache_address= None,
-                 ssl = True,):
+class CoorDLBatchSampler(BatchSampler):
+    def __init__(self, 
+                    data_source: Sized,
+                    batch_size: int,
+                    job_idx: int,
+                    num_jobs: int,
+                    drop_last: bool = False,
+                    shuffle: bool = True,
+                    seed: Optional[int] = None):
         
-        self.job_id = jobid
-        self.num_files = num_files
-        self.file_indices = list(range(num_files))          
-        self.shuffle = shuffle
-        self.batch_size = batch_size
-        self.drop_last = drop_last
-        self.batches_per_epoch = self.calc_num_batchs_per_epoch()
-        random.seed(42)
-        # Initialize epoch tracking
-        self.current_epoch = 0
-        self.processed_partitions = 0  # Counts how many partitions we've used
-        self.current_idx = 0  # Counts how many batches we've generated
-        # Start with the first partition
-        if cache_address is not None:
-            self.cache_host, self.cache_port = cache_address.split(":")
-            self.cache_port = int(self.cache_port)
-            self.use_cache = True
-        else:
-            self.use_cache = False
-
-        self.ssl = ssl
-        self.sampler = self._create_sampler(num_files)
-        self.batches:Dict = {}
-        self.local_batches:Dict = {}
-        self.get_batches()
-        self.cache_client = None
-        pass
-    
-    def __len__(self):
-        return self.batches_per_epoch
-    
-
-    def get_batches(self):
-        batches_per_epoch = self.batches_per_epoch
-        for idx in range(batches_per_epoch):
-            batch_indices, batch_id = next(self)
-            this_job_fetch = False
-            if (idx-self.job_id) % 4 == 0:
-                this_job_fetch = True
-                self.local_batches[batch_id] = (batch_indices, batch_id, this_job_fetch)
-            else:
-                self.batches[batch_id] = (batch_indices, batch_id, this_job_fetch)
-       
-    def _create_sampler(self, partition):
-        """Create a new sampler based on the shuffle setting."""
-        if self.shuffle:
-            #seed the random number generator for reproducibility
-            random.shuffle(self.file_indices)
-            return iter(self.file_indices)  # Random order
-        else:
-            return iter(self.file_indices)  # Sequential order
-    
-    def _initialize_cache_client(self):
-        """Initialize the cache client."""
-        # Placeholder for actual cache client initialization
-        # self.cache_client = CacheClient()
-        """Initialize Redis cache client if not already connected."""
-        if self.cache_client is None:
-            if self.ssl:
-                self.cache_client = redis.StrictRedis(host=self.cache_host, port=self.cache_port, ssl=True)
-            else:
-                self.cache_client = redis.StrictRedis(host=self.cache_host, port=self.cache_port)
-
-
-    def __iter__(self):
-        self._initialize_cache_client()
-
-        while len(self.batches) or len(self.local_batches) > 0:
-            next_batch = None
-            cache_hit = False
-           
-            keys = self.cache_client.keys()
-
-            for key in keys:
-                key_str = key.decode('utf-8')
-                if key_str in self.batches:
-                    next_batch = self.batches.pop(key_str)
-                    cache_hit = True
-                    break
-            if not cache_hit:
-                if len(self.local_batches) > 0:
-                    batch_id, next_batch = self.local_batches.popitem()
-                else:
-                    batch_id, next_batch = self.batches.popitem()
-
-            yield  next_batch
-    
-    def __next__(self):
-        """Generate a mini-batch from the current partition, switching partitions when needed."""
-        sampled_indices = []
-
-        while len(sampled_indices) < self.batch_size:
-            try:
-                sampled_indices.append(next(self.sampler))  # Get an index from the partition
-            except StopIteration:
-                if not self.drop_last and sampled_indices:
-                    
-                    return self.generate_batch(sampled_indices)  # Return smaller batch if drop_last=False
-                
-                # Move to the next partition
-                self.current_epoch += 1  # Full epoch completed
-                self.processed_partitions = 0  # Reset for the next epoch
-                self.current_idx = 0  # Reset for the next epoch
-                self.sampler = self._create_sampler(self.num_files)
-                continue  # Restart batch sampling from new partition
-
-        return self.generate_batch(sampled_indices)
-    
-    def generate_batch(self, batch_indices):
-        batch_id = f"{self.current_epoch}_{self.current_idx}_{self.create_unique_id(batch_indices, 16)}"
-        self.current_idx += 1
-        return batch_indices, batch_id
-
-    def create_unique_id(self,int_list, length = 32):
-        # Convert integers to strings and concatenate them
-        id_string = ''.join(str(x) for x in int_list)
+        self.job_idx = job_idx
+        self.num_jobs = num_jobs
         
-        # Hash the concatenated string to generate a unique ID
-        unique_id = hashlib.md5(id_string.encode()).hexdigest()
-        #Truncate the hash to the desired length
-        return unique_id[:length]
+        # Set random seed if provided
+        if seed is not None:
+            random.seed(seed)
+            torch.manual_seed(seed)
 
-    def calc_num_batchs_per_epoch(self):
-        # Calculate the number of batches
-        if self.drop_last:
-            return self.num_files // self.batch_size
-        else:
-            return (self.num_files + self.batch_size - 1) // self.batch_size
+        # Choose the appropriate sampler based on shuffle argument
+        sampler = RandomSampler(data_source) if shuffle else SequentialSampler(data_source)
+        super().__init__(sampler, batch_size, drop_last)
+        # Initialize the base BatchSampler with the chosen sampler
+        #         
+    def __iter__(self) -> Iterator[Tuple[str, List[int]]]:
+        all_batches = list(super().__iter__())
+
+        # Step 1: Split into contiguous producer groups
+        total_batches = len(all_batches)
+        batches_per_job = total_batches // self.num_jobs
+        remainder = total_batches % self.num_jobs
+
+        job_to_batches = []
+        cursor = 0
+        for i in range(self.num_jobs):
+            num = batches_per_job + (1 if i < remainder else 0)
+            job_to_batches.append(all_batches[cursor:cursor + num])
+            cursor += num
+
+        # Step 2: Construct this job's access order
+        ordered_batches = []
+        max_len = max(len(group) for group in job_to_batches)
+        for r in range(max_len):
+            for offset in range(self.num_jobs):
+                prod_id = (self.job_idx + offset) % self.num_jobs
+                if r < len(job_to_batches[prod_id]):
+                    ordered_batches.append(job_to_batches[prod_id][r])
+
+        # Step 3: Yield batch_id and batch_indices
+        for batch_indices in ordered_batches:
+            batch_id = hashlib.md5(str(batch_indices).encode()).hexdigest()
+            yield batch_id, batch_indices
+
+    def __len__(self) -> int:
+        return super().__len__()
+
+# Example usage
+if __name__ == "__main__":
+    from torch.utils.data import SequentialSampler
+
+    # Example dataset size
+    dataset_size = 10
+    num_jobs = 4
+    samplers = []
+    for job_idx in range(num_jobs):
+        batch_sampler = CoorDLBatchSampler(
+        data_source=range(dataset_size),
+        batch_size=1,
+        job_idx=job_idx,
+        num_jobs=num_jobs,
+        shuffle=False,
+        drop_last=True,
+        seed=123)
+        samplers.append(batch_sampler)
+        # Create a batch sampler for each job inde
+        indicies =[]
+        for batch_id, batch_indices in batch_sampler:
+            indicies.append(batch_indices)
+        print(f"Job: {job_idx}, Batch Indices: {indicies}")

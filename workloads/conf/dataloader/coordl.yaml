@@ -1,7 +1,5 @@
 name: coordl
-cache_address:  coordl.rdior4.ng.0001.usw2.cache.amazonaws.com:6379 #127.0.0.1:6379 #coordl.rdior4.ng.0001.usw2.cache.amazonaws.com:6379  # 
-drop_last: False
-shuffle: True
-use_compression: True
-use_local_folder: False
+cache_host: localhost
+cache_port: 6379
 ssl_enabled: False
+syncronized_mode: True

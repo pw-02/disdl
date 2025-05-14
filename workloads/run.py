@@ -22,6 +22,9 @@ from lightning.pytorch.core.saving import save_hparams_to_yaml
 from disdl.disdl_iterable_dataset import DISDLDataset
 from disdl.minibatch_client import MiniBatchClient
 from disdl.s3_loader_factory import S3LoaderFactory
+from disdl.disk_loader_factory import DiskLoaderFactory
+from baselines.coordl.coordl_dataset import CoorDLDataset
+from baselines.coordl.coordl_sampler import CoorDLBatchSampler
 
 def run_training_job(config: DictConfig, train_logger: CSVLogger, val_logger: CSVLogger):
     # Set up Fabric
@@ -34,13 +37,17 @@ def run_training_job(config: DictConfig, train_logger: CSVLogger, val_logger: CS
         seed_everything(config.seed)
 
     # Model and optimizer
-    model = get_model(config=config)
+    model = get_model(model_arch=config.workload.model_name, 
+                      num_classes=config.workload.num_classes, 
+                      pretrained=False)
 
     optimizer = optim.Adam(model.parameters(), lr=config.workload.learning_rate)
     model, optimizer = fabric.setup(model, optimizer)
 
     if config.dataloader.name == 'disdl':
         train_dataloader = setup_disdl_dataloader(config, fabric)  # optional: extract this logic into a helper
+    elif config.dataloader.name == 'coordl':
+        train_dataloader = setup_coordl_dataloader(config, fabric)
     else:
         raise ValueError("Invalid dataloader name")
     
@@ -50,9 +57,9 @@ def run_training_job(config: DictConfig, train_logger: CSVLogger, val_logger: CS
     train_start_time = time.perf_counter()
     should_stop = False
     max_time = config.workload.max_training_time_sec
-    max_steps = config.workload.max_steps
+    max_steps = config.workload.max_training_steps 
     max_epochs = config.workload.max_epochs
-    sim_time = config.workload.sim_time if config.simulation_mode else None
+    sim_time = config.workload.gpu_time  if config.simulation_mode else None
 
     while not should_stop:
         current_epoch += 1
@@ -81,11 +88,11 @@ def run_training_job(config: DictConfig, train_logger: CSVLogger, val_logger: CS
             fabric.save(os.path.join(config.checkpoint_dir, f"epoch-{current_epoch:04d}.ckpt"), checkpoint)
 
         # Exit conditions
-        if (
-            (config.workload.max_steps and global_step >= config.workload.max_steps)
-            or (config.workload.max_epochs and current_epoch >= config.workload.max_epochs)
-            or (max_time and (time.perf_counter() - train_start_time) >= max_time)
-        ):
+        if max_steps is not None and global_step >= max_steps:
+            should_stop = True
+        if max_epochs is not None and current_epoch >= max_epochs:
+            should_stop = True
+        if max_time is not None and (time.perf_counter() - train_start_time) >= max_time:
             should_stop = True
 
     elapsed = time.perf_counter() - train_start_time
@@ -103,7 +110,8 @@ def train_loop(fabric:Fabric,
                global_step_count,
                max_steps = None, 
                max_training_time = None,
-               sim_time=None):
+               sim_time=None
+):
     
     model.train()
     total_samples = 0
@@ -122,6 +130,7 @@ def train_loop(fabric:Fabric,
             time.sleep(sim_time)
             loss = torch.tensor(0.0)
             gpu_time = time.perf_counter() - gpu_start
+            acc = {"top1": 0.0, "top5": 0.0}
 
         else:
             outputs = model(inputs)
@@ -131,13 +140,13 @@ def train_loop(fabric:Fabric,
             optimizer.step()
             torch.cuda.synchronize()
             gpu_time = time.perf_counter() - gpu_start
-        
+            acc = compute_topk_accuracy(outputs, labels, topk=(1, 5))
         total_samples += inputs.size(0)
         total_train_loss += loss.item() * inputs.size(0)
         avg_loss = total_train_loss / total_samples
         global_step_count += 1
         elapsed = time.perf_counter() - train_start_time
-        acc = compute_topk_accuracy(outputs, labels, topk=(1, 5))
+        
 
         metrics = OrderedDict({
             "Epoch": current_epoch,
@@ -160,7 +169,7 @@ def train_loop(fabric:Fabric,
         })
         train_logger.log_metrics(metrics, step=global_step_count)
         fabric.print(
-                    f" Job {job_id} | Epoch:{metrics['Epoch']}({metrics['Batch Index']}) |"
+                    f" Job {job_id} | Epoch:{metrics['Epoch']}({metrics['Batch Index']}/{len(train_dataloader)}) |"
                     f" Batch:{metrics['Batch Id']} |"
                     # f" iter:{metrics['Iteration Time (s)']:.2f}s |"
                     f" delay:{metrics['Wait for Data Time (s)']:.2f}s |"
@@ -200,8 +209,8 @@ def compute_topk_accuracy(outputs: torch.Tensor, targets: torch.Tensor, topk=(1,
         return accuracies
 
 
-def get_transform(dataset_location: str, is_training: bool = True):
-    if 'imagenet' in dataset_location.lower():
+def get_transform(dataset_name: str, is_training: bool = True):
+    if 'imagenet' in dataset_name.lower():
         return transforms.Compose([
             transforms.Resize(256), 
             transforms.RandomResizedCrop(224),
@@ -212,7 +221,7 @@ def get_transform(dataset_location: str, is_training: bool = True):
                                  std=[0.229, 0.224, 0.225]),
         ])
     
-    elif 'cifar10' in dataset_location.lower():
+    elif 'cifar10' in dataset_name.lower():
         return transforms.Compose([
             transforms.RandomCrop(32, padding=4),
             transforms.RandomHorizontalFlip(),
@@ -221,7 +230,7 @@ def get_transform(dataset_location: str, is_training: bool = True):
                                  std=[0.2470, 0.2435, 0.2616]),
         ])
     
-    elif 'openimages' in dataset_location.lower():  # consistent naming
+    elif 'openimages' in dataset_name.lower():  # consistent naming
         return transforms.Compose([
             transforms.Resize(256),
             transforms.RandomResizedCrop(224),
@@ -232,7 +241,61 @@ def get_transform(dataset_location: str, is_training: bool = True):
         ])
     
     else:
-        raise ValueError(f"No transform defined for dataset at: {dataset_location}")
+        raise ValueError(f"No transform defined for dataset at: {dataset_name}")
+
+
+def get_dataset_loader(config: DictConfig):
+    if 's3:' in config.workload.dataset_path:
+        return S3LoaderFactory.create(
+            dataset_name=config.workload.dataset_name,
+            dataset_location=config.workload.dataset_path,
+            transform=get_transform(config.workload.dataset_name),
+        )
+    else:
+        return DiskLoaderFactory.create(
+            dataset_name=config.workload.dataset_name,
+            dataset_location=config.workload.dataset_path,
+            transform=get_transform(config.workload.dataset_name),
+        )
+
+
+def setup_coordl_dataloader(config: DictConfig, fabric: Fabric):
+   
+     # Create iterable dataset
+    train_dataset = CoorDLDataset(
+        job_id=config.job_id,
+        total_jobs=config.num_jobs,
+        s3_loader=get_dataset_loader(config),
+        redis_host=config.dataloader.cache_host,
+        redis_port=config.dataloader.cache_port,
+        ssl=config.dataloader.ssl_enabled,
+        use_compression=config.workload.use_compression,
+        syncronized_mode=config.dataloader.syncronized_mode
+    )
+    train_sampler = CoorDLBatchSampler(
+        data_source=train_dataset,
+        batch_size=config.workload.batch_size,
+        job_idx=config.job_id,
+        num_jobs=config.num_jobs ,
+        shuffle=config.workload.shuffle,
+        drop_last=config.workload.drop_last,
+        seed=config.seed
+    )
+     # Wrap in PyTorch DataLoader
+    train_dataloader = DataLoader(
+        dataset=train_dataset,
+        sampler=train_sampler,
+        batch_size=None,  # CoorDLDataset yields full batches
+        num_workers=config.workload.num_torch_workers ,
+        pin_memory=config.accelerator != "cpu"
+    )
+     # Fabric handles device placement if needed
+    train_dataloader = fabric.setup_dataloaders(
+        train_dataloader, move_to_device=config.accelerator != "cpu"
+    )
+    return train_dataloader
+
+
 
 
 def setup_disdl_dataloader(config: DictConfig, fabric: Fabric):
@@ -240,18 +303,13 @@ def setup_disdl_dataloader(config: DictConfig, fabric: Fabric):
     job_id = client.register_job(dataset_name=config.workload.name)
     config.job_id = job_id
     client.close()
-     # Set up S3 data loader
-    s3_loader = S3LoaderFactory.create(
-        dataset_name=config.workload.name,
-        dataset_location=config.workload.s3_train_prefix,
-        transform=get_transform(config.workload.s3_train_prefix)
-    )
+   
      # Create iterable dataset
     train_dataset = DISDLDataset(
         job_id=job_id,
         dataset_name=config.workload.name,
         grpc_address=config.dataloader.grpc_server_address,
-        s3_loader=s3_loader,
+        s3_loader=get_dataset_loader(config),
         redis_host=config.dataloader.cache_host,
         redis_port=config.dataloader.cache_port
     )
@@ -270,14 +328,10 @@ def setup_disdl_dataloader(config: DictConfig, fabric: Fabric):
 
 
 
-def get_model(config: DictConfig):
+def get_model(model_arch: str, num_classes: int, pretrained: bool = False):
     from torchvision.models import get_model as get_torchvision_model
     from torchvision.models import list_models as list_torchvision_models
 
-    model_arch = config.workload.model_architecture
-    # if model_arch in list_torchvision_models():
-    #     model = get_torchvision_model(name=model_arch, weights=None, num_classes=config.workload.num_classes)
-    #     return model
     if model_arch == "albef_retrieval":
         raise NotImplementedError("ALBEF model is not implemented yet.")
 
@@ -286,24 +340,20 @@ def get_model(config: DictConfig):
 
     model = timm.create_model(
         model_name=model_arch,
-        pretrained=False,
-        num_classes=config.workload.num_classes
+        pretrained=pretrained,
+        num_classes=num_classes
     )
-    print_model_stats(model, model_arch)
+    num_params = sum(p.numel() for p in model.parameters())
+    print(f"{model_arch} - Total Parameters: {num_params:,}")
     return model
 
-
-
-def print_model_stats(model, model_name=""):
-    num_params = sum(p.numel() for p in model.parameters())
-    print(f"{model_name} - Total Parameters: {num_params:,}")
 
 @hydra.main(version_base=None, config_path="./conf", config_name="config")
 def main(config: DictConfig):
 
     # log_dir = f"{config.log_dir}/{config.workload.name}/{config.job_id}".lower()
     # log_dir = os.path.normpath(log_dir)  # Normalize path for Windows
-    log_dir = os.path.join(config.log_dir, config.workload.model_architecture)
+    log_dir = os.path.join(config.log_dir, config.dataloader.name, config.workload.dataset_name, config.workload.model_name)
     train_logger = CSVLogger(root_dir=log_dir, name="train", prefix='', flush_logs_every_n_steps=config.log_interval)
     val_logger = CSVLogger(root_dir=log_dir, name="val", prefix='', flush_logs_every_n_steps=config.log_interval)
     #cree log dir if does not exist

@@ -1,7 +1,7 @@
 
 from batch_manager import CentralBatchManager
-from args import DisDLArgs
-from dataset import ImageNetDataset
+from disdl.server.core.args import DisDLArgs
+from disdl.server.s3_dataset import ImageNetDataset
 from batch import Batch
 import time
 import heapq

@@ -7,7 +7,7 @@ sys.path.append(".")
 sys.path.append("disdl\server")
 from simulation.sim_workloads import workloads, save_dict_list_to_csv
 from simulation.sim_job import DLTJob
-from disdl.server.sampler import PartitionedBatchSampler
+from disdl.server.core.sampler import PartitionedBatchSampler
 from disdl.server.batch import Batch, CacheStatus, BatchSet
 from simulation.sim_cache import SharedCache
 import collections

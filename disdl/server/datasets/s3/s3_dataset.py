@@ -5,7 +5,7 @@ import boto3
 import pandas as pd
 from io import StringIO
 from typing import List, Tuple, Dict
-from utils import S3Url
+from disdl.server.utils.utils import S3Url
 
 logger = logging.getLogger(__name__)
 class S3DatasetBase:
@@ -163,3 +163,4 @@ class S3DatasetFactory:
             return OpenImagesDataset(dataset_location, batch_size, num_partitions, shuffle, drop_last, min_lookahead_steps, transforms)
         else:
             raise ValueError(f"Unsupported dataset type for location: {dataset_location}")
+ 

@@ -10,7 +10,7 @@ from typing import List, Optional, Dict, Tuple
 from collections import OrderedDict
 # from disdl.server.batch import Batch, CacheStatus, BatchSet
 from disdl.server.batch_manager import BatchManager, Batch, CacheStatus, DLTJob
-from disdl.server.utils import AverageMeter
+from disdl.server.utils.utils import AverageMeter
 import threading
 import numpy as np
 import time

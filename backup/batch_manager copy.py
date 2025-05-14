@@ -10,7 +10,7 @@ from sortedcontainers import SortedList
 
 from batch import Batch, BatchSet, CacheStatus
 from cache_prefetching import PrefetchServiceAsync
-from dataset import *  # Consider listing explicit imports instead of *
+from disdl.server.s3_dataset import *  # Consider listing explicit imports instead of *
 from job import DLTJob
 from logger_config import configure_logger
 from sampler import PartitionedBatchSampler

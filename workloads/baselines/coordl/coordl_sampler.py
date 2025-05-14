@@ -16,7 +16,8 @@ class CoorDLBatchSampler(BatchSampler):
         
         self.job_idx = job_idx
         self.num_jobs = num_jobs
-        
+        self.owned_batch_ids = set()
+
         # Set random seed if provided
         if seed is not None:
             random.seed(seed)
@@ -54,7 +55,10 @@ class CoorDLBatchSampler(BatchSampler):
         # Step 3: Yield batch_id and batch_indices
         for batch_indices in ordered_batches:
             batch_id = hashlib.md5(str(batch_indices).encode()).hexdigest()
-            yield batch_id, batch_indices
+            if batch_indices in job_to_batches[self.job_idx]:
+                yield batch_id, batch_indices, True
+            else:
+                yield batch_id, batch_indices, False
 
     def __len__(self) -> int:
         return super().__len__()
@@ -79,6 +83,6 @@ if __name__ == "__main__":
         samplers.append(batch_sampler)
         # Create a batch sampler for each job inde
         indicies =[]
-        for batch_id, batch_indices in batch_sampler:
-            indicies.append(batch_indices)
+        for batch_id, batch_indices, owner in batch_sampler:
+            indicies.append((batch_indices, owner))
         print(f"Job: {job_idx}, Batch Indices: {indicies}")

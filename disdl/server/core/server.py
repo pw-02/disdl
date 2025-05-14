@@ -6,15 +6,16 @@ sys.path.append("disdl\protos")
 import minibatch_service_pb2 as minibatch_service_pb2
 import minibatch_service_pb2_grpc as minibatch_service_pb2_grpc
 import google.protobuf.empty_pb2
-from logger_config import configure_logger
+from disdl.server.utils.logger_config import configure_logger
 import hydra
 from omegaconf import DictConfig
-from args import DisDLArgs, DatasetConfig
+from disdl.server.core.args import DisDLArgs, DatasetConfig
 from batch_manager import BatchManager
 from omegaconf import OmegaConf
 from typing import Dict, List
-from job import DLTJob
-from dataset import S3DatasetFactory
+from disdl.server.core.job import DLTJob
+from disdl.server.s3_dataset import S3DatasetFactory
+from disdl.server.datasets.disk.disk_dataset import DiskDatasetFactory
 from batch import Batch
 from cache_status import CacheStatus
 import json
@@ -32,15 +33,7 @@ class CacheAwareMiniBatchService(minibatch_service_pb2_grpc.MiniBatchServiceServ
         self.job_to_dataset: Dict[str, str] = {}
 
         for cfg in args.available_datasets:
-            dataset = S3DatasetFactory.create_dataset(
-                dataset_location=cfg.storage_backend,
-                batch_size=cfg.batch_size,
-                num_partitions=cfg.num_partitions,
-                shuffle=cfg.shuffle,
-                drop_last=cfg.drop_last,
-                min_lookahead_steps=50,  # or cfg.min_lookahead_steps if available
-                transforms=None  # or cfg.transforms if you add support
-            )
+            dataset = self._create_data_factory(cfg)
             self.datasets[cfg.name] = BatchManager(
                 dataset=dataset,
                 use_prefetching=args.enable_prefetching,
@@ -51,6 +44,31 @@ class CacheAwareMiniBatchService(minibatch_service_pb2_grpc.MiniBatchServiceServ
             )
             logger.info(f"Registered dataset '{cfg.name}' with {len(dataset)} samples.")
         logger.info("All datasets registered successfully.")
+
+    def _create_data_factory(self, config:DatasetConfig):
+
+        if config.storage_backend == "s3":
+            return S3DatasetFactory.create_dataset(
+                dataset_location=config.s3_storage_path,
+                batch_size=config.batch_size,
+                num_partitions=config.num_partitions,
+                shuffle=config.shuffle,
+                drop_last=config.drop_last,
+                min_lookahead_steps=50,  # or cong.min_lookahead_steps if available
+                transforms=None  # or cong.transforms if you add support
+            )
+        elif config.storage_backend == "local":
+            return DiskDatasetFactory.create_dataset(
+                dataset_location=config.local_storage_path,
+                batch_size=config.batch_size,
+                num_partitions=config.num_partitions,
+                shuffle=config.shuffle,
+                drop_last=config.drop_last,
+                min_lookahead_steps=50,  # or cong.min_lookahead_steps if available
+                transforms=None  # or cong.transforms if you add support
+            )
+        else:
+            raise ValueError(f"Unsupported storage backend: {config.storage_backend}")
 
     
     def ListDatasets(self, request: Empty, context):

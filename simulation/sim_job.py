@@ -8,13 +8,13 @@ from sim_workloads import workloads
 from typing import List, Optional, Dict, Tuple
 # from disdl.server.batch_manager import BatchManager
 # from job import DLTJob
-from disdl.server.logger_config import configure_simulation_logger
+from disdl.server.utils.logger_config import configure_simulation_logger
 from collections import OrderedDict
 from disdl.server.batch import Batch, CacheStatus, BatchSet
 from disdl.server.batch_manager import BatchManager
-from disdl.server.utils import AverageMeter
-from disdl.server.dataset import S3DatasetBase
-from disdl.server.sampler import PartitionedBatchSampler
+from disdl.server.utils.utils import AverageMeter
+from disdl.server.s3_dataset import S3DatasetBase
+from disdl.server.core.sampler import PartitionedBatchSampler
 import threading
 import numpy as np
 from sortedcontainers import SortedList

@@ -26,7 +26,6 @@ class CoorDLDataset(torch.utils.data.Dataset):
     def __init__(self, 
                  job_id, 
                  total_jobs,
-                 batch_size, 
                  s3_loader:BaseS3Loader, 
                  redis_host="localhost", 
                  redis_port=6379,
@@ -35,7 +34,6 @@ class CoorDLDataset(torch.utils.data.Dataset):
                  syncronized_mode=True):
         
         self.job_id = job_id
-        self.batch_size = batch_size
         self.use_compression = use_compression
         self.syncronized_mode = syncronized_mode
         self.s3_loader = s3_loader
@@ -46,6 +44,7 @@ class CoorDLDataset(torch.utils.data.Dataset):
         self.ssl = ssl
         self.redis_client = None
         self.samples = self.s3_loader.load_sample_list()
+        pass
         
     def __getstate__(self):
         state = self.__dict__.copy()
@@ -118,7 +117,7 @@ class CoorDLDataset(torch.utils.data.Dataset):
         preprocess_time = cache_time = data_fetch_time = 0.0
         batch_data = batch_labels = None
 
-        batch_id, samples, is_owner = batch_metadata
+        batch_id, batch_indicies, is_owner = batch_metadata
 
         # Try cache
         cached_bytes = self.get_cached_minibatch(batch_id)
@@ -129,6 +128,9 @@ class CoorDLDataset(torch.utils.data.Dataset):
             cache_hit = True
         # Fallback to S3 if not cached
         elif is_owner or not self.syncronized_mode:
+            #get sample list
+            samples = [self._classed_items[sample] for sample in batch_indicies]
+
             batch_data, batch_labels, _, preprocess_time = self.s3_loader.load_batch(samples)
             batch_data = torch.stack(batch_data)
             batch_labels = torch.tensor(batch_labels, dtype=torch.long)

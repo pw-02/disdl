@@ -3,19 +3,19 @@ import threading
 from collections import OrderedDict
 from typing import Dict, Optional, Tuple
 from cache_prefetching import PrefetchServiceAsync
-from job_registry import JobRegistry
+from disdl.server.core.job_registry import JobRegistry
 from cache_manager import CacheManager
-from sampler import PartitionedBatchSampler
+from disdl.server.core.sampler import PartitionedBatchSampler
 from batch import Batch, BatchSet
 from cache_status import CacheStatus
-from job import DLTJob
+from disdl.server.core.job import DLTJob
 # from logger_config import configure_logger
-from dataset import S3DatasetBase
+from disdl.server.s3_dataset import S3DatasetBase
 # logger = configure_logger()
 
 import time
 
-from utils import AverageMeter
+from disdl.server.utils.utils import AverageMeter
 
 fun_meetrs= {}
 def timed(func):

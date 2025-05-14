@@ -1,7 +1,7 @@
 
 from collections import defaultdict, deque, OrderedDict
 from typing import Dict, List, Optional, Set, Tuple
-from utils import AverageMeter
+from disdl.server.utils.utils import AverageMeter
 from batch import Batch
 from cache_status import CacheStatus
 import threading

@@ -1,21 +1,23 @@
 # conf/config.yaml
 
 available_datasets:
-  - name: "imagenet"
-    storage_backend: "s3://imagenet1k-sdl/train/"
-    batch_size: 128
-    shuffle: true
-    drop_last: false
-    num_partitions: 1
-    prefetch_lambda_name: "CreateImageNetTrainingBatch"
+  # - name: "imagenet"
+  #   storage_backend: "s3://imagenet1k-sdl/train/"
+  #   batch_size: 128
+  #   shuffle: true
+  #   drop_last: false
+  #   num_partitions: 1
+  #   prefetch_lambda_name: "CreateImageNetTrainingBatch"
 
-  - name: "cifar10"
-    storage_backend: "s3://sdl-cifar10/train"
+  - name: cifar10
+    storage_backend: local
+    local_storage_path: data\cifar10\test
+    s3_storage_path: s3://sdl-cifar10/train
     batch_size: 128
     shuffle: true
     drop_last: false
     num_partitions: 1
-    prefetch_lambda_name: "CreateVisionTrainingBatch"
+    prefetch_lambda_name: CreateVisionTrainingBatch
 
   # - name: "mscoco"
   #   storage_backend: "s3://datasets/coco/train2017"

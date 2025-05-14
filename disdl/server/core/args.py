@@ -5,6 +5,8 @@ from typing import List
 class DatasetConfig:
     name: str
     storage_backend: str
+    local_storage_path: str
+    s3_storage_path: str
     batch_size: int
     shuffle: bool
     drop_last: bool

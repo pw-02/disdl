@@ -9,7 +9,7 @@ from simulation.sim_cache import SharedCache
 from typing import List, Optional, Dict, Tuple
 from disdl.server.batch_manager import BatchManager
 from disdl.server.batch import Batch, CacheStatus, BatchSet
-from disdl.server.utils import AverageMeter
+from disdl.server.utils.utils import AverageMeter
 from collections import OrderedDict
 import threading
 

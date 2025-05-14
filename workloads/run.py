@@ -268,7 +268,7 @@ def get_model(config: DictConfig):
 
     model = timm.create_model(
         model_name=model_arch,
-        pretrained=True,
+        pretrained=False,
         num_classes=config.workload.num_classes
     )
     print_model_stats(model, model_arch)

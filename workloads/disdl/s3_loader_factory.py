@@ -10,8 +10,8 @@ from concurrent.futures import ThreadPoolExecutor
 import torchvision.transforms as T
 import logging
 from urllib.parse import urlparse
-
-
+import json
+import logging as logger
 class S3Url(object):
     def __init__(self, url):
         self._parsed = urlparse(url, allow_fragments=False)
@@ -40,17 +40,48 @@ class BaseS3Loader(ABC):
         """
         pass
 
+    @abstractmethod
+    def load_sample_list(self, samples: List[Tuple]) -> Tuple[Any, Any, float, float]:
+        """
+        Load and return data, labels, and timing info.
+        """
+        pass
+
 class ImageNetS3Loader(BaseS3Loader):
     def __init__(self, dataset_location: str, transform=None, use_local_folder=False):
-        self.dataset_location = dataset_location
+        self.dataset_location = dataset_location.rstrip('/') + '/'
         self.transform = transform or T.ToTensor()
         self.use_local_folder = use_local_folder
         self.s3_client = None  # Delay init
+        self.s3_bucket = S3Url(self.dataset_location).bucket
+        self.s3_prefix = S3Url(self.dataset_location).key
     
+
     def _ensure_s3_client(self):
         if self.s3_client is None and not self.use_local_folder:
             self.s3_client = boto3.client("s3")
     
+    def load_sample_list(self) -> List[Tuple[str, int]]:
+        self._ensure_s3_client()
+        index_key = f"{self.s3_prefix}_paired_index.json"
+        try:
+            obj = self.s3_client.get_object(Bucket=self.s3_bucket, Key=index_key)
+            return json.loads(obj['Body'].read().decode('utf-8'))
+        except Exception as e:
+            logger.warning(f"Falling back to full scan for data location: {e}")
+
+        samples = {}
+        paginator = self.s3_client.get_paginator('list_objects_v2')
+        for page in paginator.paginate(Bucket=self.s3_bucket, Prefix=self.s3_prefix):
+            for blob in page.get('Contents', []):
+                key = blob['Key']
+                if key.lower().endswith(('.jpg', '.jpeg', '.png')):
+                    class_name = key[len(self.s3_prefix):].lstrip('/').split('/')[0]
+                    samples.setdefault(class_name, []).append(key)
+
+        self.s3_client.put_object(Bucket=self.s3_bucket, Key=index_key, Body=json.dumps(samples).encode('utf-8'))
+        return samples
+
     def load_batch(self, samples: List[Tuple[str, int]]) -> Tuple[List[torch.Tensor], List[int], float, float]:
         """
         Load a batch of ImageNet-style (image_path, label) pairs.

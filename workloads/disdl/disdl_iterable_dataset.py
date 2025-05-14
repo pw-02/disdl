@@ -38,7 +38,6 @@ class DISDLDataset(IterableDataset):
             self.use_cache = True
         self.ssl = False
         self.redis_client = None
-        self.use_cache = False
 
     def _initialize_cache_client(self):
         """Initialize Redis cache client if not already connected."""
@@ -146,7 +145,7 @@ class DISDLDataset(IterableDataset):
             if self.use_cache:
                 next_minibatch = self.get_cached_minibatch_with_retries(batch_id, max_retries=0, retry_interval=0.25)
 
-            if next_minibatch is not None:
+            if next_minibatch  is not None and (isinstance(next_minibatch , bytes) or isinstance(next_minibatch , str)):
                 decode_start = time.perf_counter()
                 batch_data, batch_labels = self.deserialize_batch_tensor(next_minibatch)
                 preprocess_time = time.perf_counter() - decode_start

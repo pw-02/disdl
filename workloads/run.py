@@ -19,8 +19,6 @@ from lightning.fabric import Fabric, seed_everything
 from lightning.fabric.loggers import CSVLogger
 from lightning.pytorch.core.saving import save_hparams_to_yaml
 
-
-
 from disdl.disdl_iterable_dataset import DISDLDataset
 from disdl.minibatch_client import MiniBatchClient
 from disdl.s3_loader_factory import S3LoaderFactory

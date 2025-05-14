@@ -1,9 +1,9 @@
 import grpc
 import sys
-sys.path.append(".")
-sys.path.append("disdl\protos")
-import minibatch_service_pb2 as pb
-import minibatch_service_pb2_grpc as pb_grpc
+# sys.path.append(".")
+# sys.path.append("disdl\protos")
+import disdl.minibatch_service_pb2 as pb
+import disdl.minibatch_service_pb2_grpc as pb_grpc
 from google.protobuf.empty_pb2 import Empty
 import json
 

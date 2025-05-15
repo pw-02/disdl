@@ -2,8 +2,7 @@
 Command to generate Python gRPC stubs:
 python -m grpc_tools.protoc --proto_path=. protos/minibatch_service.proto --python_out=. --grpc_python_out=.
 
-
-
+python -m grpc_tools.protoc -I disdl/protos --python_out=disdl/protos --grpc_python_out=disdl/protos disdl/protos/minibatch_service.proto
 
 */
 

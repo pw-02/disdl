@@ -8,7 +8,7 @@ import logging
 from io import BytesIO
 from typing import List, Tuple
 from dataclasses import dataclass
-from disdl.s3_loader_factory import BaseS3Loader  # your factory class
+# from disdl.s3_loader_factory import BaseS3Loader  # your factory class
 
 logger = logging.getLogger(__name__)
 
@@ -26,7 +26,7 @@ class CoorDLDataset(torch.utils.data.Dataset):
     def __init__(self, 
                  job_id, 
                  total_jobs,
-                 s3_loader:BaseS3Loader, 
+                 s3_loader, 
                  redis_host="localhost", 
                  redis_port=6379,
                  ssl=False, 

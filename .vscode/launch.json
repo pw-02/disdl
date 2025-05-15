@@ -1,11 +1,39 @@
+// {
+//   "version": "0.2.0",
+//   "configurations": [
+//     {
+//       "name": "Run Training Job",
+//       "type": "python",
+//       "request": "launch",
+//       "program": "${workspaceFolder}/workloads/run.py",
+//       "console": "integratedTerminal",
+//       "cwd": "${workspaceFolder}/workloads",
+//       "env": {
+//         "PYTHONPATH": ".."
+//       }
+//     },
+//     {
+//       "name": "Launch DisDL Server",
+//       "type": "python",
+//       "request": "launch",
+//       "program": "${workspaceFolder}/disdl/bin/launch_server.py",
+//       "console": "integratedTerminal",
+//       "cwd": "${workspaceFolder}",
+//       "env": {
+//         "PYTHONPATH": "${workspaceFolder}"
+//       }
+//     }
+//   ]
+// }
+
 {
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch DisDL Server",
+      "name": "Run Current File",
       "type": "python",
       "request": "launch",
-      "program": "${workspaceFolder}/disdl/bin/launch_server.py",
+      "program": "${file}",
       "console": "integratedTerminal",
       "env": {
         "PYTHONPATH": "${workspaceFolder}"

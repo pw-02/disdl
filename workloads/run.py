@@ -156,27 +156,30 @@ def train_loop(fabric:Fabric,
             "Batch Index": batch_idx,
             "Batch Size": inputs.size(0),
             "Iteration Time (s)": time.perf_counter() - last_step_time,
+            "Wait for Data Time (s)": wait_for_data_time,
+            "GPU Processing Time (s)": gpu_time,
             "Train Loss (Avg)": avg_loss,
             "Top-1 Accuracy": acc["top1"],
             "Top-5 Accuracy": acc["top5"],
-            "GPU Processing Time (s)": gpu_time,
-            "Wait for Data Time (s)": wait_for_data_time,
-            "Data Load Time (s)": meta.data_fetch_time,
+            "Data Fetch Time (s)": meta.data_fetch_time,
             "Transform Time (s)": meta.preprocess_time,
-            "Cache Time (s)": meta.cache_time,
+            "GRPC Get (s)": meta.grpc_get_overhead,
+            "GRPC Report (s)": meta.grpc_report_overhead,
+            "Other Time (s)": meta.other,
             "Cache Hit (Batch)": int(meta.cache_hit),
             "Timestamp (UTC)": datetime.now(timezone.utc),
+            "Elapsed Time (s)": elapsed,
         })
         train_logger.log_metrics(metrics, step=global_step_count)
         fabric.print(
                     f" Job {job_id} | Epoch:{metrics['Epoch']}({metrics['Batch Index']}/{len(train_dataloader)}) |"
                     f" Batch:{metrics['Batch Id']} |"
-                    # f" iter:{metrics['Iteration Time (s)']:.2f}s |"
-                    f" delay:{metrics['Wait for Data Time (s)']:.2f}s |"
-                    f" fetch:{metrics['Data Load Time (s)']:.2f}s |"
-                    f" transform:{metrics['Transform Time (s)']:.2f}s |"
+                    f" iter:{metrics['Iteration Time (s)']:.2f}s |"
                     f" gpu:{metrics['GPU Processing Time (s)']:.2f}s |"
-                    # f" elapsed:{metrics['Elapsed Time (s)']:.2f}s |"
+                    f" delay:{metrics['Wait for Data Time (s)']:.2f}s |"
+                    f" fetch:{metrics['Data Fetch Time (s)']:.2f}s |"
+                    f" transform:{metrics['Transform Time (s)']:.2f}s |"
+                    f" elapsed:{metrics['Elapsed Time (s)']:.2f}s |"
                     f" loss: {metrics['Train Loss (Avg)']:.3f} |"
                     # f" acc: {metrics['Train Accuracy (Avg)']:.3f} |"
                     # F" cache hit: {metrics['Cache_Hit (Batch)']} |"
@@ -318,6 +321,7 @@ def setup_disdl_dataloader(config: DictConfig, fabric: Fabric):
         s3_loader=get_dataset_loader(config),
         redis_host=config.cache_host,
         redis_port=config.cache_port,
+
         num_batches_per_epoch=dataset_info['num_batches'],
     )
      # Wrap in PyTorch DataLoader

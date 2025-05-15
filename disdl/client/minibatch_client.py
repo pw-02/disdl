@@ -51,6 +51,7 @@ class MiniBatchClient:
         samples = json.loads(batch.samples)
         if batch.batch_id == "None":
             return None
+        # print(f"Batch ID: {batch_id} for job {job_id}")
         return batch_id, samples, should_cache, eviction_candidate
 
     def end_job(self, job_id):

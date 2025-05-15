@@ -18,10 +18,10 @@ class BatchMetadata:
     batch_id: str
     data_fetch_time: float
     preprocess_time: float
-    cache_time: float
     cache_hit: bool
-    metadata_overhead: float
-    report_overhead: float
+    grpc_get_overhead: float
+    grpc_report_overhead: float
+    other: float
 
 
 class DISDLDataset(IterableDataset):
@@ -39,7 +39,7 @@ class DISDLDataset(IterableDataset):
             self.use_cache = True
         self.ssl = False
         self.redis_client = None
-        self.use_cache = False
+        # self.use_cache = False
         self.num_batches_per_epoch = num_batches_per_epoch
     
     def __len__(self):
@@ -66,11 +66,14 @@ class DISDLDataset(IterableDataset):
                 if minibatch:
                     break
             except Exception as e:
-                logging.warning(f"[REDIS ERROR] Attempt {attempt + 1} failed for batch {batch_id}: {e}")
+                # logging.warning(f"[REDIS ERROR] Attempt {attempt + 1} failed for batch {batch_id}: {e}")
+                pass
             attempt += 1
-            time.sleep(retry_interval * (2 ** attempt))  # exponential backoff
+            if attempt <= max_retries:
+                time.sleep(retry_interval * (2 ** attempt))  # exponential backoff
         if minibatch is None:
-            logging.warning(f"[CACHE MISS] Batch {batch_id} not found after {max_retries} retries.")
+            pass
+            # logging.warning(f"[CACHE MISS] Batch {batch_id} not found after {max_retries} retries.")
         return minibatch
     
     def deserialize_batch_tensor(self, batch_bytes: bytes, use_compression=False) -> Tuple[torch.Tensor, torch.Tensor]:
@@ -82,7 +85,7 @@ class DISDLDataset(IterableDataset):
         
         return batch_data, batch_labels
     
-    def serialize_batch_tensor(batch_data: torch.Tensor, batch_labels: torch.Tensor, use_compression: bool = False) -> bytes:
+    def serialize_batch_tensor(self, batch_data: torch.Tensor, batch_labels: torch.Tensor, use_compression: bool = False) -> bytes:
         with BytesIO() as buffer:
             torch.save((batch_data, batch_labels), buffer)
             raw_bytes = buffer.getvalue()
@@ -125,7 +128,8 @@ class DISDLDataset(IterableDataset):
                     eviction_attempted = True
 
                 retries += 1
-                time.sleep(retry_interval)
+                if retries <= max_retries:
+                    time.sleep(retry_interval)
 
         logging.warning(f"Failed to cache batch '{batch_id}' after {max_retries} retries.")
         return False, evicted_key
@@ -135,62 +139,68 @@ class DISDLDataset(IterableDataset):
         
 
         while True:
-            iter_start_time = time.perf_counter()
+            iter_start = time.perf_counter()
+            # 1. Fetch metadata
             grpc_start = time.perf_counter()
-            batch_id, samples, should_cache, eviction_candidate = mini_batch_client.get_next_batch_metadata(self.job_id)
-            metadata_overhead = time.perf_counter() - grpc_start
+            batch_id, sample_list, should_cache, eviction_candidate = mini_batch_client.get_next_batch_metadata(self.job_id)
+            grpc_metadata_fetch_time = time.perf_counter() - grpc_start
 
-            # batch_id = batch_metadata["batch_id"]
-            # should_cache = batch_metadata["should_cache"]
-            # eviction_candidate = batch_metadata.get("evict_batch_id")
-            # samples = batch_metadata["samples"]
-
+            # 2. Attempt to load from Redis
             cache_hit = False
-            preprocess_time = cache_time = data_fetch_time = 0.0
+            fetch_time = transform_time = 0.0
             evicted_key = None
             batch_is_cached = False
-            next_minibatch = None
-            if self.use_cache:
-                next_minibatch = self.get_cached_minibatch_with_retries(batch_id, max_retries=0, retry_interval=0.25)
+            cached_bytes = None
 
-            if next_minibatch  is not None and (isinstance(next_minibatch , bytes) or isinstance(next_minibatch , str)):
+            if self.use_cache:
+                fetch_start = time.perf_counter()
+                cached_bytes = self.get_cached_minibatch_with_retries(batch_id, max_retries=0)
+                fetch_time = time.perf_counter() - fetch_start
+            if cached_bytes:
+                # 3a. Cache hit: decode directly
                 decode_start = time.perf_counter()
-                batch_data, batch_labels = self.deserialize_batch_tensor(next_minibatch)
-                preprocess_time = time.perf_counter() - decode_start
+                batch_data, batch_labels = self.deserialize_batch_tensor(cached_bytes)
+                transform_time = time.perf_counter() - decode_start
                 cache_hit = True
                 batch_is_cached = True
             else:
-                batch_data, batch_labels, _, preprocess_time = self.s3_loader.load_batch(samples)
-                cache_hit = False
+                # 3b. Load from S3
+                batch_data, batch_labels, s3_fetch_time, transform_time = self.s3_loader.load_batch(sample_list)
+                fetch_time = s3_fetch_time
+
+                convert_start = time.perf_counter()
                 batch_data = torch.stack(batch_data)
                 batch_labels = torch.tensor(batch_labels, dtype=torch.long)
+                transform_time += time.perf_counter() - convert_start
 
+                # 4. Optionally cache
                 if should_cache and self.use_cache:
-                    cache_start = time.perf_counter()
+                    encode_start = time.perf_counter()
                     serialized = self.serialize_batch_tensor(batch_data, batch_labels)
-                    cache_success, evicted_key = self.cache_minibatch_with_retries(
+                    success, evicted_key = self.cache_minibatch_with_retries(
                         batch_id, serialized, max_retries=1, eviction_candidate_key=eviction_candidate
                     )
-                    if cache_success:
+                    transform_time += time.perf_counter() - encode_start
+                    if success:
                         batch_is_cached = True
-                    cache_time = time.perf_counter() - cache_start
-
+            
+            # 5. Report metadata
             report_start = time.perf_counter()
             mini_batch_client.report_job_update(
                 job_id=self.job_id,
                 batch_is_cached=batch_is_cached,
-                evicted_batch_id=evicted_key )
-            report_overhead = time.perf_counter() - report_start
+                evicted_batch_id=evicted_key
+            )
+            grpc_report_time = time.perf_counter() - report_start
 
-            total_elapsed = time.perf_counter() - iter_start_time
-            data_fetch_time = max(total_elapsed - (preprocess_time + cache_time), 0.0)
-
+            # 6. Yield batch + timings
+            total_time = time.perf_counter() - iter_start
             yield (batch_data, batch_labels), BatchMetadata(
                 batch_id=batch_id,
-                data_fetch_time=data_fetch_time,
-                preprocess_time=preprocess_time,
-                cache_time=cache_time,
+                data_fetch_time=fetch_time,
+                preprocess_time=transform_time,
                 cache_hit=cache_hit,
-                metadata_overhead=metadata_overhead,
-                report_overhead=report_overhead
+                grpc_get_overhead=grpc_metadata_fetch_time,
+                grpc_report_overhead=grpc_report_time,
+                other=total_time - (fetch_time + transform_time + grpc_metadata_fetch_time + grpc_report_time)
             )

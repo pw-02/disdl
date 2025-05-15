@@ -9,7 +9,7 @@ use_local_folder: False
 
 batch_size: 128
 num_classes: 10
-num_torch_workers: 0            # 0 means all data loading on main thread
+num_torch_workers: 0           # 0 means all data loading on main thread
 max_training_time_sec: null     # OK if you're using epoch/step limit instead
 max_training_steps: null        # (typo fixed from `steeps`)
 max_epochs: 2

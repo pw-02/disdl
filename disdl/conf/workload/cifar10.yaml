@@ -6,4 +6,4 @@ prefetch_lambda_name: "CreateVisionTrainingBatch"  # Lambda for dynamic batch cr
 max_dataset_size: null              # No enforced cap; could be used for sampling or cost control
 num_partitions: 1                   # Logical partitions for sampler/distributed jobs
 min_lookahead_steps: 25             # How far ahead to prefetch
-storage_backend: "s3://sdl-cifar10/train/"  # Cloud location of raw files
+storage_backend: "s3://sdl-cifar10/test/"  # Cloud location of raw files

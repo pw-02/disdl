@@ -17,10 +17,11 @@ class BatchMetadata:
     batch_id: str
     data_fetch_time: float
     preprocess_time: float
-    cache_time: float
     cache_hit: bool
-    metadata_overhead: float
-    report_overhead: float
+    grpc_get_overhead: float
+    grpc_report_overhead: float
+    other: float
+
     
 class CoorDLDataset(torch.utils.data.Dataset):
     def __init__(self, 
@@ -69,10 +70,11 @@ class CoorDLDataset(torch.utils.data.Dataset):
                 if minibatch:
                     return minibatch
             except Exception as e:
-                logger.warning(f"[REDIS ERROR] Attempt {attempt + 1} failed for batch {batch_id}: {e}")
+                logger.debug(f"[REDIS ERROR] Attempt {attempt + 1} failed for batch {batch_id}: {e}")
             attempt += 1
-            time.sleep(retry_interval * (2 ** attempt))  # Exponential backoff
-        logger.warning(f"[CACHE MISS] Batch {batch_id} not found after {max_retries} retries.")
+            if attempt <= max_retries:
+                time.sleep(retry_interval * (2 ** attempt))  # Exponential backoff
+        logger.debug(f"[CACHE MISS] Batch {batch_id} not found after {max_retries} retries.")
         return None
 
     
@@ -98,7 +100,8 @@ class CoorDLDataset(torch.utils.data.Dataset):
             except Exception as e:
                 logger.debug(f"[RETRY {retries}] Failed to cache batch '{batch_id}': {e}")
                 retries += 1
-                time.sleep(retry_interval)
+                if retries <= max_retries:
+                    time.sleep(retry_interval)
         logger.warning(f"Failed to cache batch '{batch_id}' after {max_retries} retries.")
         return False
     
@@ -112,66 +115,73 @@ class CoorDLDataset(torch.utils.data.Dataset):
             for blob in self.samples[blob_class]]
     
     def __getitem__(self, batch_metadata):
-        iter_start_time = time.perf_counter()
-        cache_hit = False
-        preprocess_time = cache_time = data_fetch_time = 0.0
+        iter_start = time.perf_counter()
+
         batch_data = batch_labels = None
+        is_cache_hit = False
+        fetch_time = transform_time = 0.0
 
-        batch_id, batch_indicies, is_owner = batch_metadata
+        batch_id, batch_indices, is_batch_owner = batch_metadata
 
-        # Try cache
+        # Try fetching batch from cache
+        fetch_start = time.perf_counter()
         cached_bytes = self.get_cached_minibatch(batch_id)
+        fetch_time = time.perf_counter() - fetch_start
+
         if cached_bytes:
+            # Cache hit — decode and done
             decode_start = time.perf_counter()
             batch_data, batch_labels = self.deserialize_batch_tensor(cached_bytes)
-            preprocess_time = time.perf_counter() - decode_start
-            cache_hit = True
-        # Fallback to S3 if not cached
-        elif is_owner or not self.syncronized_mode:
-            #get sample list
-            samples = [self._classed_items[sample] for sample in batch_indicies]
+            transform_time = time.perf_counter() - decode_start
+            is_cache_hit = True
 
-            batch_data, batch_labels, _, preprocess_time = self.s3_loader.load_batch(samples)
+        elif is_batch_owner or not self.syncronized_mode:
+            # Load raw samples
+            samples = [self._classed_items[idx] for idx in batch_indices]
+            batch_data, batch_labels, s3_fetch_time, transform_time = self.s3_loader.load_batch(samples)
+            fetch_time = s3_fetch_time
+
+            convert_start = time.perf_counter()
             batch_data = torch.stack(batch_data)
             batch_labels = torch.tensor(batch_labels, dtype=torch.long)
-            if is_owner:
-                cache_start = time.perf_counter()
+            transform_time += time.perf_counter() - convert_start
+    
+
+            # If owner, encode + cache it
+            if is_batch_owner:
+                encode_start = time.perf_counter()
                 serialized = self.serialize_batch_tensor(batch_data, batch_labels)
                 self.cache_minibatch(batch_id, serialized, max_retries=2)
-                cache_time = time.perf_counter() - cache_start
+                transform_time += time.perf_counter() - encode_start
+                # redis_write_time = 0.0  # only count Redis insert if you want to isolate it
         else:
+            # Wait until peer caches it
             wait_start = time.perf_counter()
             cached_bytes = self.get_cached_minibatch(batch_id, max_retries=np.inf, retry_interval=0.25)
+            fetch_time = time.perf_counter() - wait_start
+
             decode_start = time.perf_counter()
             batch_data, batch_labels = self.deserialize_batch_tensor(cached_bytes)
-            preprocess_time = time.perf_counter() - decode_start
-            cache_time = decode_start - wait_start
+            transform_time = time.perf_counter() - decode_start
 
-        total_elapsed = time.perf_counter() - iter_start_time
-        data_fetch_time = max(total_elapsed - (preprocess_time + cache_time), 0.0)
-
-        #handle cache eviction
+        # Redis access tracking
         access_key = f"access_tracker:{batch_id}"
-        # Increment access count
-        access_count = int(self.redis_client.get(access_key) or 0)
-        access_count += 1
+        access_count = int(self.redis_client.get(access_key) or 0) + 1
         self.redis_client.set(access_key, access_count)
-        # Get expected count
-        # Evict if done
+
         if self.total_jobs > 0 and access_count >= self.total_jobs:
             logger.debug(f"Evicting batch {batch_id} after {access_count} accesses (expected {self.total_jobs})")
             self.redis_client.delete(batch_id)
             self.redis_client.delete(access_key)
-
+        
+        total_time = time.perf_counter() - iter_start
 
         return (batch_data, batch_labels), BatchMetadata(
-                batch_id=batch_id,
-                data_fetch_time=data_fetch_time,
-                preprocess_time=preprocess_time,
-                cache_time=cache_time,
-                cache_hit=cache_hit,
-                metadata_overhead=0,
-                report_overhead=0
-            )
-    
-
+            batch_id=batch_id,
+            data_fetch_time=fetch_time,
+            preprocess_time=transform_time,
+            cache_hit=is_cache_hit,
+            grpc_get_overhead=0.0,
+            grpc_report_overhead=0.0,
+            other=total_time - (fetch_time + transform_time)
+        )

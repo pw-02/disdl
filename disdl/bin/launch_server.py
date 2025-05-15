@@ -164,7 +164,7 @@ class CacheAwareMiniBatchService(minibatch_service_pb2_grpc.MiniBatchServiceServ
                 batch_is_cached=request.batch_is_cached,
                 evicited_batch_id=request.evicted_batch_id
             )
-            logger.info(f"Job {job_id} update reported for dataset {dataset_name}")
+            # logger.info(f"Job {job_id} update reported for dataset {dataset_name}")
         return Empty()
 
 

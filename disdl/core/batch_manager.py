@@ -101,24 +101,26 @@ class BatchManager:
             self.assign_batch_set_to_job(job)
     @timed
     def get_next_batch_for_job(self, job_id: str) -> Tuple[Batch, bool, Optional[str]]:
-        job = self.job_registry.get(job_id)
-        if not job.future_batches:
-            self.assign_batch_set_to_job(job)
-      
-        next_batch = job.next_batch()
-        if next_batch is None:
-            return None, False, None
+        # with self.lock:
+            job = self.job_registry.get(job_id)
+            if not job.future_batches:
+                self.assign_batch_set_to_job(job)
+        
+            next_batch = job.next_batch()
+            if next_batch is None:
+                return None, False, None
 
-        # next_batch.mark_seen_by(job.job_id) # Mark the batch as seen by the job and update the reuse score
-        should_cache, eviction_candidate = self.cache.maybe_cache(next_batch, job.weight)
-        # if not self.shared_cache.batch_exists(eviction_candidate) and eviction_candidate is not None:
-        #     pass
-        job.set_eviction_candidate(eviction_candidate)
-        self._maybe_trigger_sample_next_batch(next_batch)
+            # next_batch.mark_seen_by(job.job_id) # Mark the batch as seen by the job and update the reuse score
+            should_cache, eviction_candidate = self.cache.maybe_cache(next_batch, job.weight)
+            # if not self.shared_cache.batch_exists(eviction_candidate) and eviction_candidate is not None:
+            #     pass
+            job.set_eviction_candidate(eviction_candidate)
+            self._maybe_trigger_sample_next_batch(next_batch)
 
-        return next_batch, should_cache, eviction_candidate
+            return next_batch, should_cache, eviction_candidate
     @timed
     def assign_batch_set_to_job(self, job: DLTJob):
+        
         self.job_registry.reset_if_new_epoch(job, self.dataset.num_partitions)
 
         candidate = self._find_best_batch_set_for_job(job)
@@ -139,28 +141,30 @@ class BatchManager:
                                batch_is_cached: bool,
                                evicited_batch_id: Optional[str]):
         #check if evicited_batch_id empty string
-        if evicited_batch_id == "":
-            evicited_batch_id = None
+        # with self.lock:
+            
+            if evicited_batch_id == "":
+                evicited_batch_id = None
 
-        job = self.job_registry.get(job_id)
-        batch = job.current_batch
-        batch.mark_seen_by(job.job_id) # Mark the batch as seen by the job and update the reuse score
-        eviction_candidate_batch_id = job.current_eviction_candidate
+            job = self.job_registry.get(job_id)
+            batch = job.current_batch
+            batch.mark_seen_by(job.job_id) # Mark the batch as seen by the job and update the reuse score
+            eviction_candidate_batch_id = job.current_eviction_candidate
 
-        if batch_is_cached:
-            self.cache.mark_cached(batch)
-        else:
-            self.cache.mark_not_cached(batch)
+            if batch_is_cached:
+                self.cache.mark_cached(batch)
+            else:
+                self.cache.mark_not_cached(batch)
 
-        if eviction_candidate_batch_id is not None:
-            self.cache._remove_eviction_candidate(eviction_candidate_batch_id)
+            if eviction_candidate_batch_id is not None:
+                self.cache._remove_eviction_candidate(eviction_candidate_batch_id)
 
-        if evicited_batch_id is not None:
-            #find the batch somehow from the batch set dict
-            epoxh_id = int(evicited_batch_id.split("_")[0])
-            partition_id = int(evicited_batch_id.split("_")[1])
-            evicted_batch = self.batch_sets[epoxh_id][partition_id].batches.get(evicited_batch_id)
-            self.cache.mark_evicted(evicted_batch) 
+            if evicited_batch_id is not None:
+                #find the batch somehow from the batch set dict
+                epoxh_id = int(evicited_batch_id.split("_")[0])
+                partition_id = int(evicited_batch_id.split("_")[1])
+                evicted_batch = self.batch_sets[epoxh_id][partition_id].batches.get(evicited_batch_id)
+                self.cache.mark_evicted(evicted_batch) 
 
     @timed
     def _generate_new_batch(self):

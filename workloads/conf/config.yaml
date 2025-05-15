@@ -1,6 +1,6 @@
 defaults:
   - _self_
-  - dataloader: coordl #coordl, disdl, tensorsocket
+  - dataloader: disdl #coordl, disdl, tensorsocket
   - workload: cifar10
   - override hydra/job_logging: disabled
   - override hydra/hydra_logging: disabled  
@@ -12,7 +12,12 @@ devices: 1                         # Number of devices to use per job
 log_interval: 1                   # Log every N steps
 log_dir: logs
 checkpoint_dir: checkpoints
-                    # 16, 32, 64
+
+use_cache: False
+cache_host: localhost
+cache_port: 6379
+ssl_enabled: False
+                  # 16, 32, 64
 simulation_mode: True            # Real training vs simulated
 exp_id: single_job
 

@@ -25,7 +25,8 @@ class BatchMetadata:
 
 
 class DISDLDataset(IterableDataset):
-    def __init__(self, job_id, dataset_name: str, grpc_address: str, s3_loader:BaseS3Loader, redis_host="localhost", redis_port=6379):
+    def __init__(self, job_id, dataset_name: str, grpc_address: str, s3_loader:BaseS3Loader, redis_host="localhost", redis_port=6379,
+                 num_batches_per_epoch: Optional[int] = None):
         self.job_id = job_id
         self.dataset_name = dataset_name
         self.grpc_address = grpc_address
@@ -38,6 +39,12 @@ class DISDLDataset(IterableDataset):
             self.use_cache = True
         self.ssl = False
         self.redis_client = None
+        self.use_cache = False
+        self.num_batches_per_epoch = num_batches_per_epoch
+    
+    def __len__(self):
+        return self.num_batches_per_epoch
+
 
     def _initialize_cache_client(self):
         """Initialize Redis cache client if not already connected."""
@@ -125,6 +132,7 @@ class DISDLDataset(IterableDataset):
 
     def __iter__(self):
         mini_batch_client = MiniBatchClient(address=self.grpc_address)
+        
 
         while True:
             iter_start_time = time.perf_counter()

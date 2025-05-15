@@ -87,15 +87,32 @@ class CacheAwareMiniBatchService(minibatch_service_pb2_grpc.MiniBatchServiceServ
         dataset_name = request.dataset_name
         if dataset_name not in self.datasets:
             return minibatch_service_pb2.RegisterJobResponse(
-                job_id="", errorMessage=f"Dataset '{dataset_name}' not registered."
+                job_id="",
+                dataset_info=None,
+                errorMessage=f"Dataset '{dataset_name}' not registered."
             )
 
         job_id = uuid.uuid4().hex[:8]
         self.job_to_dataset[job_id] = dataset_name
         self.datasets[dataset_name].add_job(job_id=job_id)
+
+        info = self.datasets[dataset_name].dataset.dataset_info()
+        dataset_info_msg = minibatch_service_pb2.DatasetInfo(
+            name=dataset_name,
+            location=info["location"],
+            num_samples=info["num_samples"],
+            num_batches=info["num_batches"],
+            num_partitions=info["num_partitions"]
+        )
+
         logger.info(f"Registered job {job_id} for dataset '{dataset_name}'")
 
-        return minibatch_service_pb2.RegisterJobResponse(job_id=job_id, errorMessage="")
+        return minibatch_service_pb2.RegisterJobResponse(
+            job_id=job_id,
+            dataset_info=dataset_info_msg,
+            errorMessage=""
+        )
+
 
     def GetNextBatchForJob(self, request, context):
         job_id = request.job_id

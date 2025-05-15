@@ -26,9 +26,20 @@ class MiniBatchClient:
     def register_job(self, dataset_name):
         request = pb.RegisterJobRequest(dataset_name=dataset_name)
         response = self.stub.RegisterJob(request)
+
         if response.errorMessage:
             raise RuntimeError(response.errorMessage)
-        return response.job_id
+
+        dataset_info = {
+            "name": response.dataset_info.name,
+            "location": response.dataset_info.location,
+            "num_samples": response.dataset_info.num_samples,
+            "num_batches": response.dataset_info.num_batches,
+            "num_partitions": response.dataset_info.num_partitions,
+        }
+
+        return response.job_id, dataset_info
+
 
     def get_next_batch_metadata(self, job_id):
         request = pb.GetNextBatchForJobRequest(job_id=job_id)

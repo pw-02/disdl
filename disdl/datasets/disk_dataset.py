@@ -26,14 +26,22 @@ class DiskDatasetBase:
 
     def _get_samples_from_disk(self):
         raise NotImplementedError()
-
+    
+    
     def dataset_info(self):
+        num_samples = len(self)
+        if self.drop_last:
+            num_batches = num_samples // self.batch_size
+        else:
+            num_batches = (num_samples + self.batch_size - 1) // self.batch_size  # ceil division
+
         return {
             "location": str(self.dataset_location),
-            "num_samples": len(self),
-            "num_batches": len(self) // self.batch_size,
+            "num_samples": num_samples,
+            "num_batches": num_batches,
             "num_partitions": self.num_partitions
         }
+
 
     def __len__(self):
         return len(self.samples)

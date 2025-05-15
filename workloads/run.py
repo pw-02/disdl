@@ -184,6 +184,12 @@ def train_loop(fabric:Fabric,
 
         if (max_training_time and elapsed >= max_training_time) or (max_steps and global_step_count >= max_steps):
             break
+
+        if batch_idx >= len(train_dataloader):
+            # fabric.print(f"Completed epoch {current_epoch} with {global_step_count} steps.")
+            break
+
+
         last_step_time  = time.perf_counter()
     return global_step_count
 
@@ -266,9 +272,9 @@ def setup_coordl_dataloader(config: DictConfig, fabric: Fabric):
         job_id=config.job_id,
         total_jobs=config.num_jobs,
         s3_loader=get_dataset_loader(config),
-        redis_host=config.dataloader.cache_host,
-        redis_port=config.dataloader.cache_port,
-        ssl=config.dataloader.ssl_enabled,
+        redis_host=config.cache_host,
+        redis_port=config.cache_port,
+        ssl=config.ssl_enabled,
         use_compression=config.workload.use_compression,
         syncronized_mode=config.dataloader.syncronized_mode
     )
@@ -300,24 +306,25 @@ def setup_coordl_dataloader(config: DictConfig, fabric: Fabric):
 
 def setup_disdl_dataloader(config: DictConfig, fabric: Fabric):
     client = MiniBatchClient(address=config.dataloader.grpc_server_address)
-    job_id = client.register_job(dataset_name=config.workload.name)
+    job_id, dataset_info = client.register_job(dataset_name=config.workload.dataset_name)
     config.job_id = job_id
     client.close()
    
      # Create iterable dataset
     train_dataset = DISDLDataset(
         job_id=job_id,
-        dataset_name=config.workload.name,
+        dataset_name=config.workload.dataset_name,
         grpc_address=config.dataloader.grpc_server_address,
         s3_loader=get_dataset_loader(config),
-        redis_host=config.dataloader.cache_host,
-        redis_port=config.dataloader.cache_port
+        redis_host=config.cache_host,
+        redis_port=config.cache_port,
+        num_batches_per_epoch=dataset_info['num_batches'],
     )
      # Wrap in PyTorch DataLoader
     train_dataloader = DataLoader(
         train_dataset,
         batch_size=None,  # DISDLDataset yields full batches
-        num_workers=config.workload.num_pytorch_workers,
+        num_workers=config.workload.num_torch_workers,
         pin_memory=config.accelerator != "cpu"
     )
      # Fabric handles device placement if needed

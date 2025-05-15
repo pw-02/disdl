@@ -64,8 +64,9 @@ class PartitionedBatchSampler():
         # return sampled_indices, self.current_epoch, self.active_partition_idx+1, self.current_idx
     
     def generate_batch(self, batch_indices):
+        self.current_idx += 1 
         next_batch = Batch(batch_indices, self.current_epoch, self.active_partition_idx+1, self.current_idx)
-        self.current_idx += 1  # Increment the batch index for the next batch
+         # Increment the batch index for the next batch
         return next_batch
 
     def _partition_indices(self, num_partitions):

@@ -57,7 +57,8 @@ message RegisterJobRequest {
 
 message RegisterJobResponse {
   string job_id = 1;
-  string errorMessage = 2; // Optional error message
+  DatasetInfo dataset_info = 2;
+  string errorMessage = 3; // Optional error message
 
 }
 

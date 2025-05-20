@@ -50,7 +50,7 @@ class Dataset:
     def __len__(self) -> int:
         return self.num_samples
 
-@timed   
+# @timed   
 def run_simulation(
     dataloader_system: str,
     workload_name: str,
@@ -210,32 +210,32 @@ def run_simulation(
     print(f"  Cache Capacity: {cache_capacity:.0f} batches")
     print(f"  Cache Used: {max_cache_capacity_used:} batches")
     print(f"  Cache Hit %: {agg_cache_hit_percent:.2f}%, Hits: {agg_cache_hits}, Misses: {agg_cache_misses}")
-    print(f"  Cache Hit % per Job: {job_cache_hit_percent}")
     print(f"  Cache Cost: ${cache_cost:.2f}")
     print(f"  Compute Cost: ${agg_compute_cost:.2f}")
     print(f"  Total Cost : ${total_cost:.2f}")
     print(f"  Total Batches: {agg_batches_processed}")
     print(f"  Total Time: {elapsed_time_sec:.2f}s")
     print(f"  Optimal Job Throughputs: {optimal_throughputs}")
+    print(f"  Cache Hit % per Job: {job_cache_hit_percent}")
     print(f"  Actual Job Throughputs: {throuhgputs_for_jobs}")
     print(f"  Total Throughput: {agg_throuhgput:.2f} batches/s")
     print("-" * 40)
-    for job in jobs:
-        print(f"  Job {job.job_id}: {list(job.used_batch_set_ids.items())}")
-    manager.summarize_functions()
+    # for job in jobs:
+    #     print(f"  Job {job.job_id}: {list(job.used_batch_set_ids.items())}")
+    # manager.summarize_functions()
     # return overall_results
     # print(sampler.assigned_eviction_candidates)
 
 if __name__ == "__main__":
     dataloader_system  = 'DisDL' #'CoorDL', TensorSocket, DisDL
-    workload_name = 'imagenet_128_nas' #'imagenet_128_hpo', 'imagenet_128_resnet50', imagenet_128_nas, imagenet_slowfast
+    workload_name = '20_jobs' #'imagenet_128_hpo', 'imagenet_128_resnet50', imagenet_128_nas, imagenet_slowfast, '20_jobs'
     workload_jobs = dict(workloads[workload_name])
 
     simulation_time_sec = None #3600 # None  #3600 * 1 # Simulate 1 hour
-    batches_per_epoch = 8500 # batches
-    epochs_per_job = 1 #np.inf
+    batches_per_epoch = 850 # batches
+    epochs_per_job = 3 #np.inf
     batches_per_job = batches_per_epoch * epochs_per_job
-    cache_capacity = 0.25 * batches_per_epoch  #np.inf #5.0 * batches_per_epoch #number of batches as a % of the total number of batches
+    cache_capacity = 450 #0.25 * batches_per_epoch  #np.inf #5.0 * batches_per_epoch #number of batches as a % of the total number of batches
     cache_policy = "noevict" # "lru", "fifo", "mru", "random", "noevict", "reuse_score"
     hourly_ec2_cost = 12.24
     hourly_cache_cost = 3.25

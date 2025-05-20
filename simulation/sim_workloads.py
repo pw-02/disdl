@@ -53,6 +53,14 @@ workloads = {
         'VGG16': 0.514980298,
 
     },
+    
+    'imagenet_128_nas_cache': {
+        'CACGE': 0.052516984,
+        'SHUFFLENETV2': 0.062516984,
+        'RESNET18': 0.104419951,
+        'RESNET50': 0.33947309,
+        'VGG16': 0.514980298,
+    },
 
     #dict of 20 jobs operating at different speeds, labels 1-20
     '20_jobs': {

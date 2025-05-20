@@ -4,9 +4,9 @@ import time
 from typing import List, Set, Optional, Dict, Tuple
 from collections import deque, OrderedDict
 from enum import Enum
-
+import time
 from disdl.cache.cache_status import CacheStatus
-
+import math
 # from job import DLTJob
 class Batch:
     def __init__(self, batch_indicies, epoch_idx, partition_idx, batch_idx):
@@ -22,11 +22,23 @@ class Batch:
         self.lock = threading.Lock()  # Lock for accessing shared resources
         self.reuse_score: float = 0.0
         self.awaiting_to_be_seen_by: Dict[str, float] = {}
+        self.created_at = time.perf_counter()
+        self.job_next_use = dict()  # job_id -> estimated time until next use (seconds)
+
 
     def compute_weighted_reuse_score(self):
         """Compute the reuse score based on the number of jobs that have seen this batch."""
         with self.lock:
-            self.reuse_score = sum(self.awaiting_to_be_seen_by.values())
+            age_seconds = time.perf_counter() - self.created_at  # how old the batch is in seconds
+            age_tiebreaker = -age_seconds * 1e-6  # small negative number proportional to age
+            reuse_score = sum(self.awaiting_to_be_seen_by.values()) + age_tiebreaker
+            self.reuse_score = reuse_score
+            return self.reuse_score
+    
+    def compute_time_until_next_use(self):
+        if not self.job_next_use:
+            return float('inf')  # no info, treat as least urgent
+        return min(self.job_next_use.values())
     
     def mark_seen_by(self, job_id: str):
         # with self.lock:
@@ -38,6 +50,8 @@ class Batch:
         # with self.lock:
             if job_id not in self.awaiting_to_be_seen_by:
                 self.awaiting_to_be_seen_by[job_id] = weight
+                #predicted access time
+                # self.job_next_use[job_id] = access_distance * weight                
             self.compute_weighted_reuse_score()
 
 

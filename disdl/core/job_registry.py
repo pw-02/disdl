@@ -34,8 +34,9 @@ class JobRegistry:
         job.current_batch_set_id = batch_set.id
 
         for batch in batch_set.batches.values():
-            batch.mark_awaiting_to_be_seen_by(job.job_id, job.weight)
             job.future_batches[batch.batch_id] = batch
+            batch.mark_awaiting_to_be_seen_by(job.job_id, job.weight)
+
 
     def reset_if_new_epoch(self, job: DLTJob, num_partitions: int):
         if len(job.partitions_covered_this_epoch) == num_partitions:

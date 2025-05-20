@@ -64,8 +64,8 @@ class DLTJob:
             if not next_batch:
                 #just get the next batch in the future batches
                 next_batch = next(iter(self.future_batches.values()), None)
-            if '2_1_1_' in next_batch.batch_id:
-                print(f"Next batch: {next_batch.batch_id}")
+            # if '2_1_1_' in next_batch.batch_id:
+            #     print(f"Next batch: {next_batch.batch_id}")
             if next_batch:
                 next_batch.set_last_accessed_time()
                 self.future_batches.pop(next_batch.batch_id, None)

@@ -88,18 +88,18 @@ class BatchManager:
         for _ in range(self.lookahead_distance):
             self._generate_new_batch()
 
-    @timed
+    # @timed
     def add_job(self, job_id: str, processing_speed: Optional[float] = 1.0):
         job = self.job_registry.register(job_id, processing_speed)
         if not job.future_batches:
             self.assign_batch_set_to_job(job)
 
             
-    def add_job(self, job_id: str, processing_speed: Optional[float] = 1.0):
-        job = self.job_registry.register(job_id, processing_speed)
-        if not job.future_batches:
-            self.assign_batch_set_to_job(job)
-    @timed
+    # def add_job(self, job_id: str, processing_speed: Optional[float] = 1.0):
+    #     job = self.job_registry.register(job_id, processing_speed)
+    #     if not job.future_batches:
+    #         self.assign_batch_set_to_job(job)
+    # @timed
     def get_next_batch_for_job(self, job_id: str) -> Tuple[Batch, bool, Optional[str]]:
 
             job = self.job_registry.get(job_id)
@@ -118,7 +118,7 @@ class BatchManager:
             self._maybe_trigger_sample_next_batch(next_batch)
 
             return next_batch, should_cache, eviction_candidate
-    @timed
+    # @timed
     def assign_batch_set_to_job(self, job: DLTJob):
         
         self.job_registry.reset_if_new_epoch(job, self.dataset.num_partitions)
@@ -135,7 +135,7 @@ class BatchManager:
         partition_idx, batch_set = candidate
         self.job_registry.update_assignment(job, batch_set, job.elapased_time_sec)
     
-    @timed
+    # @timed
     def processed_batch_update(self,
                                job_id: str,
                                batch_is_cached: bool,
@@ -166,7 +166,7 @@ class BatchManager:
                 evicted_batch = self.batch_sets[epoxh_id][partition_id].batches.get(evicited_batch_id)
                 self.cache.mark_evicted(evicted_batch) 
 
-    @timed
+    # @timed
     def _generate_new_batch(self):
         next_batch:Batch = next(self.sampler)
 
@@ -176,13 +176,13 @@ class BatchManager:
         batch_set.batches[next_batch.batch_id] = next_batch
 
         for job in self.job_registry.all():
-            if job.current_batch_set_id == batch_set.id:
+            # if job.current_batch_set_id == batch_set.id:
                 next_batch.mark_awaiting_to_be_seen_by(job.job_id, job.weight)
                 job.future_batches[next_batch.batch_id] = next_batch
 
         return next_batch
     
-    @timed
+    # @timed
     def _find_best_batch_set_for_job(self, job: DLTJob) -> Optional[Tuple[int, BatchSet]]:
         best_candidate = None
         best_score = float('-inf')

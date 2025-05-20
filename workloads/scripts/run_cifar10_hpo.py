@@ -4,6 +4,8 @@ import sys
 from datetime import datetime, timezone
 import time
 def main():
+    started = time.perf_counter()
+
     # Global constants
     ROOT_LOG_DIR = "logs"
     WORKLOAD_TYPE = "hpo"
@@ -74,6 +76,7 @@ def main():
     end_timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%d_%H-%M-%S")
     print(f"Training started at UTC: {timestamp}")
     print(f"Training ended at UTC: {end_timestamp}")
+    print(f"Total time taken: {time.perf_counter() - started:.2f} seconds")
     print("All training jobs completed.")
 
 if __name__ == "__main__":

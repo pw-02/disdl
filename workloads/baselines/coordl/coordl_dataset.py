@@ -159,7 +159,7 @@ class CoorDLDataset(torch.utils.data.Dataset):
             wait_start = time.perf_counter()
             cached_bytes = self.get_cached_minibatch(batch_id, max_retries=np.inf, retry_interval=0.25)
             fetch_time = time.perf_counter() - wait_start
-
+            is_cache_hit = True #need to decided whether this is a cache hit or not, keep it as true for now
             decode_start = time.perf_counter()
             batch_data, batch_labels = self.deserialize_batch_tensor(cached_bytes)
             transform_time = time.perf_counter() - decode_start

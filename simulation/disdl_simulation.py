@@ -202,6 +202,7 @@ def run_simulation(
     throuhgputs_for_jobs = {job['job_id']: job['throughput(batches/s)'] for job in job_performances}
     optimal_throughputs = {job['job_id']: job['optimal_throughput(batches/s)'] for job in job_performances}
     job_cache_hit_percent = {job['job_id']: job['cache_hit_%'] for job in job_performances}
+    job_elapsed_time = {job['job_id']: job['elapsed_time'] for job in job_performances}
     print(f"{dataloader_system}")
     print(f"  Jobs: {job_speeds}"),
     print(f"  Batches per Job: {batches_per_job}")
@@ -215,6 +216,7 @@ def run_simulation(
     print(f"  Total Cost : ${total_cost:.2f}")
     print(f"  Total Batches: {agg_batches_processed}")
     print(f"  Total Time: {elapsed_time_sec:.2f}s")
+    print(f"  Job Elapsed Time: {job_elapsed_time}")
     print(f"  Optimal Job Throughputs: {optimal_throughputs}")
     print(f"  Cache Hit % per Job: {job_cache_hit_percent}")
     print(f"  Actual Job Throughputs: {throuhgputs_for_jobs}")
@@ -228,18 +230,18 @@ def run_simulation(
 
 if __name__ == "__main__":
     dataloader_system  = 'DisDL' #'CoorDL', TensorSocket, DisDL
-    workload_name = '20_jobs' #'imagenet_128_hpo', 'imagenet_128_resnet50', imagenet_128_nas, imagenet_slowfast, '20_jobs'
+    workload_name = 'imagenet_128_nas' #'imagenet_128_hpo', 'imagenet_128_resnet50', imagenet_128_nas, imagenet_slowfast, '20_jobs'
     workload_jobs = dict(workloads[workload_name])
 
     simulation_time_sec = None #3600 # None  #3600 * 1 # Simulate 1 hour
-    batches_per_epoch = 850 # batches
-    epochs_per_job = 3 #np.inf
+    batches_per_epoch = 79 # batches
+    epochs_per_job = 1 #np.inf
     batches_per_job = batches_per_epoch * epochs_per_job
     cache_capacity = 450 #0.25 * batches_per_epoch  #np.inf #5.0 * batches_per_epoch #number of batches as a % of the total number of batches
     cache_policy = "noevict" # "lru", "fifo", "mru", "random", "noevict", "reuse_score"
     hourly_ec2_cost = 12.24
     hourly_cache_cost = 3.25
-    load_from_s3_time = 0.1
+    load_from_s3_time = 0.5
     prefetcher_speed = 3
     preprocesssing_time = 0.00
     num_partitions = 1

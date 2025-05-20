@@ -368,14 +368,14 @@ def main(cfg: DictConfig):
     if cfg.dataloader.name == 'disdl':
         dataloader_config = DisDLConfig(
             name=cfg.dataloader.name,
-            cache_host=cfg.cache_host,
-            cache_port=cfg.cache_port,
-            grpc_server=cfg.grpc_server,
-            ssl_enabled=cfg.ssl_enabled,
-            shuffle=cfg.workload.shuffle,
-            drop_last=cfg.workload.drop_last,
-            use_compression=cfg.workload.use_compression,
-            num_workers=cfg.workload.num_torch_workers
+            cache_host=cfg.dataloader.cache_host,
+            cache_port=cfg.dataloader.cache_port,
+            grpc_server=cfg.dataloader.grpc_server,
+            ssl_enabled=cfg.dataloader.ssl_enabled,
+            shuffle=cfg.dataloader.shuffle,
+            drop_last=cfg.dataloader.drop_last,
+            use_compression=cfg.dataloader.use_compression,
+            num_workers=cfg.dataloader.num_torch_workers
         )
     elif cfg.dataloader.name == 'coordl':
         dataloader_config = CoorDLConfig(

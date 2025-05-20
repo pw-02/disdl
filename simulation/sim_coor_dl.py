@@ -264,16 +264,16 @@ def run_simulation(
 if __name__ == "__main__":
 
     dataloader_system  = 'CoorDL' 
-    workload_name = '20_jobs'
+    workload_name = 'imagenet_128_nas'
     workload_jobs = dict(workloads[workload_name])
-    batches_per_epoch = 850 # batches
-    epochs_per_job = 3 #np.inf
+    batches_per_epoch = 79 # batches
+    epochs_per_job = 1 #np.inf
     batches_per_job = batches_per_epoch * epochs_per_job
     cache_capacity = 450 #0.5 * batches_per_job
     eviction_policy = "noevict" # "lru", "fifo", "mru", "random", "noevict"
     hourly_ec2_cost = 12.24 
     hourly_cache_cost = 3.25
-    load_from_s3_time = 0.1
+    load_from_s3_time = 0.5
     preprocesssing_time = 0.00
     batch_size = 1
     simulation_time_sec = None #3600 # None  #3600 * 1 # Simulate 1 hour

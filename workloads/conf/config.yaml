@@ -1,6 +1,6 @@
 defaults:
   - _self_
-  - dataloader: coordl #coordl, disdl, tensorsocket
+  - dataloader: disdl #coordl, disdl, tensorsocket
   - workload: cifar10
   - override hydra/job_logging: disabled
   - override hydra/hydra_logging: disabled  

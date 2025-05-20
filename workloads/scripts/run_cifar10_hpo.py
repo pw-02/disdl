@@ -1,130 +1,79 @@
 import os
 import subprocess
 import sys
-import time
 from datetime import datetime, timezone
-from omegaconf import DictConfig
-import hydra
-from lightning.fabric.loggers import CSVLogger
-
-# Detect the correct Python version
-def get_python_command():
-    try:
-        subprocess.run(["python", "--version"], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        return "python"
-    except subprocess.CalledProcessError:
-        try:
-            subprocess.run(["python3", "--version"], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            return "python3"
-        except subprocess.CalledProcessError:
-            print("Error: Python is not installed.", file=sys.stderr)
-            sys.exit(1)
-
-#get config
+import time
 def main():
-    #global variables
-    root_log_dir = "logs"
-    workload_type = "hpo"
-    workload = "cifar10"
-    dataloader = 'coordl' #tensorsocket, disdl, coordl
-    batch_size = 128
-    max_epochs = 1
-    model = "resnet18" #resnet18, regnet_y_400mf,mobilenet_v3_large , resnet50, shufflenet_v2_x1_0, vgg16
-    seed = 42
-    sim_gpu_time = 0.1
+    # Global constants
+    ROOT_LOG_DIR = "logs"
+    WORKLOAD_TYPE = "hpo"
+    WORKLOAD = "cifar10"
+    DATALOADER = 'coordl'  # tensorsocket, disdl, coordl
+    DEFAULT_BATCH_SIZE = 128
+    DEFAULT_MAX_EPOCHS = 1
+    DEFAULT_MODEL = "resnet18"
+    DEFAULT_SEED = 42
+    DEFAULT_SIM_GPU_TIME = 0.1
+
+    # Define jobs with only differing params
     jobs = [
-        {
-            "job_id": 0,
-            "gpu": 0,
-            "seed": seed,
-            "model_name": model,
-            "learning_rate": 0.1,
-            "batch_size": batch_size,
-            "max_epochs": max_epochs,
-            "weight_decay": 0.0001,
-            "sim_gpu_time": sim_gpu_time,
-        },
-        {
-            "job_id": 1,
-            "gpu": 1,
-            "seed": seed,
-            "model_name": model,
-            "learning_rate": 0.1,
-            "batch_size": batch_size,
-            "max_epochs": max_epochs,
-            "weight_decay": 0.0001,
-            "sim_gpu_time": sim_gpu_time,
-        },
-        {
-            "job_id": 2,
-            "gpu": 2,
-            "seed": seed,
-            "model_name": model,
-            "learning_rate": 0.01,
-            "batch_size": batch_size,
-            "max_epochs": max_epochs,
-            "weight_decay": 0.0001,
-            "sim_gpu_time": sim_gpu_time,
-        },
-        {
-            "job_id": 3,
-            "gpu": 3,
-            "seed": seed,
-            "model_name": model,
-            "learning_rate": 0.005,
-            "batch_size": batch_size,
-            "max_epochs": max_epochs,
-            "weight_decay": 0.0001,
-            "sim_gpu_time": sim_gpu_time,
-        }
+        {"job_id": 0, "gpu": 0, "learning_rate": 0.1},
+        {"job_id": 1, "gpu": 1, "learning_rate": 0.1},
+        {"job_id": 2, "gpu": 2, "learning_rate": 0.01},
+        {"job_id": 3, "gpu": 3, "learning_rate": 0.005},
     ]
 
+    # Create global log directory with timestamp
+    timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%d_%H-%M-%S")
+    base_log_dir = os.path.join(ROOT_LOG_DIR, WORKLOAD, WORKLOAD_TYPE, DATALOADER, timestamp)
+    os.makedirs(base_log_dir, exist_ok=True)
 
-
-    # Generate global experiment ID and log directory
-    training_started_datetime =  datetime.now(timezone.utc).strftime("%Y-%m-%d_%H-%M-%S")
-
-    # current_datetime = f"{datetime.now(timezone.utc).strftime("%Y-%m-%d_%H-%M-%S")}"
-    log_dir = os.path.join(root_log_dir, workload, workload_type, dataloader, training_started_datetime)
-    os.makedirs(log_dir, exist_ok=True)  # Ensure the log directory exists
-    
-    python_cmd = sys.executable  # Use current python interpreter
+    python_cmd = sys.executable
     processes = []
+
     for job in jobs:
+        # Prepare per-job parameters by merging with defaults
+        job_params = {
+            "job_id": job["job_id"],
+            "gpu_id": job["gpu"],
+            "seed": DEFAULT_SEED,
+            "model_name": DEFAULT_MODEL,
+            "learning_rate": job.get("learning_rate", 0.1),
+            "batch_size": DEFAULT_BATCH_SIZE,
+            "max_epochs": DEFAULT_MAX_EPOCHS,
+            "weight_decay": 0.0001,
+            "sim_gpu_time": DEFAULT_SIM_GPU_TIME
+        }
+
         # Create per-job log directory
-        # job_log_dir = os.path.join(log_dir, f"job_{job['job_id']}_{job['model_name']}")
-        # Build command line arguments for the training script
+        job_log_dir = os.path.join(base_log_dir, f"job_{job_params['job_id']}_{job_params['model_name']}")
+        os.makedirs(job_log_dir, exist_ok=True)
+
+        # Build command line with Hydra-style overrides
         cmd = [
             python_cmd,
-            "workloads/run.py",  # your training script filename here
-            f"workload.job_id={job['job_id']}",
-            f"workload.gpu_id={job['gpu']}",
-            f"workload.seed={job['seed']}",
-            f"workload.model_name={job['model_name']}",
-            f"workload.learning_rate={job['learning_rate']}",
-            f"workload.batch_size={job['batch_size']}",
-            f"workload.max_epochs={job['max_epochs']}",
-            f"workload.weight_decay={job['weight_decay']}",
-            f"workload.sim_gpu_time={job['sim_gpu_time']}",
+            "workloads/run.py",
+            *(f"workload.{key}={value}" for key, value in job_params.items()),
+            f"log_dir={job_log_dir}",
             f"num_jobs={len(jobs)}",
-            f"log_dir={log_dir}"
         ]
 
-        # Set environment variable to control visible GPU for this process
+        # Set CUDA_VISIBLE_DEVICES env var to isolate GPUs
         env = os.environ.copy()
-        env["CUDA_VISIBLE_DEVICES"] = str(job['gpu'])
-        print(f"Launching job {job['job_id']} on GPU {job['gpu']} with command:\n{' '.join(cmd)}")
-        # Launch process
+        env["CUDA_VISIBLE_DEVICES"] = str(job_params["gpu_id"])
+
+        print(f"Launching job {job_params['job_id']} on GPU {job_params['gpu_id']} with command:\n{' '.join(cmd)}")
         proc = subprocess.Popen(cmd, env=env)
         processes.append(proc)
+        time.sleep(2)
 
-    # Wait for all jobs to finish
+    # Wait for all jobs to complete
     for proc in processes:
         proc.wait()
-    
-    training_ended_datetime =  datetime.now(timezone.utc).strftime("%Y-%m-%d_%H-%M-%S")
-    print(f"Training started UTC Time: {training_started_datetime}")
-    print(f"Training ended UTC Time: {training_ended_datetime}")
+
+    end_timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%d_%H-%M-%S")
+    print(f"Training started at UTC: {timestamp}")
+    print(f"Training ended at UTC: {end_timestamp}")
     print("All training jobs completed.")
 
 if __name__ == "__main__":

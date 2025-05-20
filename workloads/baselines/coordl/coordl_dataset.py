@@ -166,13 +166,15 @@ class CoorDLDataset(torch.utils.data.Dataset):
 
         # Redis access tracking
         access_key = f"access_tracker:{batch_id}"
-        access_count = int(self.redis_client.get(access_key) or 0) + 1
-        self.redis_client.set(access_key, access_count)
+        # access_count = int(self.redis_client.get(access_key) or 0) + 1
+        # self.redis_client.set(access_key, access_count)
+        access_count = self.redis_client.incr(access_key)
 
         if self.total_jobs > 0 and access_count >= self.total_jobs:
-            logger.debug(f"Evicting batch {batch_id} after {access_count} accesses (expected {self.total_jobs})")
+            logger.info(f"Evicting batch {batch_id} after {access_count} accesses (expected {self.total_jobs})")
             self.redis_client.delete(batch_id)
             self.redis_client.delete(access_key)
+            
         
         total_time = time.perf_counter() - iter_start
 

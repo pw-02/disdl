@@ -9,8 +9,8 @@ from sim_cache import SharedCache
 from typing import List, Optional, Dict, Tuple
 from collections import OrderedDict
 # from disdl.server.batch import Batch, CacheStatus, BatchSet
-from disdl.server.batch_manager import BatchManager, Batch, CacheStatus, DLTJob
-from disdl.server.utils.utils import AverageMeter
+from disdl.core.batch_manager import BatchManager, Batch, CacheStatus, DLTJob
+from disdl.utils.utils import AverageMeter
 import threading
 import numpy as np
 import time
@@ -43,6 +43,9 @@ class Dataset:
         self.num_samples = num_samples
         self.num_partitions = num_partitions
         self.batch_size = batch_size
+        self.drop_last = False
+        self.shuffle = False
+        self.min_lookahead_steps = 50
 
     def __len__(self) -> int:
         return self.num_samples
@@ -69,9 +72,9 @@ def run_simulation(
     cache = SharedCache(capacity=cache_capacity, eviction_policy=cache_policy)
     manager = BatchManager(
         dataset=Dataset(num_samples=batches_per_epoch, batch_size=batch_size, num_partitions=num_partitions),
-        drop_last=False,
-        shuffle=False,
-        prefetch_lookahead_steps=100,
+        # drop_last=False,
+        # shuffle=False,
+        # prefetch_lookahead_steps=100,
         use_prefetching=False,
         prefetch_lambda_name=None,
         prefetch_simulation_time=None,
@@ -80,7 +83,7 @@ def run_simulation(
 
     for job_id in workload_jobs:
         job_speed = workload_jobs[job_id]
-        manager.register_job(job_id, job_speed)
+        manager.add_job(job_id, job_speed)
     
     event_queue = []  # Priority queue for next event times
     time_elapsed = 0  # Global simulation time
@@ -232,7 +235,7 @@ if __name__ == "__main__":
     batches_per_epoch = 8500 # batches
     epochs_per_job = 1 #np.inf
     batches_per_job = batches_per_epoch * epochs_per_job
-    cache_capacity = 0.5 * batches_per_epoch  #np.inf #5.0 * batches_per_epoch #number of batches as a % of the total number of batches
+    cache_capacity = 0.25 * batches_per_epoch  #np.inf #5.0 * batches_per_epoch #number of batches as a % of the total number of batches
     cache_policy = "noevict" # "lru", "fifo", "mru", "random", "noevict", "reuse_score"
     hourly_ec2_cost = 12.24
     hourly_cache_cost = 3.25

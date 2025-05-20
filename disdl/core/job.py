@@ -45,31 +45,32 @@ class DLTJob:
         self.partitions_covered_this_epoch.clear()
     
     def next_batch(self) -> Optional[Batch]:
-        # with self.lock:
-        next_batch = None
-        best_score = float('inf')
-        fallback_batch = None
-        for batch in self.future_batches.values():
-            if batch.cache_status == CacheStatus.CACHED:
-                # if batch.reuse_score < best_score:
-                #     next_batch = batch
-                #     best_score = batch.reuse_score
-                next_batch = batch
-                break
-            elif batch.cache_status != CacheStatus.CACHING_IN_PROGRESS and fallback_batch is None:
-                fallback_batch = batch
-        if not next_batch:
-            next_batch = fallback_batch
+        with self.lock:
+            next_batch = None
+            best_score = float('inf')
+            fallback_batch = None
+            for batch in self.future_batches.values():
+                if batch.cache_status == CacheStatus.CACHED:
+                    # if batch.reuse_score < best_score:
+                    #     next_batch = batch
+                    #     best_score = batch.reuse_score
+                    next_batch = batch
+                    break
+                elif batch.cache_status != CacheStatus.CACHING_IN_PROGRESS and fallback_batch is None:
+                    fallback_batch = batch
+            if not next_batch:
+                next_batch = fallback_batch
 
-        if not next_batch:
-            #just get the next batch in the future batches
-            next_batch = next(iter(self.future_batches.values()), None)
-        
-        if next_batch:
-            next_batch.set_last_accessed_time()
-            self.future_batches.pop(next_batch.batch_id, None)
-        self.current_batch = next_batch
-        return next_batch
+            if not next_batch:
+                #just get the next batch in the future batches
+                next_batch = next(iter(self.future_batches.values()), None)
+            if '2_1_1_' in next_batch.batch_id:
+                print(f"Next batch: {next_batch.batch_id}")
+            if next_batch:
+                next_batch.set_last_accessed_time()
+                self.future_batches.pop(next_batch.batch_id, None)
+            self.current_batch = next_batch
+            return next_batch
     
     def set_eviction_candidate(self, batch: Batch):
         self.current_eviction_candidate = batch

@@ -1,9 +1,9 @@
 name: disdl
-grpc_server_address: localhost:50051   #10.0.17.5:50051 #10.0.17.5:50051 # 10.0.17.31:50051  10.0.17.5:50051
-# cache_host: localhost
-# cache_port: 6378
-# drop_last: False
-# shuffle: True
-# use_compression: True
-# use_local_folder: False
-# ssl_enabled: False
+cache_host: localhost
+cache_port: 6379
+grpc_server: localhost:50051   #10.0.17.5:50051 #10.0.17.5:50051 # 10.0.17.31:50051  10.0.17.5:50051
+ssl_enabled: False
+shuffle: true
+drop_last: false
+use_compression: true
+num_torch_workers: 2

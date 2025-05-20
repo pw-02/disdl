@@ -1,5 +1,9 @@
 name: coordl
-# # cache_host: localhost
-# # cache_port: 6379
-# ssl_enabled: False
+cache_host: localhost
+cache_port: 6379
+ssl_enabled: False
 syncronized_mode: True
+shuffle: false
+drop_last: false
+use_compression: true
+num_torch_workers: 0

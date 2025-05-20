@@ -101,7 +101,7 @@ class BatchManager:
             self.assign_batch_set_to_job(job)
     @timed
     def get_next_batch_for_job(self, job_id: str) -> Tuple[Batch, bool, Optional[str]]:
-        # with self.lock:
+
             job = self.job_registry.get(job_id)
             if not job.future_batches:
                 self.assign_batch_set_to_job(job)

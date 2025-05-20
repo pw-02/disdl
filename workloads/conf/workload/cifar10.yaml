@@ -1,20 +1,18 @@
+# conf/workload/cifar10_single_job.yaml
 dataset_name: cifar10
-dataset_path: data\cifar10\test  #s3://sdl-cifar10/train/
-model_name: resnet18
-
-drop_last: False
-shuffle: True
-use_compression: True
-use_local_folder: False
-
-batch_size: 128
+dataset_path: data/cifar10/test
 num_classes: 10
-num_torch_workers: 0           # 0 means all data loading on main thread
-max_training_time_sec: null     # OK if you're using epoch/step limit instead
-max_training_steps: null        # (typo fixed from `steeps`)
-max_epochs: 2
+batch_size: 128
+max_training_time_sec: null
+max_training_steps: null
+max_epochs: 3
+precision: 32
+# Global defaults
+workload_type: single_job
+job_id: 0
+gpu_id: 0
+model_name: resnet18
 learning_rate: 6e-4
 weight_decay: 1e-1
-precision: 32                  # This is quite high; see note below
-gpu_time: 0.01                  # Or optionally: 0.340841602
-checkpoint_frequency: .inf
+sim_gpu_time: 0.10
+seed: null

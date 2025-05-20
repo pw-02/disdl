@@ -6,9 +6,9 @@ import sys
 sys.path.append(".")
 sys.path.append("disdl\server")
 from simulation.sim_workloads import workloads, save_dict_list_to_csv
-from simulation.sim_job import DLTJob
-from disdl.server.core.sampler import PartitionedBatchSampler
-from disdl.server.batch import Batch, CacheStatus, BatchSet
+from disdl.core.job import DLTJob
+from disdl.core.sampler import PartitionedBatchSampler
+from disdl.core.batch import Batch, CacheStatus, BatchSet
 from simulation.sim_cache import SharedCache
 import collections
 
@@ -264,7 +264,7 @@ def run_simulation(
 if __name__ == "__main__":
 
     dataloader_system  = 'CoorDL' 
-    workload_name = 'imagenet_128_nas'
+    workload_name = 'imagenet_128_hpo'
     workload_jobs = dict(workloads[workload_name])
     batches_per_epoch = 10 # batches
     epochs_per_job = 1 #np.inf

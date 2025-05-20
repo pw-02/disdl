@@ -14,6 +14,7 @@ import torch.optim as optim
 from omegaconf import DictConfig
 from torch.utils.data import DataLoader
 from torchvision import transforms
+from omegaconf import DictConfig, OmegaConf
 
 from lightning.fabric import Fabric, seed_everything
 from lightning.fabric.loggers import CSVLogger
@@ -25,23 +26,23 @@ from disdl.client.s3_loader_factory import S3LoaderFactory
 from disdl.client.disk_loader_factory import DiskLoaderFactory
 from baselines.coordl.coordl_dataset import CoorDLDataset
 from baselines.coordl.coordl_sampler import CoorDLBatchSampler
-
-def run_training_job(config: DictConfig, train_logger: CSVLogger, val_logger: CSVLogger):
+from workloads.args import FullConfig, JobConfig, DisDLConfig, CoorDLConfig
+def run_training_job(config: FullConfig, train_logger: CSVLogger, val_logger: CSVLogger):
     # Set up Fabric
     if config.simulation_mode:
         config.accelerator = "cpu"
 
-    fabric = Fabric(accelerator=config.accelerator, devices=config.devices, precision=config.workload.precision)
+    fabric = Fabric(accelerator=config.accelerator, devices=config.devices, precision=config.job.precision)
     
-    if config.seed is not None:
-        seed_everything(config.seed)
+    if config.job.seed is not None:
+        seed_everything(config.job.seed)
 
     # Model and optimizer
-    model = get_model(model_arch=config.workload.model_name, 
-                      num_classes=config.workload.num_classes, 
+    model = get_model(model_arch=config.job.model_name, 
+                      num_classes=config.job.num_classes, 
                       pretrained=False)
 
-    optimizer = optim.Adam(model.parameters(), lr=config.workload.learning_rate)
+    optimizer = optim.Adam(model.parameters(), lr=config.job.learning_rate)
     model, optimizer = fabric.setup(model, optimizer)
 
     if config.dataloader.name == 'disdl':
@@ -56,16 +57,16 @@ def run_training_job(config: DictConfig, train_logger: CSVLogger, val_logger: CS
     current_epoch = 0
     train_start_time = time.perf_counter()
     should_stop = False
-    max_time = config.workload.max_training_time_sec
-    max_steps = config.workload.max_training_steps 
-    max_epochs = config.workload.max_epochs
-    sim_time = config.workload.gpu_time  if config.simulation_mode else None
+    max_time = config.job.max_training_time_sec
+    max_steps = config.job.max_training_steps 
+    max_epochs = config.job.max_epochs
+    sim_time = config.job.sim_gpu_time  if config.simulation_mode else None
 
     while not should_stop:
         current_epoch += 1
         global_step = train_loop(
             fabric=fabric,
-            job_id=config.job_id,
+            job_id=config.job.job_id,
             train_dataloader=train_dataloader,
             model=model,
             optimizer=optimizer, 
@@ -78,14 +79,14 @@ def run_training_job(config: DictConfig, train_logger: CSVLogger, val_logger: CS
             max_training_time=max_time,
             sim_time=sim_time
         )
-        # Save checkpoint
-        if current_epoch % config.workload.checkpoint_frequency == 0:
-            checkpoint = {
-                "epoch": current_epoch,
-                "model_state_dict": model.state_dict(),
-                "optimizer_state_dict": optimizer.state_dict(),
-            }
-            fabric.save(os.path.join(config.checkpoint_dir, f"epoch-{current_epoch:04d}.ckpt"), checkpoint)
+        # # Save checkpoint
+        # if current_epoch % config.checkpoint_frequency == 0:
+        #     checkpoint = {
+        #         "epoch": current_epoch,
+        #         "model_state_dict": model.state_dict(),
+        #         "optimizer_state_dict": optimizer.state_dict(),
+        #     }
+        #     fabric.save(os.path.join(config.checkpoint_dir, f"epoch-{current_epoch:04d}.ckpt"), checkpoint)
 
         # Exit conditions
         if max_steps is not None and global_step >= max_steps:
@@ -182,7 +183,7 @@ def train_loop(fabric:Fabric,
                     f" elapsed:{metrics['Elapsed Time (s)']:.2f}s |"
                     f" loss: {metrics['Train Loss (Avg)']:.3f} |"
                     # f" acc: {metrics['Train Accuracy (Avg)']:.3f} |"
-                    # F" cache hit: {metrics['Cache_Hit (Batch)']} |"
+                    f" cache hit: {metrics['Cache Hit (Batch)']} |"
                     )
 
         if (max_training_time and elapsed >= max_training_time) or (max_steps and global_step_count >= max_steps):
@@ -253,49 +254,49 @@ def get_transform(dataset_name: str, is_training: bool = True):
         raise ValueError(f"No transform defined for dataset at: {dataset_name}")
 
 
-def get_dataset_loader(config: DictConfig):
-    if 's3:' in config.workload.dataset_path:
+def get_dataset_loader(config: FullConfig):
+    if 's3:' in config.job.dataset_dir:
         return S3LoaderFactory.create(
-            dataset_name=config.workload.dataset_name,
-            dataset_location=config.workload.dataset_path,
-            transform=get_transform(config.workload.dataset_name),
+            dataset_name=config.job.dataset_name,
+            dataset_location=config.job.dataset_dir,
+            transform=get_transform(config.job.dataset_name),
         )
     else:
         return DiskLoaderFactory.create(
-            dataset_name=config.workload.dataset_name,
-            dataset_location=config.workload.dataset_path,
-            transform=get_transform(config.workload.dataset_name),
+            dataset_name=config.job.dataset_name,
+            dataset_location=config.job.dataset_dir,
+            transform=get_transform(config.job.dataset_name),
         )
 
 
-def setup_coordl_dataloader(config: DictConfig, fabric: Fabric):
+def setup_coordl_dataloader(config: FullConfig, fabric: Fabric):
    
      # Create iterable dataset
     train_dataset = CoorDLDataset(
-        job_id=config.job_id,
+        job_id=config.job.job_id,
         total_jobs=config.num_jobs,
         s3_loader=get_dataset_loader(config),
-        redis_host=config.cache_host,
-        redis_port=config.cache_port,
-        ssl=config.ssl_enabled,
-        use_compression=config.workload.use_compression,
+        redis_host=config.dataloader.cache_host,
+        redis_port=config.dataloader.cache_port,
+        ssl=config.dataloader.ssl_enabled,
+        use_compression=config.dataloader.use_compression,
         syncronized_mode=config.dataloader.syncronized_mode
     )
     train_sampler = CoorDLBatchSampler(
         data_source=train_dataset,
-        batch_size=config.workload.batch_size,
-        job_idx=config.job_id,
+        batch_size=config.job.batch_size,
+        job_idx=config.job.job_id,
         num_jobs=config.num_jobs ,
-        shuffle=config.workload.shuffle,
-        drop_last=config.workload.drop_last,
-        seed=config.seed
+        shuffle=config.dataloader.shuffle,
+        drop_last=config.dataloader.drop_last,
+        seed=config.job.seed
     )
      # Wrap in PyTorch DataLoader
     train_dataloader = DataLoader(
         dataset=train_dataset,
         sampler=train_sampler,
         batch_size=None,  # CoorDLDataset yields full batches
-        num_workers=config.workload.num_torch_workers ,
+        num_workers=config.dataloader.num_workers,
         pin_memory=config.accelerator != "cpu"
     )
      # Fabric handles device placement if needed
@@ -307,28 +308,27 @@ def setup_coordl_dataloader(config: DictConfig, fabric: Fabric):
 
 
 
-def setup_disdl_dataloader(config: DictConfig, fabric: Fabric):
-    client = MiniBatchClient(address=config.dataloader.grpc_server_address)
-    job_id, dataset_info = client.register_job(dataset_name=config.workload.dataset_name)
-    config.job_id = job_id
+def setup_disdl_dataloader(config: FullConfig, fabric: Fabric):
+    client = MiniBatchClient(address=config.dataloader.grpc_server)
+    grpc_job_id, dataset_info = client.register_job(dataset_name=config.dataset_name)
+    # config.job_id = grpc_job_id
     client.close()
    
      # Create iterable dataset
     train_dataset = DISDLDataset(
-        job_id=job_id,
-        dataset_name=config.workload.dataset_name,
-        grpc_address=config.dataloader.grpc_server_address,
+        job_id=grpc_job_id,
+        dataset_name=config.dataset_name,
+        grpc_address=config.dataloader.grpc_server,
         s3_loader=get_dataset_loader(config),
-        redis_host=config.cache_host,
-        redis_port=config.cache_port,
-
+        redis_host=config.dataloader.cache_host,
+        redis_port=config.dataloader.cache_port,
         num_batches_per_epoch=dataset_info['num_batches'],
     )
      # Wrap in PyTorch DataLoader
     train_dataloader = DataLoader(
         train_dataset,
         batch_size=None,  # DISDLDataset yields full batches
-        num_workers=config.workload.num_torch_workers,
+        num_workers=config.dataloader.num_workers,
         pin_memory=config.accelerator != "cpu"
     )
      # Fabric handles device placement if needed
@@ -360,18 +360,82 @@ def get_model(model_arch: str, num_classes: int, pretrained: bool = False):
 
 
 @hydra.main(version_base=None, config_path="./conf", config_name="config")
-def main(config: DictConfig):
+def main(cfg: DictConfig):
+
+    # cfg = OmegaConf.to_object(config)  # or manually create FullConfig if you want strict typing
+    dataloader_config = None
+
+    if cfg.dataloader.name == 'disdl':
+        dataloader_config = DisDLConfig(
+            name=cfg.dataloader.name,
+            cache_host=cfg.cache_host,
+            cache_port=cfg.cache_port,
+            grpc_server=cfg.grpc_server,
+            ssl_enabled=cfg.ssl_enabled,
+            shuffle=cfg.workload.shuffle,
+            drop_last=cfg.workload.drop_last,
+            use_compression=cfg.workload.use_compression,
+            num_workers=cfg.workload.num_torch_workers
+        )
+    elif cfg.dataloader.name == 'coordl':
+        dataloader_config = CoorDLConfig(
+            name=cfg.dataloader.name,
+            cache_host=cfg.dataloader.cache_host,
+            cache_port=cfg.dataloader.cache_port,
+            syncronized_mode=cfg.dataloader.syncronized_mode,
+            ssl_enabled=cfg.dataloader.ssl_enabled ,
+            shuffle=cfg.dataloader.shuffle,
+            drop_last=cfg.dataloader.drop_last,
+            use_compression=cfg.dataloader.use_compression,
+            num_workers=cfg.dataloader.num_torch_workers
+        )
+    # Create job config
+    job_config = JobConfig(
+        job_id=cfg.workload.job_id,
+        gpu_id=cfg.workload.gpu_id,
+        model_name=cfg.workload.model_name,
+        dataset_name=cfg.workload.dataset_name,
+        dataset_dir=cfg.workload.dataset_path,
+        num_classes=cfg.workload.num_classes,
+        learning_rate=cfg.workload.learning_rate,
+        batch_size=cfg.workload.batch_size,
+        weight_decay=cfg.workload.weight_decay,
+        sim_gpu_time=cfg.workload.sim_gpu_time  if cfg.simulation_mode else None,
+        max_training_time_sec=cfg.workload.max_training_time_sec,
+        max_training_steps=cfg.workload.max_training_steps,
+        max_epochs=cfg.workload.max_epochs,
+        precision=cfg.workload.precision,
+        seed=cfg.workload.seed
+    )
+
+    full_config = FullConfig(
+    # log_dir = os.path.join(cfg.log_dir, cfg.workload.dataset_name, cfg.workload.workload_type , cfg.dataloader.name, job_config.model_name),
+    log_dir = os.path.join(cfg.log_dir, f"{job_config.job_id}_{job_config.model_name}"),
+
+    log_interval = cfg.log_interval,
+    dataloader_name = cfg.dataloader.name,
+    dataset_name = cfg.workload.dataset_name,
+    accelerator= cfg.accelerator,
+    simulation_mode = cfg.simulation_mode,
+    job = job_config,
+    dataloader= dataloader_config,
+    devices = cfg.devices,
+    num_jobs = cfg.num_jobs,
+    checkpoint_frequency= cfg.checkpoint_frequency)
+
+    train_logger = CSVLogger(root_dir=full_config.log_dir, name="train", prefix='', flush_logs_every_n_steps=full_config.log_interval)
+    val_logger = CSVLogger(root_dir=full_config.log_dir, name="val", prefix='', flush_logs_every_n_steps=full_config.log_interval)
+    os.makedirs(full_config.log_dir, exist_ok=True)
+    save_hparams_to_yaml(os.path.join(full_config.log_dir, "hparms.yaml"), cfg)
 
     # log_dir = f"{config.log_dir}/{config.workload.name}/{config.job_id}".lower()
     # log_dir = os.path.normpath(log_dir)  # Normalize path for Windows
-    log_dir = os.path.join(config.log_dir, config.dataloader.name, config.workload.dataset_name, config.workload.model_name)
-    train_logger = CSVLogger(root_dir=log_dir, name="train", prefix='', flush_logs_every_n_steps=config.log_interval)
-    val_logger = CSVLogger(root_dir=log_dir, name="val", prefix='', flush_logs_every_n_steps=config.log_interval)
+    # log_dir = os.path.join(config.log_dir, config.workload.workload_name, config.workload.dataset.dataset_name, config.dataloader.name, config.workload.model_name)
+    # train_logger = CSVLogger(root_dir=log_dir, name="train", prefix='', flush_logs_every_n_steps=config.log_interval)
+    # val_logger = CSVLogger(root_dir=log_dir, name="val", prefix='', flush_logs_every_n_steps=config.log_interval)
     #cree log dir if does not exist
-    os.makedirs(log_dir, exist_ok=True)
-    #save config
-    save_hparams_to_yaml(os.path.join(log_dir, "hparms.yaml"), config)
-    run_training_job(config, train_logger,val_logger)
+    #save
+    run_training_job(full_config, train_logger,val_logger)
 
 
 if __name__ == "__main__":

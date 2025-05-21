@@ -326,6 +326,7 @@ def setup_disdl_dataloader(config: FullConfig, fabric: Fabric):
         redis_host=config.dataloader.cache_host,
         redis_port=config.dataloader.cache_port,
         num_batches_per_epoch=dataset_info['num_batches'],
+        use_compression=config.dataloader.use_compression,
     )
      # Wrap in PyTorch DataLoader
     train_dataloader = DataLoader(
@@ -333,7 +334,7 @@ def setup_disdl_dataloader(config: FullConfig, fabric: Fabric):
         batch_size=None,  # DISDLDataset yields full batches
         num_workers=config.dataloader.num_workers,
         pin_memory=config.accelerator != "cpu",
-        persistent_workers=True
+        persistent_workers=True if config.dataloader.num_workers > 0 else False,
     )
      # Fabric handles device placement if needed
     train_dataloader = fabric.setup_dataloaders(

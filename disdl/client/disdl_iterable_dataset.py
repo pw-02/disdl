@@ -28,7 +28,8 @@ class BatchMetadata:
 
 class DISDLDataset(IterableDataset):
     def __init__(self, job_id, dataset_name: str, grpc_address: str, s3_loader:BaseS3Loader, redis_host="localhost", redis_port=6379,
-                 num_batches_per_epoch: Optional[int] = None):
+                 num_batches_per_epoch: Optional[int] = None,
+                 use_compression: bool = True):
         self.job_id = job_id
         self.dataset_name = dataset_name
         self.grpc_address = grpc_address
@@ -43,7 +44,7 @@ class DISDLDataset(IterableDataset):
         self.redis_client = None
         # self.use_cache = False
         self.num_batches_per_epoch = num_batches_per_epoch
-    
+        self.use_compression = use_compression
     def __len__(self):
         return self.num_batches_per_epoch
 
@@ -78,20 +79,20 @@ class DISDLDataset(IterableDataset):
             # logging.warning(f"[CACHE MISS] Batch {batch_id} not found after {max_retries} retries.")
         return minibatch
     
-    def deserialize_batch_tensor(self, batch_bytes: bytes, use_compression=False) -> Tuple[torch.Tensor, torch.Tensor]:
-        if use_compression:
-            data = lz4.frame.decompress(batch_bytes)
+    def deserialize_batch_tensor(self, batch_bytes: bytes) -> Tuple[torch.Tensor, torch.Tensor]:
+        if self.use_compression:
+            batch_bytes = lz4.frame.decompress(batch_bytes)
         
         with BytesIO(batch_bytes) as buffer:
             batch_data, batch_labels = torch.load(buffer)
         
         return batch_data, batch_labels
     
-    def serialize_batch_tensor(self, batch_data: torch.Tensor, batch_labels: torch.Tensor, use_compression: bool = False) -> bytes:
+    def serialize_batch_tensor(self, batch_data: torch.Tensor, batch_labels: torch.Tensor) -> bytes:
         with BytesIO() as buffer:
             torch.save((batch_data, batch_labels), buffer)
             raw_bytes = buffer.getvalue()
-        if use_compression:
+        if self.use_compression:
             raw_bytes = lz4.frame.compress(raw_bytes)
         return raw_bytes
 
@@ -157,14 +158,13 @@ class DISDLDataset(IterableDataset):
 
         for _ in range(start, end):
             # Your existing batch fetch and yield logic here
-            yield from self._generate_batch(mini_batch_client, worker_id=worker_info.id)
+            yield from self._generate_batch(mini_batch_client, worker_id=worker_info.id if worker_info else None)
 
-    def _generate_batch(self, mini_batch_client, worker_id: int):
+    def _generate_batch(self, mini_batch_client, worker_id):
         iter_start = time.perf_counter()
         batch_id, sample_list, should_cache, eviction_candidate = mini_batch_client.get_next_batch_metadata(self.job_id)
         grpc_metadata_fetch_time = time.perf_counter() - iter_start
-        if "2_1_1_" in batch_id:
-            pass
+      
         cache_hit = False
         fetch_time = transform_time = 0.0
         evicted_key = None

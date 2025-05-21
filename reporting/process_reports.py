@@ -7,6 +7,10 @@ from pathlib import Path
 
 def convert_csv_to_dict(csv_file, start_timestamp = None, end_timestamp = None):
     df = pd.read_csv(csv_file)
+
+    # Drop the first row (index 0) as it is warmup
+    df = df.iloc[1:].reset_index(drop=True)
+
     if 'bill.csv' in csv_file:
         df['Timestamp'] = pd.to_datetime(df['Timestamp'])
         # Filter the DataFrame based on the timestamp range

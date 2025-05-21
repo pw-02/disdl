@@ -76,13 +76,12 @@ def main():
         proc.wait()
 
     end_timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%d_%H-%M-%S")
-    print(f"Training started at UTC: {timestamp}")
-    print(f"Training ended at UTC: {end_timestamp}")
-    print(f"Total time taken: {time.perf_counter() - started:.2f} seconds")
     print("All training jobs completed.")
+    print(f"Workload started at UTC: {timestamp}" and f"ended at UTC: {end_timestamp}")
+    print(f"Workload Time: {time.perf_counter() - started:.2f} seconds")
+    print("Generating Reports...")
     gen_workload_level_report(base_log_dir)
-    print(f"Generting Reports...")
-
+    print("Reports generated successfully. Exiting...")
 
 if __name__ == "__main__":
     main()

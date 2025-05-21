@@ -21,6 +21,8 @@ class BatchMetadata:
     grpc_get_overhead: float
     grpc_report_overhead: float
     other: float
+    worker_id: str = None
+    
 
     
 class CoorDLDataset(torch.utils.data.Dataset):
@@ -185,5 +187,6 @@ class CoorDLDataset(torch.utils.data.Dataset):
             cache_hit=is_cache_hit,
             grpc_get_overhead=0.0,
             grpc_report_overhead=0.0,
-            other=total_time - (fetch_time + transform_time)
+            other=total_time - (fetch_time + transform_time),
+            worker_id=None
         )

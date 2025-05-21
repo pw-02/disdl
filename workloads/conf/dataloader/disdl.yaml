@@ -6,4 +6,4 @@ ssl_enabled: False
 shuffle: true
 drop_last: false
 use_compression: true
-num_torch_workers: 4
+num_torch_workers: 2

@@ -2,7 +2,7 @@ name: coordl
 cache_host: localhost
 cache_port: 6379
 ssl_enabled: False
-syncronized_mode: True
+syncronized_mode: False
 shuffle: false
 drop_last: false
 use_compression: false

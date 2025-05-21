@@ -161,6 +161,7 @@ class CacheAwareMiniBatchService(minibatch_service_pb2_grpc.MiniBatchServiceServ
         if dataset_name:
             self.datasets[dataset_name].processed_batch_update(
                 job_id=job_id,
+                processed_batch_id=request.processed_batch_id,
                 batch_is_cached=request.batch_is_cached,
                 evicited_batch_id=request.evicted_batch_id
             )

@@ -27,6 +27,8 @@ from disdl.client.disk_loader_factory import DiskLoaderFactory
 from baselines.coordl.coordl_dataset import CoorDLDataset
 from baselines.coordl.coordl_sampler import CoorDLBatchSampler
 from workloads.args import FullConfig, JobConfig, DisDLConfig, CoorDLConfig
+
+
 def run_training_job(config: FullConfig, train_logger: CSVLogger, val_logger: CSVLogger):
     # Set up Fabric
     if config.simulation_mode:
@@ -184,6 +186,7 @@ def train_loop(fabric:Fabric,
                     f" loss: {metrics['Train Loss (Avg)']:.3f} |"
                     # f" acc: {metrics['Train Accuracy (Avg)']:.3f} |"
                     f" cache hit: {metrics['Cache Hit (Batch)']} |"
+                    f" worker: {meta.worker_id} |"
                     )
 
         if (max_training_time and elapsed >= max_training_time) or (max_steps and global_step_count >= max_steps):
@@ -329,7 +332,8 @@ def setup_disdl_dataloader(config: FullConfig, fabric: Fabric):
         train_dataset,
         batch_size=None,  # DISDLDataset yields full batches
         num_workers=config.dataloader.num_workers,
-        pin_memory=config.accelerator != "cpu"
+        pin_memory=config.accelerator != "cpu",
+        persistent_workers=True
     )
      # Fabric handles device placement if needed
     train_dataloader = fabric.setup_dataloaders(

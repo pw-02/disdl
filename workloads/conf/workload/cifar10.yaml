@@ -5,7 +5,7 @@ num_classes: 10
 batch_size: 128
 max_training_time_sec: null
 max_training_steps: null
-max_epochs: 3
+max_epochs: 2
 precision: 32
 # Global defaults
 workload_type: single_job

@@ -20,9 +20,10 @@ class DLTJob:
         self.used_batch_set_ids: Dict[str, float] = {}
         self.partitions_covered_this_epoch: Set[int] = set()
         # Active state
-        self.current_batch = None
+        # self.current_batch = None
+        self.currently_processing = {}
         self.current_batch_set_id  = None
-        self.current_eviction_candidate = None
+        # self.current_eviction_candidate = None
         self.future_batches: OrderedDict[str, Batch] = OrderedDict()
         self.processing_speed = processing_speed
         self.optimal_throughput = 1/self.processing_speed #batches/sec
@@ -69,11 +70,11 @@ class DLTJob:
             if next_batch:
                 next_batch.set_last_accessed_time()
                 self.future_batches.pop(next_batch.batch_id, None)
-            self.current_batch = next_batch
+            self.currently_processing[next_batch.batch_id] = next_batch
             return next_batch
     
-    def set_eviction_candidate(self, batch: Batch):
-        self.current_eviction_candidate = batch
+    # def set_eviction_candidate(self, batch: Batch):
+    #     self.current_eviction_candidate = batch
     
     def perf_stats(self, horurly_ec2_cost=12.24, hourly_cache_cost=3.25):
             hit_rate = self.cache_hit_count / (self.cache_hit_count + self.cache_miss_count) if (self.cache_hit_count + self.cache_miss_count) > 0 else 0

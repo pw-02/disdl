@@ -8,7 +8,7 @@ defaults:
 accelerator: cpu                 # 'cpu', 'gpu', 'tpu'
 devices: 1                       # Number of devices to use per job
 log_interval: 1                  # Log every N steps
-log_dir: logs
+log_dir: logs/single_job        # Directory to save logs
 checkpoint_frequency: null
 checkpoint_dir: null
 simulation_mode: True            # Real training vs simulated

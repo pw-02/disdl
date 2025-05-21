@@ -61,11 +61,13 @@ class MiniBatchClient:
 
     def report_job_update(self,
                             job_id: str,
+                            processed_batch_id: str,
                             batch_is_cached: str,
                             evicted_batch_id: str = None):
        
         request = pb.JobUpdateRequest(
             job_id=job_id,
+            processed_batch_id=processed_batch_id,
             batch_is_cached=batch_is_cached,
             evicted_batch_id=evicted_batch_id
         )

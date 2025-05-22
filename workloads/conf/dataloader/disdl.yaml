@@ -4,4 +4,4 @@ cache_port: 6379
 grpc_server: localhost:50051   #10.0.17.5:50051 #10.0.17.5:50051 # 10.0.17.31:50051  10.0.17.5:50051
 ssl_enabled: False
 use_compression: True
-num_torch_workers: 1
+num_torch_workers: 4

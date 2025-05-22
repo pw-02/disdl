@@ -183,9 +183,9 @@ def train_loop(fabric:Fabric,
                     f" fetch:{metrics['Data Fetch Time (s)']:.2f}s |"
                     f" transform:{metrics['Transform Time (s)']:.2f}s |"
                     f" elapsed:{metrics['Elapsed Time (s)']:.2f}s |"
-                    f" loss: {metrics['Train Loss (Avg)']:.3f} |"
+                    # f" loss: {metrics['Train Loss (Avg)']:.3f} |"
                     # f" acc: {metrics['Train Accuracy (Avg)']:.3f} |"
-                    f" cache hit: {metrics['Cache Hit (Batch)']} |"
+                    f" hit: {metrics['Cache Hit (Batch)']} |"
                     f" worker: {meta.worker_id} |"
                     )
 

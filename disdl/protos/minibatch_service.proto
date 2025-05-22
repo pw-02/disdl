@@ -53,6 +53,7 @@ message PingResponse {
 /* ----------------------------- Job Registration ----------------------------- */
 message RegisterJobRequest {
   string dataset_name = 1; // e.g., "imagenet", "cifar10"
+  double processing_speed = 2; // e.g., 1000 samples/sec
 }
 
 message RegisterJobResponse {

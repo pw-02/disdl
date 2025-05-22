@@ -29,7 +29,8 @@ class BatchMetadata:
 class DISDLDataset(IterableDataset):
     def __init__(self, job_id, dataset_name: str, grpc_address: str, s3_loader:BaseS3Loader, redis_host="localhost", redis_port=6379,
                  num_batches_per_epoch: Optional[int] = None,
-                 use_compression: bool = True):
+                 use_compression: bool = True,
+                 ):
         self.job_id = job_id
         self.dataset_name = dataset_name
         self.grpc_address = grpc_address

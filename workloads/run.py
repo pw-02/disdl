@@ -316,7 +316,8 @@ def setup_coordl_dataloader(config: FullConfig, fabric: Fabric):
 
 def setup_disdl_dataloader(config: FullConfig, fabric: Fabric):
     client = MiniBatchClient(address=config.dataloader.grpc_server)
-    grpc_job_id, dataset_info = client.register_job(dataset_name=config.dataset_name)
+    grpc_job_id, dataset_info = client.register_job(dataset_name=config.dataset_name,
+                                                    processing_speed= config.job.sim_gpu_time)
     # config.job_id = grpc_job_id
     client.close()
    

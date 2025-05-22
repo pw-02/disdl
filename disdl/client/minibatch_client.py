@@ -23,8 +23,9 @@ class MiniBatchClient:
         response = self.stub.ListDatasets(Empty())
         return [d.name for d in response.datasets]
 
-    def register_job(self, dataset_name):
-        request = pb.RegisterJobRequest(dataset_name=dataset_name)
+    def register_job(self, dataset_name, processing_speed=1.0):
+        request = pb.RegisterJobRequest(dataset_name=dataset_name,
+                                        processing_speed=processing_speed)
         response = self.stub.RegisterJob(request)
 
         if response.errorMessage:

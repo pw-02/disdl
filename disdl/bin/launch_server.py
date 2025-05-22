@@ -85,6 +85,7 @@ class CacheAwareMiniBatchService(minibatch_service_pb2_grpc.MiniBatchServiceServ
 
     def RegisterJob(self, request, context):
         dataset_name = request.dataset_name
+        processing_speed = request.processing_speed
         if dataset_name not in self.datasets:
             return minibatch_service_pb2.RegisterJobResponse(
                 job_id="",
@@ -94,7 +95,7 @@ class CacheAwareMiniBatchService(minibatch_service_pb2_grpc.MiniBatchServiceServ
 
         job_id = uuid.uuid4().hex[:8]
         self.job_to_dataset[job_id] = dataset_name
-        self.datasets[dataset_name].add_job(job_id=job_id)
+        self.datasets[dataset_name].add_job(job_id=job_id, processing_speed=processing_speed)
 
         info = self.datasets[dataset_name].dataset.dataset_info()
         dataset_info_msg = minibatch_service_pb2.DatasetInfo(
@@ -154,7 +155,8 @@ class CacheAwareMiniBatchService(minibatch_service_pb2_grpc.MiniBatchServiceServ
         if dataset_name:
             logger.info(f"Job {job_id} ended for dataset {dataset_name}")
         return Empty()
-
+    
+    #need to to pass in the job speed here!!
     def JobUpdate(self, request, context):
         job_id = request.job_id
         dataset_name = self.job_to_dataset.get(job_id)

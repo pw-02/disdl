@@ -1,9 +1,11 @@
 name: coordl
-cache_host: localhost
+# cache_host: localhost
+# cache_port: 6379
+cache_host: redis.rdior4.ng.0001.usw2.cache.amazonaws.com #localhost
 cache_port: 6379
 ssl_enabled: False
 syncronized_mode: True
 shuffle: false
 drop_last: false
 use_compression: True
-num_torch_workers: 2
+num_torch_workers: 4

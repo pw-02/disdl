@@ -93,5 +93,5 @@ def gen_workload_level_report(exp_folder_path):
 
 
 if __name__ == "__main__":
-    example_folder = r"C:\Users\pw\projects\disdl\logs\cifar10\nas\disdl\2025-05-20_22-07-02"
+    example_folder = r"C:\Users\pw\Desktop\logs\cifar10\nas\disdl\2025-05-22_22-53-53"
     gen_workload_level_report(example_folder)

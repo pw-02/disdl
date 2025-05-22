@@ -51,7 +51,7 @@ class ImageNetDiskLoader(BaseDiskLoader):
                 logger.warning(f"[FETCH FAIL] {path}: {e}")
                 return Image.new("RGB", (224, 224))
 
-        with ThreadPoolExecutor(max_workers=None) as executor:
+        with ThreadPoolExecutor(max_workers=1) as executor:
             images = list(executor.map(lambda s: load_image(s[0]), samples))
 
         retrieval_time = time.perf_counter() - retrieval_start

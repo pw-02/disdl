@@ -74,8 +74,6 @@ class DISDLDataset(IterableDataset):
             attempt += 1
             if attempt <= max_retries:
                 time.sleep(retry_interval * (2 ** attempt))  # exponential backoff
-        if minibatch is None:
-            pass
             # logging.warning(f"[CACHE MISS] Batch {batch_id} not found after {max_retries} retries.")
         return minibatch
     

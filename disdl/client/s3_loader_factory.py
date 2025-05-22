@@ -103,7 +103,7 @@ class ImageNetS3Loader(BaseS3Loader):
                 logging.warning(f"[FETCH FAIL] {path}: {e}")
                 return Image.new("RGB", (224, 224))
 
-        with ThreadPoolExecutor(max_workers=1) as executor:
+        with ThreadPoolExecutor(max_workers=4) as executor:
             images = list(executor.map(lambda s: load_image(s[0]), samples))
 
         retrieval_time = time.perf_counter() - retrieval_start

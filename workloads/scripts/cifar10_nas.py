@@ -3,7 +3,7 @@ import subprocess
 import sys
 from datetime import datetime, timezone
 import time
-from reporting.process_reports import gen_workload_level_report
+# from reporting.process_reports import gen_workload_level_report
 def main():
     started = time.perf_counter()
 
@@ -79,9 +79,9 @@ def main():
     print("All training jobs completed.")
     print(f"Workload started at UTC: {timestamp}" and f"ended at UTC: {end_timestamp}")
     print(f"Workload Time: {time.perf_counter() - started:.2f} seconds")
-    print("Generating Reports...")
-    gen_workload_level_report(base_log_dir)
-    print("Reports generated successfully. Exiting...")
+    # print("Generating Reports...")
+    # gen_workload_level_report(base_log_dir)
+    # print("Reports generated successfully. Exiting...")
 
 if __name__ == "__main__":
     main()

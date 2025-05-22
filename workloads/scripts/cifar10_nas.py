@@ -20,7 +20,7 @@ def main():
 
     # Define jobs with only differing params
     jobs = [
-        {"job_id": 0, "gpu": 0, "learning_rate": 0.1, "model_name": "mobilenetv2_100", 'sim_gpu_time': 0.062516984},
+        {"job_id": 0, "gpu": 0, "learning_rate": 0.1, "model_name": "mobilenetv3_small_075", 'sim_gpu_time': 0.062516984}, #mobilenetv3_small_075
         {"job_id": 1, "gpu": 1, "learning_rate": 0.1, "model_name": "resnet18", 'sim_gpu_time': 0.104419951},
         {"job_id": 2, "gpu": 2, "learning_rate": 0.1, "model_name": "resnet50", 'sim_gpu_time': 0.33947309},
         {"job_id": 3, "gpu": 3, "learning_rate": 0.1, "model_name": "vgg16", 'sim_gpu_time': 0.514980298},

@@ -4,7 +4,7 @@ name: coordl
 cache_host: redis.rdior4.ng.0001.usw2.cache.amazonaws.com #localhost
 cache_port: 6379
 ssl_enabled: False
-syncronized_mode: False
+syncronized_mode: True
 shuffle: false
 drop_last: false
 use_compression: True

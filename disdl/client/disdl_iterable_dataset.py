@@ -8,9 +8,9 @@ import redis
 from io import BytesIO
 import lz4.frame
 from torch.utils.data import IterableDataset
-from minibatch_client import MiniBatchClient
+from disdl.client.minibatch_client import MiniBatchClient
 import logging
-from s3_loader_factory import BaseS3Loader # your factory class
+from disdl.client.s3_loader_factory import BaseS3Loader # your factory class
 from dataclasses import dataclass
 from torch.utils.data import get_worker_info
 

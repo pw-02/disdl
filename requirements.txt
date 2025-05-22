@@ -13,6 +13,7 @@ lz4
 psutil
 torchmultimodal-nightly
 transformers
+dacite
 # torchvision
 # transformers
 # hydra

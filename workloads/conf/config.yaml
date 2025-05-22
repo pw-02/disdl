@@ -5,13 +5,13 @@ defaults:
   - override hydra/job_logging: disabled
   - override hydra/hydra_logging: disabled  
 
-accelerator: cpu                 # 'cpu', 'gpu', 'tpu'
+accelerator: gpu                 # 'cpu', 'gpu', 'tpu'
 devices: 1                       # Number of devices to use per job
 log_interval: 1                  # Log every N steps
 log_dir: logs/single_job        # Directory to save logs
 checkpoint_frequency: null
 checkpoint_dir: null
-simulation_mode: True            # Real training vs simulated
+simulation_mode: False            # Real training vs simulated
 num_jobs: 1                   # Number of jobs to run
 hydra:
   run:

@@ -407,7 +407,7 @@ def main(cfg: DictConfig):
         learning_rate=cfg.workload.learning_rate,
         batch_size=cfg.workload.batch_size,
         weight_decay=cfg.workload.weight_decay,
-        sim_gpu_time=cfg.workload.sim_gpu_time  if cfg.simulation_mode else None,
+        sim_gpu_time=cfg.workload.sim_gpu_time,
         max_training_time_sec=cfg.workload.max_training_time_sec,
         max_training_steps=cfg.workload.max_training_steps,
         max_epochs=cfg.workload.max_epochs,

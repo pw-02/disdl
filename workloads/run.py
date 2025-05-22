@@ -20,10 +20,10 @@ from lightning.fabric import Fabric, seed_everything
 from lightning.fabric.loggers import CSVLogger
 from lightning.pytorch.core.saving import save_hparams_to_yaml
 
-from disdl_iterable_dataset import DISDLDataset
-from minibatch_client import MiniBatchClient
-from s3_loader_factory import S3LoaderFactory
-from disk_loader_factory import DiskLoaderFactory
+from client.disdl_iterable_dataset import DISDLDataset
+from client.minibatch_client import MiniBatchClient
+from client.s3_loader_factory import S3LoaderFactory
+from dclient.disk_loader_factory import DiskLoaderFactory
 from baselines.coordl.coordl_dataset import CoorDLDataset
 from baselines.coordl.coordl_sampler import CoorDLBatchSampler
 from workloads.args import FullConfig, JobConfig, DisDLConfig, CoorDLConfig

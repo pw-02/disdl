@@ -63,12 +63,14 @@ class MiniBatchClient:
                             job_id: str,
                             processed_batch_id: str,
                             batch_is_cached: str,
+                            eviction_candidate_batch_id: str = None,
                             evicted_batch_id: str = None):
        
         request = pb.JobUpdateRequest(
             job_id=job_id,
             processed_batch_id=processed_batch_id,
             batch_is_cached=batch_is_cached,
+            eviction_candidate_batch_id=eviction_candidate_batch_id,
             evicted_batch_id=evicted_batch_id
         )
         self.stub.JobUpdate(request)

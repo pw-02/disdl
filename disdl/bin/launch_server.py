@@ -163,6 +163,7 @@ class CacheAwareMiniBatchService(minibatch_service_pb2_grpc.MiniBatchServiceServ
                 job_id=job_id,
                 processed_batch_id=request.processed_batch_id,
                 batch_is_cached=request.batch_is_cached,
+                evicition_candidate=request.eviction_candidate_batch_id,
                 evicited_batch_id=request.evicted_batch_id
             )
             # logger.info(f"Job {job_id} update reported for dataset {dataset_name}")

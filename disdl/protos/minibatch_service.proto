@@ -96,7 +96,8 @@ message JobUpdateRequest {
   string processed_batch_id = 2;
   bool batch_is_cached = 3;
   //double data_bottleneck_time = 3;        // e.g., time to fetch data from S3/Redis
-  optional string evicted_batch_id = 4;
+  optional string eviction_candidate_batch_id = 4;
+  optional string evicted_batch_id = 5;
 }
 
 /*

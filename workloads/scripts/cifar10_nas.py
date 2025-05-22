@@ -11,9 +11,9 @@ def main():
     ROOT_LOG_DIR = "logs"
     WORKLOAD_TYPE = "nas"
     WORKLOAD = "cifar10"
-    DATALOADER = 'coordl'  # tensorsocket, disdl, coordl
+    DATALOADER = 'disdl'  # tensorsocket, disdl, coordl
     DEFAULT_BATCH_SIZE = 128
-    DEFAULT_MAX_EPOCHS = 1
+    DEFAULT_MAX_EPOCHS = 5
     # DEFAULT_MODEL = "resnet18"
     DEFAULT_SEED = 42
     # DEFAULT_SIM_GPU_TIME = 0.1

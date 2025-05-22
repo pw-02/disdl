@@ -1,11 +1,11 @@
 # conf/workload/cifar10_single_job.yaml
 dataset_name: cifar10
-dataset_path: data/cifar10/test
+dataset_path: data/cifar10/train
 num_classes: 10
 batch_size: 128
 max_training_time_sec: null
 max_training_steps: null
-max_epochs: 2
+max_epochs: 10
 precision: 32
 # Global defaults
 workload_type: single_job

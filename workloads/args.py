@@ -9,8 +9,6 @@ class DisDLConfig:
     cache_port:int
     grpc_server:str
     ssl_enabled:bool
-    shuffle:bool
-    drop_last:bool
     use_compression:bool
     num_workers:int
 

@@ -274,7 +274,7 @@ if __name__ == "__main__":
     hourly_ec2_cost = 12.24 
     hourly_cache_cost = 3.25
     load_from_s3_time = 0.5
-    preprocesssing_time = 0.00
+    preprocesssing_time = 0.1
     batch_size = 1
     simulation_time_sec = None #3600 # None  #3600 * 1 # Simulate 1 hour
     syncronized_mode = True

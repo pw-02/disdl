@@ -128,9 +128,7 @@ class BatchManager:
             # job.set_eviction_candidate(eviction_candidate)
             self._maybe_trigger_sample_next_batch(next_batch)
             
-            print(f"[get_next_batch_for_job] job_id: {job.job_id}, next_batch: {next_batch.batch_id}, should_cache: {should_cache}, eviction_candidate: {eviction_candidate}")
-            if "2_1_1_" in next_batch.batch_id:
-                print(f"[get_next_batch_for_job] job_id: {job.job_id}, next_batch: {next_batch.batch_id}, should_cache: {should_cache}, eviction_candidate: {eviction_candidate}")
+            # print(f"[get_next_batch_for_job] job_id: {job.job_id}, next_batch: {next_batch.batch_id}, should_cache: {should_cache}, eviction_candidate: {eviction_candidate}")
             return next_batch, should_cache, eviction_candidate
     # @timed
     def assign_batch_set_to_job(self, job: DLTJob):
@@ -154,12 +152,15 @@ class BatchManager:
                                job_id: str,
                                processed_batch_id: str,
                                batch_is_cached: bool,
+                               evicition_candidate: Optional[str],
                                evicited_batch_id: Optional[str]):
         #check if evicited_batch_id empty string
         # with self.lock:
             
             if evicited_batch_id == "":
                 evicited_batch_id = None
+            if evicition_candidate == "":
+                evicition_candidate = None
             #get batch from batch set
             batch:Batch = self.get_batch(processed_batch_id)
             batch.mark_seen_by(job_id) # Mark the batch as seen by the job and update the reuse score
@@ -169,8 +170,8 @@ class BatchManager:
             else:
                 self.cache.mark_not_cached(batch)
 
-            if evicited_batch_id is not None:
-                self.cache._remove_eviction_candidate(evicited_batch_id)
+            if evicition_candidate is not None:
+                self.cache._remove_eviction_candidate(evicition_candidate)
 
             if evicited_batch_id is not None:
                 evicted_batch = self.get_batch(evicited_batch_id)                

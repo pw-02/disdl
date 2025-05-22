@@ -134,7 +134,7 @@ class DISDLDataset(IterableDataset):
                 if retries <= max_retries:
                     time.sleep(retry_interval)
 
-        logging.warning(f"Failed to cache batch '{batch_id}' after {max_retries} retries.")
+        logging.warning(f"Failed to cache batch '{batch_id}' after {max_retries} retries. Eviction candidate: '{eviction_candidate_key}'. Evicted: '{evicted_key}'")
         return False, evicted_key
     
     def __iter__(self):
@@ -199,12 +199,16 @@ class DISDLDataset(IterableDataset):
                 transform_time += time.perf_counter() - encode_start
                 if success:
                     batch_is_cached = True
+                if evicted_key:
+                    logging.info(f"Batch {batch_id} evicted key: {evicted_key}")
 
         report_start = time.perf_counter()
+     
         mini_batch_client.report_job_update(
             job_id=self.job_id,
             processed_batch_id=batch_id,
             batch_is_cached=batch_is_cached,
+            eviction_candidate_batch_id=eviction_candidate,
             evicted_batch_id=evicted_key
         )
         grpc_report_time = time.perf_counter() - report_start

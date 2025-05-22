@@ -236,7 +236,10 @@ def get_transform(dataset_name: str, is_training: bool = True):
     
     elif 'cifar10' in dataset_name.lower():
         return transforms.Compose([
-            transforms.RandomCrop(32, padding=4),
+            transforms.Resize(256), 
+            transforms.RandomResizedCrop(224),
+
+            # transforms.RandomCrop(32, padding=4),
             transforms.RandomHorizontalFlip(),
             transforms.ToTensor(),
             transforms.Normalize(mean=[0.4914, 0.4822, 0.4465],
@@ -377,8 +380,6 @@ def main(cfg: DictConfig):
             cache_port=cfg.dataloader.cache_port,
             grpc_server=cfg.dataloader.grpc_server,
             ssl_enabled=cfg.dataloader.ssl_enabled,
-            shuffle=cfg.dataloader.shuffle,
-            drop_last=cfg.dataloader.drop_last,
             use_compression=cfg.dataloader.use_compression,
             num_workers=cfg.dataloader.num_torch_workers
         )

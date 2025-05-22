@@ -11,7 +11,7 @@ available_datasets:
 
   - name: cifar10
     storage_backend: local
-    local_storage_path: data\cifar10\test
+    local_storage_path: data\cifar10\train
     s3_storage_path: s3://sdl-cifar10/train
     batch_size: 128
     shuffle: true

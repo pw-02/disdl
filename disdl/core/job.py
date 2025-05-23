@@ -57,7 +57,7 @@ class DLTJob:
                     #     best_score = batch.reuse_score
                     next_batch = batch
                     break
-                elif batch.cache_status != CacheStatus.CACHING_IN_PROGRESS and fallback_batch is None:
+                elif batch.cache_status == CacheStatus.CACHING_IN_PROGRESS and fallback_batch is None:
                     fallback_batch = batch
             if not next_batch:
                 next_batch = fallback_batch

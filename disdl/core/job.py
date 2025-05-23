@@ -32,6 +32,8 @@ class DLTJob:
         self.cache_hit_count = 0
         self.cache_miss_count = 0
         self.elapased_time_sec = 0
+        self.ready_batches: List[Tuple[str, bool, Optional[str], Optional[str]]] = []
+        self.is_training = False
         self.dataload_delay = AverageMeter('Dataload Delay')
         self.lock = threading.Lock()
         # self.reset_for_new_epoch()
@@ -57,7 +59,7 @@ class DLTJob:
                     #     best_score = batch.reuse_score
                     next_batch = batch
                     break
-                elif batch.cache_status == CacheStatus.CACHING_IN_PROGRESS and fallback_batch is None:
+                elif batch.cache_status != CacheStatus.CACHING_IN_PROGRESS and fallback_batch is None:
                     fallback_batch = batch
             if not next_batch:
                 next_batch = fallback_batch

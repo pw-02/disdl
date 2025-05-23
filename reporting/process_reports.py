@@ -36,8 +36,13 @@ def gen_workload_level_report(exp_folder_path):
     workload_summary = {}
     csv_files = glob.glob(os.path.join(exp_folder_path, '**', '*metrics.csv'), recursive=True)
     for job_level_report in csv_files:
-        model_name = model_folder = Path(job_level_report).parents[2].name  # Adjust index depending on folder depth
+        model_name = model_folder = Path(job_level_report).parents[2].name
+        dataloader_name =  Path(job_level_report).parents[4].name # Adjust index depending on folder depth
+        dataset_name = Path(job_level_report).parents[6].name
+        workload_type = Path(job_level_report).parents[5].name
         job_metrics = convert_csv_to_dict(job_level_report)
+        #rename csv file to job name
+      
         job_summaries.append({
             'model_name': model_name,
             # 'dataloader_name': job_metrics['dataloader_name'],
@@ -64,6 +69,12 @@ def gen_workload_level_report(exp_folder_path):
             'optimal_throughput(batches/s)': 1 / (sum(job_metrics['GPU Processing Time (s)']) / len(job_metrics['GPU Processing Time (s)'])),
             'throughput(batches/s)':  len(job_metrics['Batch Index']) / sum(job_metrics['Iteration Time (s)']),
             })
+        
+        #rename csv file if name == 'metrics.csv'
+        if Path(job_level_report).name == 'metrics.csv':
+            job_level_report_folder = os.path.dirname(job_level_report)
+            job_level_report_rename = os.path.join(job_level_report_folder, f'{model_name}_{dataloader_name}_metrics.csv')
+            os.rename(job_level_report, job_level_report_rename)
         # Append the data to the list
     workload_summary['num_jobs'] = len(job_summaries)
     workload_summary['model_names'] = [job['model_name'] for job in job_summaries]
@@ -84,14 +95,15 @@ def gen_workload_level_report(exp_folder_path):
     workload_summary['optimal_throughput(batches/s)'] = sum(job['optimal_throughput(batches/s)'] for job in job_summaries)
     workload_summary['throughput(batches/s)'] = sum(job['throughput(batches/s)'] for job in job_summaries)
 
-    job_summary_file = os.path.join(exp_folder_path, 'job_summary.csv')
+
+    job_summary_file = os.path.join(exp_folder_path, f'{dataloader_name}_{dataset_name}_{workload_type}_job_summary.csv')
     save_dict_list_to_csv(job_summaries, job_summary_file)
 
-    workload_summary_file = os.path.join(exp_folder_path, 'workload_summary.csv')
+    workload_summary_file = os.path.join(exp_folder_path, f'{dataloader_name}_{dataset_name}_{workload_type}_summary.csv')
     save_dict_list_to_csv([workload_summary], workload_summary_file)
 
 
 
 if __name__ == "__main__":
-    example_folder = r"C:\Users\pw\Desktop\logs\cifar10\nas\disdl\2025-05-22_22-53-53"
+    example_folder = r"C:\Users\pw\Desktop\logs\cifar10\nas\coordl\2025-05-22_23-43-55"
     gen_workload_level_report(example_folder)

@@ -1,0 +1,347 @@
+import heapq
+import logging
+from typing import List, Sized, Tuple, Dict, Set, Any
+import sys
+sys.path.append(".")
+sys.path.append("disdl\server")
+from sim_workloads import workloads
+from sim_cache import SharedCache
+from typing import List, Optional, Dict, Tuple
+from collections import OrderedDict
+# from disdl.server.batch import Batch, CacheStatus, BatchSet
+from disdl.core.batch_manager import BatchManager, Batch, CacheStatus, DLTJob
+from disdl.utils.utils import AverageMeter
+import threading
+import numpy as np
+import time
+
+fun_meetrs= {}
+def timed(func):
+    def wrapper(*args, **kwargs):
+        start = time.perf_counter()
+        out = func(*args, **kwargs)
+        elapsed = time.perf_counter() - start
+        if func.__name__ not in fun_meetrs:
+            fun_meetrs[func.__name__] = AverageMeter(func.__name__)
+        fun_meetrs[func.__name__].update(elapsed)
+        # print(f"[TIMER] {func.__name__} took {elapsed:.6f} seconds")
+        return out
+    return wrapper
+
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    filename='simulation.log',         # Log file name
+    filemode='w'                # Overwrite the file each run; use 'a' to append
+)
+logger = logging.getLogger(__name__)
+
+def get_cache_miss_delay() -> float:
+    """Get the cache miss delay for a given model."""
+    # Placeholder function to get cache miss delay based on model name
+    # In a real scenario, this would query a database or configuration file
+    return 1.167519067 + 0.76377404
+
+def get_cache_hit_delay() -> float:
+    """Get the cache hit delay for a given model."""
+    return 0.229358515 + 0.053807673
+    # Placeholder function to get cache hit delay based on model name
+    # In a real scenario, this would query a database or configuration file
+    
+
+class Dataset:
+    def __init__(self, num_samples: str, batch_size:int , num_partitions: int = 1):
+        self.num_samples = num_samples
+        self.num_partitions = num_partitions
+        self.batch_size = batch_size
+        self.drop_last = False
+        self.shuffle = False
+        self.min_lookahead_steps = 50
+
+    def __len__(self) -> int:
+        return self.num_samples
+
+# @timed   
+def run_simulation(
+    dataloader_system: str,
+    workload_name: str,
+    workload_jobs: Dict[str, float],
+    cache_capacity: float,
+    cache_policy: str,
+    cache_hit_delay: float,
+    cache_miss_delay: float,
+    hourly_cache_cost: float,
+    hourly_ec2_cost: float,
+    simulation_time_sec: int = None,
+    batches_per_epoch: int = 1000,
+    epochs_per_job: int = 1,
+    use_prefetcher: bool = False,
+    prefetch_delay: float = 3,
+    num_partitions: int = 1,
+    batch_size: int = 1,
+    num_torch_workers: int = 4,
+):
+
+    cache = SharedCache(capacity=cache_capacity, eviction_policy=cache_policy)
+    manager = BatchManager(
+        dataset=Dataset(num_samples=batches_per_epoch, batch_size=batch_size, num_partitions=num_partitions),
+        use_prefetching=False,
+        prefetch_lambda_name=None,
+        prefetch_simulation_time=None,
+        cache_address=None,
+        shared_cache=cache)
+
+    for job_id in workload_jobs:
+        job_speed = workload_jobs[job_id]
+        manager.add_job(job_id, job_speed)
+    
+    event_queue = []  # Priority queue for next event times
+    time_elapsed = 0  # Global simulation time
+    batches_per_job = batches_per_epoch * epochs_per_job
+    time_between_job_starts = 0.1
+    next_job_start_time = time_elapsed
+  
+    for job in manager.job_registry.all():
+        for i in range(num_torch_workers):
+            heapq.heappush(event_queue, (next_job_start_time, "start_batch_load", job))
+        next_job_start_time += time_between_job_starts
+
+    if use_prefetcher:
+        heapq.heappush(event_queue, (prefetch_delay, "prefetcher_step", (None)))
+
+    while True:
+        if simulation_time_sec is not None and time_elapsed >= simulation_time_sec:
+            break
+        
+        #check if all jobs have completed their batches
+        if batches_per_job is not None and all(job.num_batches_processed >= batches_per_job for job in manager.job_registry.all()):
+            break
+        
+        time_elapsed, event_type, payload = heapq.heappop(event_queue)
+
+        if event_type == "start_batch_load":
+            job: DLTJob = payload
+            job.elapased_time_sec = time_elapsed
+
+            next_batch, should_cache_on_miss, eviction_candidate = manager.get_next_batch_for_job(job.job_id)
+            batch_id = next_batch.batch_id
+            cache_hit = cache.get_batch(batch_id)
+            batch_is_cached = cache_hit
+            evicted_batch_id = None
+
+            logger.info(f"Job {job.job_id} is loading batch {batch_id} (cache hit: {cache_hit})")
+
+            if cache_hit:
+                delay = cache_hit_delay
+                heapq.heappush(event_queue, (
+                    time_elapsed + delay,
+                    "end_batch_load",
+                    (job, batch_id, cache_hit, batch_is_cached, eviction_candidate, evicted_batch_id)
+                ))
+            else:
+                delay = cache_miss_delay
+                if should_cache_on_miss:
+                    heapq.heappush(event_queue, (
+                        time_elapsed + delay,
+                        "cache_insert",
+                        (job, batch_id, eviction_candidate)
+                    ))
+                else:
+                    heapq.heappush(event_queue, (
+                        time_elapsed + delay,
+                        "end_batch_load",
+                        (job, batch_id, cache_hit, batch_is_cached, eviction_candidate, evicted_batch_id)
+                    ))
+
+        elif event_type == "cache_insert":
+            job, batch_id, eviction_candidate = payload
+            cache_hit = False
+            job.elapased_time_sec = time_elapsed
+
+            # Already in cache? Short-circuit
+            if cache.batch_exists(batch_id):
+                batch_is_cached = True
+                evicted_batch_id = None
+                logger.debug(f"Batch {batch_id} already in cache, skipping insertion.")
+            else:
+                # Try inserting into cache
+                batch_is_cached, evicted_batch_id = cache.put_batch(batch_id)
+
+                if not batch_is_cached and eviction_candidate is not None:
+                    evicted = cache.remove_batch(eviction_candidate)
+                    if evicted:
+                        evicted_batch_id = eviction_candidate
+                        batch_is_cached, _ = cache.put_batch(batch_id)
+
+                if batch_is_cached:
+                    logger.info(
+                        f"Batch {batch_id} ({manager.get_batch_reuse_score(batch_id)}) inserted into cache. "
+                        f"Evicted: {evicted_batch_id or 'None'} "
+                        f"({manager.get_batch_reuse_score(evicted_batch_id) if evicted_batch_id else 'N/A'})"
+                    )
+                else:
+                    logger.warning(f"Failed to insert batch {batch_id} even after eviction attempt.")
+
+            # Continue to training
+            heapq.heappush(event_queue, (
+                time_elapsed,
+                "end_batch_load",
+                (job, batch_id, cache_hit, batch_is_cached, eviction_candidate, evicted_batch_id)
+            ))
+
+
+        elif event_type == "end_batch_load":
+            job, batch_id, cache_hit, batch_is_cached, eviction_candidate, evicited_batch_id = payload
+            job.elapased_time_sec = time_elapsed
+            manager.processed_batch_update(
+                                job_id=job.job_id,
+                                processed_batch_id=batch_id,
+                                batch_is_cached=batch_is_cached,
+                                evicition_candidate=eviction_candidate,
+                                evicited_batch_id=evicited_batch_id
+                            )
+            # Skip if job is already complete
+            if batches_per_job is not None and job.num_batches_processed >= batches_per_job:
+                job.is_training = False
+                continue
+
+            # Add batch to ready queue
+            job.ready_batches.append((batch_id, cache_hit, batch_is_cached, eviction_candidate, evicited_batch_id))
+
+            # If this job is not training, start training immediately on this batch
+            if not job.is_training:
+                job.is_training = True
+                next_batch_id, cache_hit, batch_is_cached, eviction_candidate, evicited_batch_id = job.ready_batches.pop(0)
+                heapq.heappush(event_queue, (time_elapsed + job.processing_speed, "training_step_ended",(job, job.job_id, cache_hit)))
+        
+        elif event_type == "training_step_ended":
+            job, job_id, cache_hit = payload
+            job.elapased_time_sec = time_elapsed
+            job.num_batches_processed += 1
+
+            if cache_hit:
+                job.cache_hit_count += 1
+            else:
+                job.cache_miss_count += 1
+
+            # Check if the job is now finished
+            if batches_per_job is not None and job.num_batches_processed >= batches_per_job:
+                job.is_training = False
+                print(f"Job {job.job_id} has completed {job.num_batches_processed} batches after {job.elapased_time_sec:.2f}s. "
+                    f"Throughput: {job.num_batches_processed / job.elapased_time_sec:.2f} batches/s")
+            else:
+
+                # Continue training if a batch is ready
+                if job.ready_batches:
+                    next_batch_id, cache_hit, batch_is_cached, eviction_candidate, evicited_batch_id = job.ready_batches.pop(0)
+                    heapq.heappush(event_queue, (
+                        time_elapsed + job.processing_speed,
+                        "training_step_ended",
+                        (job, job.job_id, cache_hit)
+                    ))
+                else:
+                    job.is_training = False  # Pause until more data is loaded
+
+                # Schedule the next batch load regardless
+                heapq.heappush(event_queue, (time_elapsed, "start_batch_load", job))
+
+
+
+    #do a sanity check that batches in cache mactch all batch in manager.cache
+    for batch_id in cache.cache:
+        if batch_id not in manager.cache.cached_batches:
+            logger.error(f"Batch {batch_id} in cache but not in manager cache.")
+    for batch_id in manager.cache.cached_batches:
+        if batch_id not in cache.cache:
+            logger.error(f"Batch {batch_id} in manager cache but not in cache.")
+    if len(cache.cache) != len(manager.cache.cached_batches):
+        logger.error(f"Cache size mismatch: {len(cache.cache)} in cache but {len(manager.cache.cached_batches)} in manager cache.")
+        
+
+    jobs = manager.job_registry.all()
+    job_performances = [job.perf_stats(hourly_ec2_cost/len(jobs), hourly_cache_cost/len(jobs)) for job in jobs]
+    agg_batches_processed = sum(job['batches_processed'] for job in job_performances)
+    agg_cache_hits = sum(job['cache_hit_count'] for job in job_performances)
+    agg_cache_misses = sum(job['cache_miss_count'] for job in job_performances)
+    agg_cache_hit_percent = (agg_cache_hits / (agg_cache_hits + agg_cache_misses)) * 100 if (agg_cache_hits + agg_cache_misses) > 0 else 0
+    #formate cacge hit percent to 2 decimal places
+    agg_compute_cost = sum(job['compute_cost'] for job in job_performances)
+    agg_throuhgput = sum(job['throughput(batches/s)'] for job in job_performances)
+    agg_time_sec = sum(job['elapsed_time'] for job in job_performances)
+    elapsed_time_sec = max(job['elapsed_time'] for job in job_performances) if job_performances else 0
+    max_cache_capacity_used = cache.max_size_used
+    cache_cost = (hourly_cache_cost / 3600) * elapsed_time_sec
+    total_cost = agg_compute_cost + cache_cost  # No additional costs in this simulation
+    job_speeds = {job['job_id']: job['job_speed'] for job in job_performances}
+    throuhgputs_for_jobs = {job['job_id']: job['throughput(batches/s)'] for job in job_performances}
+    optimal_throughputs = {job['job_id']: job['optimal_throughput(batches/s)'] for job in job_performances}
+    job_cache_hit_percent = {job['job_id']: job['cache_hit_%'] for job in job_performances}
+    #format job cache hit percent to 2 decimal places
+    job_cache_hit_percent = {job_id: f"{percent*100:.2f}%" for job_id, percent in job_cache_hit_percent.items()}
+    job_elapsed_time = {job['job_id']: job['elapsed_time'] for job in job_performances}
+
+    print(f"{dataloader_system}")
+    print(f"  Jobs: {job_speeds}"),
+    print(f"  Batches per Job: {batches_per_job}")
+    # print(f"  Cache Hit Delay: {cache_hit_delay:.2f}s")
+    # print(f"  Cache Miss Delay: {cache_miss_delay:.2f}s")
+    print(f"  Eviction Policy: {cache_policy}")
+    print(f"  Cache Capacity: {cache_capacity:.0f} batches")
+    print(f"  Cache Used: {max_cache_capacity_used:} batches")
+    print(f"  Cache Hit %: {agg_cache_hit_percent:.2f}%, Hits: {agg_cache_hits}, Misses: {agg_cache_misses}")
+    print(f"  Cache Cost: ${cache_cost:.2f}")
+    print(f"  Compute Cost: ${agg_compute_cost:.2f}")
+    print(f"  Total Cost : ${total_cost:.2f}")
+    print(f"  Total Batches: {agg_batches_processed}")
+    print(f"  Total Time: {elapsed_time_sec:.2f}s")
+    # print(f"  Job Elapsed Time: {job_elapsed_time}")
+    print(f"  Cache Hit % per Job: {job_cache_hit_percent}")
+    print(f"  Optimal Job Throughputs: {optimal_throughputs}")
+    print(f"  Actual Job Throughputs: {throuhgputs_for_jobs}")
+    print(f"  Total Throughput: {agg_throuhgput:.2f} batches/s")
+    print("-" * 40)
+    # for job in jobs:
+    #     print(f"  Job {job.job_id}: {list(job.used_batch_set_ids.items())}")
+    # manager.summarize_functions()
+    # return overall_results
+    # print(sampler.assigned_eviction_candidates)
+
+if __name__ == "__main__":
+    dataloader_system  = 'DisDL' #'CoorDL', TensorSocket, DisDL
+    workload_name = 'imagenet_128_nas' #'imagenet_128_hpo', 'imagenet_128_resnet50', imagenet_128_nas, imagenet_slowfast, '20_jobs'
+    workload_jobs = dict(workloads[workload_name])
+
+    simulation_time_sec = None #3600 # None  #3600 * 1 # Simulate 1 hour
+    batches_per_epoch = 391 # batches
+    epochs_per_job = 3 #np.inf
+    batches_per_job = batches_per_epoch * epochs_per_job
+    cache_capacity = 245 #0.25 * batches_per_epoch  #np.inf #5.0 * batches_per_epoch #number of batches as a % of the total number of batches
+    cache_policy = "noevict" # "lru", "fifo", "mru", "random", "noevict", "reuse_score"
+    hourly_ec2_cost = 12.24
+    hourly_cache_cost = 3.25
+    prefetcher_speed = 3
+    cache_hit_delay = get_cache_hit_delay() #0.229358515 + 0.053807673
+    cache_miss_delay = get_cache_miss_delay()
+    num_torch_workers = 4
+    num_partitions = 1
+    batch_size = 1
+
+    run_simulation(
+        dataloader_system = dataloader_system,
+        workload_name = workload_name,
+        workload_jobs = workload_jobs,
+        cache_capacity = cache_capacity,
+        cache_policy = cache_policy,
+        cache_hit_delay=cache_hit_delay,
+        cache_miss_delay=cache_miss_delay,
+        hourly_cache_cost = hourly_cache_cost,
+        hourly_ec2_cost = hourly_ec2_cost,
+        simulation_time_sec=simulation_time_sec,
+        batches_per_epoch=batches_per_epoch,
+        epochs_per_job=epochs_per_job,
+        use_prefetcher=False,
+        prefetch_delay=prefetcher_speed,
+        num_partitions=num_partitions,
+        batch_size= batch_size,
+        num_torch_workers=num_torch_workers)

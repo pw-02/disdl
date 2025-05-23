@@ -128,13 +128,13 @@ def run_simulation(
         workload_jobs,
         cache_capacity,
         eviction_policy,
-        load_from_s3_time,
+        cache_hit_delay,
+        cache_miss_delay,
         hourly_cache_cost,
         hourly_ec2_cost,
         simulation_time_sec,
         batches_per_epoch,
         epochs_per_job,
-        preprocesssing_time,
         batch_size,
         syncronized_mode):
     logger.info(f"Starting simulation for {workload_name} with {len(workload_jobs)} jobs")
@@ -182,23 +182,22 @@ def run_simulation(
             cache_hit = cache.get_batch(batch_id)
             if cache_hit:
                 job.cache_hit_count += 1
-                delay = preprocesssing_time + job.processing_speed
+                delay = cache_hit_delay + job.processing_speed
                 heapq.heappush(event_queue, (time_elapsed + delay, "end_training_step", (job, batch_id)))
                 # logger.info(f"[job_step] Job {job.job_id} processing batch {batch_id} (owner={job_is_owner})")
             else:
                 if job_is_owner:
                     # Schedule prefetch
                     job.cache_miss_count += 1
-                    cache_delay = load_from_s3_time + preprocesssing_time
-                    delay = cache_delay + job.processing_speed
-                    heapq.heappush(event_queue, (time_elapsed + cache_delay, "cache_insert", (job, batch_id)))
+                    delay = cache_miss_delay + job.processing_speed
+                    heapq.heappush(event_queue, (time_elapsed + cache_miss_delay, "cache_insert", (job, batch_id)))
                     heapq.heappush(event_queue, (time_elapsed + delay, "end_training_step", (job, batch_id)))
                     logger.debug(f"[job_step] Job {job.job_id} processing batch {batch_id} (owner={job_is_owner})")
 
                 elif not syncronized_mode:
                     # Non-owner but allowed to proceed
                     job.cache_miss_count += 1
-                    delay = load_from_s3_time + preprocesssing_time + job.processing_speed
+                    delay = cache_miss_delay + job.processing_speed
                     heapq.heappush(event_queue, (time_elapsed + delay, "end_training_step", (job, batch_id)))
                     # logger.info(f"[job_step] Job {job.job_id} processing batch {batch_id} (owner={job_is_owner})")
                 else:
@@ -241,7 +240,8 @@ def run_simulation(
     print(f"{dataloader_system}")
     print(f"  Jobs: {job_speeds}"),
     print(f"  Batches per Job: {batches_per_job}")
-    print(f"  S3_load_time: {load_from_s3_time:.2f}s")
+    print(f"  Cache Hit Delay: {cache_hit_delay:.2f}s")
+    print(f"  Cache Miss Delay: {cache_miss_delay:.2f}s")
     print(f"  Eviction Policy: {eviction_policy}")
     print(f"  Cache Capacity: {cache_capacity:.0f} batches")
     print(f"  Cache Used: {max_cache_capacity_used:} batches")
@@ -266,15 +266,17 @@ if __name__ == "__main__":
     dataloader_system  = 'CoorDL' 
     workload_name = 'imagenet_128_nas'
     workload_jobs = dict(workloads[workload_name])
-    batches_per_epoch = 79 # batches
+    batches_per_epoch = 1173 # batches
     epochs_per_job = 1 #np.inf
     batches_per_job = batches_per_epoch * epochs_per_job
-    cache_capacity = 450 #0.5 * batches_per_job
+    cache_capacity = 250 #0.5 * batches_per_job
     eviction_policy = "noevict" # "lru", "fifo", "mru", "random", "noevict"
     hourly_ec2_cost = 12.24 
     hourly_cache_cost = 3.25
-    load_from_s3_time = 0.5
-    preprocesssing_time = 0.1
+    # load_from_s3_time = 0.29187976675
+    # preprocesssing_time = 0.19094351
+    cache_hit_delay = 0.070791547
+    cache_miss_delay = 0.29187976675 + 0.19094351
     batch_size = 1
     simulation_time_sec = None #3600 # None  #3600 * 1 # Simulate 1 hour
     syncronized_mode = True
@@ -284,13 +286,13 @@ if __name__ == "__main__":
         workload_jobs = workload_jobs,
         cache_capacity = cache_capacity,
         eviction_policy = eviction_policy,
-        load_from_s3_time=load_from_s3_time,
+        cache_hit_delay=cache_hit_delay,
+        cache_miss_delay=cache_miss_delay,
         hourly_cache_cost = hourly_cache_cost,
         hourly_ec2_cost = hourly_ec2_cost,
         simulation_time_sec=simulation_time_sec,
         batches_per_epoch=batches_per_epoch,
         epochs_per_job=epochs_per_job,
-        preprocesssing_time=preprocesssing_time,
         batch_size= batch_size,
         syncronized_mode=syncronized_mode
     )

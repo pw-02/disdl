@@ -59,7 +59,7 @@ class DISDLDataset(IterableDataset):
                 self.redis_client = redis.StrictRedis(host=self.redis_host, port=self.redis_port)
 
 
-    def get_cached_minibatch_with_retries(self, batch_id, max_retries=3, retry_interval=0.1):
+    def get_cached_minibatch_with_retries(self, batch_id, max_retries=3, retry_interval=0.25):
         """Attempts to load a batch from cache, retrying if it fails."""
         self._initialize_cache_client()
         attempt = 0
@@ -172,7 +172,7 @@ class DISDLDataset(IterableDataset):
 
         if self.use_cache:
             fetch_start = time.perf_counter()
-            cached_bytes = self.get_cached_minibatch_with_retries(batch_id, max_retries=0)
+            cached_bytes = self.get_cached_minibatch_with_retries(batch_id, max_retries=10)
             fetch_time = time.perf_counter() - fetch_start
         if cached_bytes:
             decode_start = time.perf_counter()

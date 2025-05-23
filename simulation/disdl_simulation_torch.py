@@ -45,7 +45,7 @@ def get_cache_miss_delay() -> float:
 
 def get_cache_hit_delay() -> float:
     """Get the cache hit delay for a given model."""
-    return 0.229358515 + 0.053807673
+    return 0.053807673 + 0.229358515
     # Placeholder function to get cache hit delay based on model name
     # In a real scenario, this would query a database or configuration file
     
@@ -295,7 +295,7 @@ def run_simulation(
     print(f"  Total Cost : ${total_cost:.2f}")
     print(f"  Total Batches: {agg_batches_processed}")
     print(f"  Total Time: {elapsed_time_sec:.2f}s")
-    # print(f"  Job Elapsed Time: {job_elapsed_time}")
+    print(f"  Job Times: {job_elapsed_time}")
     print(f"  Cache Hit % per Job: {job_cache_hit_percent}")
     print(f"  Optimal Job Throughputs: {optimal_throughputs}")
     print(f"  Actual Job Throughputs: {throuhgputs_for_jobs}")
